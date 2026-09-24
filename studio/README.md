@@ -9,8 +9,13 @@ Remotion project: style guide and reusable scene components. 1080×1920, 30 fps.
 - `src/components/`: primitives (`Tex`, `PaperRect`, `Equation`, ...), each
   specced in the storyboard that introduced it.
 - `src/storyboard/`: plays an episode's `storyboard.json` with the frame numbers
-  in its `cues.json`. `src/episodes/<slug>/` wires one episode to it and to its
-  `narration.mp3`; the composition id is the slug.
+  in its `cues.json`. `src/episodes/<slug>/` wires one episode to it with
+  `makeEpisode` (`Episode.tsx`) and registers it in `Root.tsx`; the composition
+  id is the slug. Scripts pass an episode folder's own `storyboard` and `cues`
+  as props, so scratch copies render too.
+- `src/probe/`: with the `probe` prop, a composition logs what every frame
+  draws (lines, fills, text ink, glyph heights) for `check-render` and
+  `measure-tex`; the player marks elements `data-el`, text items `data-text`.
 - `src/compositions/StyleSheet.tsx`: visual check for the style guide.
 - `src/brand/`: channel branding (루트와이, √y) as stills in the `brand` folder:
   `Logo` (transparent), `Avatar` (profile picture, 800×800), `Watermark` (video
@@ -60,8 +65,16 @@ python3 scripts/storyboard-view.py $ep
 python3 scripts/build-cues.py $ep $ep/take1@1.08.wav $ep/take1@1.08.words.json
 # A still at every beat's endFrame (safe-area guide on) → $ep/frames/
 node scripts/beat-stills.mts $ep
-# Video from Remotion (BT.709), narration muxed by ffmpeg → $ep/render.mp4
+# Video from Remotion (BT.709), narration muxed by ffmpeg → $ep/render.mp4,
+# then check-render (--no-check to skip; its failures fail the render step)
 node scripts/render.mts $ep
+# Check a render: technical, bounds, centering, legibility, overlaps, reaction,
+# loudness, A/V sync, words vs audio, loop (thresholds: `checks` in theme.ts)
+#   → $ep/check.json, check.md, check/ (contact sheet + cited frames); exit 1 on a fail
+node scripts/check-render.mts $ep
+# Ink box and smallest glyph of TeX as the studio renders it (default size
+# type.mathInline; --display for \displaystyle; --token=mathDisplay | --size=N)
+node scripts/measure-tex.mts '\dfrac{x}{2}' 'x^2 = 2' --display
 # TTS samples of scripts/tts-compare/sentences.json → out/tts-compare/
 node scripts/tts-compare/compare.mts synth gemini gemini-3.8-flash-tts Kore kore
 ```

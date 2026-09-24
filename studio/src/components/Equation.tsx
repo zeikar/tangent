@@ -193,7 +193,10 @@ export const Equation: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, 
   );
 
   const row = (i: number, parts: Drawn[]) => (
-    <div style={{ position: "absolute", left: originX[i], top: p.y - measured[i].baseline, whiteSpace: "nowrap" }}>
+    <div
+      data-text="equation"
+      style={{ position: "absolute", left: originX[i], top: p.y - measured[i].baseline, whiteSpace: "nowrap" }}
+    >
       <Origin />
       <Tex tex={drawTex(parts)} trust fontSize={fontSize} />
     </div>

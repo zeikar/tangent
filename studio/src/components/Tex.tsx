@@ -35,6 +35,7 @@ export const Tex: React.FC<Props> = ({
   );
   return (
     <span
+      data-tex={tex}
       style={{ fontSize, color, lineHeight: 1, ...style }}
       dangerouslySetInnerHTML={{ __html: html }}
     />

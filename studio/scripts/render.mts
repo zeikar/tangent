@@ -3,17 +3,20 @@
 // own AAC track carries no edit list, so the encoder's priming samples would
 // play as a 43 ms audio delay; ffmpeg's mp4 muxer records them.
 //
-//   node scripts/render.mts ../episodes/<slug>
-// The composition id is the slug. The output only becomes render.mp4 if
-// storyboard.json is unchanged when the render ends; otherwise it is left as
-// render.stale.mp4 and the script fails.
+//   node scripts/render.mts ../episodes/<slug> [--no-check]
+// The composition id is the slug; the folder's own storyboard.json and
+// cues.json are passed in, so a scratch copy renders too. The output only
+// becomes render.mp4 if storyboard.json is unchanged when the render ends;
+// otherwise it is left as render.stale.mp4 and the script fails. The file
+// carries the storyboard's hash (comment tag) for check-render.mts, which
+// runs last unless --no-check; its failures fail this script too.
 import { execFileSync } from "node:child_process";
-import { mkdirSync, renameSync } from "node:fs";
+import { mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 import { assertCuesFresh } from "./cues-fresh.mts";
 
-const episodeArg = process.argv[2];
-if (!episodeArg) throw new Error("usage: node scripts/render.mts <episode dir>");
+const [episodeArg, ...flags] = process.argv.slice(2);
+if (!episodeArg) throw new Error("usage: node scripts/render.mts <episode dir> [--no-check]");
 const episode = resolve(episodeArg);
 const slug = basename(episode);
 const { storyboardSha256 } = assertCuesFresh(episode);
@@ -21,16 +24,20 @@ const studio = join(import.meta.dirname, "..");
 const video = join(studio, "out", `${slug}-video.mp4`);
 const partial = join(episode, "render.partial.mp4");
 const out = join(episode, "render.mp4");
+const props = join(studio, "out", `${slug}-props.json`);
 mkdirSync(join(studio, "out"), { recursive: true });
+const readJson = (name: string) => JSON.parse(readFileSync(join(episode, name), "utf8"));
+writeFileSync(props, JSON.stringify({ showSafeArea: false, storyboard: readJson("storyboard.json"), cues: readJson("cues.json") }));
 
-execFileSync("npx", ["remotion", "render", slug, video, "--muted", "--color-space=bt709"], {
+execFileSync("npx", ["remotion", "render", slug, video, "--muted", "--color-space=bt709", `--props=${props}`], {
   cwd: studio,
   stdio: "inherit",
 });
 execFileSync(
   "ffmpeg",
   ["-v", "error", "-y", "-i", video, "-i", join(episode, "narration.mp3"), "-map", "0:v", "-map", "1:a",
-   "-c:v", "copy", "-c:a", "aac", "-b:a", "320k", "-movflags", "+faststart", partial],
+   "-c:v", "copy", "-c:a", "aac", "-b:a", "320k", "-movflags", "+faststart",
+   "-metadata", `comment=storyboard-sha256=${storyboardSha256}`, partial],
   { stdio: "inherit" },
 );
 
@@ -44,3 +51,10 @@ try {
 }
 renameSync(partial, out);
 console.log(out);
+if (!flags.includes("--no-check")) {
+  try {
+    execFileSync("node", [join(import.meta.dirname, "check-render.mts"), episode], { stdio: "inherit" });
+  } catch {
+    process.exitCode = 1; // the check printed its failures; the render itself is kept
+  }
+}

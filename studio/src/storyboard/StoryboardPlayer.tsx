@@ -64,9 +64,16 @@ export const StoryboardPlayer: React.FC<{ storyboard: Storyboard; cues: Cues }> 
         .filter((e) => frame >= e.start && frame < e.end)
         .map((e) => {
           const C = components[e.spec.component];
-          return <C key={e.spec.id} el={e} scene={scene} />;
+          // data-el: the element a frame's pixels belong to, for the probe.
+          return (
+            <div key={e.spec.id} data-el={e.spec.id} style={{ position: "absolute", inset: 0 }}>
+              <C el={e} scene={scene} />
+            </div>
+          );
         })}
-      <Captions captions={captions} frame={frame} fps={cues.fps} />
+      <div data-el="captions" style={{ position: "absolute", inset: 0 }}>
+        <Captions captions={captions} frame={frame} fps={cues.fps} />
+      </div>
     </AbsoluteFill>
   );
 };

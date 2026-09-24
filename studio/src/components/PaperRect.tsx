@@ -308,7 +308,7 @@ export const SheetShape: React.FC<{
 };
 
 export const SheetName: React.FC<{ box: Box; text: string; opacity: number }> = ({ box, text, opacity }) => (
-  <Anchored x={box.cx} y={box.cy} anchor="center" opacity={opacity}>
+  <Anchored x={box.cx} y={box.cy} anchor="center" opacity={opacity} kind="name">
     <div style={{ ...type.label, fontFamily: font.sans, color: color.text }}>{text}</div>
   </Anchored>
 );
@@ -433,7 +433,11 @@ const SideLabel: React.FC<{ box: Box; side: Side; opacity: number; tex: string; 
       ? { left: box.cx - (ink.l + ink.r) / 2, top: box.cy + box.h / 2 + mark.edgeLabelGap - ink.t }
       : { left: box.cx + box.w / 2 + mark.edgeLabelGap - ink.l, top: box.cy - (ink.t + ink.b) / 2 };
   return (
-    <div ref={ref} style={{ position: "absolute", ...at, opacity: ink ? opacity : 0, display: "flex", whiteSpace: "nowrap" }}>
+    <div
+      ref={ref}
+      data-text="edge-label"
+      style={{ position: "absolute", ...at, opacity: ink ? opacity : 0, display: "flex", whiteSpace: "nowrap" }}
+    >
       <Tex tex={tex} color={c} />
     </div>
   );

@@ -4,9 +4,10 @@
 //   node scripts/beat-stills.mts ../episodes/<slug> [--clean] [--frames=12,40]
 // Writes <episode>/frames/<beat>-f<frame>[-safe].png ("frame-f<n>" with
 // --frames, which renders those frames instead of the beat ends). The
-// composition id is the slug.
+// composition id is the slug; the folder's storyboard.json and cues.json are
+// passed in.
 import { execFileSync } from "node:child_process";
-import { mkdirSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 import { assertCuesFresh } from "./cues-fresh.mts";
 
@@ -28,10 +29,15 @@ mkdirSync(outDir, { recursive: true });
 const run = (args: string[]) =>
   execFileSync("npx", ["remotion", ...args], { cwd: join(import.meta.dirname, ".."), stdio: ["ignore", "ignore", "inherit"] });
 
+// The folder's own storyboard and cues, so a scratch copy renders too.
+const props = join(import.meta.dirname, "../out", `${slug}-stills-props.json`);
+const storyboard = JSON.parse(readFileSync(join(episode, "storyboard.json"), "utf8"));
+writeFileSync(props, JSON.stringify({ showSafeArea: !clean, storyboard, cues }));
+
 run(["bundle", "--out-dir", bundleDir]);
 for (const { name, frame } of shots) {
   const out = join(outDir, `${name}-f${frame}${clean ? "" : "-safe"}.png`);
-  run(["still", bundleDir, slug, out, `--frame=${frame}`, `--props=${JSON.stringify({ showSafeArea: !clean })}`]);
+  run(["still", bundleDir, slug, out, `--frame=${frame}`, `--props=${props}`]);
   console.log(out);
 }
 // The storyboard may have changed while the stills rendered.

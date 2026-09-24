@@ -17,9 +17,12 @@ export const Anchored: React.FC<{
   anchor: Anchor;
   opacity?: number;
   scale?: number;
+  // What the probe (src/probe) calls this text item.
+  kind?: string;
   children: React.ReactNode;
-}> = ({ x, y, anchor, opacity = 1, scale = 1, children }) => (
+}> = ({ x, y, anchor, opacity = 1, scale = 1, kind = "label", children }) => (
   <div
+    data-text={kind}
     style={{
       position: "absolute",
       left: x,

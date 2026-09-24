@@ -12,8 +12,9 @@ episode folder (committed), so the build reruns without re-aligning.
 - Inserts each beat's pauseAfter as digital silence in the gap between the
   beat's last word and the next beat's first word.
 - Writes narration.mp3 as the video's audio master: the take on both stereo
-  channels, with one gain so it measures TARGET_LUFS integrated and at most
-  MAX_TRUE_PEAK (gain only, so timestamps stay valid). Copies it to
+  channels, with one gain so it measures checks.loudness in theme.ts (target
+  integrated LUFS, true peak at most maxTruePeak; gain only, so timestamps
+  stay valid). Copies it to
   studio/public/episodes/<slug>/, where the composition loads it.
 - Writes words.json (align.py format, shifted into narration.mp3's timeline)
   and cues.json: per beat startFrame / endFrame (inclusive) / pauseFrame, and
@@ -43,14 +44,15 @@ LEAD = 0.1  # seconds of silence kept before the first word
 SILENCE_DB = -45.0  # dBFS RMS in HOP windows
 SILENCE_RUN = 0.15  # seconds; longer than a stop-consonant closure
 HOP = 0.01
-TARGET_LUFS = -14.0  # YouTube turns louder audio down, quieter audio stays quiet
-MAX_TRUE_PEAK = -1.0  # dBTP
 DUAL_MONO = "pan=stereo|c0=c0|c1=c0"
 
 ep, take_path, words_path = sys.argv[1:4]
 studio = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 theme = open(os.path.join(studio, "src/style/theme.ts"), encoding="utf-8").read()
 FPS = int(re.search(r"VIDEO = \{[^}]*fps: (\d+)", theme).group(1))
+# YouTube turns louder audio down, quieter audio stays quiet.
+_loud = re.search(r"loudness: \{ target: (-?[\d.]+), tolerance: [\d.]+, maxTruePeak: (-?[\d.]+) \}", theme)
+TARGET_LUFS, MAX_TRUE_PEAK = float(_loud.group(1)), float(_loud.group(2))  # LUFS, dBTP
 
 sb_bytes = open(os.path.join(ep, "storyboard.json"), "rb").read()
 sb = json.loads(sb_bytes)

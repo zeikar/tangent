@@ -5,7 +5,9 @@ import { BANNER, Banner, bannerSchema } from "./brand/Banner";
 import { LOGO_UNIT, LogoStill } from "./brand/Logo";
 import { WATERMARK, Watermark } from "./brand/Watermark";
 import { StyleSheet, styleSheetSchema } from "./compositions/StyleSheet";
-import { A4PaperRatio, a4PaperRatioSchema, cues as a4Cues } from "./episodes/001-a4-paper-ratio";
+import { a4Cues, a4PaperRatio } from "./episodes/001-a4-paper-ratio";
+import { MeasureTex, measureTexSchema } from "./probe/MeasureTex";
+import { episodeSchema } from "./storyboard/Episode";
 import { VIDEO } from "./style/theme";
 
 export const RemotionRoot: React.FC = () => {
@@ -21,12 +23,22 @@ export const RemotionRoot: React.FC = () => {
       />
       <Composition
         id="001-a4-paper-ratio"
-        component={A4PaperRatio}
-        schema={a4PaperRatioSchema}
+        component={a4PaperRatio.Component}
+        schema={episodeSchema}
+        calculateMetadata={a4PaperRatio.calculateMetadata}
         defaultProps={{ showSafeArea: false }}
         durationInFrames={a4Cues.durationInFrames}
         {...VIDEO}
       />
+      <Folder name="tools">
+        <Still
+          id="MeasureTex"
+          component={MeasureTex}
+          schema={measureTexSchema}
+          defaultProps={{ items: [{ tex: "\\frac{x}{2}", fontSize: 58 }] }}
+          {...VIDEO}
+        />
+      </Folder>
       <Folder name="brand">
         <Still id="Logo" component={LogoStill} width={LOGO_UNIT} height={LOGO_UNIT} />
         <Still id="Avatar" component={Avatar} {...AVATAR} />

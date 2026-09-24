@@ -30,8 +30,7 @@ export const type = {
   headline: { fontSize: 96, fontWeight: 800, lineHeight: 1.2 },
   body: { fontSize: 56, fontWeight: 600, lineHeight: 1.35 },
   caption: { fontSize: 60, fontWeight: 700, lineHeight: 1.3 },
-  // Labels and inline math: lowercase glyphs at least 30 px tall, the floor for
-  // reading on a phone.
+  // Labels and inline math: lowercase glyphs clear checks.glyphMin.
   label: { fontSize: 56, fontWeight: 600, lineHeight: 1.2 },
   // KaTeX scales its glyphs to 1.21em of this, so 80 renders like ~97px text.
   mathDisplay: 80,
@@ -110,4 +109,25 @@ export const content = {
 export const zone = {
   visual: { top: safe.top, bottom: 1250 },
   caption: { top: 1280, bottom: VIDEO.height - safe.bottom },
+} as const;
+
+// What scripts/check-render.mts holds a render to; build-cues.py reads the
+// loudness target from here too. Pixel levels are 8-bit gray.
+export const checks = {
+  maxSeconds: 60,
+  glyphMin: 30, // px at 1080 wide: smallest letter or digit, lowercase x-height included
+  centerTolerance: 25, // px between the visual zone's ink center and content.centerX at a beat's end
+  reactionFrames: 3, // a beat's first word (when it has cues) to the first visible change
+  loudness: { target: -14, tolerance: 1, maxTruePeak: -1 }, // LUFS integrated, LU, dBTP
+  avOffsetMs: 20, // render audio vs narration.mp3
+  wordOnsetMs: 200, // words.json start vs the audible onset, for words after a pause
+  // Audible onsets: speech (speechDb, per 10 ms) within 60 ms of a dip to
+  // dipDb. Checked for words words.json puts at least wordGap s after the
+  // previous word's end (the aligner's ends run up to ~0.16 s early).
+  onset: { dipDb: -55, speechDb: -35, wordGap: 0.25 },
+  tailSilenceDb: -50, // the render's last 100 ms must be quieter, or the audio was cut off
+  inkLevel: 10, // gray levels above the background that count as ink
+  changeLevel: 16, // a pixel changed by more than this...
+  changePixels: 100, // ...in more visual-zone pixels than this is a visible change
+  loopMaxPixels: 500, // visual-zone pixels allowed to differ (by changeLevel) between the last and first frame
 } as const;

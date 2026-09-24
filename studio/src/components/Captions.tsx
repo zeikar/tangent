@@ -34,7 +34,7 @@ export const Captions: React.FC<{ captions: Caption[]; frame: number; fps: numbe
           opacity,
         }}
       >
-        <div>
+        <div data-text="caption">
           {/* Display style: an inline \frac would set its digits at half the caption's
               size. Bold: regular KaTeX reads lighter than the bold caption text. */}
           {cur.text.split("$").map((seg, i) =>
