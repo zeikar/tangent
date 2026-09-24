@@ -33,10 +33,12 @@ still says the narration is an AI voice, voluntarily.
 
 - **Title:** under ~40 characters (Shorts truncate), containing the words
   someone would search for, posed in terms the viewer already knows. Never
-  put the answer in the title, and prefer the question the video's hook
-  shows over a "~의 비밀" frame (dated, and over-promises). For 001: "A4 용지는
-  왜 반으로 접어도 모양이 똑같을까?", not "A4 용지는 왜 1:√2일까?" (gives the
-  answer; few viewers know the ratio) or "A4 용지 비율의 비밀" (clumsy).
+  put the answer in the title, and don't presuppose a fact most viewers don't
+  know: start from something they have seen. Avoid "~의 비밀" (dated,
+  over-promises). For 001: "A4 용지는 왜 하필 210×297일까?" (numbers everyone
+  has seen), not "A4 용지는 왜 1:√2일까?" (gives the answer), "A4 용지는 왜
+  반으로 접어도 모양이 똑같을까?" (assumes a property few know), or "A4 용지
+  비율의 비밀" (clumsy).
 - **Description:** first two lines show the phenomenon, not the answer; then
   the key math in plain text with its variables defined; decimals written so
   they don't read as exact (297 ÷ 210 = 1.41429 next to √2 = 1.41421, not
