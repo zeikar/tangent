@@ -7,6 +7,9 @@ Claude Code agents with human checkpoints.
 *A tangent: the line that just touches the curve, and the short detour off the
 main topic.*
 
+Channel: [루트와이 (√y, "root why")](https://www.youtube.com/channel/UCQyrXQkYvmwkQ2W8oaQEy1w)
+on YouTube.
+
 Status: milestone 1, producing the first short by hand, stage by stage. See
 [docs/decisions.md](docs/decisions.md) and
 [docs/milestone-1-notes.md](docs/milestone-1-notes.md).
