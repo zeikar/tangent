@@ -72,11 +72,21 @@ re-run, hand-edited, or gated by a human.
   text lives in strings separate from scene code, and animation timing binds to
   beats, not seconds. Then English = translate + re-TTS + re-render.
 
-## Narration: TTS
+## Narration: Gemini TTS + local forced alignment
 
-Keep a display script and a read-aloud script: TTS misreads numbers, formulas,
-and English terms (x², sin, 1,000). Compare in milestone 1: ElevenLabs (returns
-timestamps) vs. Korean-specialized engines (Typecast, Supertone).
+- **Engine: Gemini TTS on the free tier**, chosen on cost in milestone 1. Google
+  claims no ownership of the output; the free tier lets Google use inputs and
+  outputs to improve its products, which is acceptable because the scripts get
+  published anyway. Fallbacks if quality disappoints: ElevenLabs (character
+  timestamps, from $6/mo) and Typecast (Korean-specialized, word timestamps,
+  $15/mo). Supertone's API shut down in August 2026; CLOVA Voice's policy
+  doesn't allow saving the audio.
+- **Word timestamps come from local forced alignment** (MMS aligner), since
+  Gemini returns none. Word starts land within about 40 ms, about one frame.
+- **Keep a display script and a read-aloud script.** The read-aloud script
+  spells numbers, formulas, and English terms in Hangul (x² → 엑스 제곱).
+  Gemini reads most display text correctly on its own, but the aligner can only
+  match Hangul words, and a fixed spoken text keeps timing reproducible.
 
 ## Format
 

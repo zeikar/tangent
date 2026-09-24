@@ -46,3 +46,55 @@ video with Korean text (Pretendard) and KaTeX math.
   pipeline-stage skills AGENTS.md plans. Skipped maps, saas, interactivity,
   multimedia, create, studio, upgrade, and `best-practices`: it is only a router
   whose links point at files that aren't in the installed layout.
+
+### 2. Tech spike: word timestamps without the TTS engine (2026-09-24)
+
+About 11 min, run by a background agent against macOS `say` (Yuna) audio of
+the read-aloud test sentence (46 words, 20.8 s). Question: if the chosen TTS
+engine returns no timestamps, can local forced alignment replace them? Yes.
+
+- **Pick: MMS forced aligner** (`ctc-forced-aligner` from GitHub, model
+  `mms-300m-1130-forced-aligner`, 1.26 GB, ~7 s per clip on CPU). All 46 words
+  in order; word starts within about ±40 ms of the true boundaries (about one
+  frame at 30 fps); 6/6 words cut at its timestamps transcribed back
+  correctly. WhisperX (Korean wav2vec2) was close but clipped initial
+  consonants (4/6); stable-ts started words up to 300 ms late; plain Whisper
+  transcription is unusable for this (writes "R", "3.14", "A4", mishears
+  words, so it can't be matched back to the script).
+- **The aligner needs the read-aloud script**, not the display script: it
+  romanizes the text, so digits and Latin letters don't align. One more reason
+  the two scripts stay separate.
+- **Use starts, not ends.** Word ends come up to ~160 ms early before pauses,
+  and the last word's end runs to the end of the file. Cue code should end a
+  word at the next word's start.
+- **Trap:** the PyPI package named `ctc-forced-aligner` is an unrelated
+  project; install from the GitHub repo. It compiles a C++ extension.
+- Even if the engine returns timestamps, running this aligner once is a cheap
+  cross-check.
+
+### 2. Tech spike: TTS (2026-09-24)
+
+Research by a background agent (~12 min), then samples on Gemini only: the
+human chose Gemini's free tier on cost without a cross-engine listening test.
+Engine landscape and the decision are in decisions.md → Narration.
+
+- **Human wait dominated.** Picking an engine needed API keys (sign-ups) and a
+  cost call from the human; agent work was ~30 min total.
+- **Silent failure: instructions read aloud.** A style preamble in the text
+  ("Read the Korean narration below aloud as...") was spoken verbatim in 2 of
+  4 `gemini-3.8-flash-tts` samples, stretching them to 36 s. 3.8 models treat
+  the text field as a verbatim transcript; style belongs in
+  `speech_metadata.style` via the Interactions API (`/v1beta/interactions`).
+  Caught only by transcribing the output. The raw REST response puts audio in
+  `steps[].content[]`, not the `output_audio` the docs show.
+- **Whisper is a noisy checker.** It hallucinates text over trailing silence
+  or at the end of a file ("MBC 뉴스 ...", "아멘"; zero-length words) and
+  writes numbers as digits, so it can't tell "삼 점 일사" from "3.14". Useful
+  for catching gross errors like a leaked preamble, not for judging reading.
+- **Gemini reads display text well.** Both 3.8 voices read πr², 1,000, 1/√N,
+  and 1:√2 correctly from the raw display text. `3.1-flash-tts-preview`
+  appears to drop "루트" in 1/√N and pads ~4 s of trailing silence.
+- **Speech rate** (read-aloud version, 124 Hangul syllables): 3.8 Kore 4.4
+  syl/s, 3.8 Charon 5.0, 3.1 Kore 5.3. A 30–60 s short holds roughly 130–300
+  syllables; the script stage should budget with this.
+- **No speed parameter.** Pace is only steerable through the style text.
