@@ -16,8 +16,9 @@ Directories get created when they first have content.
 - `episodes/<slug>/`: one short per folder, holding each pipeline stage's
   handoff file (see decisions.md → Pipeline).
 - `studio/`: Remotion project: style guide + reusable scene components.
-- `publish/`: final videos after the human approves the cut, named
-  `<slug>.mp4`, ready to upload. Gitignored.
+- `publish/`: final videos and thumbnails after the human approves the cut
+  (`<slug>.mp4`, `<slug>.thumb.png`), ready to upload. Gitignored. Upload
+  settings: `docs/channel.md` and each episode's `publish.md`.
 - `docs/briefs/`: hand-written agent briefs from milestone 1; seeds for the
   skills.
 - `.claude/skills/`: one skill per agent role (see decisions.md → Agents).

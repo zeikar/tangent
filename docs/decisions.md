@@ -49,7 +49,7 @@ off-frame) to be the main failure mode.
 
 `topic.md → research.md (sourced) → script.md + narration take →
 word timestamps → storyboard.json → beat cues → scenes → render.mp4 →
-review.md`
+review.md → publish.md`
 
 Each stage reads the previous file and writes its own, so any stage can be
 re-run, hand-edited, or gated by a human.
@@ -67,9 +67,10 @@ re-run, hand-edited, or gated by a human.
   overlap, off-frame, Shorts UI safe areas (bottom/right), legibility. Check
   facts against research.md sources, and check math computationally where
   possible. The reviewer is a fresh agent, not the one that made the scenes.
-- **Human checkpoints:** topic, script + take, storyboard, final cut. Each is
-  something to hear or see (table-read audio, the storyboard viewer page, the
-  video), not a document to read. No full autonomy early on.
+- **Human checkpoints:** topic, script + take, storyboard, final cut with its
+  upload metadata. Each is something to hear or see (table-read audio, the
+  storyboard viewer page, the video), not a document to read. No full autonomy
+  early on.
 
 ## Agents: one specialist per stage group
 
@@ -85,6 +86,7 @@ files along, and stops at the human checkpoints.
 | Script & storyboard | 4–5 | `topic.md`, `research.md` → `script.md`; then the approved take's words → `storyboard.json` |
 | Production | 6–7 | `storyboard.json`, approved take → beat cues → scenes → `render.mp4` |
 | QA | 8 | render, `research.md` → `review.md` (captions, audio sync, layout, facts) |
+| Publish | 9 | approved render, `script.md`, `research.md`, `docs/channel.md` → `publish.md` (title, description, tags, playlist, thumbnail), `publish/` |
 
 - Script and storyboard share one agent because the visual is the explanation
   (see Pipeline). Between its two passes the orchestrator runs the narration
