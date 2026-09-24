@@ -14,3 +14,6 @@ episodes/**/*.wav
 episodes/**/*.mp3
 episodes/**/*.flac
 episodes/**/take*.txt
+
+# Final approved videos, copied here for upload (see AGENTS.md).
+/publish/
