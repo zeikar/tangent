@@ -23,6 +23,71 @@ Both corrections come from reviewing `check-render`.
     `check-render` passes it, because it has no label-ownership check.
   - The storyboard is widening the rect–half gap. Round 4 re-checks it.
 
+## Round 4
+
+**Verdict: ship.**
+
+This round is a focused review of the render rebuilt at 08:25 (d136c18, the
+B4–B6 gap fix). The √2 label now clearly belongs to rect. The half's new
+set-down slide collides with nothing. The rest of the render is unchanged from
+round 3. Evidence is in `review/r4/`: `sheet-b4-lift-slide.png`,
+`sheet-b5-b6-labels.png` and `sheet-boundaries.png`, plus the cited frames.
+
+### Label ownership, B4–B6 (f429–900)
+
+I measured every frame from f438 to f900. The gaps are clear space in pixel
+ink, from the label to rect's right edge and to the nearest other ink:
+
+| Span | Label | To rect | To anything else |
+|------|-------|---------|------------------|
+| f440–f855, at rest | x | 11 px | 107 px (the half) |
+| f865–f900 (`r4/f0900.png`) | √2 | 14 px | 51 px (the half's left edge) |
+| f471–f483, the slide on "긴" | x | 11 px | 61 px, growing to 106 px |
+| f442–f444, the lift | x | — | the half's edge touches the label |
+| f445–f446, the lift | x | 11 px | 1 px, then 6 px |
+
+- **√2 reads as rect's label** (was 14 against 10 px, the round-3 regression).
+- **The slide on "긴" is clean.** The half moves down and right, away from the
+  label. Nothing new collides with anything during it
+  (`sheet-b4-lift-slide.png`).
+- **The x→√2 crossfade (f852–f862) is clean** (`sheet-b5-b6-labels.png`).
+- **The lift crossing is still there.** The half's edge crosses the top of the
+  "x" at f442–f444 and passes 1 px from it at f445. `check-render` warns on it
+  (`r4/f0443.png`), and it was accepted in round 3.
+- **Measurement difference.** The commit message's 9 px for √2 is measured
+  from the probe's box, which starts at the radical's box. The pixel ink
+  starts 5 px later.
+
+### check-render on the real episode
+
+My run matches production's summary: **0 fail, 1 warn, 10 pass**.
+
+- The only warn is "f442–444: half's lines cross rect "x" (while moving)".
+- Freshness now passes: the render carries the storyboard hash.
+- Centering: B4 +2, B5 +3, B6 +3.
+
+The run rewrote the tracked `check.md` and `check.json`. The only differences
+were the run time and timestamp, so I restored both to the committed version.
+
+### Regression pass
+
+- **Beat boundaries.** I sampled all 8 boundaries every 2 frames
+  (`sheet-boundaries.png`). They are unchanged from round 3: the old picture
+  fades out, 4 blank frames, then the new one draws, and nothing overlaps.
+- **Bounds.** All 1532 frames stay inside x 140–940 and below y 240. Visual ink
+  spans x 146–937.
+  - The lifted half reaches y 240 at f461 (`r4/f0461.png`) and x 937 at f460.
+- **Crowding at the frame bounds.** The B4–B6 picture now spans almost the full
+  content width: rect's left edge ink starts at x 149, and the half's "1" label
+  ends at x 934. That is 9 px and 6 px inside the bounds. It is inside the
+  rule and still reads as balanced (`r4/f0578.png`). The bounding box is
+  centered at +1.5; the ink centroid is at −18.6, since the larger rect is on
+  the left.
+- **Captions.** All 28 start within 0.5 frame of their word and stay inside
+  y 1325–1453.
+- **Cue reaction.** Only eased color crossfades react later than 3 frames,
+  showing 3 frames in, the same as round 3. The slide starts on "긴".
+
 ## Round 3
 
 **Verdict: ship.**
