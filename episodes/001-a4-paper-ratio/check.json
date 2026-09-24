@@ -1,0 +1,516 @@
+{
+ "episode": "001-a4-paper-ratio",
+ "render": "render.mp4",
+ "storyboardSha256": "2eb4336eba2006481cc0936b3042f8f62d2fd757261ca567611dbd614a12c1eb",
+ "checkedAt": "2026-09-24T23:06:38.177Z",
+ "seconds": 10.1,
+ "verdict": "pass",
+ "counts": {
+  "fail": 0,
+  "warn": 2,
+  "pass": 9,
+  "skip": 0
+ },
+ "contactSheet": "check/sheet.png",
+ "checks": [
+  {
+   "id": "freshness",
+   "status": "warn",
+   "summary": "render.mp4 carries no storyboard hash (made before render.mts tagged renders); can't prove it matches"
+  },
+  {
+   "id": "technical",
+   "status": "pass",
+   "summary": "1080×1920, 30 fps, 1532 frames (51.07 s), video + audio, last 100 ms at -120 dBFS"
+  },
+  {
+   "id": "bounds",
+   "status": "pass",
+   "summary": "all 1532 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 152–939, y 240–1254",
+   "cites": []
+  },
+  {
+   "id": "centering",
+   "status": "pass",
+   "summary": "B1 0, B2 0, B3 +24, B4 -9, B5 -10, B6 -9, B7 +9, B8 0, B9 +1 (px off x 540, tolerance ±25)",
+   "details": [
+    {
+     "beat": "B1",
+     "frame": 156,
+     "center": 540,
+     "off": 0,
+     "status": "pass"
+    },
+    {
+     "beat": "B2",
+     "frame": 282,
+     "center": 540,
+     "off": 0,
+     "status": "pass"
+    },
+    {
+     "beat": "B3",
+     "frame": 428,
+     "center": 563.5,
+     "off": 23.5,
+     "status": "pass"
+    },
+    {
+     "beat": "B4",
+     "frame": 578,
+     "center": 530.5,
+     "off": -9.5,
+     "status": "pass"
+    },
+    {
+     "beat": "B5",
+     "frame": 727,
+     "center": 530,
+     "off": -10,
+     "status": "pass"
+    },
+    {
+     "beat": "B6",
+     "frame": 900,
+     "center": 530.5,
+     "off": -9.5,
+     "status": "pass"
+    },
+    {
+     "beat": "B7",
+     "frame": 1090,
+     "center": 549,
+     "off": 9,
+     "status": "pass"
+    },
+    {
+     "beat": "B8",
+     "frame": 1337,
+     "center": 540,
+     "off": 0,
+     "status": "pass"
+    },
+    {
+     "beat": "B9",
+     "frame": 1531,
+     "center": 540.5,
+     "off": 0.5,
+     "status": "pass"
+    }
+   ],
+   "cites": []
+  },
+  {
+   "id": "legibility",
+   "status": "pass",
+   "summary": "smallest glyph \"r\" 30.1 px in letter \"Letter\" (floor 30 px, 145 text items)",
+   "details": [
+    {
+     "id": "letter",
+     "kind": "name",
+     "text": "Letter",
+     "char": "r",
+     "height": 30.1,
+     "frame": 172
+    },
+    {
+     "id": "dial",
+     "kind": "label",
+     "text": "Letter",
+     "char": "r",
+     "height": 30.1,
+     "frame": 921
+    },
+    {
+     "id": "dimW",
+     "kind": "label",
+     "text": "210\\,\\text{mm}",
+     "char": "m",
+     "height": 31,
+     "frame": 1124
+    },
+    {
+     "id": "dimH",
+     "kind": "label",
+     "text": "297\\,\\text{mm}",
+     "char": "m",
+     "height": 31,
+     "frame": 1153
+    },
+    {
+     "id": "nest",
+     "kind": "label",
+     "text": "1\\,\\text{m}^2",
+     "char": "m",
+     "height": 31,
+     "frame": 1353
+    },
+    {
+     "id": "rect",
+     "kind": "edge-label",
+     "text": "x",
+     "char": "x",
+     "height": 31.8,
+     "frame": 397
+    },
+    {
+     "id": "half",
+     "kind": "edge-label",
+     "text": "\\dfrac{x}{2}",
+     "char": "x",
+     "height": 31.8,
+     "frame": 535
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "\\displaystyle\\boldsymbol{x^2 = 2}",
+     "char": "2",
+     "height": 32.1,
+     "frame": 728
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "\\displaystyle\\boldsymbol{x}",
+     "char": "x",
+     "height": 32.3,
+     "frame": 375
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "\\displaystyle\\boldsymbol{\\frac{x}{2}}",
+     "char": "x",
+     "height": 32.3,
+     "frame": 504
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "x:1과 1:2x가",
+     "char": "x",
+     "height": 32.3,
+     "frame": 615
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "그러니까 x는 2가 돼요.",
+     "char": "x",
+     "height": 32.3,
+     "frame": 800
+    },
+    {
+     "id": "a4",
+     "kind": "name",
+     "text": "A4",
+     "char": "A",
+     "height": 39.6,
+     "frame": 0
+    },
+    {
+     "id": "sweep",
+     "kind": "name",
+     "text": "A4",
+     "char": "A",
+     "height": 39.6,
+     "frame": 1097
+    },
+    {
+     "id": "nest",
+     "kind": "label",
+     "text": "A1",
+     "char": "A",
+     "height": 39.6,
+     "frame": 1372
+    },
+    {
+     "id": "nest",
+     "kind": "label",
+     "text": "A2",
+     "char": "A",
+     "height": 39.6,
+     "frame": 1387
+    },
+    {
+     "id": "nest",
+     "kind": "label",
+     "text": "A3",
+     "char": "A",
+     "height": 39.6,
+     "frame": 1401
+    },
+    {
+     "id": "nest",
+     "kind": "name",
+     "text": "A4",
+     "char": "A",
+     "height": 39.6,
+     "frame": 1416
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "모양이 그대로예요.",
+     "char": "그",
+     "height": 41.4,
+     "frame": 48
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "모양이 그대로인 건",
+     "char": "그",
+     "height": 41.4,
+     "frame": 927
+    }
+   ],
+   "cites": []
+  },
+  {
+   "id": "overlaps",
+   "status": "warn",
+   "summary": "f442–444: half's lines cross rect \"x\" (while moving)",
+   "details": [
+    {
+     "status": "warn",
+     "what": "half's lines cross rect \"x\" (while moving)",
+     "frames": [
+      442,
+      443,
+      444
+     ],
+     "box": [
+      514.5,
+      604.1,
+      548.6,
+      635.9
+     ]
+    }
+   ],
+   "cites": [
+    {
+     "frame": 443,
+     "box": [
+      514.5,
+      604.1,
+      548.6,
+      635.9
+     ],
+     "note": "f442–444: half's lines cross rect \"x\" (while moving)",
+     "image": "check/f0443.png"
+    }
+   ]
+  },
+  {
+   "id": "reaction",
+   "status": "pass",
+   "summary": "B1 +2, B2 +1, B3 +1, B4 +1, B5 —, B6 +1, B7 +1, B8 +1, B9 +1 (frames from each beat's first word to the first visible change; — = no cue on that word; limit 3)",
+   "details": [
+    {
+     "beat": "B1",
+     "frame": 4,
+     "hasCue": true,
+     "latency": 2,
+     "status": "pass"
+    },
+    {
+     "beat": "B2",
+     "frame": 157,
+     "hasCue": true,
+     "latency": 1,
+     "status": "pass"
+    },
+    {
+     "beat": "B3",
+     "frame": 283,
+     "hasCue": true,
+     "latency": 1,
+     "status": "pass"
+    },
+    {
+     "beat": "B4",
+     "frame": 429,
+     "hasCue": true,
+     "latency": 1,
+     "status": "pass"
+    },
+    {
+     "beat": "B5",
+     "frame": 579,
+     "hasCue": false,
+     "latency": null,
+     "status": "skip"
+    },
+    {
+     "beat": "B6",
+     "frame": 728,
+     "hasCue": true,
+     "latency": 1,
+     "status": "pass"
+    },
+    {
+     "beat": "B7",
+     "frame": 901,
+     "hasCue": true,
+     "latency": 1,
+     "status": "pass"
+    },
+    {
+     "beat": "B8",
+     "frame": 1091,
+     "hasCue": true,
+     "latency": 1,
+     "status": "pass"
+    },
+    {
+     "beat": "B9",
+     "frame": 1338,
+     "hasCue": true,
+     "latency": 1,
+     "status": "pass"
+    }
+   ],
+   "cites": []
+  },
+  {
+   "id": "loudness",
+   "status": "pass",
+   "summary": "-14 LUFS integrated (target -14 ±1), true peak -1.9 dBTP (max -1), range 3.8 LU"
+  },
+  {
+   "id": "av-sync",
+   "status": "pass",
+   "summary": "render audio is 0 ms off against narration.mp3 (limit ±20 ms)"
+  },
+  {
+   "id": "words",
+   "status": "pass",
+   "summary": "23 of 23 words after a pause start within 90 ms of an audible onset (widest \"딱\" at 33.79 s, +90 ms); limit ±200 ms",
+   "details": [
+    {
+     "word": "에이포를",
+     "start": 0.13,
+     "dev": -20
+    },
+    {
+     "word": "몇",
+     "start": 3.03,
+     "dev": 0
+    },
+    {
+     "word": "미국",
+     "start": 5.23,
+     "dev": 10
+    },
+    {
+     "word": "접으면",
+     "start": 6.93,
+     "dev": 10
+    },
+    {
+     "word": "어떤",
+     "start": 9.43,
+     "dev": -40
+    },
+    {
+     "word": "짧은",
+     "start": 11.39,
+     "dev": 60
+    },
+    {
+     "word": "반으로",
+     "start": 14.31,
+     "dev": 10
+    },
+    {
+     "word": "긴",
+     "start": 15.69,
+     "dev": 10
+    },
+    {
+     "word": "모양이",
+     "start": 19.29,
+     "dev": 10
+    },
+    {
+     "word": "일",
+     "start": 21.71,
+     "dev": -10
+    },
+    {
+     "word": "정리하면",
+     "start": 24.25,
+     "dev": 20
+    },
+    {
+     "word": "엑스",
+     "start": 25.13,
+     "dev": -40
+    },
+    {
+     "word": "그러니까",
+     "start": 26.65,
+     "dev": 30
+    },
+    {
+     "word": "반으로",
+     "start": 30.05,
+     "dev": 10
+    },
+    {
+     "word": "일",
+     "start": 32.57,
+     "dev": -70
+    },
+    {
+     "word": "딱",
+     "start": 33.79,
+     "dev": 90
+    },
+    {
+     "word": "에이포는",
+     "start": 36.37,
+     "dev": -50
+    },
+    {
+     "word": "나눠",
+     "start": 39.47,
+     "dev": 0
+    },
+    {
+     "word": "일",
+     "start": 40.31,
+     "dev": -50
+    },
+    {
+     "word": "거의",
+     "start": 41.63,
+     "dev": 20
+    },
+    {
+     "word": "에이제로를",
+     "start": 44.59,
+     "dev": -50
+    },
+    {
+     "word": "몇",
+     "start": 48.29,
+     "dev": 0
+    },
+    {
+     "word": "모양은",
+     "start": 49.47,
+     "dev": -30
+    }
+   ]
+  },
+  {
+   "id": "loop",
+   "status": "pass",
+   "summary": "0 visual-zone pixels differ by more than 16 levels between the last and first frame (limit 500)",
+   "cites": []
+  }
+ ]
+}
