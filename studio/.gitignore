@@ -5,3 +5,7 @@ dist
 
 # Ignore the output video from Git but not videos you import into src/.
 out
+
+# Remotion agent skills are installed locally, not committed (their repo
+# declares no license). See README.md.
+.claude/skills/

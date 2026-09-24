@@ -9,11 +9,14 @@ Remotion project: style guide and reusable scene components. 1080×1920, 30 fps.
 - `src/components/`: primitives (`Tex`, `SafeAreaGuide`, ...).
 - `src/compositions/StyleSheet.tsx`: visual check for the style guide.
 - `.claude/skills/`: Remotion's official agent skills (markup, render, captions,
-  docs), loaded when an agent works in this directory. Pinned in
-  `skills-lock.json`; update with `npx skills update -p`.
+  docs), loaded when an agent works in this directory. Not committed, since
+  their repo declares no license; install them after cloning (below).
+  `skills-lock.json` records what was installed.
 
 ```sh
 npm i
+npx skills add remotion-dev/skills -a claude-code --copy -y \
+  -s remotion-markup -s remotion-render -s remotion-captions -s remotion-docs
 npm run dev                                   # Studio preview
 npx remotion still StyleSheet out/a.png --frame=45
 npx remotion still StyleSheet out/a.png --props='{"showSafeArea":true}'
