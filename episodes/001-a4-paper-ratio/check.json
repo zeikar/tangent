@@ -1,22 +1,22 @@
 {
  "episode": "001-a4-paper-ratio",
  "render": "render.mp4",
- "storyboardSha256": "2eb4336eba2006481cc0936b3042f8f62d2fd757261ca567611dbd614a12c1eb",
- "checkedAt": "2026-09-24T23:06:38.177Z",
- "seconds": 10.1,
+ "storyboardSha256": "58da520cec5955f2608b422b7b651160e081be5616dd64a15360192b3b61be3d",
+ "checkedAt": "2026-09-24T23:25:43.459Z",
+ "seconds": 10.4,
  "verdict": "pass",
  "counts": {
   "fail": 0,
-  "warn": 2,
-  "pass": 9,
+  "warn": 1,
+  "pass": 10,
   "skip": 0
  },
  "contactSheet": "check/sheet.png",
  "checks": [
   {
    "id": "freshness",
-   "status": "warn",
-   "summary": "render.mp4 carries no storyboard hash (made before render.mts tagged renders); can't prove it matches"
+   "status": "pass",
+   "summary": "render.mp4 and cues.json were both built from this storyboard.json"
   },
   {
    "id": "technical",
@@ -26,13 +26,13 @@
   {
    "id": "bounds",
    "status": "pass",
-   "summary": "all 1532 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 152–939, y 240–1254",
+   "summary": "all 1532 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 145–939, y 240–1254",
    "cites": []
   },
   {
    "id": "centering",
    "status": "pass",
-   "summary": "B1 0, B2 0, B3 +24, B4 -9, B5 -10, B6 -9, B7 +9, B8 0, B9 +1 (px off x 540, tolerance ±25)",
+   "summary": "B1 0, B2 0, B3 +24, B4 +2, B5 +3, B6 +3, B7 +10, B8 0, B9 +1 (px off x 540, tolerance ±25)",
    "details": [
     {
      "beat": "B1",
@@ -58,29 +58,29 @@
     {
      "beat": "B4",
      "frame": 578,
-     "center": 530.5,
-     "off": -9.5,
+     "center": 541.5,
+     "off": 1.5,
      "status": "pass"
     },
     {
      "beat": "B5",
      "frame": 727,
-     "center": 530,
-     "off": -10,
+     "center": 542.5,
+     "off": 2.5,
      "status": "pass"
     },
     {
      "beat": "B6",
      "frame": 900,
-     "center": 530.5,
-     "off": -9.5,
+     "center": 542.5,
+     "off": 2.5,
      "status": "pass"
     },
     {
      "beat": "B7",
      "frame": 1090,
-     "center": 549,
-     "off": 9,
+     "center": 550,
+     "off": 10,
      "status": "pass"
     },
     {
@@ -282,9 +282,9 @@
       444
      ],
      "box": [
-      514.5,
+      506.5,
       604.1,
-      548.6,
+      540.6,
       635.9
      ]
     }
@@ -293,9 +293,9 @@
     {
      "frame": 443,
      "box": [
-      514.5,
+      506.5,
       604.1,
-      548.6,
+      540.6,
       635.9
      ],
      "note": "f442–444: half's lines cross rect \"x\" (while moving)",

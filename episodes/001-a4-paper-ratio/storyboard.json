@@ -1,5 +1,6 @@
 {
   "slug": "001-a4-paper-ratio",
+  "loop": true,
   "notes": [
     "Geometry is px in the 1080×1920 frame, origin top-left; center is [x, y].",
     "Compositions center on the frame, x = 540 (theme.ts content.centerX), not on the asymmetric safe area, and keep content within x 140–940. Where a sheet carries a wide label on one side (B8's '297 mm'), the sheet and label are centered as a group.",
@@ -291,7 +292,7 @@
           "id": "half",
           "component": "PaperRect",
           "props": {
-            "center": [330, 499.8],
+            "center": [322, 499.8],
             "w": 340,
             "h": 240.4,
             "stroke": "teal",
@@ -306,7 +307,7 @@
           "at": {"word": "반으로"},
           "target": "rect",
           "action": "moveTo",
-          "params": {"center": [330, 620]},
+          "params": {"center": [322, 620]},
           "speed": "fast"
         },
         {
@@ -327,7 +328,7 @@
           "at": {"word": "접어"},
           "target": "half",
           "action": "moveTo",
-          "params": {"center": [728, 452], "ease": "linear"},
+          "params": {"center": [726, 452], "ease": "linear"},
           "until": {"word": "세우면"},
           "note": "the top half lifts off up and to the right, still lying on its side, to the highest spot where standing it up stays inside the frame; linear, so its bottom edge clears rect's x label within 4 frames"
         },
@@ -343,7 +344,7 @@
           "at": {"word": "긴"},
           "target": "half",
           "action": "moveTo",
-          "params": {"center": [740, 690.4]},
+          "params": {"center": [772, 690.4]},
           "speed": "fast",
           "note": "sets down beside rect, bottom edges level (y 860.4)"
         },
@@ -380,7 +381,7 @@
           "note": "display-style fraction: its x and 2 read at the size of the '1' labels"
         }
       ],
-      "endFrame": "Left: rect 340×481 centered (330, 620) with dashed midline, blue '1' below, yellow 'x' right. Right: half upright 240.5×340 centered (740, 690.4), teal fill, yellow long edges with '1' right, blue short edges with a display-style x/2 below (as tall as the '1' labels); both bottoms at y ≈ 860. Caption: '짧은 변은 $\\frac{x}{2}$가 돼요.'",
+      "endFrame": "Left: rect 340×481 centered (322, 620) with dashed midline, blue '1' below, yellow 'x' right. Right: half upright 240.5×340 centered (772, 690.4), teal fill, yellow long edges with '1' right, blue short edges with a display-style x/2 below (as tall as the '1' labels); both bottoms at y ≈ 860. Caption: '짧은 변은 $\\frac{x}{2}$가 돼요.'",
       "claims": ["C3"]
     },
     {

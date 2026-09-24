@@ -1,5 +1,28 @@
 # Review · 001-a4-paper-ratio
 
+## Corrections (after round 3)
+
+Both corrections come from reviewing `check-render`.
+
+- **Round 1 misreported the x/2 label's size.** It gave the numerator x as
+  13 px tall, but my crop had cut the glyph off. Re-measured on the round-1
+  frame `review/f0578.png`, the numerator x is 21 px and the denominator 2 is
+  31 px. `measure-tex` agrees: 20.0 px for `\frac{x}{2}` at 52 px. The
+  finding stands, since 21 px is still under the 30 px floor. The "13 px"
+  figures in Round 1 issue 1 and Round 2's re-check table are wrong.
+- **Round 3 missed a regression in √2's placement.** Round 2 fixed which sheet
+  the label reads as belonging to. When round 3 recentered the layout, rect
+  moved to x 330 and the half to x 740, and the label is ambiguous again. I
+  didn't re-measure it in round 3.
+  - At f900 (`review/r3/f0900.png`), rect's right edge ink ends at x 502, the
+    √2 label ink spans x 517–605, and the half's left edge ink starts at x 616.
+  - That leaves 14 px of clear space to rect's edge and 10 px to the half's
+    edge, so √2 sits slightly closer to the half and reads as the half's
+    left-side label. The half's left side is the one of length 1.
+  - The label is wedged between the two sheets from f848 to f900 (B6).
+    `check-render` passes it, because it has no label-ownership check.
+  - The storyboard is widening the rect–half gap. Round 4 re-checks it.
+
 ## Round 3
 
 **Verdict: ship.**
