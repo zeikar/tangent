@@ -82,7 +82,8 @@ math. Chunks together must cover the beat's 화면용 text in order.
 ### Screen
 - 1080×1920. Safe area and zones are in `studio/src/style/theme.ts`: the
   picture lives in the visual zone (y 240–1250); captions own the band below.
-  Keep x within 60–940.
+  Center compositions on the frame (x 540) and keep everything, labels
+  included, within x 140–940.
 - Colors by theme name only: `text`, `muted`, `blue`, `yellow`, `teal`, `red`,
   `purple`. Pick a color meaning and keep it for the whole episode (e.g. the
   long side is always yellow).
