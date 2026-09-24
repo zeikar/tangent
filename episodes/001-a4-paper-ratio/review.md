@@ -1,5 +1,198 @@
 # Review · 001-a4-paper-ratio
 
+## Round 2
+
+**Verdict: fix then ship.** One small fix is required: four pieces of lowercase
+label text are under the 30 px legibility floor. Everything else passes.
+
+Every round-1 issue that mattered is fixed in the rebuilt render:
+
+- the x/2 label is readable;
+- no beat change draws new content over old;
+- the B9 focus move is clean;
+- √2 sits by its own edge;
+- the A0 title stays up for about 3.4 s;
+- loudness is on target.
+
+Audio, captions, sync and facts are still clean. Without the floor rule on
+x-height, this render would be a **ship**.
+
+Frames are `review/r2/fNNNN.png` (0-based frame number, 30 fps), extracted from
+the rebuilt `render.mp4`. 391 frames cover every beat boundary and every long
+move.
+
+### Round-1 issues, re-checked
+
+| # | Round 1 | Now | Evidence |
+|---|---------|-----|----------|
+| 1 | The half's x/2 label glyph was 13 px tall | **Fixed.** It is a display-style fraction now: numerator x 30 px, denominator 2 43 px, the same as the "1" labels. | `r2/f0578.png` |
+| 2 | New content drew over old content at B2→B3, B6→B7, B8→B9 | **Fixed.** At all four beats whose first word has exits, the old picture clears before the new one draws, so nothing overlaps. | `r2/f0283`–`f0297`, `r2/f0899`–`f0925`, `r2/f1336`–`f1362` |
+| 3 | In B9's focusKept, the A4 label collided with A3 | **Fixed.** The rest of the nest fades out over f1449–f1463, and the A4 piece moves only after that (f1464–f1498). | `r2/f1458.png`, `r2/f1461.png`, `r2/f1470.png`, `r2/f1485.png` |
+| 4 | "√2" sat 9 px from the half and 27 px from rect | **Fixed.** It is now 13 px from rect's edge and 21 px from the half, so it reads as rect's label. | `r2/f0900.png` |
+| 5 | "A0 · 1 m²" showed for 0.4 s, and a cut line crossed it | **Fixed.** The title sits above the sheet from f1357 to about f1460 (3.4 s), and no line crosses it. Its "m" is under the floor; see issue 1 below. | `r2/f1358.png`, `r2/f1440.png` |
+| 6 | Loudness −16.2 LUFS | **Fixed.** −14.0 LUFS integrated, true peak −1.9 dBTP, LRA 3.8 LU. | — |
+| 7a | Teal-to-blue change on the half's short edges barely shows | **Unchanged.** Still (93,207,176) → (89,192,214). | `r2/f0516.png` |
+| 7b | Caption math lighter than the words | **Fixed.** Math in captions is bold now. | `r2/f0620.png` |
+| 7c | "210 mm" tight above the division row | **Unchanged.** Still a 46 px gap. | `r2/f1337.png` |
+| 7d | Color metadata | **Fixed.** yuv420p, BT.709, TV range. | — |
+
+### Issues
+
+#### 1. Lowercase label text is under the 30 px floor (B2, B7, B8, B9)
+
+The floor is 30 px for the smallest glyph at 1080 px frame width. The math
+glyphs now sit right at it: every x is 30 px, including the numerators of the
+caption and label fractions, and the superscript ² is 30 px. The lowercase
+letters in these plain-text labels fall short:
+
+| Beat | Text | Frames | Smallest glyph | Evidence |
+|------|------|--------|----------------|----------|
+| B2 | The "Letter" sheet name | ~f0176–f0188 | e and r, 25 px | `r2/f0180.png` |
+| B7 | The "Letter" mark on the number line | f0925–f1090 | r 24 px, e 26 px | `r2/f1090.png` |
+| B8 | "mm" in both dimension labels | f1110–f1337 | 29 px | `r2/f1337.png` |
+| B9 | "m" in the title "A0 · 1 m²" | f1357–f1460 | 28 px | `r2/f1440.png` |
+
+Capitals and digits in the same labels measure 32–45 px.
+
+- **Fix:** enlarge these four labels by about 20%: `type.label` and the
+  number-line mark size (44 → about 54), and `type.mathInline` enough to lift
+  "mm" and "m" to 30 px. Then re-check spacing, since B8's "210 mm" is already
+  tight.
+- **Owner:** production for the theme sizes. The storyboard sets the
+  number-line mark at fontSize 44 explicitly, so that value changes in the
+  storyboard.
+
+#### 2. Minor: the picture reacts about 0.25 s after the first word at four beat changes
+
+Under the new rule, appears wait for exits on the same anchor. The exits use
+ease.in over 11 frames, so for about 7 frames after the first word nothing
+visibly changes. The new content first draws 11–12 frames in:
+
+| Change | First word | First visible change | New content |
+|--------|------------|----------------------|-------------|
+| B1→B2 | f157 | f165 | f168 |
+| B2→B3 | f283 | f290 | f295 |
+| B6→B7 | f901 | f908 | f913 |
+| B8→B9 | f1338 | f1345 | f1350 |
+
+The caption switches on the word, so the picture visibly trails the sentence by
+about 0.25 s. Nothing overlaps, and this doesn't block shipping.
+
+- **Fix (optional):** give exits a curve that moves at once (ease.out or
+  linear), or shorten them to about 6 frames.
+- **Owner:** production.
+
+#### 3. Minor: brief overlaps during moves (under 0.3 s each)
+
+- **The fold midline crosses the sheet name.** The dashed midline draws through
+  "A4" at f0008–f0011, in the hook's first 0.4 s, and through "Letter" at
+  f0188–f0191, while the name is still fading out (`r2/f0009.png`,
+  `r2/f0010.png`, `r2/f0189.png`). Fading the name out before the line reaches
+  the center would avoid it.
+- **B4's half slides across rect's "x" label.** As the half lifts off at
+  f0443–f0449, its translucent fill passes over the label (`r2/f0445.png`,
+  `r2/f0447.png`).
+- **The rotating Letter half grazes "1.29".** Its corner touches the label for
+  about 2 frames around f0213 (`r2/f0213.png`).
+
+Owner: storyboard.
+
+#### 4. Minor: "Letter" is readable for about 0.4 s (B2)
+
+The name fades in only after the exits and the fast draw-on, around f0176.
+The fold starts fading it at f0186. The narration says "레터" at the same time,
+so nothing is lost. Owner: storyboard, if anyone wants it longer.
+
+#### 5. Minor: edge labels no longer match the storyboard's spacing
+
+The storyboard's PaperRect spec still puts edge labels 24 px outside the edge.
+The render now uses `mark.edgeLabelGap` = 12 in theme.ts:
+
+- label ink starts 7 px below a bottom edge's ink;
+- label ink starts 11 px right of a right edge's ink.
+
+It reads fine and is what fixed round-1 issue 4, but the spec should say 12.
+Owner: storyboard (update the spec text).
+
+#### 6. Informational: audio is now 24 kHz
+
+The audio stream changed from 48 kHz to 24 kHz AAC. That matches the 24 kHz TTS
+source, so nothing is lost. YouTube resamples uploads, so 48 kHz is only the
+conventional choice. Owner: production, if at all.
+
+### Checked and fine
+
+- **Technical.**
+  - Video: 1080×1920 at 30 fps, 1532 frames, 51.07 s, yuv420p, BT.709, TV
+    range.
+  - Audio: AAC 24 kHz stereo, 51.07 s.
+  - Speech ends at 50.57 s, followed by 0.49 s of silence, so nothing is cut
+    off.
+  - Loudness: −14.0 LUFS integrated, −1.9 dBTP true peak.
+  - Duration: 51.07 s is within the 60 s limit. It misses the 40–50 s target
+    in `topic.md` by 1.07 s; that is for the human to judge.
+- **Safe area and zones.** Across all 1532 frames:
+  - all content stays within x 104–911 and y 282–1447;
+  - the visual content never goes below y 1226;
+  - caption ink stays within y 1332–1446 and x 194–803, inside `zone.caption`
+    (y 1280–1500).
+- **Beat end frames.** All nine match their updated `endFrame` descriptions:
+  f156, f282, f428, f578, f727, f900, f1090, f1337, f1531.
+  - B2: the red strip spans y 320–433.
+  - B3: rect is centered at y ≈ 620.
+  - B4: both bottoms are at y ≈ 860.
+  - B7: there is no red on the sheet, and the label reads 1.414.
+- **Loop.** In the visual zone, f1531 and f0 differ in 193 px beyond a 2% fuzz
+  (RMSE 0.12%). That is anti-aliasing noise.
+- **Transitions.**
+  - All 9 beat boundaries were sampled every 2 frames for 26 frames.
+  - Every cue lasting 15 frames or more was sampled every 3 frames: B1's
+    folds and fits, B2's fold and fit, B4's lift-off and rotation, B6's three
+    morphs, B7's two resizes, B8's move, B9's split and focus.
+  - The only findings are issues 2–4 above. The B6 morphs show brief ghosting
+    mid-crossfade, which is normal for this kind of morph.
+- **Captions.**
+  - All 28 chunks show the storyboard text exactly.
+  - Each starts on the frame of its first word in `words.json`, within
+    0.5 frame.
+- **A/V sync.**
+  - I re-ran `studio/scripts/align.py` on the render's own audio: all 94 word
+    starts land within ±10 ms of `words.json` (59 on the same frame, 35 one
+    frame off).
+  - Cross-correlating the render's audio with `narration.mp3` gives 0 samples
+    of lag.
+  - Of the 48 cue anchor frames, 34 show visual change within 2 frames. The
+    rest are expected:
+    - color crossfades appear 3–5 frames in (ease.smooth starts slowly);
+    - the four beat changes in issue 2 respond 7–8 frames in;
+    - the teal-to-blue edge change on "짧은" (f504) is too faint for the motion
+      detector (minor 7a above).
+- **Narration.** A Whisper large-v3-turbo transcript of the render matches the
+  읽기용 text in every beat; the only differences are Whisper's digits and
+  spacing.
+- **Facts.** `python3 verify.py` passes. The on-screen numbers are unchanged
+  from round 1 and still check out: 1.29 → 1.55, 1.41429 / 1.41421, 1.414, the
+  number-line marks, A1–A4, and x : 1 = 1 : x/2 → x² = 2 → x = √2.
+
+### What the brief should still tell me
+
+- **Say which glyph height the floor means.** Worded as the smallest glyph, the
+  30 px floor catches lowercase x-height ("Letter", "mm"). Say whether that is
+  intended, or whether it means digit, cap and math-symbol height.
+- **Set a reaction-time limit at beat changes.** For example: "first visible
+  change within 3 frames of the anchor word". The wait-for-exits rule now puts
+  new content 11–12 frames after the word.
+- **Say what round 2 covers.** Say whether a re-review covers the whole render
+  or only the changes. I re-ran everything.
+- **Cap the evidence frames.** The transition pass keeps 391 PNGs (about
+  32 MB). The brief could ask for contact sheets plus the individual frames
+  that are cited.
+
+## Round 1
+
+Everything below reviews the first render, which has since been replaced. Its
+frames are the `review/fNNNN.png` files, not the ones under `review/r2/`.
+
 **Verdict: fix then ship.**
 
 The audio and the facts are clean. Every spoken word matches the 읽기용 script,
@@ -12,9 +205,9 @@ in B9 shows labels colliding for about a second. None of this needs a rework.
 Frames are `review/fNNNN.png`, where NNNN is the 0-based frame number at 30 fps,
 all extracted from `render.mp4`.
 
-## Issues
+### Issues
 
-### 1. The half's x/2 label is unreadable at phone size (B4–B6)
+#### 1. The half's x/2 label is unreadable at phone size (B4–B6)
 
 - **Where:** f529 (17.63 s) to f900 (30.00 s). See `review/f0578.png` (B4
   end), `review/f0727.png` and `review/f0900.png`.
@@ -30,7 +223,7 @@ all extracted from `render.mp4`.
   `type.mathInline`. It becomes production's fix if the choice is to render
   every Tex label in display style.
 
-### 2. New content draws over old content at beat changes (B6→B7, B8→B9, B2→B3)
+#### 2. New content draws over old content at beat changes (B6→B7, B8→B9, B2→B3)
 
 Exits on a beat's first word use ease.in over 0.35 s. The old picture stays
 close to full opacity while the new one draws on top of it, and then it drops
@@ -53,7 +246,7 @@ when a line crosses text.
   an appear and the render follows that spec. Production could instead fix it
   once for every episode in the player or theme, if the human prefers one rule.
 
-### 3. The moving A4 piece runs into the fading nest labels (B9, focusKept)
+#### 3. The moving A4 piece runs into the fading nest labels (B9, focusKept)
 
 - **Where:** f1460–f1488 (48.67–49.60 s). See `review/f1468.png`,
   `review/f1476.png` and `review/f1484.png`.
@@ -66,7 +259,7 @@ when a line crosses text.
   piece moves", which allows this.
 - **Owner:** production.
 
-### 4. The "√2" label on rect sits against the half's edge (B6)
+#### 4. The "√2" label on rect sits against the half's edge (B6)
 
 - **Where:** f848 (28.27 s) to f900. See `review/f0900.png`.
 - **What:** when rect's right label changes from x to √2, it gets wider. It now
@@ -78,7 +271,7 @@ when a line crosses text.
   right), or put rect's long-side label on its left.
 - **Owner:** storyboard.
 
-### 5. "A0 · 1 m²" is on screen for about 0.4 s, and the first cut runs through it (B9)
+#### 5. "A0 · 1 m²" is on screen for about 0.4 s, and the first cut runs through it (B9)
 
 - **Where:** f1353–f1366 (45.10–45.53 s). See `review/f1356.png` and
   `review/f1362.png`.
@@ -91,7 +284,7 @@ when a line crosses text.
   f1342, and/or start the split one word later. Alternatively, drop the sub.
 - **Owner:** storyboard.
 
-### 6. Loudness is −16.2 LUFS
+#### 6. Loudness is −16.2 LUFS
 
 - **What:** the render's audio measures −16.2 LUFS integrated, 3.8 LU loudness
   range, and −3.6 dBTP true peak (ffmpeg `ebur128`). YouTube turns loud audio
@@ -101,7 +294,7 @@ when a line crosses text.
   +2.2 dB of gain fits: the peak lands at −1.4 dBTP.
 - **Owner:** production.
 
-### 7. Minor
+#### 7. Minor
 
 - **Blue and teal look nearly the same (B4).** On "짧은" at f504 (16.8 s, see
   `review/f0515.png`), the half's short edges change from teal (93,207,176) to
@@ -123,7 +316,7 @@ when a line crosses text.
   Some players may still shift colors slightly with BT.601 or unset tags on a
   1080p video; BT.709 limited range is the safe default. Owner: production.
 
-## Checked and fine
+### Checked and fine
 
 - **Technical.** Video is 1080×1920 at 30 fps: 1532 frames, 51.07 s. Audio is
   AAC 48 kHz stereo, 51.11 s. Speech ends at 50.61 s and decays naturally into
@@ -183,7 +376,7 @@ when a line crosses text.
 - **B6 morphs.** The equation morphs crossfade cleanly, with brief ghosting
   mid-morph only. The B7→B8 handover is clean.
 
-## What this brief should have told me
+### What this brief should have told me
 
 - **Check transitions.** The worst problems were in transitions, which neither
   the beat-end frames nor the after-cue frames catch. Ask for a pass over every

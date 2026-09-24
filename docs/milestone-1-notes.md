@@ -250,3 +250,27 @@ Findings about the process:
   length target applies, who owns a faithful-but-bad render, and a check of
   words.json against the audio. QA also noted the shared session scratchpad
   exposed builders' files to it; QA should get its own scratch space.
+
+### 8. Review, round 2 (2026-09-24)
+
+Fix loop: storyboard agent and production agent in parallel (~20 min), with
+the orchestrator relaying one cross-agent dependency (a player rule that
+shifted storyboard timing); then the same QA agent re-reviewed (~25 min).
+Every round-1 issue that mattered is fixed. Verdict again **fix then ship**,
+but only because the orchestrator's new legibility floor (30 px glyphs at
+1080 wide) caught lowercase letters in plain-text labels at 24–29 px; the
+render was sent to the human for the final call instead of a third round.
+
+- **A spec change can silently render stale.** The storyboard edit kept cue
+  count and order, so the player would have rendered old timing without
+  complaint. Production now stamps a storyboard hash into cues.json and the
+  render refuses a mismatch.
+- **Measurable thresholds change QA's output.** With pixel, loudness, and sync
+  thresholds, QA reported numbers (captions within 0.5 frame, A/V ±10 ms,
+  −14.0 LUFS) instead of judgement calls; an ambiguous threshold (which glyph
+  height counts) produced the one blocking issue.
+- **Minor leftovers:** entrances trail the beat's first word by ~11 frames
+  under the exits-first rule; a few sub-0.3 s overlaps from storyboard
+  geometry; the teal→blue edge change is nearly invisible (palette call).
+- **Evidence volume:** round 2 kept 391 PNGs (~32 MB). The brief should cap
+  saved frames (contact sheets plus cited frames).
