@@ -10,10 +10,41 @@ fine until someone looked at the pixels).
 
 ## Summary
 
-Filled in at the end of the milestone.
+Episode 001 shipped on 2026-09-25 after three QA rounds: 51.07 s, QA verdict
+"ship". Times are wall-clock from the log below; "human wait" is time the
+pipeline sat on a human decision.
 
 | Stage | Agent time | Human wait | Blockers | Repeated work | Automate next? |
 | ----- | ---------- | ---------- | -------- | ------------- | -------------- |
+| 1 Topic | minutes | ~1 h (bundled with TTS keys) | none | none | later |
+| 2 Spike | ~1 h (Remotion 20 min, TTS/aligner research in parallel) | key sign-ups, listening | silent font/CSS drop; TTS reading its own style prompt | — | done once |
+| 3 Research | ~10 min | none | iso.org 403 | claim table + `verify.py` | later |
+| 4 Script | ~15 min + table read | short (listening worked) | none | syllable budgeting | later |
+| 5 Storyboard | ~25 min + ~20 min viewer page | short | schema gaps; written blind (no real timings, no TeX sizes) | validator | partly (real timings first) |
+| 6–7 Production | ~42 min | none | cue semantics undefined; silent A/V offsets | ad-hoc stills and measurements | done once (player) |
+| 8 QA + fixes | **~2.5 h over 3 rounds** | the human's eye caught centering | layout defects only visible in transitions; cross-agent relays; a render race | **pixel measurements rewritten each round** | **yes, first** |
+| 9 Final | — | minutes | — | — | — |
+
+**Bottleneck: the loop after the first render.** Narration, timing, and facts
+were right the first time. Every defect was layout (sizes, overlaps,
+centering, bounds), found by measuring frames, and each round cost a
+storyboard edit, a player change, orchestrator relays, a re-render, and a
+re-review. Production and QA each rewrote the same measurements (ink bounds,
+glyph heights, centering, transition sampling) by hand every round.
+
+**Automate first: a render check script** in `studio/` that both the
+production self-check and QA run: per-frame bounds against `content` and
+`safe`, ink center per beat end, smallest glyph height, element overlaps at
+beat boundaries, loudness, and A/V alignment against `words.json`, emitting a
+pass/fail report with cited frames. It would have caught every round-1..3
+defect before QA, and leaves QA the judgment calls.
+
+**Then:** align the table read before the storyboard pass (real word timings,
+plus a TeX measuring tool), so the storyboard stops being written blind; turn
+the storyboard viewer into a studio tool for the checkpoint; fold the briefs'
+accumulated gaps (schemas for storyboard and cues, thresholds, length gate,
+speech-rate choice at the script checkpoint) into the briefs before they become
+skills.
 
 ## Log
 
