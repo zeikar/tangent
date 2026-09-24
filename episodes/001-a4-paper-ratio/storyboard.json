@@ -5,7 +5,7 @@
     "An element is invisible until its appear cue, unless it has visibleAtStart (drawn from the beat's first frame).",
     "Draw order is declaration order across the episode: an element declared later draws on top (Mismatch excepted, see its spec).",
     "Scaling (moveTo with w/h, resize, standAndFit, focusKept) changes geometry only: stroke widths and text sizes never scale.",
-    "Cues sharing an anchor run in parallel. A cue with neither speed nor until uses base.",
+    "Cues sharing an anchor run in parallel, except that an appear or reveal waits for the exits on its anchor to finish (the player's rule, so new content never draws over old). A cue with neither speed nor until uses base.",
     "Easing from studio/src/style/theme.ts: ease.out for appear and reveal, ease.in for exit, ease.smooth for everything else, unless a cue's params say ease: linear.",
     "h/w is long ÷ short for every portrait sheet; √2 = 1.4142."
   ],
@@ -51,7 +51,7 @@
     {
       "name": "HalvingNest",
       "status": "new",
-      "spec": "A sheet cut in half again and again (the A-series picture). Props: center, w, h (the starting sheet, portrait); name (plain text, styled like PaperRect.name) and sub (tex, muted, type.mathInline, under the name), centered inside before the first cut; labels [plain text per level, type.label]; stroke (default text). Outline and cut lines use stroke at width 6; every piece is filled with stroke at 0.08, exactly like a default PaperRect. Every cut goes across the current piece's long side (parallel to its short sides). Level 1 horizontal, keep bottom; level 2 vertical, keep right; level 3 horizontal, keep bottom; level 4 vertical, keep right. At levels 1 to 3 the half set aside keeps its outline and gets that level's label, muted, centered in it. At the last level the set-aside half stays unlabeled and the kept piece gets the label, in text. Actions: appear (outline draws on, name and sub fade in); split {levels} (levels run back to back, evenly spread over the cue's span; each cut line draws in, then its label fades in; name and sub fade out at the first cut); pulseKept {color} (kept piece's stroke flashes to color and back); focusKept {center, w, h, name} (everything but the kept piece fades out while the kept piece moves and scales to that geometry; stroke width and label size never scale. The end state must be pixel-identical to a default-style PaperRect with that geometry and name; production may swap one in on the last frame); exit."
+      "spec": "A sheet cut in half again and again (the A-series picture). Props: center, w, h (the starting sheet, portrait); title: name (plain text, styled like PaperRect.name), a muted middle dot, then sub (Tex at type.mathInline, muted), on one line centered over the sheet with its bottom 24 px above the sheet's top edge, outside the sheet so no cut line ever crosses it; labels [plain text per level, type.label]; stroke (default text). Outline and cut lines use stroke at width 6; every piece is filled with stroke at 0.08, exactly like a default PaperRect. Every cut goes across the current piece's long side (parallel to its short sides). Level 1 horizontal, keep bottom; level 2 vertical, keep right; level 3 horizontal, keep bottom; level 4 vertical, keep right. At levels 1 to 3 the half set aside keeps its outline and gets that level's label, muted, centered in it. At the last level the set-aside half stays unlabeled and the kept piece gets the label, in text. Actions: appear (outline draws on, then the title fades in; the title stays through every split and fades out with the rest in focusKept); split {levels} (levels run back to back, evenly spread over the cue's span; each cut line draws in, then its label fades in); pulseKept {color} (kept piece's stroke flashes to color and back); focusKept {center, w, h, name} (everything but the kept piece fades out while the kept piece moves and scales to that geometry; stroke width and label size never scale. The end state must be pixel-identical to a default-style PaperRect with that geometry and name; production may swap one in on the last frame); exit."
     }
   ],
   "beats": [
@@ -118,7 +118,8 @@
           "target": "a4",
           "action": "standAndFit",
           "params": {"ref": "a4Ghost"},
-          "speed": "base"
+          "until": {"pause": true},
+          "note": "lands as the pause starts, so the pulse below flashes on the landing"
         },
         {
           "at": {"pause": true},
@@ -175,8 +176,14 @@
       "cues": [
         {"at": {"word": "미국"}, "target": "a4", "action": "exit", "speed": "fast"},
         {"at": {"word": "미국"}, "target": "a4Ghost", "action": "exit", "speed": "fast"},
-        {"at": {"word": "미국"}, "target": "letterGhost", "action": "appear", "speed": "base"},
-        {"at": {"word": "미국"}, "target": "letter", "action": "appear", "speed": "base"},
+        {"at": {"word": "미국"}, "target": "letterGhost", "action": "appear", "speed": "fast"},
+        {
+          "at": {"word": "미국"},
+          "target": "letter",
+          "action": "appear",
+          "speed": "fast",
+          "note": "fast: once the a4 exits finish first, a base appear would still be drawing when the fold starts on '달라요'"
+        },
         {
           "at": {"word": "레터"},
           "target": "letterRatio",
@@ -226,8 +233,8 @@
         {
           "id": "rect",
           "component": "PaperRect",
-          "props": {"center": [500, 660], "w": 340, "h": 480.8, "stroke": "text"},
-          "where": "visual zone, centered horizontally, raised (center y 660) to leave room for B5's equation; drawn at h/w = √2 but unnamed"
+          "props": {"center": [500, 620], "w": 340, "h": 480.8, "stroke": "text"},
+          "where": "visual zone, centered horizontally, raised (center y 620) to leave room for the half's x/2 label and B5's equation; drawn at h/w = √2 but unnamed"
         }
       ],
       "cues": [
@@ -265,7 +272,7 @@
           "speed": "fast"
         }
       ],
-      "endFrame": "One sheet 340×481 centered at (500, 660): top and bottom edges blue with '1' (blue) below, left and right edges yellow with 'x' (yellow) to the right. Nothing else. Caption: '긴 변을 $x$라고 할게요.'",
+      "endFrame": "One sheet 340×481 centered at (500, 620): top and bottom edges blue with '1' (blue) below, left and right edges yellow with 'x' (yellow) to the right. Nothing else. Caption: '긴 변을 $x$라고 할게요.'",
       "claims": ["C3"]
     },
     {
@@ -283,7 +290,7 @@
           "id": "half",
           "component": "PaperRect",
           "props": {
-            "center": [290, 539.8],
+            "center": [290, 499.8],
             "w": 340,
             "h": 240.4,
             "stroke": "teal",
@@ -298,7 +305,7 @@
           "at": {"word": "반으로"},
           "target": "rect",
           "action": "moveTo",
-          "params": {"center": [290, 660]},
+          "params": {"center": [290, 620]},
           "speed": "fast"
         },
         {
@@ -313,14 +320,14 @@
           "target": "half",
           "action": "appear",
           "params": {"mode": "fade"},
-          "speed": "fast"
+          "until": {"word": "세우면"}
         },
         {
           "at": {"word": "접어"},
           "target": "half",
           "action": "moveTo",
-          "params": {"center": [700, 730.4]},
-          "speed": "fast",
+          "params": {"center": [700, 690.4]},
+          "until": {"word": "세우면"},
           "note": "the top half lifts off and slides right, still lying on its side"
         },
         {
@@ -329,7 +336,7 @@
           "action": "rotate",
           "params": {"deg": 90},
           "speed": "base",
-          "note": "stands up: the old short side (1) is now vertical, bottom edge level with rect's (y 900.5)"
+          "note": "stands up: the old short side (1) is now vertical, bottom edge level with rect's (y 860.4)"
         },
         {
           "at": {"word": "긴"},
@@ -358,12 +365,13 @@
           "target": "half",
           "action": "setStyle",
           "params": {
-            "labels": {"right": {"tex": "1", "color": "yellow"}, "bottom": {"tex": "\\frac{x}{2}", "color": "blue"}}
+            "labels": {"right": {"tex": "1", "color": "yellow"}, "bottom": {"tex": "\\dfrac{x}{2}", "color": "blue"}}
           },
-          "speed": "fast"
+          "speed": "fast",
+          "note": "display-style fraction: its x and 2 read at the size of the '1' labels"
         }
       ],
-      "endFrame": "Left: rect 340×481 centered (290, 660) with dashed midline, blue '1' below, yellow 'x' right. Right: half upright 240.5×340 centered (700, 730.5), teal fill, yellow long edges with '1' right, blue short edges with 'x/2' below; both bottoms at y ≈ 900. Caption: '짧은 변은 $\\frac{x}{2}$가 돼요.'",
+      "endFrame": "Left: rect 340×481 centered (290, 620) with dashed midline, blue '1' below, yellow 'x' right. Right: half upright 240.5×340 centered (700, 690.4), teal fill, yellow long edges with '1' right, blue short edges with a display-style x/2 below (as tall as the '1' labels); both bottoms at y ≈ 860. Caption: '짧은 변은 $\\frac{x}{2}$가 돼요.'",
       "claims": ["C3"]
     },
     {
@@ -611,7 +619,7 @@
         {"at": {"word": "반으로"}, "target": "sweepGap", "action": "appear", "speed": "fast"},
         {"at": {"word": "반으로"}, "target": "dial", "action": "appear", "speed": "base"},
         {
-          "at": {"word": "접어도"},
+          "at": {"word": "모양이"},
           "target": "sweep",
           "action": "resize",
           "params": {"ratio": 1.7, "ease": "linear"},
@@ -798,7 +806,7 @@
             "labels": ["A1", "A2", "A3", "A4"],
             "stroke": "text"
           },
-          "where": "visual zone, centered at (500, 700); A0 440×622, x 280–720, y 389–1011; the kept A4 ends 110×155.5 at the bottom-right corner"
+          "where": "visual zone, centered at (500, 700); A0 440×622, x 280–720, y 389–1011, title 'A0 · 1 m²' above it (about y 300–365); the kept A4 ends 110×155.5 at the bottom-right corner"
         }
       ],
       "cues": [
@@ -807,7 +815,13 @@
         {"at": {"word": "에이제로를"}, "target": "dimH", "action": "exit", "speed": "fast"},
         {"at": {"word": "에이제로를"}, "target": "divRow", "action": "exit", "speed": "fast"},
         {"at": {"word": "에이제로를"}, "target": "rootRow", "action": "exit", "speed": "fast"},
-        {"at": {"word": "에이제로를"}, "target": "nest", "action": "appear", "speed": "base"},
+        {
+          "at": {"word": "에이제로를"},
+          "target": "nest",
+          "action": "appear",
+          "speed": "fast",
+          "note": "fast: once the B8 exits finish first, the outline is drawn by '반씩', where the first cut starts"
+        },
         {
           "at": {"word": "반씩"},
           "target": "nest",

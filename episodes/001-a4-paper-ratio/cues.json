@@ -1,4 +1,5 @@
 {
+ "storyboardSha256": "202fa83acce5f3f20097fc01a2da70b1e9c843dd9872fbf597df32368e1772a2",
  "fps": 30,
  "durationInFrames": 1532,
  "beats": [
@@ -59,7 +60,8 @@
      "target": "a4",
      "action": "standAndFit",
      "word": "접어도요",
-     "frame": 108
+     "frame": 108,
+     "untilFrame": 123
     },
     {
      "target": "a4",
@@ -255,13 +257,15 @@
      "target": "half",
      "action": "appear",
      "word": "접어",
-     "frame": 441
+     "frame": 441,
+     "untilFrame": 450
     },
     {
      "target": "half",
      "action": "moveTo",
      "word": "접어",
-     "frame": 441
+     "frame": 441,
+     "untilFrame": 450
     },
     {
      "target": "half",
@@ -484,8 +488,8 @@
     {
      "target": "sweep",
      "action": "resize",
-     "word": "접어도",
-     "frame": 915,
+     "word": "모양이",
+     "frame": 927,
      "untilFrame": 977
     },
     {
