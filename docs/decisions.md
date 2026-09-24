@@ -7,9 +7,10 @@ Why the project is shaped the way it is. Read before re-litigating something.
 ## Goal: both a channel and the system
 
 Grow a channel *and* build the agent system as an engineering project. The
-first milestone serves both: one short, end to end, semi-automated. The human
-writes topic + script; agents do storyboard → scenes → render → review. The
-stage that bottlenecks is the next one to automate.
+first milestone serves both: one short, end to end, run stage by stage in
+conversation rather than as automated skills. Agents draft every stage; the
+human picks the topic and approves script, storyboard, and final cut. The stage
+that bottlenecks is the next one to automate.
 
 ## Style: 3Blue1Brown first, Kurzgesagt later
 
