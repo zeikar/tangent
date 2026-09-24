@@ -54,3 +54,81 @@ with the four bullets above.
 - Check every 근거 ID exists in research.md and says what the beat claims.
 - Report back: the total length estimate, the hook in one line, and any choice
   you were unsure about.
+
+## Pass 2: storyboard → `episodes/<slug>/storyboard.json`
+
+Input: the approved `script.md` (plus topic and research). The storyboard is
+the production agent's only spec: it must say what is on screen, when, and
+which component draws it, precisely enough that nobody improvises.
+
+### Timing model
+- Narration is **one TTS take** of all 읽기용 lines. Word start times come from
+  forced alignment. Every animation cue is anchored to a spoken word; never
+  write seconds for when something happens.
+- An anchor is `{ "word": "<eojeol>", "nth": 1 }`: the start of that word in the
+  beat's `readAloud` (compare with punctuation stripped; `nth` for repeats,
+  default 1). `{ "pause": true }` is the start of the beat's trailing pause.
+- `pauseAfter` (seconds, 0–1.5) is editorial pacing: production inserts that
+  much silence into the audio after the beat. It is the only place seconds
+  appear.
+- How long an animation runs: `until` (another anchor), or `speed`: `fast` /
+  `base` / `slow` (style-guide durations). Nothing else.
+
+### Captions
+Captions are phrase chunks of the 화면용 text, 2–4 eojeol each, shown from
+the anchor of the chunk's first spoken word until the next chunk. Keep `$...$`
+math. Chunks together must cover the beat's 화면용 text in order.
+
+### Screen
+- 1080×1920. Safe area and zones are in `studio/src/style/theme.ts`: the
+  picture lives in the visual zone (y 240–1250); captions own the band below.
+  Keep x within 60–940.
+- Colors by theme name only: `text`, `muted`, `blue`, `yellow`, `teal`, `red`,
+  `purple`. Pick a color meaning and keep it for the whole episode (e.g. the
+  long side is always yellow).
+- Existing components: `Tex` (props: `tex`, `display`, `color`). Anything else
+  is new: name it, and spec it once in `components`. Prefer a few general
+  primitives with props over one component per beat.
+- Elements persist across beats until an `exit` cue.
+
+### Schema
+```jsonc
+{
+  "slug": "001-a4-paper-ratio",
+  "colors": { "yellow": "long side", "blue": "short side" },  // meaning map
+  "components": [
+    { "name": "PaperRect", "status": "new",
+      "spec": "rectangle with optional side labels; actions: appear, fold, rotate, scaleTo, exit" }
+  ],
+  "beats": [
+    {
+      "id": "B1",
+      "name": "훅",
+      "readAloud": "…exactly script.md 읽기용…",
+      "captions": [{ "text": "A4를 반으로 접어도", "at": { "word": "에이포를" } }],
+      "pauseAfter": 0.5,
+      "elements": [
+        { "id": "a4", "component": "PaperRect",
+          "props": { "ratio": 1.4142, "stroke": "text" },
+          "where": "visual zone, centered" }
+      ],
+      "cues": [
+        { "at": { "word": "접어도" }, "target": "a4", "action": "fold",
+          "params": { "axis": "parallel to short side" }, "speed": "base",
+          "note": "why this moment" }
+      ],
+      "endFrame": "what the last frame of this beat must show (QA checks it)",
+      "claims": ["C1", "C2"]
+    }
+  ]
+}
+```
+
+### Before you finish
+- Validate with code: the file parses; every beat's `readAloud` equals
+  script.md's 읽기용; every anchor word exists in its beat; captions cover the
+  화면용 text in order; every component used is listed in `components`; every
+  `target` is a declared element.
+- Report back: the component list (new ones with a one-line spec), any beat
+  whose picture you are unsure can be drawn with those components, and missing
+  context as before.

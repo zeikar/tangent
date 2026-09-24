@@ -69,3 +69,10 @@ export const duration = {
 // the bottom, which grows when expanded). YouTube publishes no official spec;
 // these are conservative values from third-party overlay templates.
 export const safe = { top: 240, bottom: 420, left: 60, right: 140 } as const;
+
+// Vertical zones inside the safe area (y in px). The picture owns the visual
+// zone; captions own the band below it.
+export const zone = {
+  visual: { top: safe.top, bottom: 1250 },
+  caption: { top: 1280, bottom: VIDEO.height - safe.bottom },
+} as const;
