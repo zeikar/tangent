@@ -7,6 +7,8 @@ type Props = {
   display?: boolean;
   fontSize?: number;
   color?: string;
+  // Allows \htmlData / \htmlStyle, which Equation uses to address its parts.
+  trust?: boolean;
   style?: React.CSSProperties;
 };
 
@@ -17,6 +19,7 @@ export const Tex: React.FC<Props> = ({
   display = false,
   fontSize = display ? type.mathDisplay : type.mathInline,
   color = palette.text,
+  trust = false,
   style,
 }) => {
   const html = useMemo(
@@ -25,8 +28,10 @@ export const Tex: React.FC<Props> = ({
         displayMode: display,
         output: "html",
         throwOnError: true,
+        trust,
+        strict: trust ? "ignore" : "warn",
       }),
-    [tex, display],
+    [tex, display, trust],
   );
   return (
     <span

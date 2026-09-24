@@ -13,4 +13,5 @@ episodes/**/*.jpg
 episodes/**/*.wav
 episodes/**/*.mp3
 episodes/**/*.flac
+episodes/**/take*.txt
 !episodes/*/narration.mp3

@@ -34,6 +34,7 @@ export const type = {
   // KaTeX scales its glyphs to 1.21em of this, so 80 renders like ~97px text.
   mathDisplay: 80,
   mathInline: 52,
+  mathSmall: 44, // number-line mark labels
 } as const;
 
 // Manim's `smooth` rate function: a normalized sigmoid, 3b1b's default motion.
@@ -55,6 +56,30 @@ export const ease = {
   out: Easing.bezier(0.16, 1, 0.3, 1), // entrances: arrive fast, settle
   in: Easing.bezier(0.7, 0, 0.84, 0), // exits
   linear: (t: number) => t, // tracing along with time
+} as const;
+
+// Diagram strokes, fills, and marks (px).
+export const stroke = {
+  sheet: 6, // paper outlines and cut lines
+  line: 4, // number lines, dimension lines, equation boxes
+  dash: [18, 12], // dashed outlines and fold lines: dash, gap
+} as const;
+
+export const fill = {
+  sheet: 0.08, // paper
+  flap: 0.2, // the half of a sheet that is flipping over
+  mismatch: 0.35, // where two shapes disagree
+} as const;
+
+export const mark = {
+  labelGap: 24, // edge or line to its label
+  tick: 24, // number-line tick
+  endTick: 16, // dimension-line end tick
+  marker: 28, // number-line marker triangle width
+  boxPadding: 12, // box drawn around an equation part
+  boxRadius: 16,
+  revealRise: 20, // an equation part rises this far into place
+  pulseScale: 1.3, // a pulsed number-line mark
 } as const;
 
 // Default animation lengths. These are durations, not start times; start times
