@@ -1,0 +1,4 @@
+/* KaTeX display mode adds 1em vertical margins; layout spacing is ours. */
+.katex-display {
+  margin: 0;
+}
