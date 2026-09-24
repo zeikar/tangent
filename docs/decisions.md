@@ -89,10 +89,12 @@ files along, and stops at the human checkpoints.
 - **Slug: `NNN-english-kebab`** (e.g. `001-a4-paper-ratio`). The number keeps
   production order; ASCII paths stay safe in CLI tools; English keeps the
   folder name valid when an English version is added.
-- **Git holds text artifacts plus each episode's final narration audio.** Word
-  timestamps and beat cues derive from that exact file, and TTS never produces
-  the same take twice, so losing it means redoing narration and everything
-  after. Renders, extracted frames, and discarded takes stay out of git.
+- **Git holds text artifacts only; all media stays out.** Every media file can
+  be regenerated from the committed text: a new TTS take, then alignment and
+  cues rebuild and the animation re-times itself, because cues bind to words.
+  A regenerated take is equivalent, not identical (TTS never repeats a take),
+  so a regenerated episode needs a fresh QA pass. This keeps the public repo
+  small.
 
 ## Language: Korean first, English later
 
