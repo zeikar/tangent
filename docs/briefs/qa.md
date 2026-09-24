@@ -23,6 +23,10 @@ there. Don't fix anything yourself and don't commit.
      `studio/src/style/theme.ts`: top 240, bottom 420, left 60, right 140 px);
    - text and math legible at phone size (think of the frame shown ~400 px
      wide).
+
+   Judge frames extracted from `render.mp4` itself. For a safe-area overlay,
+   `studio/scripts/beat-stills.mts` re-renders beat stills from source with
+   the guide on; use those only as a supplement.
 3. **Captions.** Each caption chunk shows the storyboard's text, inside the
    caption zone, readable, and appears when its first word is spoken (compare
    the caption's first frame with the word's start in `words.json`; more than

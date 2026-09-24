@@ -193,3 +193,33 @@ NumberLine, Dimension, HalvingNest). The agent's validator is promoted to
   ~20 min to build from scratch. The generator is still a throwaway in the
   session scratchpad; it is a candidate studio tool for every episode's
   storyboard checkpoint, and later for the QA review (with real frames).
+
+### 6–7. Narration and scenes (2026-09-24)
+
+Production agent, ~42 min wall-clock plus a 12-min reviewer subagent in
+parallel. No human wait. Result: 51.07 s render (1532 frames); full render
+20 s, nine beat stills 13 s. No Manim needed.
+
+- **Narration was the easy part.** One Gemini take, accepted first try; forced
+  alignment of all 94 words, re-checked on the final mp3 (every start within
+  10 ms). First runs download ~3 GB of models (aligner 1.3 GB, Whisper 1.6 GB).
+- **Length drifted past the target.** Kore read this take at ~4.9 syl/s, not
+  the 5.3 measured on the test sentence, so the episode runs ~1 s over
+  topic.md's 40–50 s. Nothing gates length after the script; the brief needs a
+  rule (retake, trim, or accept).
+- **The big design win: a generic storyboard player.** Instead of per-beat
+  scene code, one player computes every element's state per frame from its cue
+  list; the episode folder is ~20 lines of wiring. This makes the storyboard
+  the program and scene-building mostly a component-library question, which is
+  what decisions.md hoped for.
+- **Silent A/V offsets, found only by measurement.** `@remotion/media`'s Audio
+  ignored the MP3's encoder priming (+46 ms); Remotion's AAC mux adds another
+  +43 ms (no edit list). Switched to core `Html5Audio`; 43 ms (~1.3 frames)
+  remains. A post-render `ffmpeg` remux of the original narration would remove
+  it. An A/V sync check (re-align the render's audio) belongs in QA.
+- **The agent had to invent the cue semantics:** where a beat starts and ends,
+  what `{pause: true}` resolves to, trimming leading silence, and the shape of
+  `cues.json`. These belong in the brief as a schema.
+- **Storyboard timing nits surfaced only with real timings** (a pulse starting
+  before a move lands, a move overlapping a rotate by 2 frames, folds of 17–22
+  frames). Real word timings before the storyboard pass would catch these.
