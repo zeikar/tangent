@@ -116,6 +116,7 @@ math. Chunks together must cover the beat's 화면용 text in order.
 ```jsonc
 {
   "slug": "001-a4-paper-ratio",
+  "loop": true,  // the last frame returns to the first (check-render verifies)
   "notes": ["units, draw order, anything the schema can't say"],
   "colors": { "yellow": "긴 변", "blue": "짧은 변" },  // meaning map, Korean
   "components": [
