@@ -32,7 +32,10 @@ illustration assets only.
 - **Manim (CE)**: only for scenes Remotion does poorly (equation morphs, 3D),
   rendered as transparent clips and composited in Remotion.
 
-Not yet validated. Milestone 1 confirms or revises this.
+Validated in milestone 1: Remotion handled Korean type, KaTeX, 9:16 layout,
+word-synced captions, and audio; a frame renders in under 2 s and the 51 s
+short in about 20 s. No scene needed Manim (equation steps worked as KaTeX
+parts crossfading), so it stays reserved for true glyph morphs and 3D.
 
 ## Quality comes from a component library, not free-form generation
 
