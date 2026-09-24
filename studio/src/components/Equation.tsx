@@ -2,6 +2,7 @@ import React, { useLayoutEffect, useRef, useState } from "react";
 import { AbsoluteFill, continueRender, delayRender, useCurrentScale } from "remotion";
 import { ElementTimeline, mix, phase, Scene, themeColor } from "../storyboard/timeline";
 import { mark, safe, stroke, type, VIDEO } from "../style/theme";
+import { inkRect } from "./ink";
 import { Tex } from "./Tex";
 
 // One line of KaTeX built from addressable parts, rendered as a single
@@ -34,27 +35,6 @@ const drawTex = (parts: Drawn[]) =>
         `left:${p.dx.toFixed(2)}px;top:${p.dy.toFixed(2)}px}{${p.tex}}`,
     )
     .join(" ")}`;
-
-// Union of a part's glyphs, radical signs and fraction bars. KaTeX's strut
-// and spacing spans are left out: they are taller or wider than the ink.
-const inkRect = (el: Element) => {
-  const rects: DOMRect[] = [];
-  const walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
-  for (let n = walk.nextNode(); n; n = walk.nextNode()) {
-    if (/^[\s\u200b]*$/.test(n.textContent ?? "")) continue;
-    const range = document.createRange();
-    range.selectNodeContents(n);
-    rects.push(range.getBoundingClientRect());
-  }
-  el.querySelectorAll("svg, .frac-line").forEach((e) => rects.push(e.getBoundingClientRect()));
-  if (!rects.length) throw new Error("Equation: part has no ink");
-  return {
-    left: Math.min(...rects.map((r) => r.left)),
-    right: Math.max(...rects.map((r) => r.right)),
-    top: Math.min(...rects.map((r) => r.top)),
-    bottom: Math.max(...rects.map((r) => r.bottom)),
-  };
-};
 
 // Zero-size inline-block: sits on the baseline at the expression's left edge.
 const Origin = () => <span data-origin style={{ display: "inline-block", width: 0, height: 0 }} />;

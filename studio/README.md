@@ -34,12 +34,14 @@ Narration and production (API keys in the repo-root `.env`; `ep` is
 # One TTS take of every beat's readAloud → $ep/take<N>.wav + take<N>.txt
 node scripts/narrate.mts $ep
 # Word timestamps for a take (first run downloads 1.3 GB)
-uv run scripts/align.py $ep/take1.wav $ep/take1.txt take1.words.json
-# Insert pauseAfter silences → $ep/narration.mp3, words.json, cues.json
-python3 scripts/build-cues.py $ep $ep/take1.wav take1.words.json
+uv run scripts/align.py $ep/take1.wav $ep/take1.txt $ep/take1.words.json
+# Insert pauseAfter silences, normalize to -14 LUFS
+#   → $ep/narration.mp3, words.json, cues.json
+python3 scripts/build-cues.py $ep $ep/take1.wav $ep/take1.words.json
 # A still at every beat's endFrame (safe-area guide on) → $ep/frames/
 node scripts/beat-stills.mts $ep
-npx remotion render <slug> $ep/render.mp4
+# Video from Remotion (BT.709), narration muxed by ffmpeg → $ep/render.mp4
+node scripts/render.mts $ep
 # TTS samples of scripts/tts-compare/sentences.json → out/tts-compare/
 node scripts/tts-compare/compare.mts synth gemini gemini-3.8-flash-tts Kore kore
 ```

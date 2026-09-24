@@ -43,7 +43,7 @@ export type Cues = {
     startFrame: number;
     endFrame: number;
     captions: { frame: number }[];
-    cues: { target: string; action: string; frame: number; untilFrame?: number }[];
+    cues: { target: string; action: string; word?: string; frame: number; untilFrame?: number }[];
   }[];
 };
 
@@ -114,10 +114,16 @@ export const resolveTimeline = (sb: Storyboard, cues: Cues): ElementTimeline[] =
     for (const spec of beat.elements) {
       elements.set(spec.id, { spec, start: timing.startFrame, end: Infinity, actions: [] });
     }
-    beat.cues.forEach((c, i) => {
+    const resolved = beat.cues.map((c, i) => {
       const t = timing.cues[i];
-      if (t.target !== c.target || t.action !== c.action) {
-        throw new Error(`cues.json ${beat.id} cue ${i} is ${t.target}.${t.action}; rebuild it`);
+      // A cues.json from an older storyboard would silently play old timing.
+      if (
+        t.target !== c.target ||
+        t.action !== c.action ||
+        t.word !== ("word" in c.at ? c.at.word : undefined) ||
+        (t.untilFrame === undefined) !== (c.until === undefined)
+      ) {
+        throw new Error(`cues.json ${beat.id} cue ${i} (${c.target}.${c.action}) is from another storyboard; rebuild it`);
       }
       const el = elements.get(c.target);
       if (!el) throw new Error(`${beat.id}: cue target ${c.target} is not declared`);
@@ -125,10 +131,24 @@ export const resolveTimeline = (sb: Storyboard, cues: Cues): ElementTimeline[] =
         t.untilFrame ??
         t.frame + Math.round(duration[(c.speed ?? "base") as keyof typeof duration] * cues.fps);
       if (Number.isNaN(len)) throw new Error(`${beat.id}: bad speed ${c.speed}`);
-      const action = { action: c.action, params: c.params ?? {}, from: t.frame, to: len, ease: easeFor(c) };
-      el.actions.push(action);
-      if (c.action === "exit") el.end = action.to;
+      return { el, action: { action: c.action, params: c.params ?? {}, from: t.frame, to: len, ease: easeFor(c) } };
     });
+    // The one exception to "cues sharing an anchor run in parallel": an
+    // entrance waits for the exits on its anchor, so new content never draws
+    // over old content that is still fading out.
+    for (const { action: a } of resolved) {
+      if (a.action !== "appear" && a.action !== "reveal") continue;
+      const exitsEnd = Math.max(
+        a.from,
+        ...resolved.filter((r) => r.action.action === "exit" && r.action.from === a.from).map((r) => r.action.to),
+      );
+      a.to += exitsEnd - a.from;
+      a.from = exitsEnd;
+    }
+    for (const { el, action } of resolved) {
+      el.actions.push(action);
+      if (action.action === "exit") el.end = action.to;
+    }
   });
   const list = [...elements.values()];
   // Actions apply in start order; cues sharing an anchor keep storyboard order.

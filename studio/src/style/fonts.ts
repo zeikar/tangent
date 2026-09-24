@@ -6,6 +6,7 @@ import amsRegular from "katex/dist/fonts/KaTeX_AMS-Regular.woff2";
 import mainBold from "katex/dist/fonts/KaTeX_Main-Bold.woff2";
 import mainItalic from "katex/dist/fonts/KaTeX_Main-Italic.woff2";
 import mainRegular from "katex/dist/fonts/KaTeX_Main-Regular.woff2";
+import mathBoldItalic from "katex/dist/fonts/KaTeX_Math-BoldItalic.woff2";
 import mathItalic from "katex/dist/fonts/KaTeX_Math-Italic.woff2";
 import size1 from "katex/dist/fonts/KaTeX_Size1-Regular.woff2";
 import size2 from "katex/dist/fonts/KaTeX_Size2-Regular.woff2";
@@ -22,6 +23,7 @@ const faces = [
   { family: "KaTeX_Main", url: mainBold, weight: "bold" },
   { family: "KaTeX_Main", url: mainItalic, style: "italic" },
   { family: "KaTeX_Math", url: mathItalic, style: "italic" },
+  { family: "KaTeX_Math", url: mathBoldItalic, weight: "bold", style: "italic" },
   { family: "KaTeX_Size1", url: size1 },
   { family: "KaTeX_Size2", url: size2 },
   { family: "KaTeX_Size3", url: size3 },

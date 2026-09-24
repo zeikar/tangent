@@ -72,7 +72,8 @@ export const fill = {
 } as const;
 
 export const mark = {
-  labelGap: 24, // edge or line to its label
+  labelGap: 24, // line (number line, dimension) to its label; sheet to its title
+  edgeLabelGap: 12, // sheet edge to its label: tight, so it can't read as a neighbor's
   tick: 24, // number-line tick
   endTick: 16, // dimension-line end tick
   marker: 28, // number-line marker triangle width

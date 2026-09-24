@@ -6,8 +6,9 @@
 // --frames, which renders those frames instead of the beat ends). The
 // composition id is the slug.
 import { execFileSync } from "node:child_process";
-import { mkdirSync, readFileSync } from "node:fs";
+import { mkdirSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
+import { assertCuesFresh } from "./cues-fresh.mts";
 
 const [episodeArg, ...flags] = process.argv.slice(2);
 if (!episodeArg) throw new Error("usage: node scripts/beat-stills.mts <episode dir> [--clean] [--frames=a,b]");
@@ -16,7 +17,7 @@ const slug = basename(episode);
 const clean = flags.includes("--clean");
 const only = flags.find((f) => f.startsWith("--frames="))?.slice("--frames=".length);
 
-const cues = JSON.parse(readFileSync(join(episode, "cues.json"), "utf8"));
+const cues = assertCuesFresh(episode);
 const shots: { name: string; frame: number }[] = only
   ? only.split(",").map((f) => ({ name: "frame", frame: Number(f) }))
   : cues.beats.map((b: { id: string; endFrame: number }) => ({ name: b.id, frame: b.endFrame }));

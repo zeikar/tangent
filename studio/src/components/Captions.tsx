@@ -35,9 +35,14 @@ export const Captions: React.FC<{ captions: Caption[]; frame: number; fps: numbe
         }}
       >
         <div>
-          {/* Display style: an inline \frac would set its digits at half the caption's size. */}
+          {/* Display style: an inline \frac would set its digits at half the caption's
+              size. Bold: regular KaTeX reads lighter than the bold caption text. */}
           {cur.text.split("$").map((seg, i) =>
-            i % 2 ? <Tex key={i} tex={`\\displaystyle ${seg}`} /> : <React.Fragment key={i}>{seg}</React.Fragment>,
+            i % 2 ? (
+              <Tex key={i} tex={`\\displaystyle\\boldsymbol{${seg}}`} />
+            ) : (
+              <React.Fragment key={i}>{seg}</React.Fragment>
+            ),
           )}
         </div>
       </div>

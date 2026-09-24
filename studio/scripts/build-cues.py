@@ -1,16 +1,25 @@
 """Turns an aligned narration take into the episode's narration.mp3, words.json
 and cues.json.
 
-usage: python3 studio/scripts/build-cues.py episodes/<slug> take.wav take.words.json
+usage: python3 studio/scripts/build-cues.py episodes/<slug> \
+           episodes/<slug>/take<N>.wav episodes/<slug>/take<N>.words.json
+
+take<N>.words.json is align.py's output for the chosen take. It stays in the
+episode folder (committed), so the build reruns without re-aligning.
 
 - Trims the take's leading silence to LEAD seconds and ends the audio the last
   beat's pauseAfter seconds after its speech ends.
 - Inserts each beat's pauseAfter as digital silence in the gap between the
   beat's last word and the next beat's first word.
+- Writes narration.mp3 as the video's audio master: the take on both stereo
+  channels, with one gain so it measures TARGET_LUFS integrated and at most
+  MAX_TRUE_PEAK (gain only, so timestamps stay valid).
 - Writes words.json (align.py format, shifted into narration.mp3's timeline)
   and cues.json: per beat startFrame / endFrame (inclusive) / pauseFrame, and
   the frame of every caption and cue anchor (plus untilFrame), in storyboard
-  order. Frames at the fps in studio/src/style/theme.ts.
+  order. Frames at the fps in studio/src/style/theme.ts. cues.json also
+  records storyboard.json's SHA-256; render.mts and beat-stills.mts refuse
+  a cues.json built from another version of it.
 
 Where speech ends is measured, not taken from the aligner (its word ends run
 early): the start of the first run of SILENCE_RUN seconds below SILENCE_DB
@@ -18,6 +27,7 @@ after the beat's last word starts. That point is also the beat's
 {"pause": true} anchor.
 """
 import array
+import hashlib
 import json
 import math
 import os
@@ -31,13 +41,17 @@ LEAD = 0.1  # seconds of silence kept before the first word
 SILENCE_DB = -45.0  # dBFS RMS in HOP windows
 SILENCE_RUN = 0.15  # seconds; longer than a stop-consonant closure
 HOP = 0.01
+TARGET_LUFS = -14.0  # YouTube turns louder audio down, quieter audio stays quiet
+MAX_TRUE_PEAK = -1.0  # dBTP
+DUAL_MONO = "pan=stereo|c0=c0|c1=c0"
 
 ep, take_path, words_path = sys.argv[1:4]
 studio = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 theme = open(os.path.join(studio, "src/style/theme.ts"), encoding="utf-8").read()
 FPS = int(re.search(r"VIDEO = \{[^}]*fps: (\d+)", theme).group(1))
 
-sb = json.load(open(os.path.join(ep, "storyboard.json"), encoding="utf-8"))
+sb_bytes = open(os.path.join(ep, "storyboard.json"), "rb").read()
+sb = json.loads(sb_bytes)
 aligned = json.load(open(words_path, encoding="utf-8"))
 
 with wave.open(take_path) as w:
@@ -69,6 +83,17 @@ def speech_end(after, before):
             return (i - run + 1) * HOP
         i += 1
     return None
+
+
+def loudness(path, af):
+    """(integrated LUFS, true peak dBTP) of `path` after filter `af`."""
+    err = subprocess.run(
+        ["ffmpeg", "-hide_banner", "-nostats", "-i", path, "-af", f"{af},ebur128=peak=true", "-f", "null", "-"],
+        capture_output=True, text=True, check=True,
+    ).stderr
+    summary = err[err.rindex("Summary:"):]
+    return (float(re.search(r"I:\s+(-?[\d.]+) LUFS", summary).group(1)),
+            float(re.search(r"Peak:\s+(-?[\d.]+) dBFS", summary).group(1)))
 
 
 def strip(word):
@@ -140,9 +165,15 @@ with tempfile.TemporaryDirectory() as tmp:
         w.setsampwidth(2)
         w.setframerate(rate)
         w.writeframes(out.tobytes())
+    lufs, peak = loudness(wav_path, DUAL_MONO)
+    gain = TARGET_LUFS - lufs
+    if peak + gain > MAX_TRUE_PEAK:
+        gain = MAX_TRUE_PEAK - peak
+        print(f"WARNING: true peak limits the gain; narration will be {lufs + gain:.1f} LUFS, "
+              f"not {TARGET_LUFS}", file=sys.stderr)
     subprocess.run(
-        ["ffmpeg", "-v", "error", "-y", "-i", wav_path, "-codec:a", "libmp3lame",
-         "-q:a", "2", os.path.join(ep, "narration.mp3")],
+        ["ffmpeg", "-v", "error", "-y", "-i", wav_path, "-af", f"{DUAL_MONO},volume={gain:.2f}dB",
+         "-codec:a", "libmp3lame", "-q:a", "2", os.path.join(ep, "narration.mp3")],
         check=True,
     )
 
@@ -186,11 +217,14 @@ for k, b in enumerate(beats):
     beats[k] = {key: b[key] for key in b_keys}
 
 with open(os.path.join(ep, "cues.json"), "w", encoding="utf-8") as f:
-    json.dump({"fps": FPS, "durationInFrames": n_frames, "beats": beats}, f,
+    json.dump({"storyboardSha256": hashlib.sha256(sb_bytes).hexdigest(), "fps": FPS,
+               "durationInFrames": n_frames, "beats": beats}, f,
               ensure_ascii=False, indent=1)
 
+lufs_out, peak_out = loudness(os.path.join(ep, "narration.mp3"), "anull")
 print(f"trimmed {trim:.3f}s lead; inserted {[p for _, p in inserts]}; "
-      f"narration {n_frames} frames ({n_frames / FPS:.2f}s)")
+      f"narration {n_frames} frames ({n_frames / FPS:.2f}s); "
+      f"gain {gain:+.2f} dB -> {lufs_out:.1f} LUFS, true peak {peak_out:.1f} dBTP")
 for k, b in enumerate(beats):
     gap = (beat_words[k + 1][0]["start"] - ends[k]) if k + 1 < len(beats) else None
     print(f"{b['id']}: frames {b['startFrame']}-{b['endFrame']}, speech ends {b['pauseFrame']}"

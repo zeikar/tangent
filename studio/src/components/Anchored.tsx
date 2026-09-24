@@ -1,10 +1,11 @@
 import React from "react";
 
-type Anchor = "center" | "top" | "left";
+type Anchor = "center" | "top" | "bottom" | "left";
 
 const shift: Record<Anchor, string> = {
   center: "-50% -50%",
   top: "-50% 0", // (x, y) is the top-center of the content
+  bottom: "-50% -100%", // (x, y) is the bottom-center of the content
   left: "0 -50%", // (x, y) is the left-middle of the content
 };
 

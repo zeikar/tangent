@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
 import { bump, ElementTimeline, lerp, mix, phase, rawProgress, Scene, themeColor } from "../storyboard/timeline";
-import { color, fill, font, stroke, type, VIDEO } from "../style/theme";
+import { color, fill, font, mark, stroke, type, VIDEO } from "../style/theme";
 import { Anchored } from "./Anchored";
 import { Box, SheetName, SheetShape } from "./PaperRect";
 import { Tex } from "./Tex";
@@ -54,10 +54,10 @@ export const HalvingNest: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ e
   let opacity = 0;
   let draw = 0;
   let content = 0;
-  let titleOpacity = 1; // name and sub
   const cut = levels.map(() => 0); // share of each cut line drawn
   const labelIn = levels.map(() => 0);
-  let focus = 0;
+  let fadeRest = 0; // focusKept, first 30%: everything but the kept piece fades out
+  let focus = 0; // focusKept, the rest: the kept piece moves and scales
   let focusTarget: Box | null = null;
   let focusName: string | null = null;
   let keptStroke = strokeColor;
@@ -83,14 +83,14 @@ export const HalvingNest: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ e
           labelIn[splitLevels + i] = a.ease(Math.max((local - 0.6) / 0.4, 0));
         }
         splitLevels += n;
-        titleOpacity = 1 - cut[0];
         break;
       }
       case "pulseKept":
         keptStroke = mix(strokeColor, themeColor(a.params.color), bump(a, frame));
         break;
       case "focusKept":
-        focus = e;
+        fadeRest = phase(a, frame, 0, 0.3);
+        focus = phase(a, frame, 0.3, 1);
         focusTarget = { cx: a.params.center[0], cy: a.params.center[1], w: a.params.w, h: a.params.h };
         focusName = a.params.name;
         break;
@@ -116,7 +116,7 @@ export const HalvingNest: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ e
     : keptFrom;
   const last = levels.length - 1;
   const keptLabel = labelIn[last] > 0 ? p.labels[last] : null;
-  const restOpacity = opacity * (1 - focus);
+  const restOpacity = opacity * (1 - fadeRest);
   const plain = { color: strokeColor, width: stroke.sheet };
   const edge = { color: keptStroke, width: stroke.sheet };
   const line = (c: [number, number, number, number], share: number, key: number) => (
@@ -158,11 +158,17 @@ export const HalvingNest: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ e
               <div style={{ ...type.label, fontFamily: font.sans, color: color.muted }}>{p.labels[i]}</div>
             </Anchored>
           ))}
-          {p.name && titleOpacity > 0 ? (
-            <Anchored x={p.center[0]} y={p.center[1]} anchor="center" opacity={titleOpacity * content}>
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                <div style={{ ...type.label, fontFamily: font.sans, color: color.text }}>{p.name}</div>
-                {p.sub ? <Tex tex={p.sub} color={color.muted} /> : null}
+          {/* Title "name · sub" above the sheet, where no cut line crosses it. */}
+          {p.name ? (
+            <Anchored x={p.center[0]} y={sheet.t - mark.labelGap} anchor="bottom" opacity={content}>
+              <div style={{ display: "flex", alignItems: "baseline", ...type.label, fontFamily: font.sans, color: color.text }}>
+                {p.name}
+                {p.sub ? (
+                  <>
+                    <span style={{ color: color.muted, whiteSpace: "pre" }}> · </span>
+                    <Tex tex={p.sub} color={color.muted} />
+                  </>
+                ) : null}
               </div>
             </Anchored>
           ) : null}

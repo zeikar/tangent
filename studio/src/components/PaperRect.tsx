@@ -1,5 +1,5 @@
-import React from "react";
-import { AbsoluteFill } from "remotion";
+import React, { useLayoutEffect, useRef, useState } from "react";
+import { AbsoluteFill, continueRender, delayRender, useCurrentScale } from "remotion";
 import {
   bump,
   ElementTimeline,
@@ -12,6 +12,7 @@ import {
 } from "../storyboard/timeline";
 import { color, fill, font, mark, stroke, type, VIDEO } from "../style/theme";
 import { Anchored } from "./Anchored";
+import { expressionInk } from "./ink";
 import { Tex } from "./Tex";
 
 // A sheet of paper: an axis-aligned rectangle that folds, stands up, and
@@ -372,12 +373,12 @@ const Folding: React.FC<{ s: PaperState; flip: number }> = ({ s, flip }) => {
   // The flap's fill rises to fill.flap as it lifts and drops to nothing as it
   // lands, so the landed stack reads as the single half it becomes.
   const flapFill = Math.min(
-    lerp(s.fillOpacity, fill.flap, Math.min(flip / 0.2, 1)),
+    lerp(s.fillOpacity * s.content, fill.flap, Math.min(flip / 0.2, 1)),
     fill.flap * Math.min((1 - flip) / 0.2, 1),
   );
   return (
     <>
-      <rect x={l} y={cy} width={w} height={h / 2} fill={s.fill} fillOpacity={s.fillOpacity} />
+      <rect x={l} y={cy} width={w} height={h / 2} fill={s.fill} fillOpacity={s.fillOpacity * s.content} />
       {line(l, cy, l, cy + h / 2)}
       {line(l, cy + h / 2, r, cy + h / 2)}
       {line(r, cy, r, cy + h / 2)}
@@ -398,21 +399,43 @@ const Folding: React.FC<{ s: PaperState; flip: number }> = ({ s, flip }) => {
   );
 };
 
-const SideLabel: React.FC<{ box: Box; side: Side; opacity: number; children: React.ReactNode }> = ({
+// Edge label, placed by its ink rather than its line box: KaTeX's box adds
+// more room above a digit than above a fraction, so equal box gaps look unequal.
+const SideLabel: React.FC<{ box: Box; side: Side; opacity: number; tex: string; color: string }> = ({
   box,
   side,
   opacity,
-  children,
-}) =>
-  side === "bottom" ? (
-    <Anchored x={box.cx} y={box.cy + box.h / 2 + mark.labelGap} anchor="top" opacity={opacity}>
-      {children}
-    </Anchored>
-  ) : (
-    <Anchored x={box.cx + box.w / 2 + mark.labelGap} y={box.cy} anchor="left" opacity={opacity}>
-      {children}
-    </Anchored>
+  tex,
+  color: c,
+}) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const scale = useCurrentScale();
+  const [ink, setInk] = useState<{ l: number; t: number; r: number; b: number } | null>(null);
+  useLayoutEffect(() => {
+    const handle = delayRender(`measure label ${tex}`);
+    document.fonts.ready.then(() => {
+      const outer = ref.current!.getBoundingClientRect();
+      const r = expressionInk(ref.current!);
+      setInk({
+        l: (r.left - outer.left) / scale,
+        t: (r.top - outer.top) / scale,
+        r: (r.right - outer.left) / scale,
+        b: (r.bottom - outer.top) / scale,
+      });
+      continueRender(handle);
+    });
+  }, [tex, scale]);
+  const at = !ink
+    ? { left: 0, top: 0 }
+    : side === "bottom"
+      ? { left: box.cx - (ink.l + ink.r) / 2, top: box.cy + box.h / 2 + mark.edgeLabelGap - ink.t }
+      : { left: box.cx + box.w / 2 + mark.edgeLabelGap - ink.l, top: box.cy - (ink.t + ink.b) / 2 };
+  return (
+    <div ref={ref} style={{ position: "absolute", ...at, opacity: ink ? opacity : 0, display: "flex", whiteSpace: "nowrap" }}>
+      <Tex tex={tex} color={c} />
+    </div>
   );
+};
 
 export const PaperRect: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, scene }) => {
   const s = scene.paper(el.spec.id);
@@ -441,14 +464,23 @@ export const PaperRect: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el,
         </g>
       </Svg>
       {s.labels.map((l) => (
-        <SideLabel key={`${l.side}-${l.tex}`} box={s.box} side={l.side} opacity={l.opacity * s.content}>
-          <Tex tex={l.tex} color={l.color} />
-        </SideLabel>
+        <SideLabel
+          key={`${l.side}-${l.tex}`}
+          box={s.box}
+          side={l.side}
+          opacity={l.opacity * s.content}
+          tex={l.tex}
+          color={l.color}
+        />
       ))}
       {s.valueLabel ? (
-        <SideLabel box={s.box} side="right" opacity={s.valueLabel.opacity * s.content}>
-          <Tex tex={(s.box.h / s.box.w).toFixed(3)} color={s.valueLabel.color} />
-        </SideLabel>
+        <SideLabel
+          box={s.box}
+          side="right"
+          opacity={s.valueLabel.opacity * s.content}
+          tex={(s.box.h / s.box.w).toFixed(3)}
+          color={s.valueLabel.color}
+        />
       ) : null}
       {s.names.map((n) => (
         <SheetName key={n.text} box={s.box} text={n.text} opacity={n.opacity * s.content} />
