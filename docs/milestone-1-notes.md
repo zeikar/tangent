@@ -126,3 +126,39 @@ C1–C11; the script may only use those.
 - Worth recording alongside the claims: wording traps (not "exactly" √2, fold
   direction, the half is rotated 90°). They feed the script and the fact-check
   review.
+
+### 4. Script (2026-09-24)
+
+- **First draft by the orchestrator** (~10 min, 262 syllables ≈ 49 s). The
+  human then pointed out the original plan: specialist agents per stage group,
+  collaborating through files (now decisions.md → Agents). The draft was set
+  aside as a baseline, and the script & storyboard agent writes the script from
+  `topic.md` + `research.md` + `docs/briefs/script-storyboard.md` alone.
+- **What the brief had to carry beyond the input files** (i.e. what the handoff
+  files lack): the TTS speech rate (5.3 syl/s, only in these notes), the
+  display/read-aloud rules and the `$...$` caption convention, the requirement
+  that read-aloud text be aligner-safe (Hangul only), tone/register, and the
+  audience. These belong in a studio-level config or style doc that every
+  episode's agents read.
+- **Agent draft** (~15 min including its own reviewer subagent): 9 beats, 233
+  syllables, estimated 44 s narration; a TTS table read came out at 45.8 s, so
+  the syllable budget is accurate to about 2 s. Compared with the orchestrator
+  draft it is tighter, adds a ratio-sweep beat ("only √2 works"), uses US
+  Letter as the counterexample, and ends on a loop back to the first frame.
+- **A TTS table read at the script checkpoint is cheap and worth keeping**
+  (free tier, ~30 s): the human hears pronunciation problems before the
+  storyboard is built on the script. Whisper confirmed nothing was dropped.
+- **Missing context the agent reported** (candidates for a studio-level
+  narration/style doc): how captions map to narration (word-synced or per
+  beat); how to record silent visual time and who inserts it; a pronunciation
+  list shared across episodes (A0 → 에이제로, x/2 → 이분의 엑스, ratios with
+  대); a rule for Hangul numbers that collide with grammar words ("루트
+  이예요" can sound like "루트예요"; "일이", "이 하나"); a scaling rule for
+  "same shape" overlays; whether unspoken labels need claim IDs; whether the
+  loop ending is a channel convention.
+- **Checkpoint format.** Asked to review the script, the human's first reaction
+  was "do I have to read it?". Listening to the 45 s table read was enough to
+  approve. Later checkpoints should present something to hear or see (table
+  read, a handful of frames), not a document to read.
+- Approved with the orchestrator's calls on the open questions: US Letter as
+  the counterexample, loop ending (per-episode for now), tone as written.
