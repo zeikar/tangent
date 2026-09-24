@@ -17,6 +17,15 @@ Filled in at the end of the milestone.
 
 ## Log
 
+### 1. Topic (2026-09-24)
+
+- Agent drafted five candidates in one pass (a few minutes, no research).
+- **Human wait dominated.** The pick came about an hour later: it was asked
+  alongside the TTS key requests, and the decisions got answered one at a time.
+  Asking one decision per message may move faster than bundling.
+- Picked A4 paper ratio (the recommendation), slug `001-a4-paper-ratio`, and the
+  media rule (text + final narration in git).
+
 ### 2. Tech spike: Remotion (2026-09-24)
 
 About 20 min of agent work. Result: `studio/` renders 1080×1920 stills and
@@ -104,3 +113,16 @@ Engine landscape and the decision are in decisions.md → Narration.
   default in `compare.mts`). The human found all samples similar and leaned
   toward a female voice; the choice is cheap to revisit because timing binds to
   beats, so a new voice only means re-running the narration stage.
+
+### 3. Research (2026-09-24)
+
+About 10 min. Two independent sources that agree (Kuhn's Cambridge page and
+Wikipedia), plus `verify.py` for every numeric claim. research.md lists claims
+C1–C11; the script may only use those.
+
+- The primary source (ISO 216 on iso.org) returned 403 to the fetch tool, so the
+  standard itself went unread. Paywalled standards will recur; agreement between
+  two secondary sources is the fallback.
+- Worth recording alongside the claims: wording traps (not "exactly" √2, fold
+  direction, the half is rotated 90°). They feed the script and the fact-check
+  review.
