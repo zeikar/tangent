@@ -162,3 +162,34 @@ C1–C11; the script may only use those.
   read, a handful of frames), not a document to read.
 - Approved with the orchestrator's calls on the open questions: US Letter as
   the counterexample, loop ending (per-episode for now), tone as written.
+
+### 5. Storyboard (2026-09-24)
+
+Same agent as the script (resumed), ~25 min including its own validator and a
+fresh reviewer subagent (4 must-fix, 7 should-fix, all applied). Output: 38 KB
+`storyboard.json`, 9 beats, 6 new components (PaperRect, Mismatch, Equation,
+NumberLine, Dimension, HalvingNest). The agent's validator is promoted to
+`studio/scripts/validate-storyboard.py`.
+
+- **The schema was missing things the agent had to invent:** showing an element
+  on a beat's first frame (`visibleAtStart`, needed by the hook and the loop),
+  per-cue easing, draw order, and a free-form `notes` field. Fold these into
+  the brief's schema.
+- **Timing gap: no "after the previous cue".** Every start must be a spoken
+  word, which forced compound actions (`standAndFit`) and picking later words
+  as workarounds. A cue-relative anchor (`{ "after": "<cue id>" }`) keeps
+  timing beat-bound without seconds; consider it for the next episode.
+- **Style values invented in the storyboard** (stroke 6 px, dash 18/12, tick
+  sizes, box padding) belong in `theme.ts`.
+- **The storyboard was written blind.** Word timings were estimated from the
+  speech rate, and KaTeX sizes were guessed (B5's fraction sits ~35 px from a
+  label). Two cheap fixes: align the approved table read before the storyboard
+  pass, and a studio script that measures a TeX string's rendered box.
+- Riskiest beats per the agent: B6 equation morphs (Manim candidate), the 2D
+  fold in the hook, the pixel-exact loop, and B5/B8 layout.
+- **Storyboard checkpoint as a page, not a file.** Asked for the storyboard,
+  the human wanted a link, not 38 KB of JSON. A generated viewer (captions,
+  cues under the words that trigger them, the table read playing in sync) was
+  ~20 min to build from scratch. The generator is still a throwaway in the
+  session scratchpad; it is a candidate studio tool for every episode's
+  storyboard checkpoint, and later for the QA review (with real frames).

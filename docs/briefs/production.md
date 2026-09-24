@@ -49,6 +49,9 @@ commit; the orchestrator does.
   anchors.
 - On-screen text (captions, labels) comes from `storyboard.json`, not string
   literals in scene code, so an English version is a data swap.
+- The storyboard's `notes` carry style values the theme lacks (stroke width,
+  dash pattern, tick sizes, box padding): add them to `theme.ts` and use them
+  from there.
 - Colors, type, easing, safe area, and zones from the theme only. Nothing
   important outside the safe area; math must fit its box (scale long equations
   down, never let them run off-frame).
