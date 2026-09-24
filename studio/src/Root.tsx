@@ -1,5 +1,8 @@
 import "./style/fonts";
-import { Composition } from "remotion";
+import { Composition, Folder, Still } from "remotion";
+import { AVATAR, Avatar } from "./brand/Avatar";
+import { BANNER, Banner, bannerSchema } from "./brand/Banner";
+import { LOGO_UNIT, LogoStill } from "./brand/Logo";
 import { StyleSheet, styleSheetSchema } from "./compositions/StyleSheet";
 import { A4PaperRatio, a4PaperRatioSchema, cues as a4Cues } from "./episodes/001-a4-paper-ratio";
 import { VIDEO } from "./style/theme";
@@ -23,6 +26,17 @@ export const RemotionRoot: React.FC = () => {
         durationInFrames={a4Cues.durationInFrames}
         {...VIDEO}
       />
+      <Folder name="brand">
+        <Still id="Logo" component={LogoStill} width={LOGO_UNIT} height={LOGO_UNIT} />
+        <Still id="Avatar" component={Avatar} {...AVATAR} />
+        <Still
+          id="Banner"
+          component={Banner}
+          schema={bannerSchema}
+          defaultProps={{ showSafeArea: false }}
+          {...BANNER}
+        />
+      </Folder>
     </>
   );
 };
