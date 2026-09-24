@@ -62,6 +62,28 @@ re-run, hand-edited, or gated by a human.
 - **Human checkpoints:** topic, script/storyboard, final cut. No full autonomy
   early on.
 
+## Agents: one specialist per stage group
+
+Each stage group belongs to a specialist agent: a fresh subagent that reads the
+previous stage's files and writes its own. Agents collaborate only through
+files. The main conversation orchestrates: it writes each agent's brief, passes
+files along, and stops at the human checkpoints.
+
+| Agent | Stages | Reads → writes |
+| ----- | ------ | -------------- |
+| Topic | 1 | past episodes → `topic.md` (candidates, duplicate check) |
+| Research | 3 | `topic.md` → `research.md` (claims, sources, dates), `verify.py` |
+| Script & storyboard | 4–5 | `topic.md`, `research.md` → `script.md` → `storyboard.json` |
+| Production | 6–7 | `storyboard.json` → narration, word timestamps, beat cues → scenes → `render.mp4` |
+| QA | 8 | render, `research.md` → `review.md` (captions, audio sync, layout, facts) |
+
+- Script and storyboard share one agent because the visual is the explanation
+  (see Pipeline). The human still approves the script before the storyboard.
+- QA is never the agent that built the scenes.
+- In milestone 1 the briefs are hand-written in `docs/briefs/`. Whatever a brief
+  has to carry beyond the input files shows what the handoff files are missing.
+  The briefs become the stage skills.
+
 ## Episode folders and git
 
 - **Slug: `NNN-english-kebab`** (e.g. `001-a4-paper-ratio`). The number keeps

@@ -16,4 +16,6 @@ Directories get created when they first have content.
 - `episodes/<slug>/`: one short per folder, holding each pipeline stage's
   handoff file (see decisions.md → Pipeline).
 - `studio/`: Remotion project: style guide + reusable scene components.
-- `.claude/skills/`: one skill per pipeline stage.
+- `docs/briefs/`: hand-written agent briefs from milestone 1; seeds for the
+  skills.
+- `.claude/skills/`: one skill per agent role (see decisions.md → Agents).
