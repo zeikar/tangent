@@ -92,16 +92,14 @@ export const mix = (a: string, b: string, t: number) =>
 
 export const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
-// Easing per the storyboard notes: out for entrances, in for exits, smooth for
-// everything else, unless the cue asks for linear.
+// Easing: out for entrances and exits (both start moving on their word),
+// smooth for everything else, unless the cue asks for linear.
 const easeFor = (c: StoryboardCue) =>
   c.params?.ease === "linear"
     ? ease.linear
-    : c.action === "appear" || c.action === "reveal"
+    : c.action === "appear" || c.action === "reveal" || c.action === "exit"
       ? ease.out
-      : c.action === "exit"
-        ? ease.in
-        : ease.smooth;
+      : ease.smooth;
 
 export const resolveTimeline = (sb: Storyboard, cues: Cues): ElementTimeline[] => {
   if (sb.beats.length !== cues.beats.length) throw new Error("cues.json beats differ from storyboard");
@@ -127,9 +125,10 @@ export const resolveTimeline = (sb: Storyboard, cues: Cues): ElementTimeline[] =
       }
       const el = elements.get(c.target);
       if (!el) throw new Error(`${beat.id}: cue target ${c.target} is not declared`);
-      const len =
-        t.untilFrame ??
-        t.frame + Math.round(duration[(c.speed ?? "base") as keyof typeof duration] * cues.fps);
+      // Exits are short whatever their speed, so an entrance waiting on them
+      // (below) follows its word closely.
+      const seconds = c.action === "exit" ? duration.exit : duration[(c.speed ?? "base") as keyof typeof duration];
+      const len = t.untilFrame ?? t.frame + Math.round(seconds * cues.fps);
       if (Number.isNaN(len)) throw new Error(`${beat.id}: bad speed ${c.speed}`);
       return { el, action: { action: c.action, params: c.params ?? {}, from: t.frame, to: len, ease: easeFor(c) } };
     });

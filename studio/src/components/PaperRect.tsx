@@ -164,11 +164,13 @@ export const paperState = (el: ElementTimeline, scene: Scene): PaperState => {
         break;
       case "fold": {
         if (s.box.w > s.box.h) throw new Error(`${el.spec.id}: fold expects a portrait sheet (top half onto bottom)`);
-        const drawLine = phase(a, frame, 0, 0.3);
+        // The name is gone before the fold line draws, so the line never crosses it.
+        const nameOut = phase(a, frame, 0, 0.15);
+        const drawLine = phase(a, frame, 0.15, 0.3);
         const flip = phase(a, frame, 0.3, 1);
         if (t < 1) {
           s.midline = Math.max(s.midline, drawLine);
-          s.names = s.names.map((n) => ({ ...n, opacity: n.opacity * (1 - drawLine) }));
+          s.names = s.names.map((n) => ({ ...n, opacity: n.opacity * (1 - nameOut) }));
           s.flip = flip;
           s.stroke = mix(s.stroke, color.teal, flip);
           s.edge = { long: mix(s.edge.long, color.teal, flip), short: mix(s.edge.short, color.teal, flip) };

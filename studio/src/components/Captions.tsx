@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
 import { Caption } from "../storyboard/timeline";
-import { color, duration, ease, font, safe, type, VIDEO, zone } from "../style/theme";
+import { color, content, duration, ease, font, type, zone } from "../style/theme";
 import { Tex } from "./Tex";
 
 // Phrase captions in the caption band: plain text with $...$ math, each shown
@@ -19,8 +19,8 @@ export const Captions: React.FC<{ captions: Caption[]; frame: number; fps: numbe
       <div
         style={{
           position: "absolute",
-          left: safe.left,
-          width: VIDEO.width - safe.left - safe.right,
+          left: content.left,
+          width: content.right - content.left,
           top: zone.caption.top,
           height: zone.caption.bottom - zone.caption.top,
           display: "flex",

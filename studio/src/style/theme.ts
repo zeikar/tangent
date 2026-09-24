@@ -30,11 +30,12 @@ export const type = {
   headline: { fontSize: 96, fontWeight: 800, lineHeight: 1.2 },
   body: { fontSize: 56, fontWeight: 600, lineHeight: 1.35 },
   caption: { fontSize: 60, fontWeight: 700, lineHeight: 1.3 },
-  label: { fontSize: 44, fontWeight: 600, lineHeight: 1.2 },
+  // Labels and inline math: lowercase glyphs at least 30 px tall, the floor for
+  // reading on a phone.
+  label: { fontSize: 56, fontWeight: 600, lineHeight: 1.2 },
   // KaTeX scales its glyphs to 1.21em of this, so 80 renders like ~97px text.
   mathDisplay: 80,
-  mathInline: 52,
-  mathSmall: 44, // number-line mark labels
+  mathInline: 58,
 } as const;
 
 // Manim's `smooth` rate function: a normalized sigmoid, 3b1b's default motion.
@@ -53,8 +54,7 @@ const smooth = (t: number) =>
 
 export const ease = {
   smooth, // moves and transforms (default)
-  out: Easing.bezier(0.16, 1, 0.3, 1), // entrances: arrive fast, settle
-  in: Easing.bezier(0.7, 0, 0.84, 0), // exits
+  out: Easing.bezier(0.16, 1, 0.3, 1), // entrances and exits: move at once, settle
   linear: (t: number) => t, // tracing along with time
 } as const;
 
@@ -89,12 +89,21 @@ export const duration = {
   fast: 0.35,
   base: 0.7,
   slow: 1.2,
+  exit: 0.2, // every exit, whatever its speed: it clears the way for what comes next
 } as const;
 
 // Shorts overlays (header, action buttons on the right, title/description at
 // the bottom, which grows when expanded). YouTube publishes no official spec;
 // these are conservative values from third-party overlay templates.
 export const safe = { top: 240, bottom: 420, left: 60, right: 140 } as const;
+
+// Content centers on the frame, not on the asymmetric safe area, and keeps the
+// safe area's wider (right) margin on both sides.
+export const content = {
+  centerX: VIDEO.width / 2,
+  left: safe.right,
+  right: VIDEO.width - safe.right,
+} as const;
 
 // Vertical zones inside the safe area (y in px). The picture owns the visual
 // zone; captions own the band below it.

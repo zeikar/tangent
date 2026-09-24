@@ -74,7 +74,8 @@ def geom_ok(where, props):
     if "center" not in props:
         return
     (x, y), w, h = props["center"], props.get("w", 0), props.get("h", 0)
-    if x - w / 2 < 60 or x + w / 2 > 940 or y - h / 2 < 240 or y + h / 2 > 1250:
+    # content (x) and zone.visual (y) in studio/src/style/theme.ts
+    if x - w / 2 < 140 or x + w / 2 > 940 or y - h / 2 < 240 or y + h / 2 > 1250:
         err(f"{where}: geometry {props['center']} {w}x{h} leaves the visual zone")
 
 

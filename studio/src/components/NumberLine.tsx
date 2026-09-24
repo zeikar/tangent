@@ -15,7 +15,8 @@ type Props = {
   x1: number;
   y: number;
   ends?: boolean;
-  marks?: { value: number; tex: string; color: string }[];
+  // Each mark's label is plain text (styled like a sheet name) or tex.
+  marks?: { value: number; color: string; text?: string; tex?: string }[];
   markerFrom?: string;
 };
 
@@ -94,7 +95,11 @@ export const NumberLine: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el
           opacity={rest}
           scale={1 + (mark.pulseScale - 1) * (pulse.get(m.value) ?? 0)}
         >
-          <Tex tex={m.tex} color={themeColor(m.color)} fontSize={type.mathSmall} />
+          {m.text !== undefined ? (
+            <div style={{ ...type.label, fontFamily: font.sans, color: themeColor(m.color) }}>{m.text}</div>
+          ) : (
+            <Tex tex={m.tex!} color={themeColor(m.color)} />
+          )}
         </Anchored>
       ))}
       {p.ends

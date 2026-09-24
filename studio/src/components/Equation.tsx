@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { AbsoluteFill, continueRender, delayRender, useCurrentScale } from "remotion";
 import { ElementTimeline, mix, phase, Scene, themeColor } from "../storyboard/timeline";
-import { mark, safe, stroke, type, VIDEO } from "../style/theme";
+import { content, mark, stroke, type, VIDEO } from "../style/theme";
 import { inkRect } from "./ink";
 import { Tex } from "./Tex";
 
@@ -177,7 +177,7 @@ export const Equation: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, 
       })
     : [];
 
-  // Math must stay inside the safe area: scale the row about its anchor if a layout overflows.
+  // Math must stay inside the content bounds: scale the row about its anchor if a layout overflows.
   const anchorX = p.align ? p.align.x : p.centerX!;
   const fit = Math.min(
     1,
@@ -186,8 +186,8 @@ export const Equation: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, 
       const l = originX[i] + Math.min(...inks.map((b) => b.x0));
       const r = originX[i] + Math.max(...inks.map((b) => b.x1));
       return [
-        l < safe.left ? (anchorX - safe.left) / (anchorX - l) : 1,
-        r > VIDEO.width - safe.right ? (VIDEO.width - safe.right - anchorX) / (r - anchorX) : 1,
+        l < content.left ? (anchorX - content.left) / (anchorX - l) : 1,
+        r > content.right ? (content.right - anchorX) / (r - anchorX) : 1,
       ];
     }),
   );

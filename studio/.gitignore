@@ -9,3 +9,6 @@ out
 # Remotion agent skills are installed locally, not committed (their repo
 # declares no license). See README.md.
 .claude/skills/
+
+# Episode narration, copied here by scripts/build-cues.py (episode media).
+public/episodes/

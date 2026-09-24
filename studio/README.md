@@ -36,7 +36,10 @@ node scripts/narrate.mts $ep
 # Word timestamps for a take (first run downloads 1.3 GB)
 uv run scripts/align.py $ep/take1.wav $ep/take1.txt $ep/take1.words.json
 # Insert pauseAfter silences, normalize to -14 LUFS
-#   → $ep/narration.mp3, words.json, cues.json
+#   → $ep/narration.mp3, words.json, cues.json, and a copy of the narration
+#     in public/episodes/<slug>/ (gitignored), which the composition plays.
+#     An episode renders only after this has run; the rest of the studio
+#     needs no episode media.
 python3 scripts/build-cues.py $ep $ep/take1.wav $ep/take1.words.json
 # A still at every beat's endFrame (safe-area guide on) → $ep/frames/
 node scripts/beat-stills.mts $ep

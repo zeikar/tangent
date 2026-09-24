@@ -34,3 +34,7 @@ for (const { name, frame } of shots) {
   run(["still", bundleDir, slug, out, `--frame=${frame}`, `--props=${JSON.stringify({ showSafeArea: !clean })}`]);
   console.log(out);
 }
+// The storyboard may have changed while the stills rendered.
+if (assertCuesFresh(episode).storyboardSha256 !== cues.storyboardSha256) {
+  throw new Error("cues.json was rebuilt while the stills rendered; they may be stale, rerun");
+}

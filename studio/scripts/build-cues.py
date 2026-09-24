@@ -13,7 +13,8 @@ episode folder (committed), so the build reruns without re-aligning.
   beat's last word and the next beat's first word.
 - Writes narration.mp3 as the video's audio master: the take on both stereo
   channels, with one gain so it measures TARGET_LUFS integrated and at most
-  MAX_TRUE_PEAK (gain only, so timestamps stay valid).
+  MAX_TRUE_PEAK (gain only, so timestamps stay valid). Copies it to
+  studio/public/episodes/<slug>/, where the composition loads it.
 - Writes words.json (align.py format, shifted into narration.mp3's timeline)
   and cues.json: per beat startFrame / endFrame (inclusive) / pauseFrame, and
   the frame of every caption and cue anchor (plus untilFrame), in storyboard
@@ -32,6 +33,7 @@ import json
 import math
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -220,6 +222,10 @@ with open(os.path.join(ep, "cues.json"), "w", encoding="utf-8") as f:
     json.dump({"storyboardSha256": hashlib.sha256(sb_bytes).hexdigest(), "fps": FPS,
                "durationInFrames": n_frames, "beats": beats}, f,
               ensure_ascii=False, indent=1)
+
+public = os.path.join(studio, "public", "episodes", os.path.basename(os.path.abspath(ep)))
+os.makedirs(public, exist_ok=True)
+shutil.copyfile(os.path.join(ep, "narration.mp3"), os.path.join(public, "narration.mp3"))
 
 lufs_out, peak_out = loudness(os.path.join(ep, "narration.mp3"), "anull")
 print(f"trimmed {trim:.3f}s lead; inserted {[p for _, p in inserts]}; "
