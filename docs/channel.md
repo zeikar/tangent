@@ -31,8 +31,10 @@ still says the narration is an AI voice, voluntarily.
 
 ## Per-episode metadata
 
-- **Title:** the viewer's question in under ~40 characters (Shorts truncate),
-  containing the words someone would search for.
+- **Title:** under ~40 characters (Shorts truncate), containing the words
+  someone would search for, posed in terms the viewer already knows. Never
+  put the answer in the title: for 001, "A4 용지 비율의 비밀", not "A4 용지는
+  왜 1:√2일까?" (few viewers know the ratio is 1:√2).
 - **Description:** two lines of what the short shows, the key math in plain
   text, then 출처 with the research.md sources the video relies on, then the
   AI-voice line, then three hashtags (the first three show above the title).
