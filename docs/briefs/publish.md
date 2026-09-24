@@ -29,6 +29,9 @@ as the format.
 - Copy `render.mp4` to `publish/<slug>.mp4`.
 - Export the thumbnail frame from `render.mp4` (exact frame, PNG, 1080×1920)
   to `publish/<slug>.thumb.png`.
+- Symlink the metadata next to them, so the upload tray holds everything while
+  the committed file stays the source: `ln -sf ../episodes/<slug>/publish.md
+  publish/<slug>.md`.
 
 ## Report back
 
