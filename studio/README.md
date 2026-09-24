@@ -39,21 +39,25 @@ Narration and production (API keys in the repo-root `.env`; `ep` is
 `../episodes/<slug>`):
 
 ```sh
+# Right after the script: one TTS take of every 읽기용 line in script.md, plus
+# sped-up copies to compare → $ep/take<N>.wav, take<N>@1.08.wav, ..., take<N>.txt
+node scripts/narrate.mts $ep --tempo=1.08,1.15
+# The human picks a take; record it in $ep/narration.json:
+#   {"source": "take1@1.08.wav", "take": "take1.wav", "tempo": 1.08, ...}
+# Word timestamps for the picked take (first run downloads 1.3 GB); the
+# storyboard is written against these
+uv run scripts/align.py $ep/take1@1.08.wav $ep/take1.txt $ep/take1@1.08.words.json
 # Check storyboard.json against script.md, research.md and the brief's rules
 python3 scripts/validate-storyboard.py $ep
 # Checkpoint page for the human: captions, each cue under its word, narration
-# in sync → $ep/storyboard.html (uses the final narration if built, else the take)
+# in sync → $ep/storyboard.html (final narration if built, else the picked take)
 python3 scripts/storyboard-view.py $ep
-# One TTS take of every beat's readAloud → $ep/take<N>.wav + take<N>.txt
-node scripts/narrate.mts $ep
-# Word timestamps for a take (first run downloads 1.3 GB)
-uv run scripts/align.py $ep/take1.wav $ep/take1.txt $ep/take1.words.json
 # Insert pauseAfter silences, normalize to -14 LUFS
 #   → $ep/narration.mp3, words.json, cues.json, and a copy of the narration
 #     in public/episodes/<slug>/ (gitignored), which the composition plays.
 #     An episode renders only after this has run; the rest of the studio
 #     needs no episode media.
-python3 scripts/build-cues.py $ep $ep/take1.wav $ep/take1.words.json
+python3 scripts/build-cues.py $ep $ep/take1@1.08.wav $ep/take1@1.08.words.json
 # A still at every beat's endFrame (safe-area guide on) → $ep/frames/
 node scripts/beat-stills.mts $ep
 # Video from Remotion (BT.709), narration muxed by ffmpeg → $ep/render.mp4

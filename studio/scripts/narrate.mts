@@ -1,9 +1,16 @@
-// Narration take: every beat's readAloud from storyboard.json, joined with
-// newlines, in one TTS call so the voice stays consistent across beats.
+// Narration take: every beat's 읽기용 line from script.md, joined with
+// newlines, in one TTS call so the voice stays consistent across beats. It runs
+// right after the script is written, so the human approves the take together
+// with the script and the storyboard is written against real word timings.
 // Writes <episode>/take<N>.wav (next free N) and, next to it, take<N>.txt: the
 // exact text sent, which is the transcript align.py needs.
 //
-//   node scripts/narrate.mts ../episodes/<slug>
+// --tempo=1.08,1.15 also writes sped-up copies (pitch kept) as
+// take<N>@<tempo>.wav for the human to compare. The picked file is recorded in
+// <episode>/narration.json and is the episode's narration source from then on.
+//
+//   node scripts/narrate.mts ../episodes/<slug> [--tempo=1.08,1.15]
+import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { geminiSynth } from "./tts.mts";
@@ -12,13 +19,26 @@ const MODEL = "gemini-3.8-flash-tts";
 const VOICE = "Kore";
 
 const episode = process.argv[2];
-if (!episode) throw new Error("usage: node scripts/narrate.mts <episode dir>");
-const storyboard = JSON.parse(readFileSync(join(episode, "storyboard.json"), "utf8"));
-const text = storyboard.beats.map((b: { readAloud: string }) => b.readAloud).join("\n");
+if (!episode) throw new Error("usage: node scripts/narrate.mts <episode dir> [--tempo=1.08,1.15]");
+const script = readFileSync(join(episode, "script.md"), "utf8");
+const lines = [...script.matchAll(/\*\*읽기용:\*\*\s*(.+)/g)].map((m) => m[1].trim());
+if (lines.length === 0) throw new Error(`${episode}/script.md has no 읽기용 lines`);
+const text = lines.join("\n");
 
 let n = 1;
 while (existsSync(join(episode, `take${n}.wav`))) n++;
-const wav = await geminiSynth(text, MODEL, VOICE);
-writeFileSync(join(episode, `take${n}.wav`), wav);
+const take = join(episode, `take${n}.wav`);
+writeFileSync(take, await geminiSynth(text, MODEL, VOICE));
 writeFileSync(join(episode, `take${n}.txt`), text + "\n");
-console.log(join(episode, `take${n}.wav`));
+console.log(take);
+
+const tempos = process.argv
+  .find((a) => a.startsWith("--tempo="))
+  ?.slice("--tempo=".length)
+  .split(",")
+  .filter(Boolean);
+for (const t of tempos ?? []) {
+  const out = join(episode, `take${n}@${t}.wav`);
+  execFileSync("ffmpeg", ["-v", "error", "-y", "-i", take, "-filter:a", `atempo=${t}`, out]);
+  console.log(out);
+}

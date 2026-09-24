@@ -47,8 +47,9 @@ off-frame) to be the main failure mode.
 
 ## Pipeline: file handoffs between stages
 
-`topic.md → research.md (sourced) → script.md → storyboard.json →
-narration audio + word timestamps → scenes → render.mp4 → review.md`
+`topic.md → research.md (sourced) → script.md + narration take →
+word timestamps → storyboard.json → beat cues → scenes → render.mp4 →
+review.md`
 
 Each stage reads the previous file and writes its own, so any stage can be
 re-run, hand-edited, or gated by a human.
@@ -56,14 +57,19 @@ re-run, hand-edited, or gated by a human.
 - **Storyboard is its own stage.** In this style the visual *is* the
   explanation, so script and visuals are designed together. Otherwise the scene
   agent improvises and narration and picture drift apart.
-- **Audio first.** Generate TTS, extract word-level timestamps, then bind
-  animation cues to those beats. Never time animation by hand-set seconds.
+- **Audio before the storyboard.** The TTS take is generated right after the
+  script and approved with it: the human hears it and picks a speed variant.
+  The picked take is aligned to word timestamps, and the storyboard is written
+  against those real timings, then cues bind animation to the words. Never time
+  animation by hand-set seconds. (Milestone 1 wrote the storyboard on
+  estimated timings; the real ones exposed collisions only after rendering.)
 - **Review looks at pixels.** Extract frames per beat and check them visually:
   overlap, off-frame, Shorts UI safe areas (bottom/right), legibility. Check
   facts against research.md sources, and check math computationally where
   possible. The reviewer is a fresh agent, not the one that made the scenes.
-- **Human checkpoints:** topic, script/storyboard, final cut. No full autonomy
-  early on.
+- **Human checkpoints:** topic, script + take, storyboard, final cut. Each is
+  something to hear or see (table-read audio, the storyboard viewer page, the
+  video), not a document to read. No full autonomy early on.
 
 ## Agents: one specialist per stage group
 
@@ -76,12 +82,14 @@ files along, and stops at the human checkpoints.
 | ----- | ------ | -------------- |
 | Topic | 1 | past episodes → `topic.md` (candidates, duplicate check) |
 | Research | 3 | `topic.md` → `research.md` (claims, sources, dates), `verify.py` |
-| Script & storyboard | 4–5 | `topic.md`, `research.md` → `script.md` → `storyboard.json` |
-| Production | 6–7 | `storyboard.json` → narration, word timestamps, beat cues → scenes → `render.mp4` |
+| Script & storyboard | 4–5 | `topic.md`, `research.md` → `script.md`; then the approved take's words → `storyboard.json` |
+| Production | 6–7 | `storyboard.json`, approved take → beat cues → scenes → `render.mp4` |
 | QA | 8 | render, `research.md` → `review.md` (captions, audio sync, layout, facts) |
 
 - Script and storyboard share one agent because the visual is the explanation
-  (see Pipeline). The human still approves the script before the storyboard.
+  (see Pipeline). Between its two passes the orchestrator runs the narration
+  take (`studio/scripts/narrate.mts`), and the human approves script and take
+  before the storyboard.
 - QA is never the agent that built the scenes.
 - In milestone 1 the briefs are hand-written in `docs/briefs/`. Whatever a brief
   has to carry beyond the input files shows what the handoff files are missing.
