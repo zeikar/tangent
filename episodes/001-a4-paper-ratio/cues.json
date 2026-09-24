@@ -1,5 +1,5 @@
 {
- "storyboardSha256": "202fa83acce5f3f20097fc01a2da70b1e9c843dd9872fbf597df32368e1772a2",
+ "storyboardSha256": "2eb4336eba2006481cc0936b3042f8f62d2fd757261ca567611dbd614a12c1eb",
  "fps": 30,
  "durationInFrames": 1532,
  "beats": [
@@ -272,6 +272,12 @@
      "action": "rotate",
      "word": "세우면",
      "frame": 450
+    },
+    {
+     "target": "half",
+     "action": "moveTo",
+     "word": "긴",
+     "frame": 471
     },
     {
      "target": "half",

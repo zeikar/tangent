@@ -2,11 +2,12 @@
   "slug": "001-a4-paper-ratio",
   "notes": [
     "Geometry is px in the 1080×1920 frame, origin top-left; center is [x, y].",
+    "Compositions center on the frame, x = 540 (theme.ts content.centerX), not on the asymmetric safe area, and keep content within x 140–940. Where a sheet carries a wide label on one side (B8's '297 mm'), the sheet and label are centered as a group.",
     "An element is invisible until its appear cue, unless it has visibleAtStart (drawn from the beat's first frame).",
     "Draw order is declaration order across the episode: an element declared later draws on top (Mismatch excepted, see its spec).",
     "Scaling (moveTo with w/h, resize, standAndFit, focusKept) changes geometry only: stroke widths and text sizes never scale.",
-    "Cues sharing an anchor run in parallel, except that an appear or reveal waits for the exits on its anchor to finish (the player's rule, so new content never draws over old). A cue with neither speed nor until uses base.",
-    "Easing from studio/src/style/theme.ts: ease.out for appear and reveal, ease.in for exit, ease.smooth for everything else, unless a cue's params say ease: linear.",
+    "Cues sharing an anchor run in parallel, except that an appear or reveal waits for the exits on its anchor to finish (the player's rule, so new content never draws over old). Every exit is a duration.exit (0.2 s) fade whatever its speed, unless it has until. Any other cue with neither speed nor until uses base.",
+    "Easing from studio/src/style/theme.ts: ease.out for appear, reveal and exit (they move on their word), ease.smooth for everything else, unless a cue's params say ease: linear.",
     "h/w is long ÷ short for every portrait sheet; √2 = 1.4142."
   ],
   "colors": {
@@ -26,7 +27,7 @@
     {
       "name": "PaperRect",
       "status": "new",
-      "spec": "A sheet of paper: an axis-aligned rectangle. Props: center [x,y], w, h (px); stroke (color, default text); strokeWidth (default 6); fill (color, default = stroke) at fillOpacity (default 0.08); dashed (bool: 18 px dash, 12 px gap); edgeColors {long?, short?} overrides stroke per edge pair (long = the longer pair, recomputed live); labels {bottom?, right?}: {tex, color}, drawn with Tex at type.mathInline, upright, 24 px outside that edge's midpoint, re-anchored whenever the geometry changes; name: plain text centered inside (type.label, color text); valueLabel {side: right, color}: the right label shows the live h/w with 3 decimals; followHalfOf: element id; this element then has no own geometry and every frame takes the standAndFit end result of that element's half (see standAndFit). Labels never rotate or fold: in this storyboard no element carries labels or a name through a fold or rotate. Actions: appear {mode?: draw|fade} (draw, the default: stroke draws on clockwise from the top-left corner, then fill, labels and name fade in; fade: everything fades in together); exit (fade out with labels); moveTo {center, w?, h?}; resize {ratio} (keeps w and the bottom edge, h = w × ratio); showMidline (dashed muted line across the middle, parallel to the short sides, drawn from its center outward); fold (always across the long side, never the other way. First 30%: the dashed muted midline draws in and the name fades out. Remaining 70%: the top half (the flap) flips down onto the bottom half about the midline, drawn as a y-scale 1 → −1 of the flap; the flap keeps the sheet's stroke with its fill raised to 0.2 while it flips; over the same 70% the whole sheet's stroke and fill crossfade to teal. Afterwards the element IS the bottom half: stroke teal, fill teal at 0.08; the midline is gone, it has become the half's top edge); rotate {deg} (clockwise about its center; the center must not be moving at the same time); standAndFit {ref} (the match-widths rule for 'same shape' overlays: first 40% rotate 90° clockwise about its center, remaining 60% scale uniformly and move so its width equals ref's width and the bottom-left corners coincide; a similar rectangle then lands exactly on ref, any other one sticks out at the top or falls short of it); setStyle {any style prop} (colors crossfade; a label's tex change morphs old into new); pulse {edges?: long|short|all, color?} (stroke width to 2× and back, optionally flashing to color; pulses on different edges combine)."
+      "spec": "A sheet of paper: an axis-aligned rectangle. Props: center [x,y], w, h (px); stroke (color, default text); strokeWidth (default 6); fill (color, default = stroke) at fillOpacity (default 0.08); dashed (bool: 18 px dash, 12 px gap); edgeColors {long?, short?} overrides stroke per edge pair (long = the longer pair, recomputed live); labels {bottom?, right?}: {tex, color}, drawn with Tex at type.mathInline, upright, centered on that edge's midpoint with their ink 12 px (mark.edgeLabelGap) outside the edge, measured to the ink, re-anchored whenever the geometry changes; name: plain text centered inside (type.label, color text); valueLabel {side: right, color}: the right label shows the live h/w with 3 decimals; followHalfOf: element id; this element then has no own geometry and every frame takes the standAndFit end result of that element's half (see standAndFit). Labels never rotate or fold: in this storyboard no element carries labels or a name through a fold or rotate. Actions: appear {mode?: draw|fade} (draw, the default: stroke draws on clockwise from the top-left corner, then fill, labels and name fade in; fade: everything fades in together); exit (fade out with labels); moveTo {center, w?, h?}; resize {ratio} (keeps w and the bottom edge, h = w × ratio); showMidline (dashed muted line across the middle, parallel to the short sides, drawn from its center outward); fold (always across the long side, never the other way. First 30%: the name fades out over 0–15%, then the dashed muted midline draws in from the center over 15–30%, so the line never crosses a visible name. Remaining 70%: the top half (the flap) flips down onto the bottom half about the midline, drawn as a y-scale 1 → −1 of the flap; the flap keeps the sheet's stroke with its fill raised to 0.2 while it flips; over the same 70% the whole sheet's stroke and fill crossfade to teal. Afterwards the element IS the bottom half: stroke teal, fill teal at 0.08; the midline is gone, it has become the half's top edge); rotate {deg} (clockwise about its center; the center must not be moving at the same time); standAndFit {ref} (the match-widths rule for 'same shape' overlays: first 40% rotate 90° clockwise about its center, remaining 60% scale uniformly and move so its width equals ref's width and the bottom-left corners coincide; a similar rectangle then lands exactly on ref, any other one sticks out at the top or falls short of it); setStyle {any style prop} (colors crossfade; a label's tex change morphs old into new); pulse {edges?: long|short|all, color?} (stroke width to 2× and back, optionally flashing to color; pulses on different edges combine)."
     },
     {
       "name": "Mismatch",
@@ -41,7 +42,7 @@
     {
       "name": "NumberLine",
       "status": "new",
-      "spec": "Horizontal number line. Props: min, max, x0, x1 (px of min and max), y; ends (bool: min/max numbers below the ends, muted, type.label); marks [{value, tex, color}] (a 24 px tick in color plus the tex label below the line, Tex at fontSize 44); markerFrom: element id whose live h/w places a yellow down-pointing triangle (28 px wide) just above the line. Line muted, 4 px. Actions: appear (line draws left to right, then ticks, labels and marker fade in); pulseMark {value} (that mark's tick and label scale 1.3× and back); exit."
+      "spec": "Horizontal number line. Props: min, max, x0, x1 (px of min and max), y; ends (bool: min/max numbers below the ends, muted, type.label); marks [{value, color, text | tex}] (a 24 px tick in color plus a label below the line: text is plain text styled like PaperRect.name (type.label), tex renders with Tex at type.mathInline; either way lowercase letters reach the 30 px floor); markerFrom: element id whose live h/w places a yellow down-pointing triangle (28 px wide) just above the line. Line muted, 4 px. Actions: appear (line draws left to right, then ticks, labels and marker fade in); pulseMark {value} (that mark's tick and label scale 1.3× and back); exit."
     },
     {
       "name": "Dimension",
@@ -69,14 +70,14 @@
         {
           "id": "a4Ghost",
           "component": "PaperRect",
-          "props": {"center": [500, 745], "w": 480, "h": 678.8, "stroke": "muted", "fillOpacity": 0, "dashed": true},
+          "props": {"center": [540, 745], "w": 480, "h": 678.8, "stroke": "muted", "fillOpacity": 0, "dashed": true},
           "where": "visual zone, centered; the original outline, left behind when a4 folds"
         },
         {
           "id": "a4",
           "component": "PaperRect",
           "visibleAtStart": true,
-          "props": {"center": [500, 745], "w": 480, "h": 678.8, "stroke": "text", "name": "A4"},
+          "props": {"center": [540, 745], "w": 480, "h": 678.8, "stroke": "text", "name": "A4"},
           "where": "visual zone, centered; the first frame is exactly this sheet (hook, loop target)"
         }
       ],
@@ -129,7 +130,7 @@
           "speed": "fast"
         }
       ],
-      "endFrame": "Visual zone: the teal half, fitted back to 480×679, lies exactly on the dashed muted a4Ghost outline centered at (500, 745); no name label, nothing else. Caption: '몇 번을 접어도요.'",
+      "endFrame": "Visual zone: the teal half, fitted back to 480×679, lies exactly on the dashed muted a4Ghost outline centered at (540, 745); no name label, nothing else. Caption: '몇 번을 접어도요.'",
       "claims": ["C1", "C2"]
     },
     {
@@ -142,13 +143,13 @@
         {
           "id": "letterGhost",
           "component": "PaperRect",
-          "props": {"center": [500, 745], "w": 480, "h": 621.2, "stroke": "muted", "fillOpacity": 0, "dashed": true},
+          "props": {"center": [540, 745], "w": 480, "h": 621.2, "stroke": "muted", "fillOpacity": 0, "dashed": true},
           "where": "visual zone, centered, same spot and width as the A4 in B1"
         },
         {
           "id": "letter",
           "component": "PaperRect",
-          "props": {"center": [500, 745], "w": 480, "h": 621.2, "stroke": "text", "name": "Letter"},
+          "props": {"center": [540, 745], "w": 480, "h": 621.2, "stroke": "text", "name": "Letter"},
           "where": "visual zone, centered, on top of letterGhost (8.5 × 11 in: h/w = 1.294)"
         },
         {
@@ -167,10 +168,10 @@
               {"id": "after", "tex": "1.55", "color": "red"}
             ],
             "fontSize": 52,
-            "centerX": 500,
-            "y": 1200
+            "centerX": 540,
+            "y": 1240
           },
-          "where": "below the sheet, above the caption band"
+          "where": "below the sheet, baseline y 1240: the Letter half's corner reaches y ≈ 1186 mid-rotation, so it stays clear"
         }
       ],
       "cues": [
@@ -216,7 +217,7 @@
           "speed": "fast"
         }
       ],
-      "endFrame": "Dashed muted letterGhost (480×621) centered at (500, 745); teal fitted half 480×742 sharing its bottom edge (y 1055.6) and sticking out above it; red strip between y ≈ 314 and 434; '1.29 → 1.55' (1.55 red) on baseline y 1200. Caption: '접으면 더 길쭉해져요.'",
+      "endFrame": "Dashed muted letterGhost (480×621) centered at (540, 745); teal fitted half 480×742 sharing its bottom edge (y 1055.6) and sticking out above it; red strip between y ≈ 314 and 434; '1.29 → 1.55' (1.55 red) on baseline y 1240. Caption: '접으면 더 길쭉해져요.'",
       "claims": ["C11"]
     },
     {
@@ -233,7 +234,7 @@
         {
           "id": "rect",
           "component": "PaperRect",
-          "props": {"center": [500, 620], "w": 340, "h": 480.8, "stroke": "text"},
+          "props": {"center": [540, 620], "w": 340, "h": 480.8, "stroke": "text"},
           "where": "visual zone, centered horizontally, raised (center y 620) to leave room for the half's x/2 label and B5's equation; drawn at h/w = √2 but unnamed"
         }
       ],
@@ -272,7 +273,7 @@
           "speed": "fast"
         }
       ],
-      "endFrame": "One sheet 340×481 centered at (500, 620): top and bottom edges blue with '1' (blue) below, left and right edges yellow with 'x' (yellow) to the right. Nothing else. Caption: '긴 변을 $x$라고 할게요.'",
+      "endFrame": "One sheet 340×481 centered at (540, 620): top and bottom edges blue with '1' (blue) below, left and right edges yellow with 'x' (yellow) to the right. Nothing else. Caption: '긴 변을 $x$라고 할게요.'",
       "claims": ["C3"]
     },
     {
@@ -290,7 +291,7 @@
           "id": "half",
           "component": "PaperRect",
           "props": {
-            "center": [290, 499.8],
+            "center": [330, 499.8],
             "w": 340,
             "h": 240.4,
             "stroke": "teal",
@@ -305,7 +306,7 @@
           "at": {"word": "반으로"},
           "target": "rect",
           "action": "moveTo",
-          "params": {"center": [290, 620]},
+          "params": {"center": [330, 620]},
           "speed": "fast"
         },
         {
@@ -326,9 +327,9 @@
           "at": {"word": "접어"},
           "target": "half",
           "action": "moveTo",
-          "params": {"center": [700, 690.4]},
+          "params": {"center": [728, 452], "ease": "linear"},
           "until": {"word": "세우면"},
-          "note": "the top half lifts off and slides right, still lying on its side"
+          "note": "the top half lifts off up and to the right, still lying on its side, to the highest spot where standing it up stays inside the frame; linear, so its bottom edge clears rect's x label within 4 frames"
         },
         {
           "at": {"word": "세우면"},
@@ -336,7 +337,15 @@
           "action": "rotate",
           "params": {"deg": 90},
           "speed": "base",
-          "note": "stands up: the old short side (1) is now vertical, bottom edge level with rect's (y 860.4)"
+          "note": "stands up where it was lifted: the old short side (1) is now vertical"
+        },
+        {
+          "at": {"word": "긴"},
+          "target": "half",
+          "action": "moveTo",
+          "params": {"center": [740, 690.4]},
+          "speed": "fast",
+          "note": "sets down beside rect, bottom edges level (y 860.4)"
         },
         {
           "at": {"word": "긴"},
@@ -371,7 +380,7 @@
           "note": "display-style fraction: its x and 2 read at the size of the '1' labels"
         }
       ],
-      "endFrame": "Left: rect 340×481 centered (290, 620) with dashed midline, blue '1' below, yellow 'x' right. Right: half upright 240.5×340 centered (700, 690.4), teal fill, yellow long edges with '1' right, blue short edges with a display-style x/2 below (as tall as the '1' labels); both bottoms at y ≈ 860. Caption: '짧은 변은 $\\frac{x}{2}$가 돼요.'",
+      "endFrame": "Left: rect 340×481 centered (330, 620) with dashed midline, blue '1' below, yellow 'x' right. Right: half upright 240.5×340 centered (740, 690.4), teal fill, yellow long edges with '1' right, blue short edges with a display-style x/2 below (as tall as the '1' labels); both bottoms at y ≈ 860. Caption: '짧은 변은 $\\frac{x}{2}$가 돼요.'",
       "claims": ["C3"]
     },
     {
@@ -398,7 +407,7 @@
               {"id": "c2", "tex": ":", "color": "text"},
               {"id": "halfX", "tex": "\\frac{x}{2}", "color": "blue"}
             ],
-            "centerX": 500,
+            "centerX": 540,
             "y": 1150
           },
           "where": "below both sheets, centered, baseline y 1150 (about y 1044–1218 with the fraction)"
@@ -564,7 +573,7 @@
           "id": "sweep",
           "component": "PaperRect",
           "props": {
-            "center": [500, 748.0],
+            "center": [540, 748.0],
             "w": 420,
             "h": 504.0,
             "stroke": "text",
@@ -591,17 +600,17 @@
           "props": {
             "min": 1.2,
             "max": 1.7,
-            "x0": 140,
-            "x1": 860,
+            "x0": 180,
+            "x1": 900,
             "y": 1130,
-            "ends": true,
+            "ends": false,
             "marks": [
-              {"value": 1.294, "tex": "\\text{Letter}", "color": "red"},
+              {"value": 1.294, "text": "Letter", "color": "red"},
               {"value": 1.4142, "tex": "\\sqrt{2}", "color": "yellow"}
             ],
             "markerFrom": "sweep"
           },
-          "where": "below the sheet, x 140–860 at y 1130; marks at x ≈ 275 (Letter) and 448 (√2)"
+          "where": "below the sheet, x 180–900 at y 1130; marks at x ≈ 315 (Letter) and 488 (√2); no end numbers: at the enlarged mark size they would crowd 'Letter', and the sheet's live label carries the value"
         }
       ],
       "cues": [
@@ -691,7 +700,7 @@
             "offset": 40,
             "label": {"tex": "297\\,\\text{mm}", "color": "yellow"}
           },
-          "where": "right of the A4 (line at x 670, label from x ≈ 690, ends before x 940)"
+          "where": "right of the A4 (line at x 610, label from x ≈ 634, about 230 px wide, ends near x 864)"
         },
         {
           "id": "divRow",
@@ -704,10 +713,10 @@
               {"id": "d2", "tex": "29", "color": "text"}
             ],
             "fontSize": 64,
-            "align": {"part": "eq", "x": 480},
-            "y": 1020
+            "align": {"part": "eq", "x": 577},
+            "y": 1066
           },
-          "where": "below the A4, '=' at x 480"
+          "where": "below the A4, '=' at x 577 so the row is centered on the frame; baseline 1066 leaves about 80 px under the enlarged '210 mm'"
         },
         {
           "id": "rootRow",
@@ -720,10 +729,10 @@
               {"id": "d2", "tex": "21", "color": "text"}
             ],
             "fontSize": 64,
-            "align": {"part": "eq", "x": 480},
-            "y": 1140
+            "align": {"part": "eq", "x": 577},
+            "y": 1186
           },
-          "where": "under divRow, '=' at x 480 so the digits line up column by column"
+          "where": "under divRow, '=' at x 577 so the digits line up column by column"
         }
       ],
       "cues": [
@@ -742,7 +751,7 @@
           "at": {"word": "에이포는"},
           "target": "sweep",
           "action": "moveTo",
-          "params": {"center": [460, 560], "w": 340, "h": 480.8},
+          "params": {"center": [400, 560], "w": 340, "h": 480.8},
           "speed": "base"
         },
         {"at": {"word": "가로"}, "target": "dimW", "action": "appear", "speed": "base"},
@@ -778,7 +787,7 @@
           "speed": "fast"
         }
       ],
-      "endFrame": "A4 sheet 340×481 centered (460, 560), yellow long / blue short edges, name 'A4'; '210 mm' (blue) below, '297 mm' (yellow) right; rows '297 ÷ 210 = 1.41429' and '√2 = 1.41421' aligned on '=', with 1.414 yellow in both and 29 / 21 muted. Caption: '거의 정확히 $\\sqrt{2}$와 같아요.'",
+      "endFrame": "A4 sheet 340×481 centered (400, 560), yellow long / blue short edges, name 'A4'; '210 mm' (blue) below, '297 mm' (yellow) right; rows '297 ÷ 210 = 1.41429' and '√2 = 1.41421' aligned on '=', with 1.414 yellow in both and 29 / 21 muted. Caption: '거의 정확히 $\\sqrt{2}$와 같아요.'",
       "claims": ["C4", "C8"]
     },
     {
@@ -798,7 +807,7 @@
           "id": "nest",
           "component": "HalvingNest",
           "props": {
-            "center": [500, 700],
+            "center": [540, 700],
             "w": 440,
             "h": 622.3,
             "name": "A0",
@@ -806,7 +815,7 @@
             "labels": ["A1", "A2", "A3", "A4"],
             "stroke": "text"
           },
-          "where": "visual zone, centered at (500, 700); A0 440×622, x 280–720, y 389–1011, title 'A0 · 1 m²' above it (about y 300–365); the kept A4 ends 110×155.5 at the bottom-right corner"
+          "where": "visual zone, centered at (540, 700); A0 440×622, x 320–760, y 389–1011, title 'A0 · 1 m²' above it (about y 290–365); the kept A4 ends 110×155.5 at the bottom-right corner"
         }
       ],
       "cues": [
@@ -841,12 +850,12 @@
           "at": {"word": "몇"},
           "target": "nest",
           "action": "focusKept",
-          "params": {"center": [500, 745], "w": 480, "h": 678.8, "name": "A4"},
+          "params": {"center": [540, 745], "w": 480, "h": 678.8, "name": "A4"},
           "until": {"word": "그대로죠"},
           "note": "loop: ends on B1's first frame"
         }
       ],
-      "endFrame": "Visual zone pixel-identical to B1's first frame: one A4 sheet 480×679 centered (500, 745), stroke text, fill text at 0.08, name 'A4', nothing else. Caption: '모양은 그대로죠.'",
+      "endFrame": "Visual zone pixel-identical to B1's first frame: one A4 sheet 480×679 centered (540, 745), stroke text, fill text at 0.08, name 'A4', nothing else. Caption: '모양은 그대로죠.'",
       "claims": ["C2", "C5", "C6"]
     }
   ]

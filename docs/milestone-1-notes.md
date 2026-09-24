@@ -274,3 +274,25 @@ render was sent to the human for the final call instead of a third round.
   geometry; the teal→blue edge change is nearly invisible (palette call).
 - **Evidence volume:** round 2 kept 391 PNGs (~32 MB). The brief should cap
   saved frames (contact sheets plus cited frames).
+
+### Round 3 and the human's eye (2026-09-24)
+
+- **The human caught what two QA rounds didn't:** the whole picture sat 40 px
+  left of center. The style guide's safe area is asymmetric (left 60, right
+  140, for the Shorts button column), and the storyboard centered on the safe
+  area. The button column only covers the lower half, so the shift bought
+  nothing and looked off-center everywhere. New rule: center on x 540, keep
+  content in x 140–940. QA's brief checked "inside the safe area", never
+  "balanced"; add a centering check (ink center per beat end ≈ 540).
+- **Orchestration race.** The orchestrator said "render" while the storyboard
+  agent was still processing a relayed message; its final (notes-only) edit
+  landed 14 s into the render. The hash guard caught it only at the next step
+  (beat stills), after a stale render.mp4 was written. Two fixes: the
+  orchestrator waits until every agent touching the episode is idle before a
+  render go, and render.mts re-checks the hash after rendering.
+- **Relay traffic is the new bottleneck.** Round 3 took ~12 messages between
+  the two builders through the orchestrator (player rules shift storyboard
+  timing; label sizes shift layout). Most were the orchestrator forwarding
+  facts one agent learned to the other. Candidates: a shared per-episode
+  change log both agents append to, or one agent owning storyboard +
+  production fixes after the first render.
