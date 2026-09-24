@@ -20,5 +20,14 @@ npx remotion still StyleSheet out/a.png --props='{"showSafeArea":true}'
 npx remotion render StyleSheet out/a.mp4
 ```
 
+Narration tools (API keys in the repo-root `.env`):
+
+```sh
+# TTS samples of scripts/tts-compare/sentences.json → out/tts-compare/
+node scripts/tts-compare/compare.mts synth gemini gemini-3.8-flash-tts Kore kore
+# Word timestamps for a known read-aloud transcript (first run downloads 1.3 GB)
+uv run scripts/align.py narration.wav read-aloud.txt words.json
+```
+
 Remotion is free for individuals and companies of up to 3 people; see its
 [license](https://github.com/remotion-dev/remotion/blob/main/LICENSE.md).
