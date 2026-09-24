@@ -98,6 +98,10 @@ files along, and stops at the human checkpoints.
   A regenerated take is equivalent, not identical (TTS never repeats a take),
   so a regenerated episode needs a fresh QA pass. This keeps the public repo
   small.
+- **Each approved episode gets a GitHub Release** tagged with its slug, at the
+  commit that produced the cut: the final video, the original TTS take (FLAC,
+  lossless), and the mixed narration. That is the exact-media backup; git
+  stays text-only. The approved video is also copied to `publish/` for upload.
 
 ## Language: Korean first, English later
 
