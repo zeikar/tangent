@@ -39,6 +39,11 @@ Narration and production (API keys in the repo-root `.env`; `ep` is
 `../episodes/<slug>`):
 
 ```sh
+# Check storyboard.json against script.md, research.md and the brief's rules
+python3 scripts/validate-storyboard.py $ep
+# Checkpoint page for the human: captions, each cue under its word, narration
+# in sync → $ep/storyboard.html (uses the final narration if built, else the take)
+python3 scripts/storyboard-view.py $ep
 # One TTS take of every beat's readAloud → $ep/take<N>.wav + take<N>.txt
 node scripts/narrate.mts $ep
 # Word timestamps for a take (first run downloads 1.3 GB)

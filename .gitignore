@@ -17,3 +17,4 @@ episodes/**/take*.txt
 
 # Final approved videos, copied here for upload (see AGENTS.md).
 /publish/
+episodes/**/storyboard.html
