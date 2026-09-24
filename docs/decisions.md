@@ -62,6 +62,16 @@ re-run, hand-edited, or gated by a human.
 - **Human checkpoints:** topic, script/storyboard, final cut. No full autonomy
   early on.
 
+## Episode folders and git
+
+- **Slug: `NNN-english-kebab`** (e.g. `001-a4-paper-ratio`). The number keeps
+  production order; ASCII paths stay safe in CLI tools; English keeps the
+  folder name valid when an English version is added.
+- **Git holds text artifacts plus each episode's final narration audio.** Word
+  timestamps and beat cues derive from that exact file, and TTS never produces
+  the same take twice, so losing it means redoing narration and everything
+  after. Renders, extracted frames, and discarded takes stay out of git.
+
 ## Language: Korean first, English later
 
 - The early bottleneck is judging quality (hooks, TTS naturalness), which is

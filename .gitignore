@@ -3,3 +3,14 @@
 .env.*
 node_modules/
 .playwright-mcp/
+
+# Episode media stays out of git, except the final narration (see
+# docs/decisions.md → Episode folders and git).
+episodes/**/*.mp4
+episodes/**/*.mov
+episodes/**/*.png
+episodes/**/*.jpg
+episodes/**/*.wav
+episodes/**/*.mp3
+episodes/**/*.flac
+!episodes/*/narration.mp3
