@@ -223,3 +223,30 @@ parallel. No human wait. Result: 51.07 s render (1532 frames); full render
 - **Storyboard timing nits surfaced only with real timings** (a pulse starting
   before a move lands, a move overlapping a rotate by 2 frames, folds of 17–22
   frames). Real word timings before the storyboard pass would catch these.
+
+### 8. Review, round 1 (2026-09-24)
+
+Fresh QA agent, verdict **fix then ship**. Audio, captions, cue timing, and
+facts were clean (28 caption chunks within 1 frame of their words; 81 cues
+0–2 frames after their anchors; nothing in the Shorts UI zones in any of 1532
+frames). All problems were layout, and all were invisible in the builder's own
+beat-end stills:
+
+- A fraction label (x/2) rendered at ~13 px glyphs: unreadable on a phone.
+- New content drawing over exiting content at beat changes (~0.3 s each),
+  because exits ease in while appears on the same word start at once.
+- Labels colliding during B9's zoom; a label read as belonging to the wrong
+  sheet; A0's "1 m²" readable for 0.4 s; loudness −16.2 LUFS.
+
+Findings about the process:
+- **The worst defects live in transitions,** which end-of-beat frames never
+  show. QA needs a pass over every beat boundary and long move, sampled every
+  2–3 frames, and the builder's self-check should do the same.
+- **Fixes span two agents.** The x/2 label is a storyboard spec; the overlaps
+  are best fixed once as a player rule. Routing each fix to its owner works but
+  costs a coordination round (storyboard edit must land before the re-render).
+- **QA asked for thresholds the brief left to judgement:** a pixel legibility
+  floor, the caption zone's coordinates, a loudness pass/fail line, which
+  length target applies, who owns a faithful-but-bad render, and a check of
+  words.json against the audio. QA also noted the shared session scratchpad
+  exposed builders' files to it; QA should get its own scratch space.
