@@ -3,6 +3,7 @@ import { Composition, Folder, Still } from "remotion";
 import { AVATAR, Avatar } from "./brand/Avatar";
 import { BANNER, Banner, bannerSchema } from "./brand/Banner";
 import { LOGO_UNIT, LogoStill } from "./brand/Logo";
+import { WATERMARK, Watermark } from "./brand/Watermark";
 import { StyleSheet, styleSheetSchema } from "./compositions/StyleSheet";
 import { A4PaperRatio, a4PaperRatioSchema, cues as a4Cues } from "./episodes/001-a4-paper-ratio";
 import { VIDEO } from "./style/theme";
@@ -29,6 +30,7 @@ export const RemotionRoot: React.FC = () => {
       <Folder name="brand">
         <Still id="Logo" component={LogoStill} width={LOGO_UNIT} height={LOGO_UNIT} />
         <Still id="Avatar" component={Avatar} {...AVATAR} />
+        <Still id="Watermark" component={Watermark} {...WATERMARK} />
         <Still
           id="Banner"
           component={Banner}

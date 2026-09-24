@@ -13,8 +13,9 @@ Remotion project: style guide and reusable scene components. 1080×1920, 30 fps.
   `narration.mp3`; the composition id is the slug.
 - `src/compositions/StyleSheet.tsx`: visual check for the style guide.
 - `src/brand/`: channel branding (루트와이, √y) as stills in the `brand` folder:
-  `Logo` (transparent), `Avatar` (profile picture, 800×800), `Banner` (channel
-  banner; `showSafeArea` outlines what every device shows).
+  `Logo` (transparent), `Avatar` (profile picture, 800×800), `Watermark` (video
+  watermark, 150×150), `Banner` (channel banner; `showSafeArea` outlines what
+  every device shows).
 - `.claude/skills/`: Remotion's official agent skills (markup, render, captions,
   docs), loaded when an agent works in this directory. Not committed, since
   their repo declares no license; install them after cloning (below).
@@ -31,6 +32,7 @@ npx remotion render StyleSheet out/a.mp4
 npx remotion still Avatar out/brand/avatar.png
 npx remotion still Banner out/brand/banner.png --scale=1.25   # 2560×1440 for TV
 npx remotion still Logo out/brand/logo.png
+npx remotion still Watermark out/brand/watermark.png
 ```
 
 Narration and production (API keys in the repo-root `.env`; `ep` is
