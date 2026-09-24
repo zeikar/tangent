@@ -338,3 +338,29 @@ the human: a 4-frame empty visual zone at the four exit/appear beat changes
 (reads as a quick cut), B7's dropped end numbers, the faint teal→blue edge
 change, and 51.07 s against the 40–50 s target. Evidence kept to contact
 sheets plus cited frames (round 2's 391 PNGs pruned to 66).
+
+### After ship: tools, metadata, and a missed regression (2026-09-25)
+
+- **check-render** (production agent, ~1 h): 11 checks in ~10 s, exact
+  geometry from the player via a probe prop plus one pixel decode. It passes
+  the shipped 001 and caught every planted defect. QA reviewed it as its
+  future user: it would have caught 7 of the 10 defects from rounds 1–3; it
+  misses collisions inside one element, label ownership, and how long a label
+  stays readable, and it doesn't check caption timing. Its legibility and
+  overlap checks measure the current studio code, not the render, so a
+  render from older code can pass or fail on text it doesn't have.
+- **A regression shipped past QA round 3.** Enlarging labels (round 3) widened
+  √2 until it sat 14 px from its own sheet and 10 px from the neighbor, reading
+  as the neighbor's label. Round 3 was focused on the changes and missed it;
+  the tool review found it. Fixed by widening the gap (round 4, ship). Global
+  changes (type sizes, theme tokens) need a full review, not a focused one.
+- **Metadata took four title attempts.** "…왜 1:√2일까?" gave away the answer;
+  "…비율의 비밀" read clumsy; "…왜 반으로 접어도 모양이 똑같을까?" assumed a
+  property few know. Settled on "A4 용지는 왜 하필 210×297일까?": start from
+  what viewers have seen. A fresh reviewer agent also caught four description
+  issues (a "1.414…" that reads as exact, an unread source cited, spelling,
+  an overstated "직접"). Rules now in `docs/channel.md`; publishing is a
+  pipeline stage with its own brief.
+- **Narration moved before the storyboard** (decisions.md → Pipeline), with
+  speed variants at the script checkpoint, so the storyboard is written
+  against real timings.
