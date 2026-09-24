@@ -296,3 +296,14 @@ render was sent to the human for the final call instead of a third round.
   facts one agent learned to the other. Candidates: a shared per-episode
   change log both agents append to, or one agent owning storyboard +
   production fixes after the first render.
+
+### 8. Review, round 3 (2026-09-24)
+
+Verdict **ship**, no defects. Every beat end centered within 25 px of x 540
+(B3's +22.5 is its one-sided label); all 1532 frames within x 154–939, y ≥ 240;
+smallest glyph 31 px; beat changes show motion 1 frame after the word, new
+content at +7; −14.0 LUFS, A/V ±10 ms, transcript and facts clean. Left for
+the human: a 4-frame empty visual zone at the four exit/appear beat changes
+(reads as a quick cut), B7's dropped end numbers, the faint teal→blue edge
+change, and 51.07 s against the 40–50 s target. Evidence kept to contact
+sheets plus cited frames (round 2's 391 PNGs pruned to 66).

@@ -1,5 +1,107 @@
 # Review · 001-a4-paper-ratio
 
+## Round 3
+
+**Verdict: ship.**
+
+This round is a focused review of the render rebuilt at 22:42. Content is now
+centered on x 540 and stays inside x 140–940 in every frame. Every glyph clears
+30 px, lowercase letters included. Every beat change reacts within 1 frame of
+its first word, and the round-2 overlaps are gone. Audio, captions, sync, facts
+and the loop are still clean. What remains are observations for the human
+below, not defects.
+
+Evidence is in `review/r3/`. The contact sheets are `sheet-beat-ends.png`,
+`sheet-boundaries-1.png` and `sheet-boundaries-2.png` (every beat boundary,
+every 2 frames), plus `detail-fold-names.png`, `detail-b4-lift.png` and
+`detail-letter-rotate.png`. The cited frames are `fNNNN.png`. I pruned the
+uncited frames from `review/r2/`.
+
+### Centering (visual zone, beat ends)
+
+The bounding box of all ink at each beat's last frame, against a target of
+x 540:
+
+| Beat | Frame | Ink x | Box center | Off |
+|------|-------|-------|------------|-----|
+| B1 | f156 | 297–782 | 539.5 | −0.5 |
+| B2 | f282 | 297–782 | 539.5 | −0.5 |
+| B3 | f428 | 367–758 | 562.5 | +22.5 |
+| B4 | f578 | 157–902 | 529.5 | −10.5 |
+| B5 | f727 | 157–902 | 529.5 | −10.5 |
+| B6 | f900 | 157–902 | 529.5 | −10.5 |
+| B7 | f1090 | 178–920 | 549.0 | +9.0 |
+| B8 | f1337 | 202–879 | 540.5 | +0.5 |
+| B9 | f1531 | 297–782 | 539.5 | −0.5 |
+
+Nothing is off by more than 25 px. B3 comes closest, at +22.5, only because of
+the "x" label on the right. The sheet itself spans x 367–713, which centers at
+540, and the beat reads as centered. On `sheet-beat-ends.png` every beat looks
+centered on the frame.
+
+### Bounds (all 1532 frames)
+
+- **Visual ink** stays within x 154–939 and y 240–1252. No frame falls outside
+  x 140–940 or above y 240.
+- **Closest approach:** B4's half, standing up at its lifted spot, touches
+  x 939 and y 240 at f458–f463 (`r3/f0460.png`). That is inside the bounds, by
+  design.
+- **Captions:** ink stays within y 1325–1453 and x 229–848 (centered on
+  about 538), inside 1280–1500.
+- **Lowest visual ink:** y 1252, from B2's "1.29 → 1.55" at f167–f284. That is
+  2 px below `zone.visual` but 73 px clear of the captions, so no bound is
+  broken.
+
+### Round-2 issues, re-checked
+
+| Round 2 | Now | Evidence |
+|---------|-----|----------|
+| Lowercase glyphs under 30 px | **Fixed.** Measured glyph heights:<br>• "Letter" name: e 32, r 31<br>• number-line "Letter" (now plain text): e 32, r 31<br>• "mm": 32<br>• "m" in "1 m²": 32<br>• label x: 33; x/2 numerator: 33<br>• caption x: 34; caption x/2 numerator: 34; caption superscript ²: 33<br>The smallest glyph anywhere is 31 px. | `r3/f0180.png`, `r3/f1090.png`, `r3/f1337.png`, `r3/f1440.png`, `r3/f0578.png`, `r3/f0510.png` |
+| Beat changes reacted 7–8 frames late | **Fixed.** The exits at f157, f283, f901 and f1338 show change 1 frame later (f158, f284, f902, f1339), and new content draws 7 frames after the word. Across all 48 cue anchors, the only ones slower than 3 frames are color crossfades, which show 3 frames in (e.g. f342 → f345, f375 → f378). | `sheet-boundaries-1/2.png` |
+| Fold midline crossed the "A4" and "Letter" names | **Fixed.** Each name is gone (f8, f189) before its midline starts (f10, f190). | `detail-fold-names.png` |
+| B4's half slid across rect's "x" label | **Nearly fixed.** It now lifts up and to the right. Its bottom edge crosses the top of the "x" for 2 frames (f442–f443) and clears it by f444. | `detail-b4-lift.png`, `r3/f0443.png` |
+| Rotating Letter half grazed "1.29" | **Fixed.** The label moved to baseline 1240, and the corner stays about 17 px above it. | `detail-letter-rotate.png` |
+| "Letter" name readable for only 0.4 s | **Better.** It is readable for about 0.5 s (f171–f187). | `sheet-boundaries-1.png` |
+| Edge-label spacing differed from the spec | **Fixed.** The storyboard now specifies 12 px, measured to the ink. | — |
+| "210 mm" tight above the division row | **Fixed.** The gap is 85 px (was 46) after the B8 relayout. | `r3/f1337.png` |
+
+### For the human
+
+None of these block shipping:
+
+- **Brief blank between pictures.** At the four exit/appear beat changes, the
+  visual zone is empty for 4 frames (0.13 s) between the old picture fading
+  and the new one drawing: f160–f163, f286–f289, f904–f907 and f1341–f1344
+  (`r3/f0162.png`). It reads as a quick cut rather than a glitch.
+- **B7's number line has no end numbers.** The storyboard dropped "1.2" and
+  "1.7" (`ends: false`), so the line shows only the Letter and √2 marks. The
+  sheet's live label carries the value (`r3/f1090.png`).
+- **The teal-to-blue change on the half's short edges is still faint**
+  (unchanged since round 1): teal (93,207,176) against blue (88,195,216).
+- **Length.** The render is 51.07 s, 1.07 s over the 40–50 s target.
+
+### Sanity pass
+
+- **Technical.** 1080×1920 at 30 fps, 1532 frames, yuv420p BT.709. Audio is
+  AAC 24 kHz, 51.07 s. Loudness is −14.0 LUFS integrated with −1.9 dBTP true
+  peak. Speech ends at 50.57 s, before the video does.
+- **A/V sync.** I re-ran `align.py` on the render's audio: all 94 word starts
+  land within ±10 ms of `words.json`. Cross-correlating with `narration.mp3`
+  gives 0 samples of lag.
+- **Captions.** All 28 chunks show the storyboard text and start within
+  0.5 frame of their word.
+- **Transcript.** Whisper's transcript matches the 읽기용 text in every beat;
+  the only differences are digits and spacing.
+- **Facts.** `verify.py` passes. The on-screen numbers are unchanged:
+  1.29 → 1.55, 1.41429 / 1.41421, 1.414.
+- **Loop.** In the visual zone, f1531 and f0 differ in 496 px beyond a 2% fuzz
+  (RMSE 0.15%). That is anti-aliasing around the "A4" name, which looks
+  identical.
+- **Beat ends.** All nine match their `endFrame` descriptions at the new
+  x 540 positions.
+- **Transitions.** Every beat boundary is clean: the old picture fades out and
+  the new one draws on, with nothing overlapping.
+
 ## Round 2
 
 **Verdict: fix then ship.** One small fix is required: four pieces of lowercase
