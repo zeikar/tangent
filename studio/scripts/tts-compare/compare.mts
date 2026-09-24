@@ -77,7 +77,8 @@ const pcmToWav = (pcm: Buffer, rate: number) => {
 // preamble. 3.8 models read the whole text field verbatim, preamble included,
 // so they get the style in speech_metadata via the Interactions API instead.
 const GEMINI_STYLE =
-  "calm, clear, curious narrator of a short math explainer video; natural brisk pace";
+  process.env.GEMINI_STYLE ??
+  "clear, curious, upbeat narrator of a YouTube Shorts math explainer; fast, energetic pace with short pauses";
 const GEMINI_LEGACY_PREAMBLE = `Read the Korean narration below aloud as a ${GEMINI_STYLE}. Read only the narration.\n\nNarration:\n`;
 
 const engines = {

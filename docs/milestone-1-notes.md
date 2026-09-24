@@ -98,3 +98,9 @@ Engine landscape and the decision are in decisions.md → Narration.
   syl/s, 3.8 Charon 5.0, 3.1 Kore 5.3. A 30–60 s short holds roughly 130–300
   syllables; the script stage should budget with this.
 - **No speed parameter.** Pace is only steerable through the style text.
+- **Pace is steerable through the style field.** Asking for a "fast,
+  energetic pace" moved 3.8 Kore from 4.4 to 5.3 syl/s (28.5 s → 23.7 s).
+- **Picked: `gemini-3.8-flash-tts`, voice Kore, the fast style** (now the
+  default in `compare.mts`). The human found all samples similar and leaned
+  toward a female voice; the choice is cheap to revisit because timing binds to
+  beats, so a new voice only means re-running the narration stage.
