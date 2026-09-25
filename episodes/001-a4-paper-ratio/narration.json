@@ -1,7 +1,7 @@
 {
- "source": "take1.wav",
- "take": "take1.wav",
- "tempo": 1.0,
+ "source": "take2@1.08.wav",
+ "take": "take2.wav",
+ "tempo": 1.08,
  "model": "gemini-3.8-flash-tts",
  "voice": "Kore",
  "style": "clear, curious, upbeat narrator of a YouTube Shorts math explainer; fast, energetic pace with short pauses"
