@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { AbsoluteFill, continueRender, delayRender, useCurrentScale } from "remotion";
 import { ElementTimeline, mix, phase, Scene, themeColor } from "../storyboard/timeline";
+import { fontsLoaded } from "../style/fonts";
 import { content, mark, stroke, type, VIDEO } from "../style/theme";
 import { inkRect } from "./ink";
 import { Tex } from "./Tex";
@@ -51,7 +52,7 @@ export const Equation: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, 
   const [measured, setMeasured] = useState<Measured[] | null>(null);
   useLayoutEffect(() => {
     const handle = delayRender(`measure ${el.spec.id}`);
-    document.fonts.ready.then(() => {
+    fontsLoaded.then(() => {
       setMeasured(
         refs.current.map((box) => {
           const origin = box!.querySelector("[data-origin]")!.getBoundingClientRect();
@@ -125,8 +126,13 @@ export const Equation: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, 
         break;
       case "transformTo": {
         const next = layouts[cur + 1];
-        from = e < 1 ? { layout: cur, e, vis, col, morph: a.params.morph ?? {} } : null;
-        vis = Object.fromEntries(next.map((q) => [q.id, q.id in vis ? vis[q.id] : e]));
+        const morph: Record<string, string[]> = a.params.morph ?? {};
+        from = e < 1 ? { layout: cur, e, vis, col, morph } : null;
+        // A morph target fades in as its sources arrive; any other new part
+        // waits for the second half, once parts sliding past have mostly
+        // cleared its slot.
+        const enter = phase(a, frame, 0.5, 1);
+        vis = Object.fromEntries(next.map((q) => [q.id, q.id in vis ? vis[q.id] : q.id in morph ? e : enter]));
         col = Object.fromEntries(
           next.map((q) => [q.id, q.id in col ? mix(col[q.id], themeColor(q.color), e) : themeColor(q.color)]),
         );

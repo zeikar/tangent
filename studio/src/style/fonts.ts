@@ -30,6 +30,8 @@ const faces = [
   { family: "KaTeX_Size4", url: size4 },
 ];
 
-for (const face of faces) {
-  loadFont(face);
-}
+// Resolves once every face is in document.fonts. Code that measures text
+// waits on this, not on document.fonts.ready: loadFont() fetches a file before
+// it adds the face, and until then .ready can resolve with text laid out in a
+// fallback font.
+export const fontsLoaded = Promise.all(faces.map((face) => loadFont(face))).then(() => document.fonts.ready);

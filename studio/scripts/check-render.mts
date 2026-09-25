@@ -180,6 +180,9 @@ const [snaps, px] = await Promise.all([
 ]);
 const timeline = snaps[0].extra as Timeline;
 const componentOf = new Map(timeline.elements.map((e) => [e.id, e.component]));
+// Probed elements that live in the caption band rather than the picture: the
+// captions and the channel mark (Episode.tsx).
+const captionBand = new Set(["captions", "logo"]);
 
 // Geometry helpers over probe snapshots.
 const inflate = ([l, t, r, b]: Box, d: number): Box => [l - d, t - d, r + d, b + d];
@@ -267,7 +270,7 @@ const visibleOpacity = (snap: FrameSnap, id: string) => {
   const intrusions: { frame: number; id: string; bottom: number; box: Box }[] = [];
   for (const s of snaps) {
     for (const el of s.els) {
-      if (el.id === "captions") continue;
+      if (captionBand.has(el.id)) continue;
       const box = elementBox(el, 0.1);
       if (box && box[3] > zone.caption.top) intrusions.push({ frame: s.frame, id: el.id, bottom: box[3], box });
     }
@@ -295,7 +298,7 @@ const visibleOpacity = (snap: FrameSnap, id: string) => {
 {
   const rows = cues.beats.map((b: { id: string; endFrame: number }) => {
     const box = px.visual[b.endFrame];
-    const els = snaps[b.endFrame].els.filter((e) => e.id !== "captions");
+    const els = snaps[b.endFrame].els.filter((e) => !captionBand.has(e.id));
     const picture = union(
       els.flatMap((e) => [
         ...e.lines.filter((l) => l[5] >= 0.1).map(lineBox),

@@ -1,8 +1,10 @@
 import React from "react";
 import { AbsoluteFill, CalculateMetadataFunction, Html5Audio } from "remotion";
 import { z } from "zod";
+import { Logo } from "../brand/Logo";
 import { SafeAreaGuide } from "../components/SafeAreaGuide";
 import { Probe } from "../probe/Probe";
+import { channelMark } from "../style/theme";
 import { narrationSrc } from "./narration";
 import { StoryboardPlayer } from "./StoryboardPlayer";
 import { Cues, resolveCaptions, resolveTimeline, Storyboard } from "./timeline";
@@ -30,9 +32,9 @@ const timelineOf = (storyboard: Storyboard, cues: Cues) => ({
   captions: resolveCaptions(storyboard, cues),
 });
 
-// An episode's composition: everything on screen comes from storyboard.json,
-// every frame number from cues.json, the audio from the narration
-// build-cues.py wrote.
+// An episode's composition: everything on screen but the channel mark comes
+// from storyboard.json, every frame number from cues.json, the audio from the
+// narration build-cues.py wrote.
 export const makeEpisode = (slug: string, defaults: { storyboard: Storyboard; cues: Cues }) => {
   const Component: React.FC<Props> = ({ showSafeArea, probe, ...props }) => {
     const storyboard = (props.storyboard ?? defaults.storyboard) as Storyboard;
@@ -40,6 +42,17 @@ export const makeEpisode = (slug: string, defaults: { storyboard: Storyboard; cu
     return (
       <AbsoluteFill>
         <StoryboardPlayer storyboard={storyboard} cues={cues} />
+        <div
+          data-el="logo"
+          style={{
+            position: "absolute",
+            left: channelMark.left,
+            top: channelMark.top,
+            opacity: channelMark.opacity,
+          }}
+        >
+          <Logo size={channelMark.size} />
+        </div>
         {/* Not @remotion/media's Audio: it ignores the MP3's encoder delay and
             plays the narration 46 ms late. */}
         <Html5Audio src={narrationSrc(slug)} />

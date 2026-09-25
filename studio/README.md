@@ -5,7 +5,8 @@ Remotion project: style guide and reusable scene components. 1080×1920, 30 fps.
 - `src/style/theme.ts`: palette, type scale, easing, Shorts safe area. Scenes use
   these tokens instead of literal values.
 - `src/style/fonts.ts`: Pretendard (Korean/Latin) and KaTeX faces, loaded with
-  `loadFont()` so frames never capture a fallback font.
+  `loadFont()` so frames never capture a fallback font. Code that measures
+  text waits on its `fontsLoaded`, not `document.fonts.ready`.
 - `src/components/`: primitives (`Tex`, `PaperRect`, `Equation`, ...), each
   specced in the storyboard that introduced it.
 - `src/storyboard/`: plays an episode's `storyboard.json` with the frame numbers
@@ -20,7 +21,8 @@ Remotion project: style guide and reusable scene components. 1080×1920, 30 fps.
 - `src/brand/`: channel branding (루트와이, √y) as stills in the `brand` folder:
   `Logo` (transparent), `Avatar` (profile picture, 800×800), `Watermark` (video
   watermark, 150×150), `Banner` (channel banner; `showSafeArea` outlines what
-  every device shows).
+  every device shows). `makeEpisode` also draws `Logo` on every frame of every
+  episode, as `channelMark` in `theme.ts` places it.
 - `.claude/skills/`: Remotion's official agent skills (markup, render, captions,
   docs), loaded when an agent works in this directory. Not committed, since
   their repo declares no license; install them after cloning (below).

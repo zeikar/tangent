@@ -10,6 +10,7 @@ import {
   Scene,
   themeColor,
 } from "../storyboard/timeline";
+import { fontsLoaded } from "../style/fonts";
 import { color, fill, font, mark, stroke, type, VIDEO } from "../style/theme";
 import { Anchored } from "./Anchored";
 import { expressionInk } from "./ink";
@@ -37,6 +38,7 @@ type Props = {
   name?: string;
   valueLabel?: { side: "right"; color: string } | null;
   followHalfOf?: string;
+  page?: boolean;
 };
 
 export type PaperState = {
@@ -49,7 +51,8 @@ export type PaperState = {
   strokeWidth: number;
   fill: string;
   fillOpacity: number;
-  dashed: boolean;
+  dashed: number; // 1 = dashed outline, 0 = solid; between, the gaps fill in
+  page: number; // document content (the page prop), 0..1
   draw: number; // share of the outline drawn on
   content: number; // fill, labels and name fade in after the outline
   midline: number; // share of the fold line drawn, from the center outward
@@ -69,19 +72,24 @@ const lerpBox = (a: Box, b: Box, t: number): Box => ({
   h: lerp(a.h, b.h, t),
 });
 
-// standAndFit's end: scaled uniformly to ref's width, bottom-left corners together.
-const fitTo = (b: Box, ref: Box): Box => {
-  const h = (b.h * ref.w) / b.w;
-  return { cx: ref.cx, cy: ref.cy + ref.h / 2 - h / 2, w: ref.w, h };
+type Match = "width" | "height";
+
+// standAndFit's end: scaled uniformly until its width (or height) equals
+// ref's, bottom-left corners together.
+const fitTo = (b: Box, ref: Box, match: Match): Box => {
+  const k = match === "height" ? ref.h / b.h : ref.w / b.w;
+  const w = b.w * k;
+  const h = b.h * k;
+  return { cx: ref.cx - ref.w / 2 + w / 2, cy: ref.cy + ref.h / 2 - h / 2, w, h };
 };
 
 // The half a fold across the long side leaves, stood up and fitted to the sheet.
-const fittedHalf = (ref: Box): Box => {
+const fittedHalf = (ref: Box, match: Match): Box => {
   const half = ref.h >= ref.w ? { ...ref, h: ref.h / 2 } : { ...ref, w: ref.w / 2 };
-  return fitTo(rotated(half, 90), ref);
+  return fitTo(rotated(half, 90), ref, match);
 };
 
-const STYLE_KEYS = ["stroke", "fill", "fillOpacity", "edgeColors", "labels", "name", "valueLabel"];
+const STYLE_KEYS = ["stroke", "fill", "fillOpacity", "dashed", "page", "edgeColors", "labels", "name", "valueLabel"];
 
 // Which pair the horizontal (top/bottom) edges belong to.
 const horizontalPair = (b: Box): Pair => (b.w > b.h ? "long" : "short");
@@ -95,7 +103,7 @@ export const paperState = (el: ElementTimeline, scene: Scene): PaperState => {
   const s: PaperState = {
     opacity: el.spec.visibleAtStart ? 1 : 0,
     box: p.followHalfOf
-      ? fittedHalf(scene.paper(p.followHalfOf).box)
+      ? fittedHalf(scene.paper(p.followHalfOf).box, "width")
       : { cx: p.center![0], cy: p.center![1], w: p.w!, h: p.h! },
     rot: 0,
     stroke: strokeColor,
@@ -107,7 +115,8 @@ export const paperState = (el: ElementTimeline, scene: Scene): PaperState => {
     strokeWidth: p.strokeWidth ?? stroke.sheet,
     fill: themeColor(p.fill ?? p.stroke ?? "text"),
     fillOpacity: p.fillOpacity ?? fill.sheet,
-    dashed: !!p.dashed,
+    dashed: p.dashed ? 1 : 0,
+    page: p.page ? 1 : 0,
     draw: 1,
     content: 1,
     midline: 0,
@@ -154,16 +163,26 @@ export const paperState = (el: ElementTimeline, scene: Scene): PaperState => {
         if (t < 1) s.rot = q.deg * e;
         else s.box = rotated(s.box, q.deg);
         break;
-      case "standAndFit":
+      case "standAndFit": {
+        const match: Match = q.match ?? "width";
+        if (match !== "width" && match !== "height") throw new Error(`${el.spec.id}: standAndFit match ${match}`);
         if (t < 0.4) {
           s.rot = 90 * phase(a, frame, 0, 0.4);
+        } else if (q.follow) {
+          // The fitted half of ref's live box, from here on: it tracks ref's
+          // moves and resizes, and later geometry actions start from it.
+          s.box = lerpBox(rotated(s.box, 90), fittedHalf(scene.paper(q.ref).box, match), phase(a, frame, 0.4, 1));
         } else {
+          // Fitted to ref as it is when the fit ends; ref moving later leaves it be.
+          const ref = (t < 1 ? scene : scene.at(a.to)).paper(q.ref).box;
           const stood = rotated(s.box, 90);
-          s.box = lerpBox(stood, fitTo(stood, scene.paper(q.ref).box), phase(a, frame, 0.4, 1));
+          s.box = lerpBox(stood, fitTo(stood, ref, match), phase(a, frame, 0.4, 1));
         }
         break;
+      }
       case "fold": {
         if (s.box.w > s.box.h) throw new Error(`${el.spec.id}: fold expects a portrait sheet (top half onto bottom)`);
+        if (s.page > 0) throw new Error(`${el.spec.id}: fold with its page content showing; setStyle page false first`);
         // The name is gone before the fold line draws, so the line never crosses it.
         const nameOut = phase(a, frame, 0, 0.15);
         const drawLine = phase(a, frame, 0.15, 0.3);
@@ -198,6 +217,8 @@ export const paperState = (el: ElementTimeline, scene: Scene): PaperState => {
         }
         if ("fill" in q) s.fill = mix(s.fill, themeColor(q.fill), e);
         if ("fillOpacity" in q) s.fillOpacity = lerp(s.fillOpacity, q.fillOpacity, e);
+        if ("dashed" in q) s.dashed = lerp(s.dashed, q.dashed ? 1 : 0, e);
+        if ("page" in q) s.page = lerp(s.page, q.page ? 1 : 0, e);
         if ("edgeColors" in q) {
           for (const pair of ["long", "short"] as const) {
             const c = q.edgeColors?.[pair];
@@ -260,50 +281,122 @@ type EdgeStyle = { color: string; width: number };
 
 // Rectangle outline as four edges (top, right, bottom, left), drawn on
 // clockwise from the top-left corner, plus its fill. Shared by every sheet so
-// equal inputs give identical pixels.
+// equal inputs give identical pixels. Between dashed (1) and solid (0), the
+// solid outline fades in over the dashed one, so the gaps fill in.
 export const SheetShape: React.FC<{
   box: Box;
   edges: [EdgeStyle, EdgeStyle, EdgeStyle, EdgeStyle];
-  dashed?: boolean;
+  dashed?: number;
   draw?: number;
   fill: string;
   fillOpacity: number;
-}> = ({ box, edges, dashed = false, draw = 1, fill: fillColor, fillOpacity }) => {
+}> = ({ box, edges, dashed = 0, draw = 1, fill: fillColor, fillOpacity }) => {
   const l = box.cx - box.w / 2;
   const r = box.cx + box.w / 2;
   const t = box.cy - box.h / 2;
   const b = box.cy + box.h / 2;
-  const segs: [number, number, number, number][] = [
-    [l, t, r, t],
-    [r, t, r, b],
-    [r, b, l, b],
-    [l, b, l, t],
-  ];
   let budget = draw * 2 * (box.w + box.h);
+  const segs = (
+    [
+      [l, t, r, t],
+      [r, t, r, b],
+      [r, b, l, b],
+      [l, b, l, t],
+    ] as const
+  ).map(([x1, y1, x2, y2]) => {
+    const len = Math.hypot(x2 - x1, y2 - y1);
+    const k = Math.min(budget, len) / len;
+    budget -= len;
+    return { x1, y1, x2: x1 + (x2 - x1) * k, y2: y1 + (y2 - y1) * k, drawn: k > 0 };
+  });
+  const outline = (dash: boolean, opacity: number) =>
+    segs.map((sg, i) =>
+      sg.drawn ? (
+        <line
+          key={`${dash}-${i}`}
+          x1={sg.x1}
+          y1={sg.y1}
+          x2={sg.x2}
+          y2={sg.y2}
+          stroke={edges[i].color}
+          strokeWidth={edges[i].width}
+          strokeLinecap={dash ? "butt" : "square"}
+          strokeDasharray={dash ? stroke.dash.join(" ") : undefined}
+          opacity={opacity < 1 ? opacity : undefined}
+        />
+      ) : null,
+    );
   return (
     <>
       {fillOpacity > 0 ? (
         <rect x={l} y={t} width={box.w} height={box.h} fill={fillColor} fillOpacity={fillOpacity} />
       ) : null}
-      {segs.map(([x1, y1, x2, y2], i) => {
-        const len = Math.hypot(x2 - x1, y2 - y1);
-        const k = Math.min(budget, len) / len;
-        budget -= len;
-        return k > 0 ? (
-          <line
-            key={i}
-            x1={x1}
-            y1={y1}
-            x2={x1 + (x2 - x1) * k}
-            y2={y1 + (y2 - y1) * k}
-            stroke={edges[i].color}
-            strokeWidth={edges[i].width}
-            strokeLinecap={dashed ? "butt" : "square"}
-            strokeDasharray={dashed ? stroke.dash.join(" ") : undefined}
-          />
-        ) : null;
-      })}
+      {dashed > 0 ? outline(true, 1) : null}
+      {dashed < 1 ? outline(false, 1 - dashed) : null}
     </>
+  );
+};
+
+// The page prop's document, in fractions of the box from its top-left: a
+// title bar, text lines (y, length, all from x 0.12) and a framed figure of a
+// mountain and a sun. Stroke widths stay fixed as the box scales. No glyphs,
+// so nothing to hold to the legibility floor.
+const PAGE = {
+  left: 0.12,
+  title: { x: [0.12, 0.62], y: [0.07, 0.105], radius: 4 },
+  lines: [
+    [0.17, 0.76],
+    [0.22, 0.72],
+    [0.27, 0.76],
+    [0.32, 0.46],
+    [0.74, 0.76],
+    [0.8, 0.7],
+    [0.86, 0.52],
+  ],
+  figure: { x: [0.12, 0.6], y: [0.4, 0.66] },
+  mountain: [
+    [0.14, 0.64],
+    [0.26, 0.5],
+    [0.34, 0.58],
+    [0.44, 0.47],
+    [0.58, 0.64],
+  ],
+  sun: { x: 0.53, y: 0.46, r: 0.03 }, // r in box widths
+} as const;
+
+const PageContent: React.FC<{ box: Box; opacity: number }> = ({ box, opacity }) => {
+  const x = (f: number) => box.cx - box.w / 2 + f * box.w;
+  const y = (f: number) => box.cy - box.h / 2 + f * box.h;
+  const ink = { stroke: color.muted, strokeWidth: stroke.line, fill: "none" };
+  const { title, figure, sun } = PAGE;
+  return (
+    <g opacity={opacity}>
+      <rect
+        x={x(title.x[0])}
+        y={y(title.y[0])}
+        width={x(title.x[1]) - x(title.x[0])}
+        height={y(title.y[1]) - y(title.y[0])}
+        rx={title.radius}
+        fill={color.text}
+      />
+      {PAGE.lines.map(([fy, len]) => (
+        <line key={fy} x1={x(PAGE.left)} y1={y(fy)} x2={x(PAGE.left + len)} y2={y(fy)} {...ink} strokeLinecap="round" />
+      ))}
+      <rect
+        x={x(figure.x[0])}
+        y={y(figure.y[0])}
+        width={x(figure.x[1]) - x(figure.x[0])}
+        height={y(figure.y[1]) - y(figure.y[0])}
+        {...ink}
+      />
+      <polyline
+        points={PAGE.mountain.map(([fx, fy]) => `${x(fx)},${y(fy)}`).join(" ")}
+        {...ink}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <circle cx={x(sun.x)} cy={y(sun.y)} r={sun.r * box.w} {...ink} />
+    </g>
   );
 };
 
@@ -415,7 +508,7 @@ const SideLabel: React.FC<{ box: Box; side: Side; opacity: number; tex: string; 
   const [ink, setInk] = useState<{ l: number; t: number; r: number; b: number } | null>(null);
   useLayoutEffect(() => {
     const handle = delayRender(`measure label ${tex}`);
-    document.fonts.ready.then(() => {
+    fontsLoaded.then(() => {
       const outer = ref.current!.getBoundingClientRect();
       const r = expressionInk(ref.current!);
       setInk({
@@ -464,6 +557,7 @@ export const PaperRect: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el,
                 fill={s.fill}
                 fillOpacity={s.fillOpacity * s.content}
               />
+              {s.page > 0 ? <PageContent box={s.box} opacity={s.page * s.content} /> : null}
               {s.midline > 0 ? <Midline box={s.box} drawn={s.midline} width={s.strokeWidth} /> : null}
             </>
           )}

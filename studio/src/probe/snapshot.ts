@@ -3,8 +3,11 @@
 // with their effective opacity. Text ink and glyph heights come from the
 // fonts' own metrics (canvas measureText), not from line boxes.
 //
-// Elements are the [data-el] wrappers StoryboardPlayer draws; text items are
-// [data-text] nodes (their value is the kind: name, edge-label, equation, ...).
+// Elements are the [data-el] wrappers StoryboardPlayer draws, plus the
+// channel mark ("logo"); text items are [data-text] nodes (their value is the
+// kind: name, edge-label, equation, ...).
+
+import { textNodeInk as glyphInk } from "../components/ink";
 
 export type Line = [x1: number, y1: number, x2: number, y2: number, width: number, opacity: number];
 export type Box = [left: number, top: number, right: number, bottom: number];
@@ -39,54 +42,13 @@ const opacityOf = (node: Element) => {
   return o;
 };
 
-const ctx = document.createElement("canvas").getContext("2d")!;
-const metricsCache = new Map<string, TextMetrics>();
-const measure = (font: string, s: string) => {
-  const key = `${font}|${s}`;
-  let m = metricsCache.get(key);
-  if (!m) {
-    ctx.font = font;
-    m = ctx.measureText(s);
-    metricsCache.set(key, m);
-  }
-  return m;
-};
-
-const GLYPH = /[\p{L}\p{N}]/u;
-
-// Ink of one text node: its laid-out advance box (from a Range) placed on the
-// font's baseline, sized by the glyphs' actual bounds.
+// Ink of one text node, and its effective opacity.
 const textNodeInk = (node: Text) => {
-  const s = node.textContent ?? "";
-  if (!s.trim() || /^[\s\u200b]*$/.test(s)) return null;
   const parent = node.parentElement!;
   const cs = getComputedStyle(parent);
   if (cs.visibility !== "visible") return null; // e.g. Equation's measuring copies
-  const font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
-  const range = document.createRange();
-  range.selectNodeContents(node);
-  const r = range.getBoundingClientRect();
-  const m = measure(font, s);
-  if (!m.width || !r.width) return null;
-  const k = r.width / m.width; // any CSS scale between layout and screen
-  const baseline = r.top + m.fontBoundingBoxAscent * k;
-  let glyph: [string, number] | null = null;
-  for (const ch of s) {
-    if (!GLYPH.test(ch)) continue;
-    const g = measure(font, ch);
-    const h = (g.actualBoundingBoxAscent + g.actualBoundingBoxDescent) * k;
-    if (!glyph || h < glyph[1]) glyph = [ch, h];
-  }
-  return {
-    box: [
-      r.left - m.actualBoundingBoxLeft * k,
-      baseline - m.actualBoundingBoxAscent * k,
-      r.left + m.actualBoundingBoxRight * k,
-      baseline + m.actualBoundingBoxDescent * k,
-    ] as Box,
-    opacity: opacityOf(parent) * alphaOf(cs.color),
-    glyph,
-  };
+  const ink = glyphInk(node);
+  return ink && { ...ink, opacity: opacityOf(parent) * alphaOf(cs.color) };
 };
 
 const union = (a: Box | null, b: Box): Box =>
@@ -165,7 +127,7 @@ export const snapshot = (): ElementSnap[] =>
   [...document.querySelectorAll<HTMLElement>("[data-el]")].map((el) => {
     const lines: Line[] = [];
     const fills: Fill[] = [];
-    el.querySelectorAll<SVGGraphicsElement>("line, rect, path, polygon").forEach((g) => {
+    el.querySelectorAll<SVGGraphicsElement>("line, polyline, rect, path, polygon").forEach((g) => {
       // KaTeX draws glyphs (radicals) as SVG on huge clipped canvases; they
       // belong to the text item, not the diagram.
       if (!g.getScreenCTM() || g.closest(".katex")) return;
@@ -180,6 +142,9 @@ export const snapshot = (): ElementSnap[] =>
       let corners: number[][] | undefined;
       if (g instanceof SVGLineElement) {
         segs.push([...point(g, g.x1.baseVal.value, g.y1.baseVal.value), ...point(g, g.x2.baseVal.value, g.y2.baseVal.value)]);
+      } else if (g instanceof SVGPolylineElement) {
+        const pts = [...g.points].map((p) => point(g, p.x, p.y));
+        for (let i = 1; i < pts.length; i++) segs.push([...pts[i - 1], ...pts[i]]);
       } else if (g instanceof SVGRectElement) {
         const { x, y, width: rw, height: rh } = g.getBBox();
         corners = [point(g, x, y), point(g, x + rw, y), point(g, x + rw, y + rh), point(g, x, y + rh)];

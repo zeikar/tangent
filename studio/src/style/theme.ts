@@ -111,6 +111,17 @@ export const zone = {
   caption: { top: 1280, bottom: VIDEO.height - safe.bottom },
 } as const;
 
+// The channel mark (brand/Logo) on every frame of every episode, in one place
+// so a looping short's last frame still matches its first: the caption band's
+// bottom-left corner, below any one-line caption and outside the picture.
+const markSize = 60;
+export const channelMark = {
+  size: markSize,
+  left: content.left,
+  top: zone.caption.bottom - markSize,
+  opacity: 0.5,
+} as const;
+
 // What scripts/check-render.mts holds a render to; build-cues.py reads the
 // loudness target from here too. Pixel levels are 8-bit gray.
 export const checks = {

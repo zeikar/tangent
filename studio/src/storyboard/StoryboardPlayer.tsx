@@ -5,6 +5,7 @@ import { Dimension } from "../components/Dimension";
 import { Equation } from "../components/Equation";
 import { HalvingNest } from "../components/HalvingNest";
 import { Mismatch } from "../components/Mismatch";
+import { Note } from "../components/Note";
 import { NumberLine } from "../components/NumberLine";
 import { PaperRect, PaperState, paperState } from "../components/PaperRect";
 import { color } from "../style/theme";
@@ -17,6 +18,7 @@ const components: Record<string, React.FC<{ el: ElementTimeline; scene: Scene }>
   NumberLine,
   Dimension,
   HalvingNest,
+  Note,
 };
 
 // Draw order is declaration order, except a Mismatch goes beneath both of
@@ -43,20 +45,25 @@ export const StoryboardPlayer: React.FC<{ storyboard: Storyboard; cues: Cues }> 
     return drawOrder(elements);
   }, [elements]);
 
-  const papers = new Map<string, PaperState>();
-  const scene: Scene = {
-    frame,
-    paper: (id) => {
-      let s = papers.get(id);
-      if (!s) {
-        const el = elements.find((e) => e.spec.id === id && e.spec.component === "PaperRect");
-        if (!el) throw new Error(`${id} is not a PaperRect`);
-        s = paperState(el, scene);
-        papers.set(id, s);
-      }
-      return s;
-    },
+  const sceneAt = (f: number): Scene => {
+    const papers = new Map<string, PaperState>();
+    const scene: Scene = {
+      frame: f,
+      paper: (id) => {
+        let s = papers.get(id);
+        if (!s) {
+          const el = elements.find((e) => e.spec.id === id && e.spec.component === "PaperRect");
+          if (!el) throw new Error(`${id} is not a PaperRect`);
+          s = paperState(el, scene);
+          papers.set(id, s);
+        }
+        return s;
+      },
+      at: sceneAt,
+    };
+    return scene;
   };
+  const scene = sceneAt(frame);
 
   return (
     <AbsoluteFill style={{ background: color.bg }}>

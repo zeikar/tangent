@@ -34,3 +34,75 @@ export const expressionInk = (el: Element) => {
     bottom: Math.max(...struts.map((r) => r.bottom)),
   };
 };
+
+let canvas: CanvasRenderingContext2D | null = null;
+const metricsCache = new Map<string, TextMetrics>();
+const measure = (font: string, s: string) => {
+  const key = `${font}|${s}`;
+  let m = metricsCache.get(key);
+  if (!m) {
+    canvas ??= document.createElement("canvas").getContext("2d")!;
+    canvas.font = font;
+    m = canvas.measureText(s);
+    metricsCache.set(key, m);
+  }
+  return m;
+};
+
+const GLYPH = /[\p{L}\p{N}]/u;
+
+// Ink of one text node: its laid-out advance box (from a Range) placed on the
+// font's baseline, sized by the glyphs' actual bounds (canvas measureText), so
+// tighter than the Range's line box. Also its smallest letter or digit
+// (lowercase x-height included) and that glyph's height.
+export const textNodeInk = (node: Text) => {
+  const s = node.textContent ?? "";
+  if (!s.trim() || /^[\s\u200b]*$/.test(s)) return null;
+  const cs = getComputedStyle(node.parentElement!);
+  const font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+  const range = document.createRange();
+  range.selectNodeContents(node);
+  const r = range.getBoundingClientRect();
+  const m = measure(font, s);
+  if (!m.width || !r.width) return null;
+  const k = r.width / m.width; // any CSS scale between layout and screen
+  const baseline = r.top + m.fontBoundingBoxAscent * k;
+  let glyph: [string, number] | null = null;
+  for (const ch of s) {
+    if (!GLYPH.test(ch)) continue;
+    const g = measure(font, ch);
+    const h = (g.actualBoundingBoxAscent + g.actualBoundingBoxDescent) * k;
+    if (!glyph || h < glyph[1]) glyph = [ch, h];
+  }
+  return {
+    box: [
+      r.left - m.actualBoundingBoxLeft * k,
+      baseline - m.actualBoundingBoxAscent * k,
+      r.left + m.actualBoundingBoxRight * k,
+      baseline + m.actualBoundingBoxDescent * k,
+    ] as [left: number, top: number, right: number, bottom: number],
+    glyph,
+  };
+};
+
+// A line of text and KaTeX as the probe sees its ink: glyphs (textNodeInk),
+// radical signs and fraction bars.
+export const glyphRect = (el: Element) => {
+  const boxes: number[][] = [];
+  const walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+  for (let n = walk.nextNode(); n; n = walk.nextNode()) {
+    const ink = textNodeInk(n as Text);
+    if (ink) boxes.push(ink.box);
+  }
+  el.querySelectorAll("svg, .frac-line").forEach((e) => {
+    const r = e.getBoundingClientRect();
+    if (r.width) boxes.push([r.left, r.top, r.right, r.bottom]);
+  });
+  if (!boxes.length) throw new Error("no ink to measure");
+  return {
+    left: Math.min(...boxes.map((b) => b[0])),
+    top: Math.min(...boxes.map((b) => b[1])),
+    right: Math.max(...boxes.map((b) => b[2])),
+    bottom: Math.max(...boxes.map((b) => b[3])),
+  };
+};
