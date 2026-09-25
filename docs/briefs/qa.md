@@ -13,17 +13,15 @@ own scratch directory, not the builders'. Don't fix anything and don't commit.
 
 ## 1. Run the render check first
 
-`cd studio && node scripts/check-render.mts ../episodes/<slug>` (~10 s). It
-covers freshness, technical, bounds, centering, legibility, overlaps between
-elements, reaction, loudness, A/V sync, word timing, and the loop, with the
-thresholds in `theme.ts`'s `checks` block. Report its summary; every fail is
-an issue.
-
-Know its blind spots: its legibility and overlap checks measure the current
-studio code, not the pixels of `render.mp4`, so trust them only when the
-freshness check passes. The run rewrites the tracked `check.md` and
-`check.json`; restore them afterwards (`git checkout --`) unless the render
-changed.
+`cd studio && node scripts/check-render.mts ../episodes/<slug> --out <your
+scratch dir>` (~12 s; `--out` keeps the tracked check files untouched). It
+covers freshness (the render's storyboard and studio-code hashes), technical
+(incl. BT.709, 48 kHz), bounds, centering (ink and picture), legibility,
+overlaps (across and inside elements, text under fills, exits still visible
+while new content draws), label ownership, captions (timing, one line, zone),
+readable duration, reaction, mid-beat cues, blank runs, loudness, A/V sync,
+word timing, and the loop, with thresholds in `theme.ts`'s `checks` block.
+Report its summary; every fail is an issue, every warn needs a verdict.
 
 ## 2. Then judge what it can't
 
@@ -31,18 +29,13 @@ Look at frames extracted from `render.mp4`: every beat's last frame, every
 beat boundary and long move sampled every 2–3 frames. Check:
 
 - each end frame against its beat's `endFrame` description;
-- collisions inside one element (a name against its own fold line, labels
-  inside one diagram) and text under translucent fills;
-- label ownership: every edge label clearly nearer its own edge than any
-  other element's;
 - readability beyond glyph height: contrast (muted text, red on dark), stroke
   weight, fractions and superscripts, color pairs that must be told apart;
-- balance: the picture's weight, not just its bounding box, during beats as
-  well as at their ends;
-- timing: how long names and labels stay readable (about 1 s at least), cues
-  after each beat's first word, blank frames between beats;
-- captions: text against the storyboard, line breaks, width, and that each
-  appears within 3 frames of its first word;
+- balance: whether the picture feels centered and uses its space, during beats
+  as well as at their ends;
+- whether each animation reads as what it means (a fold reads as a fold, a
+  scale-to-compare reads as scaling, not as the same size);
+- captions: the text against the storyboard's, and line breaks;
 - narration: the spoken words against the script's 읽기용 text (transcribe;
   Whisper invents text over silence and writes numbers as digits);
 - facts: run `python3 verify.py`, and recompute every number on screen.
