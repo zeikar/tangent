@@ -47,7 +47,8 @@ Split the script into beats (B1, B2, ...), one idea each. Every beat has:
 - **화면용** (display): the on-screen caption text. Math goes in `$...$` as
   KaTeX (`$\frac{x}{2}$`, `$\sqrt{2}$`), but prefer words when the picture
   already shows the math (see Structure). Numbers as digits.
-- **읽기용** (read-aloud): the exact TTS input. Spell out every number, symbol,
+- **읽기용** (read-aloud): the exact TTS input, following
+  `docs/narration.md` (spelling out, and clashes to avoid). Spell out every number, symbol,
   formula, Latin letter, and English term in Hangul (`$x^2 = 2$` → "엑스 제곱은
   이", "A4" → "에이포", "210" → "이백십"). Commas mark breaths. The word
   sequence must be something a forced aligner can match: Hangul words only, no
