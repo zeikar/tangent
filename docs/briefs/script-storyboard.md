@@ -20,17 +20,41 @@ Write only the output file of the current pass. Don't edit other files.
 - Audience: curious high-schoolers and adults. Explain with the picture, not
   with jargon.
 
+### Structure: make the viewer wonder before you explain
+A Short is watched to the end because the viewer wants to know, not because
+it explains well. Episode 001 v1 stated its conclusion first and then proved
+it; it read as a tidy lecture. Instead:
+
+- **Open from what the viewer already knows or can see**, with a question or
+  a surprise about it, never a stated conclusion. Best: a comparison they can
+  judge themselves in the first 3 s (two things that behave differently).
+- **Leave room to guess.** Show the counterexample before the rule, and pause
+  on the question for a beat before answering it.
+- **Let the viewer find the answer in the picture** (a search or sweep that
+  lands on it) before or alongside the algebra; the algebra then explains why
+  the discovery isn't a coincidence.
+- **End on meaning or use**, something the viewer can recognize in their own
+  life, not one more fact; tie back to the opening picture so the loop works.
+- **Captions carry meaning, pictures carry formulas.** When the picture shows
+  an equation, the caption says what it means in words ("접기 전후 비율이
+  같아야 하니까") instead of repeating it.
+- **Precision:** name the direction of every operation ("긴 변을 반으로"),
+  write rounded decimals with ≈, and keep design values apart from measured
+  ones ("설계 비율은 √2, 실제 치수는 mm 단위라 조금 달라요").
+
 ### Beats
 Split the script into beats (B1, B2, ...), one idea each. Every beat has:
 - **화면용** (display): the on-screen caption text. Math goes in `$...$` as
-  KaTeX (`$\frac{x}{2}$`, `$\sqrt{2}$`). Numbers as digits.
+  KaTeX (`$\frac{x}{2}$`, `$\sqrt{2}$`), but prefer words when the picture
+  already shows the math (see Structure). Numbers as digits.
 - **읽기용** (read-aloud): the exact TTS input. Spell out every number, symbol,
   formula, Latin letter, and English term in Hangul (`$x^2 = 2$` → "엑스 제곱은
   이", "A4" → "에이포", "210" → "이백십"). Commas mark breaths. The word
   sequence must be something a forced aligner can match: Hangul words only, no
   digits or Latin letters.
 - **비주얼**: one line: what the viewer sees, the single picture that carries
-  the idea.
+  the idea. When a shape is scaled to compare with another, say so on screen
+  (the scale-up must read as "크기를 맞춰 비교", not "same size").
 - **근거**: the research.md claim IDs (C1, C2, ...) this beat relies on. A
   factual statement without a claim ID is not allowed; pure arithmetic or logic
   shown on screen may say "산수".

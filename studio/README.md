@@ -44,6 +44,9 @@ Narration and production (API keys in the repo-root `.env`; `ep` is
 `../episodes/<slug>`):
 
 ```sh
+# Codex critique (read-only sandbox): the script before the take, and the
+# final cut after QA → $ep/critique-script.md, critique-cut.md
+node scripts/critique.mts $ep script
 # Right after the script: one TTS take of every 읽기용 line in script.md, plus
 # sped-up copies to compare → $ep/take<N>.wav, take<N>@1.08.wav, ..., take<N>.txt
 node scripts/narrate.mts $ep --tempo=1.08,1.15

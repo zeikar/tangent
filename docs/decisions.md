@@ -93,6 +93,12 @@ files along, and stops at the human checkpoints.
   take (`studio/scripts/narrate.mts`), and the human approves script and take
   before the storyboard.
 - QA is never the agent that built the scenes.
+- **A second model critiques twice.** Codex, in a read-only sandbox
+  (`studio/scripts/critique.mts`), reviews the script before the take
+  (editorial: hook, curiosity arc, pacing) and the final cut before the human
+  (as a viewer, from contact sheets). Its findings are advice, not gates. In
+  milestone 1 an outside Codex review caught what no Claude agent had: the
+  episode explained well but never made the viewer wonder.
 - In milestone 1 the briefs are hand-written in `docs/briefs/`. Whatever a brief
   has to carry beyond the input files shows what the handoff files are missing.
   The briefs become the stage skills.
