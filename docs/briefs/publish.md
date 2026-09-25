@@ -12,19 +12,26 @@ as the format.
 
 ## Write `episodes/<slug>/publish.md`
 
+Use the format in `docs/channel.md` → `publish.md` format: every field the
+uploader pastes (title, description, tags) alone in its own code block, in
+upload order, then the per-upload answers (thumbnail time, playlist,
+audience, AI disclosure), then our notes below a rule. The uploader should be
+able to copy each block without editing it.
+
 - **Title, description, tags, playlist** per `docs/channel.md`. Korean,
-  the same "~요" register as the script.
+  the same "~요" register as the script. Tags leave out what the upload
+  defaults already add.
 - **Facts:** every factual statement in the description comes from a
   research.md claim, and the 출처 lines are the sources those claims cite.
-  Don't add facts the video doesn't show.
-- **AI disclosure:** answer per `docs/channel.md` and say why in one line.
+  Don't add facts the video doesn't show. The claim map goes in the notes.
+- **AI disclosure:** answer per `docs/channel.md` and say why in the notes.
   Check the episode for anything that changes the answer (AI music, realistic
   AI imagery).
 - **Thumbnail:** choose one frame that shows the subject and the title's
   question, never the answer (docs/channel.md), not mid-transition, with
   nothing important in the Shorts UI zones. Prefer a picture that holds for
-  at least ~1 s so it can be hit in the app's frame selector. Record its time
-  and frame number and what it shows.
+  at least ~1 s so it can be hit in the app's frame selector. Give its time
+  range in the upload answers and the frame number in the notes.
 
 ## Files
 
