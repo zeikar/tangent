@@ -364,3 +364,17 @@ sheets plus cited frames (round 2's 391 PNGs pruned to 66).
 - **Narration moved before the storyboard** (decisions.md → Pipeline), with
   speed variants at the script checkpoint, so the storyboard is written
   against real timings.
+
+### v2 decision and the script critic experiment (2026-09-25)
+
+- An outside Codex review of v1's render: well made, but "a tidy 51 s math
+  lecture, not a curiosity Short": it states the conclusion first, the
+  discovery (the ratio sweep) comes after the proof, formulas repeat across
+  picture, caption, and voice. No Claude agent had flagged this; QA checks
+  correctness and layout, not whether the viewer wonders. The human chose to
+  remake 001 as v2 before uploading.
+- Experiment: the new script critic (`critique.mts script`, Codex, read-only)
+  run on v1's script alone returned **restructure** with the same blocking
+  findings. A critic at the script stage would have caught it before any
+  storyboard or render. Codex critique is now a pipeline step twice (script,
+  final cut).
