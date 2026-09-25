@@ -1,5 +1,5 @@
 {
- "storyboardSha256": "18f046e8036706d15417682068b3e831a75ef8eb0e443dc2156757941bd0260d",
+ "storyboardSha256": "e5e117fa4eb6e08c4f6564e6a80539382be6f19afd808c4f0470a17e287465d9",
  "fps": 30,
  "durationInFrames": 1248,
  "beats": [
@@ -30,29 +30,35 @@
      "action": "standAndFit",
      "word": "똑같이",
      "frame": 3,
-     "untilFrame": 71
+     "untilFrame": 29
     },
     {
      "target": "half",
      "action": "standAndFit",
      "word": "똑같이",
      "frame": 3,
-     "untilFrame": 71
+     "untilFrame": 29
     },
     {
      "target": "compareNote",
+     "action": "appear",
+     "word": "반으로",
+     "frame": 19
+    },
+    {
+     "target": "letterGap",
      "action": "appear",
      "word": "접었는데",
      "frame": 29
     },
     {
-     "target": "letterGap",
-     "action": "appear",
-     "word": "딱",
-     "frame": 71
+     "target": "a4Half",
+     "action": "pulse",
+     "word": "이쪽만",
+     "frame": 58
     },
     {
-     "target": "a4Ghost",
+     "target": "letterGap",
      "action": "pulse",
      "word": "이쪽만",
      "frame": 58
@@ -102,8 +108,15 @@
     {
      "target": "sheet",
      "action": "moveTo",
-     "word": "정도를",
-     "frame": 139
+     "word": "길쭉한",
+     "frame": 124
+    },
+    {
+     "target": "sheet",
+     "action": "resize",
+     "word": "바꾸면",
+     "frame": 151,
+     "untilFrame": 203
     }
    ]
   },
@@ -173,6 +186,24 @@
      "action": "pulse",
      "word": "딱",
      "frame": 353
+    },
+    {
+     "target": "sheet",
+     "action": "moveTo",
+     "word": "왜",
+     "frame": 388
+    },
+    {
+     "target": "half",
+     "action": "moveTo",
+     "word": "왜",
+     "frame": 388
+    },
+    {
+     "target": "sheet",
+     "action": "setStyle",
+     "word": "왜",
+     "frame": 388
     }
    ]
   },
@@ -197,20 +228,8 @@
    ],
    "cues": [
     {
-     "target": "sheet",
-     "action": "moveTo",
-     "word": "짧은",
-     "frame": 458
-    },
-    {
-     "target": "half",
-     "action": "moveTo",
-     "word": "짧은",
-     "frame": 458
-    },
-    {
-     "target": "sheet",
-     "action": "setStyle",
+     "target": "ratioNote",
+     "action": "exit",
      "word": "짧은",
      "frame": 458
     },
@@ -324,39 +343,57 @@
     },
     {
      "target": "sheet",
-     "action": "pulse",
+     "action": "moveTo",
      "word": "너비도",
      "frame": 652
     },
     {
      "target": "half",
-     "action": "pulse",
+     "action": "moveTo",
      "word": "너비도",
      "frame": 652
-    },
-    {
-     "target": "half",
-     "action": "setStyle",
-     "word": "길이가",
-     "frame": 689
-    },
-    {
-     "target": "eq",
-     "action": "reveal",
-     "word": "길이가",
-     "frame": 689
     },
     {
      "target": "sheet",
      "action": "pulse",
-     "word": "일과",
-     "frame": 705
+     "word": "너비도",
+     "frame": 652
+    },
+    {
+     "target": "half",
+     "action": "pulse",
+     "word": "너비도",
+     "frame": 652
+    },
+    {
+     "target": "eq",
+     "action": "reveal",
+     "word": "길이가",
+     "frame": 689
     },
     {
      "target": "eq",
      "action": "reveal",
      "word": "일과",
      "frame": 705
+    },
+    {
+     "target": "sheet",
+     "action": "pulse",
+     "word": "같아야",
+     "frame": 715
+    },
+    {
+     "target": "half",
+     "action": "pulse",
+     "word": "같아야",
+     "frame": 715
+    },
+    {
+     "target": "eq",
+     "action": "reveal",
+     "word": "해요",
+     "frame": 728
     }
    ]
   },
@@ -395,16 +432,16 @@
      "frame": 821
     },
     {
+     "target": "ratioNote2",
+     "action": "appear",
+     "word": "루트",
+     "frame": 837
+    },
+    {
      "target": "eq",
      "action": "box",
      "word": "이가",
      "frame": 847
-    },
-    {
-     "target": "ratioNote",
-     "action": "setText",
-     "word": "루트",
-     "frame": 837
     }
    ]
   },
@@ -441,7 +478,7 @@
      "frame": 891
     },
     {
-     "target": "ratioNote",
+     "target": "ratioNote2",
      "action": "exit",
      "word": "실제",
      "frame": 891
@@ -475,6 +512,12 @@
      "action": "appear",
      "word": "이백구십칠",
      "frame": 951
+    },
+    {
+     "target": "diffNote",
+     "action": "appear",
+     "word": "조금",
+     "frame": 1001
     }
    ]
   },
@@ -506,6 +549,12 @@
     },
     {
      "target": "dim297",
+     "action": "exit",
+     "word": "그래서",
+     "frame": 1034
+    },
+    {
+     "target": "diffNote",
      "action": "exit",
      "word": "그래서",
      "frame": 1034

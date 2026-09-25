@@ -1,8 +1,8 @@
 {
  "episode": "001-a4-paper-ratio",
  "render": "render.mp4",
- "storyboardSha256": "18f046e8036706d15417682068b3e831a75ef8eb0e443dc2156757941bd0260d",
- "studioSha256": "42cfc4b6f2b387592b1b438d6a4f1671eb2e630c277811f5c5f8247e833ab92e",
+ "storyboardSha256": "e5e117fa4eb6e08c4f6564e6a80539382be6f19afd808c4f0470a17e287465d9",
+ "studioSha256": "abafa13c9dbe4b546fea92e175a5480e60fc47975aa8a3e540e10cac8aa8be98",
  "verdict": "fail",
  "counts": {
   "fail": 1,
@@ -27,88 +27,88 @@
   {
    "id": "bounds",
    "status": "pass",
-   "summary": "all 1248 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 152–927, y 256–1251",
+   "summary": "all 1248 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 145–935, y 264–1174",
    "cites": []
   },
   {
    "id": "centering",
    "status": "pass",
-   "summary": "B1 0/0, B2 -3/0, B3 -3/0, B4 -2/0, B5 +9/-11, B6 +13/-12, B7 +14/-12, B8 +14/-5, B9 +1/+0, B10 0/0, B11 0/0 (px off x 540: all ink / picture without edge labels; tolerance ±25)",
+   "summary": "B1 -1/0, B2 0/0, B3 0/0, B4 -9/-9, B5 +11/-9, B6 +12/-11, B7 +13/-11, B8 +13/-10, B9 0/+0, B10 0/0, B11 0/0 (px off x 540: all ink / picture without edge labels; tolerance ±25)",
    "details": [
     {
      "beat": "B1",
      "frame": 123,
-     "off": 0,
+     "off": -1.5,
      "pictureOff": 0,
      "status": "pass"
     },
     {
      "beat": "B2",
      "frame": 244,
-     "off": -3,
+     "off": 0,
      "pictureOff": 0,
      "status": "pass"
     },
     {
      "beat": "B3",
      "frame": 339,
-     "off": -3,
+     "off": 0,
      "pictureOff": 0,
      "status": "pass"
     },
     {
      "beat": "B4",
      "frame": 457,
-     "off": -2,
-     "pictureOff": 0,
+     "off": -9.5,
+     "pictureOff": -9.049999999999955,
      "status": "pass"
     },
     {
      "beat": "B5",
      "frame": 555,
-     "off": 8.5,
-     "pictureOff": -10.649999999999977,
+     "off": 10.5,
+     "pictureOff": -9.049999999999955,
      "status": "pass"
     },
     {
      "beat": "B6",
      "frame": 651,
-     "off": 13,
-     "pictureOff": -11.549999999999955,
+     "off": 12,
+     "pictureOff": -11.5,
      "status": "pass"
     },
     {
      "beat": "B7",
      "frame": 752,
-     "off": 13.5,
-     "pictureOff": -11.549999999999955,
+     "off": 13,
+     "pictureOff": -11.5,
      "status": "pass"
     },
     {
      "beat": "B8",
      "frame": 890,
-     "off": 13.5,
-     "pictureOff": -4.600000000000023,
+     "off": 13,
+     "pictureOff": -9.549999999999955,
      "status": "pass"
     },
     {
      "beat": "B9",
      "frame": 1033,
-     "off": 0.5,
+     "off": 0,
      "pictureOff": 0.25,
      "status": "pass"
     },
     {
      "beat": "B10",
      "frame": 1180,
-     "off": 0,
+     "off": -0.5,
      "pictureOff": 0,
      "status": "pass"
     },
     {
      "beat": "B11",
      "frame": 1247,
-     "off": 0,
+     "off": -0.5,
      "pictureOff": 0,
      "status": "pass"
     }
@@ -118,7 +118,7 @@
   {
    "id": "legibility",
    "status": "pass",
-   "summary": "smallest glyph \"m\" 31 px in dim210 \"210\\,\\mathrm{mm}\" (floor 30 px, 53 text items)",
+   "summary": "smallest glyph \"m\" 31 px in dim210 \"210\\,\\mathrm{mm}\" (floor 30 px, 55 text items)",
    "details": [
     {
      "id": "dim210",
@@ -135,6 +135,14 @@
      "char": "m",
      "height": 31,
      "frame": 967
+    },
+    {
+     "id": "diffNote",
+     "kind": "label",
+     "text": "설계값과약0.3mm차이",
+     "char": "m",
+     "height": 31,
+     "frame": 1005
     },
     {
      "id": "sheet",
@@ -163,15 +171,23 @@
     {
      "id": "half",
      "kind": "edge-label",
+     "text": "\\dfrac{x}{2}\\times x",
+     "char": "x",
+     "height": 31.8,
+     "frame": 597
+    },
+    {
+     "id": "half",
+     "kind": "edge-label",
      "text": "x",
      "char": "x",
      "height": 31.8,
      "frame": 614
     },
     {
-     "id": "half",
-     "kind": "edge-label",
-     "text": "\\dfrac{x}{2}\\times x",
+     "id": "eq",
+     "kind": "equation",
+     "text": "2x×x",
      "char": "x",
      "height": 31.8,
      "frame": 689
@@ -222,7 +238,7 @@
      "text": "크기를맞춰비교",
      "char": "교",
      "height": 38.5,
-     "frame": 33
+     "frame": 23
     },
     {
      "id": "a4Half",
@@ -241,12 +257,12 @@
      "frame": 350
     },
     {
-     "id": "ratioNote",
+     "id": "ratioNote2",
      "kind": "label",
      "text": "A4의설계비율2≈1.414",
      "char": "A",
      "height": 39.6,
-     "frame": 852
+     "frame": 841
     },
     {
      "id": "sheet",
@@ -263,22 +279,6 @@
      "char": "A",
      "height": 39.6,
      "frame": 1230
-    },
-    {
-     "id": "foldNote",
-     "kind": "label",
-     "text": "긴변을반으로접은뒤",
-     "char": "로",
-     "height": 40.3,
-     "frame": 7
-    },
-    {
-     "id": "captions",
-     "kind": "caption",
-     "text": "그래서 A4 문서를",
-     "char": "그",
-     "height": 41.4,
-     "frame": 1034
     }
    ],
    "cites": []
@@ -305,58 +305,58 @@
      "ratio": 3.07
     },
     {
-     "id": "half",
-     "text": "\\dfrac{x}{2}\\times x",
-     "frame": 848,
-     "own": 8.2,
-     "other": 26.7,
-     "otherId": "eq",
-     "ratio": 3.26
-    },
-    {
      "id": "a3",
      "text": "\\mathrm{A3}",
      "frame": 1145,
      "own": 6.7,
-     "other": 92.3,
+     "other": 109.3,
      "otherId": "page",
-     "ratio": 13.78
+     "ratio": 16.31
+    },
+    {
+     "id": "half",
+     "text": "\\dfrac{x}{2}\\times x",
+     "frame": 627,
+     "own": 8.2,
+     "other": 152.1,
+     "otherId": "sheet",
+     "ratio": 18.55
     },
     {
      "id": "half",
      "text": "\\dfrac{x}{2}",
      "frame": 538,
      "own": 8.2,
-     "other": 173.4,
+     "other": 176.9,
      "otherId": "sheet",
-     "ratio": 21.14
+     "ratio": 21.58
     },
     {
      "id": "half",
      "text": "1",
      "frame": 538,
-     "own": 14.8,
-     "other": 317,
+     "own": 14.9,
+     "other": 324.1,
      "otherId": "sheet",
-     "ratio": 21.42
+     "ratio": 21.75
     },
     {
      "id": "sheet",
      "text": "1",
      "frame": 566,
      "own": 7.5,
-     "other": 221.8,
+     "other": 226.8,
      "otherId": "half",
-     "ratio": 29.57
+     "ratio": 30.24
     },
     {
      "id": "half",
      "text": "x",
-     "frame": 638,
+     "frame": 868,
      "own": 11.4,
-     "other": 401.4,
-     "otherId": "sheet",
-     "ratio": 35.21
+     "other": 410.2,
+     "otherId": "eq",
+     "ratio": 35.98
     }
    ],
    "cites": []
@@ -628,7 +628,7 @@
   {
    "id": "reaction",
    "status": "pass",
-   "summary": "B1 +1, B2 +1, B3 +1, B4 +1, B5 +1, B6 +1, B7 +1, B8 +1, B9 +1, B10 +1, B11 +1 (frames from each beat's first word to the first visible change; — = no cue on that word; limit 3)",
+   "summary": "B1 +1, B2 +1, B3 +1, B4 +1, B5 +1, B6 +2, B7 +1, B8 +1, B9 +1, B10 +1, B11 +1 (frames from each beat's first word to the first visible change; — = no cue on that word; limit 3)",
    "details": [
     {
      "beat": "B1",
@@ -669,7 +669,7 @@
      "beat": "B6",
      "frame": 556,
      "hasCue": true,
-     "latency": 1,
+     "latency": 2,
      "status": "pass"
     },
     {
@@ -856,7 +856,7 @@
   {
    "id": "loop",
    "status": "pass",
-   "summary": "142 visual-zone pixels differ by more than 16 levels between the last and first frame (limit 500)",
+   "summary": "151 visual-zone pixels differ by more than 16 levels between the last and first frame (limit 500)",
    "cites": []
   }
  ]

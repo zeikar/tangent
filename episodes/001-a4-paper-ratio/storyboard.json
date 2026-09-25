@@ -2,15 +2,18 @@
  "slug": "001-a4-paper-ratio",
  "loop": true,
  "notes": [
-  "Geometry is px in the 1080×1920 frame, origin top-left; center is [x, y]. Every sheet's short side is 300 px and, except the A3 in B10–B11, every sheet's bottom edge is at y 900.",
-  "Compositions center on x 540 and keep all ink, labels and every moving shape's whole sweep within x 140–940, y ≥ 240. check-render wants both the whole ink and the picture without edge labels within ±25 px of x 540 at each beat end, so pairs with a label on one side (B5–B8) sit a few px right of group-center, and the A3 label goes below its outline.",
+  "Geometry is px in the 1080×1920 frame, origin top-left; center is [x, y].",
+  "Sizes: B1 and B11's slots are 320 wide (the halves' quarter turn sweeps a circle of radius 199 px about their centers, which is what fits between x 140 and 940); the swept sheet in B2–B4 is 400 wide; the proof pair in B4–B8 is 310 wide each; the real A4 in B9 is 360 wide and the A3 in B10 is 509 × 720.",
+  "Vertical use: B1's notes sit under the sheets; B2–B4's sheet sits on y 1052 above compareNote; B5–B6's pair sits low (bottoms y 952) and B7 lifts it to y 833.4 so the equation row fits under it; B9–B10 fill y 370–1154.",
+  "Compositions center on x 540 and keep all ink, labels and every moving shape's whole sweep within x 140–940, y ≥ 240. check-render wants both the whole ink and the picture without edge labels within ±25 px of x 540 at each beat end, so the proof pairs (B4–B8) sit a few px right of group-center, and the A3 label goes below its outline.",
   "Draw order is declaration order across the episode (Mismatch beneath its two sheets). The loop depends on it: a4Ghost draws beneath a4Half at frame 0, and a3 beneath page at the end.",
   "The loop: B11's last frame must equal B1's frame 0 (dashed ghosts, teal lower halves, names A4 and 레터, no notes). a3 ends as a4Ghost's box, page ends as a4Half's box with name 'A4', letterGhost2 and letterHalf2 copy sheet and half's frame-0 props. Every prop that draws pixels must match: stroke, dashed, fillOpacity, strokeWidth, names.",
-  "Comparisons match heights (standAndFit match 'height'), because B6 explains the fit that way: grow the folded half x times until the heights meet, then the widths must meet too.",
-  "√2 = 1.4142; Letter h/w = 11/8.5 = 1.2941. The ideal sheet (h/w = √2) also stands for the real A4 in B9–B10: 210 × 297 mm differs from it by under 0.1 px at this size.",
-  "Nothing shows a number until B4. The sweep shows only the gap.",
-  "Every exit is a 0.2 s fade; an appear sharing its anchor with exits waits for them. Handoffs between elements with identical boxes (page over sheet in B10) put the appear and the exit on different anchors, so there is no blink.",
   "check-render will warn 'readable' at the end: the page's 'A4' and letterHalf2's '레터' are fully visible only for the last few frames. Expected: the loop continues them into frame 0, where both are visible.",
+  "Comparisons match heights (standAndFit match 'height'), because B6 explains the fit that way: grow the folded half x times until the heights meet, then the widths must meet too.",
+  "√2 = 1.4142; Letter h/w = 11/8.5 = 1.2941. The ideal sheet (h/w = √2) also stands for the real A4 in B9–B10: 210 × 297 mm differs from it by under 0.1 px at this size, which is why B9 says the difference in words (≈ 0.3 mm) instead of drawing it.",
+  "Nothing shows a number until B4. The sweep shows only the gap. The top ratio note leaves at B5 and returns, with √2, in B8.",
+  "Every exit is a 0.2 s fade; an appear sharing its anchor with exits waits for them. Handoffs between elements with identical boxes (page over sheet in B10) put the appear and the exit on different anchors, so there is no blink.",
+  "B7's word '이' has no audible onset in this take (20 ms in the alignment), so no cue is anchored on it; only the caption chunk starts there.",
   "Edge colors follow the role, not the physical edge: yellow is a sheet's long side (its height, since every compared sheet stands upright), blue its short side (width). So the original's short side is blue '1' while the same edge, as the folded half's height, is yellow '1'. The reasoning is height against height, width against width, which role colors show directly."
  ],
  "colors": {
@@ -19,28 +22,28 @@
   "teal": "접힌 절반",
   "red": "안 맞는 곳",
   "yellow": "높이 = 긴 변(세워 둔 종이라서): x, √2, 1.414, 297 mm, 세운 절반의 높이 1",
-  "blue": "너비 = 짧은 변: 1, x/2, 210 mm"
+  "blue": "너비 = 짧은 변: 1, x/2, x/2 × x, 210 mm"
  },
  "components": [
   {
    "name": "PaperRect",
-   "status": "change",
-   "spec": "Existing (studio/src/components/PaperRect.tsx; v1's spec). Changes: (1) standAndFit gains params match ('width', the default and v1's rule, or 'height': after the 90° clockwise turn, scale uniformly until its height equals ref's height, bottom-left corners together; a similar rectangle lands exactly on ref, any other one is narrower or wider) and follow (bool): once the action ends, the element keeps being the fitted half of ref's live box, i.e. ref's lower half (the long side halved) stood up and fitted by the same match, recomputed every frame, so it tracks ref's moveTo and resize. Later geometry actions on the element (moveTo) apply on top of that tracked box as usual: lerp from it, and once one has ended, its target is the box. (2) setStyle gains dashed (bool: the outline crossfades between dashed and solid) and page (bool: the document content below fades in or out). (3) New prop page (bool, default false): draws a plain document inside the box, laid out in fractions of the box so it scales with every geometry change while stroke widths stay fixed: title bar (filled rounded rect, color text, x 0.12–0.62 w, y 0.07–0.105 h); text lines as 4 px round-capped muted strokes at y 0.17, 0.22, 0.27, 0.32 h (x from 0.12 w, lengths 0.76, 0.72, 0.76, 0.46 w); a figure: muted 4 px rectangle x 0.12–0.60 w, y 0.40–0.66 h, holding a mountain polyline through (0.14, 0.64) (0.26, 0.50) (0.34, 0.58) (0.44, 0.47) (0.58, 0.64) and a sun circle centered (0.53 w, 0.46 h) with radius 0.03 w, both muted 4 px strokes, no fill; three more text lines at y 0.74, 0.80, 0.86 h (lengths 0.76, 0.70, 0.52 w). All points are (x, y) fractions of the box from its top-left. The title bar is fully opaque with 4 px corner radius. No text glyphs, so nothing to measure against the legibility floor. The content fades in with the element's content phase (appear) and is not drawn while the element folds; clear it with setStyle page false first. The first frame's folded halves need no change: each is a teal PaperRect over the lower half of a dashed ghost."
+   "status": "existing",
+   "spec": "As built for this episode: v1's actions plus standAndFit {ref, match: width|height, follow}, setStyle dashed and page, the page prop. Unchanged this round."
   },
   {
    "name": "Note",
-   "status": "new",
-   "spec": "One line of text in the visual zone: plain text (Pretendard, type.label: 56 px, weight 600) with optional $…$ math segments rendered by Tex at type.mathInline, like Captions but not bold. Props: text; at [x, y] (the center of the line's ink box); color (theme name, default text) for the plain text; mathColor (default = color) for the math. No wrapping. Invisible until appear unless visibleAtStart. Actions: appear (fade in, ease.out), exit (the player's 0.2 s fade), setText {text} (old line fades out while the new one fades in; during the crossfade both share one left edge, which slides from the old line's left to the new line's (the new line is centered on at when done), so words the two lines share stay in place). Mark it data-text=\"label\" for the probe, like other labels."
+   "status": "existing",
+   "spec": "As built: one line of text with $…$ math at `at`; appear, exit, setText (token morph)."
   },
   {
    "name": "Mismatch",
-   "status": "existing",
-   "spec": "As built (v1 spec): red symmetric difference of two live sheets, drawn beneath both."
+   "status": "change",
+   "spec": "As built (the red symmetric difference of two live sheets, beneath both; production is raising its fill to a clearly red, higher-contrast style). New action pulse: over the cue's span the shaded region flashes (bump 0 → 1 → 0) to full opacity and back, with a 4 px outline in the same color that fades with the flash. Used once, on '이쪽만' in B1, together with a4Half's pulse."
   },
   {
    "name": "Equation",
    "status": "existing",
-   "spec": "As built (v1 spec): one KaTeX row of addressable parts; reveal, transformTo with morph, box, exit."
+   "spec": "As built: parts, reveal, transformTo token morphs (x^2 is x plus a superscript 2; \\sqrt{...} wraps its radicand's tokens), box, exit, and reveal fromLabel {of, side}: exactly one part, which starts as that sheet's edge label as drawn the frame before and flies, growing, into its slot; the player takes the label off the sheet on the same frame. The label's TeX must render like the part in the display-style row (B7: \\dfrac{x}{2}\\times x for \\frac{x}{2} \\times x; 1 for 1)."
   },
   {
    "name": "Dimension",
@@ -75,16 +78,16 @@
      "visibleAtStart": true,
      "props": {
       "center": [
-       340.0,
-       687.87
+       345.0,
+       673.73
       ],
-      "w": 300.0,
-      "h": 424.26,
+      "w": 320.0,
+      "h": 452.55,
       "stroke": "muted",
       "fillOpacity": 0,
       "dashed": true
      },
-     "where": "left slot: A4's original outline (300 × 424.3, bottom y 900); frame 0 and the loop's last frame"
+     "where": "left slot: A4's original outline, 320 × 452.5 (x 185–505, y 447.5–900); frame 0 and the loop's last frame"
     },
     {
      "id": "a4Half",
@@ -92,15 +95,15 @@
      "visibleAtStart": true,
      "props": {
       "center": [
-       340.0,
-       793.93
+       345.0,
+       786.86
       ],
-      "w": 300.0,
-      "h": 212.13,
+      "w": 320.0,
+      "h": 226.27,
       "stroke": "teal",
       "name": "A4"
      },
-     "where": "A4's lower half, already folded (the long side halved): 300 × 212.1 inside the bottom of a4Ghost; name centered in it"
+     "where": "A4's lower half, already folded (the long side halved): 320 × 226.3 inside the bottom of a4Ghost; name centered in it"
     },
     {
      "id": "sheet",
@@ -108,16 +111,16 @@
      "visibleAtStart": true,
      "props": {
       "center": [
-       740.0,
-       705.88
+       735.0,
+       692.94
       ],
-      "w": 300.0,
-      "h": 388.24,
+      "w": 320.0,
+      "h": 414.12,
       "stroke": "muted",
       "fillOpacity": 0,
       "dashed": true
      },
-     "where": "right slot: Letter's original outline (8.5 × 11 in: 300 × 388.2, bottom y 900). The same element is swept in B3 and becomes the original sheet of the reasoning (B5–B9)"
+     "where": "right slot: Letter's original outline (8.5 × 11 in: 320 × 414.1, x 575–895). The same element is swept in B2–B3 and becomes the original sheet of the reasoning (B4–B10)"
     },
     {
      "id": "half",
@@ -125,15 +128,15 @@
      "visibleAtStart": true,
      "props": {
       "center": [
-       740.0,
-       802.94
+       735.0,
+       796.47
       ],
-      "w": 300.0,
-      "h": 194.12,
+      "w": 320.0,
+      "h": 207.06,
       "stroke": "teal",
       "name": "레터"
      },
-     "where": "Letter's lower half, already folded: 300 × 194.1 inside the bottom of sheet; name centered in it"
+     "where": "Letter's lower half, already folded: 320 × 207.1 inside the bottom of sheet; name centered in it"
     },
     {
      "id": "letterGap",
@@ -143,7 +146,7 @@
       "b": "half",
       "color": "red"
      },
-     "where": "where Letter's fitted half misses its outline: a strip x 841–890 inside the outline (the fitted half is 251 wide)"
+     "where": "where Letter's fitted half misses its outline: a strip x 843–895, the full height, inside the outline"
     },
     {
      "id": "foldNote",
@@ -152,11 +155,11 @@
       "text": "긴 변을 반으로 접은 뒤",
       "at": [
        540,
-       290
+       1040
       ],
       "color": "muted"
      },
-     "where": "top of the visual zone, centered"
+     "where": "under the sheets (the turning halves reach y 986, 26 px above its ink): the contrast reads before the words"
     },
     {
      "id": "compareNote",
@@ -165,7 +168,7 @@
       "text": "크기를 맞춰 비교",
       "at": [
        540,
-       360
+       1105
       ],
       "color": "muted"
      },
@@ -192,9 +195,9 @@
       "match": "height"
      },
      "until": {
-      "word": "딱"
+      "word": "접었는데"
      },
-     "note": "2.3 s: turns 90° clockwise, then grows until its height equals the outline's; lands exactly"
+     "note": "0.87 s: a 0.35 s quarter turn, then grows to the outline's height; lands at 1.0 s, so the fit/gap contrast reads in the first second"
     },
     {
      "at": {
@@ -208,22 +211,22 @@
       "follow": true
      },
      "until": {
-      "word": "딱"
+      "word": "접었는데"
      },
-     "note": "same move, in parallel; follow keeps it fitted to sheet's live geometry from here on (B2 moves sheet, B3 sweeps it)"
+     "note": "same move, in parallel; follow keeps it fitted to sheet's live geometry from here on (B2 moves and stretches sheet)"
     },
     {
      "at": {
-      "word": "접었는데"
+      "word": "반으로"
      },
      "target": "compareNote",
      "action": "appear",
      "speed": "fast",
-     "note": "the scaling phase of the fits (their last 60%) starts about now"
+     "note": "as the halves start to grow"
     },
     {
      "at": {
-      "word": "딱"
+      "word": "접었는데"
      },
      "target": "letterGap",
      "action": "appear",
@@ -234,17 +237,26 @@
      "at": {
       "word": "이쪽만"
      },
-     "target": "a4Ghost",
+     "target": "a4Half",
      "action": "pulse",
      "params": {
       "edges": "all",
       "color": "text"
      },
      "speed": "base",
-     "note": "'이쪽만' points at A4: its outline flashes while the half is still landing; the half lands on '딱' (frame 71), inside the pulse"
+     "note": "'이쪽만': the fitted A4 half itself flashes"
+    },
+    {
+     "at": {
+      "word": "이쪽만"
+     },
+     "target": "letterGap",
+     "action": "pulse",
+     "speed": "base",
+     "note": "Letter's gap flashes at the same moment: the pair of outcomes, side by side"
     }
    ],
-   "endFrame": "Left: dashed muted a4Ghost 300 × 424.3 (x 190–490, y 475.7–900) with the teal half fitted exactly on it, name 'A4' at (340, 687.9). Right: dashed muted Letter outline 300 × 388.2 (x 590–890, y 511.8–900) with the teal fitted half 251.2 × 388.2 from x 590, name '레터' at its center, red strip x 841–890. Notes '긴 변을 반으로 접은 뒤' (y 290) and '크기를 맞춰 비교' (y 360), muted. Caption '왜 이쪽만 딱 맞을까요?'",
+   "endFrame": "Left: dashed muted a4Ghost 320 × 452.5 with the teal half fitted exactly on it, name 'A4' at (345, 673.7). Right: dashed muted Letter outline 320 × 414.1 (x 575–895, y 485.9–900) with the teal fitted half 268.0 × 414.1 from x 575, name '레터' at its center, red strip x 843–895. Notes '긴 변을 반으로 접은 뒤' (y 1040) and '크기를 맞춰 비교' (y 1105), muted, below the sheets. Caption '왜 이쪽만 딱 맞을까요?'",
    "claims": [
     "C2",
     "C11"
@@ -306,23 +318,38 @@
     },
     {
      "at": {
-      "word": "정도를"
+      "word": "길쭉한"
      },
      "target": "sheet",
      "action": "moveTo",
      "params": {
       "center": [
        540,
-       740.0
+       793.18
       ],
-      "w": 340.0,
-      "h": 440.0
+      "w": 400.0,
+      "h": 517.65
      },
      "speed": "base",
-     "note": "Letter's pair slides to the center and grows to 340 wide (bottom y 960) for the search; half and letterGap follow it"
+     "note": "Letter's pair slides to the center and grows to 400 wide (bottom y 1052); half and letterGap follow"
+    },
+    {
+     "at": {
+      "word": "바꾸면"
+     },
+     "target": "sheet",
+     "action": "resize",
+     "params": {
+      "ratio": 1.36,
+      "ease": "linear"
+     },
+     "until": {
+      "pause": true
+     },
+     "note": "the search starts while the question is asked: the long side stretches (short side and bottom fixed), the red gap narrows from 65 to 30 px but stays"
     }
    ],
-   "endFrame": "Dashed muted sheet 340 × 440.0 centered at (540, 740.0) (x 370–710, y 520.0–960); teal fitted half 284.7 × 440.0 from x 370; red strip x 655–710; compareNote '크기를 맞춰 비교' at y 360. No numbers anywhere. Caption '딱 맞는 순간이 있을까요?'",
+   "endFrame": "Dashed muted sheet 400 × 544.0 centered at (540, 780.0) (x 340–740, bottom 1052); teal fitted half 369.9 wide from x 340; red strip x 710–740; compareNote at y 1105. No numbers anywhere. Caption '딱 맞는 순간이 있을까요?'",
    "claims": [
     "C11"
    ]
@@ -355,7 +382,7 @@
      "until": {
       "pause": true
      },
-     "note": "the long side grows (short side and bottom edge fixed): the red gap narrows, vanishes at √2, and comes back outside the sheet on the right"
+     "note": "continues B2's stretch: the gap closes, vanishes at √2 (about frame 252), and comes back outside the sheet on the right"
     },
     {
      "at": {
@@ -370,7 +397,7 @@
      "note": "settles on √2 in silence, about 1 s before '여기선': the fit is seen before it is said"
     }
    ],
-   "endFrame": "Sheet at h/w = √2: 340 × 480.8 centered at (540, 719.6) (y 479.2–960); the teal fitted half exactly on it; no visible red. compareNote at y 360. Caption '조금씩 바꿔 볼게요.' Mid-sweep (h/w 1.62): sheet top y 409.2 (compareNote's ink ends near y 388), fitted half 446.1 wide (right edge x 816.1), red strip x 710–816.1.",
+   "endFrame": "Sheet at h/w = √2: 400 × 565.7 centered at (540, 769.2) (y 486.3–1052); the teal fitted half exactly on it; no visible red. compareNote at y 1105. Caption '조금씩 바꿔 볼게요.' Mid-sweep (h/w 1.62): sheet top y 404.0, fitted half 524.9 wide (right edge x 864.9), red strip x 740–864.9.",
    "claims": []
   },
   {
@@ -400,12 +427,12 @@
       "text": "A4의 설계 비율 $\\approx 1.414$",
       "at": [
        540,
-       290
+       410
       ],
       "color": "text",
       "mathColor": "yellow"
      },
-     "where": "top of the visual zone, centered; the first number in the episode"
+     "where": "above the sheet (its top is at y 486), centered; the first number in the episode"
     }
    ],
    "cues": [
@@ -415,7 +442,7 @@
      },
      "target": "letterGap",
      "action": "exit",
-     "note": "nothing to shade at √2; gone before B5 pulls the pair apart"
+     "note": "nothing to shade at √2; gone before '왜' pulls the pair apart"
     },
     {
      "at": {
@@ -444,9 +471,58 @@
       "color": "text"
      },
      "speed": "base"
+    },
+    {
+     "at": {
+      "word": "왜"
+     },
+     "target": "sheet",
+     "action": "moveTo",
+     "params": {
+      "center": [
+       376.35,
+       732.8
+      ],
+      "w": 310.0,
+      "h": 438.41
+     },
+     "speed": "base",
+     "note": "the proof starts on the question: the pair zooms out to 310 wide and spreads apart"
+    },
+    {
+     "at": {
+      "word": "왜"
+     },
+     "target": "half",
+     "action": "moveTo",
+     "params": {
+      "center": [
+       730.95,
+       797.0
+      ],
+      "w": 219.2,
+      "h": 310.0
+     },
+     "speed": "base",
+     "note": "the fitted half shrinks back to its real size (219.2 × 310) beside the sheet; ends follow"
+    },
+    {
+     "at": {
+      "word": "왜"
+     },
+     "target": "sheet",
+     "action": "setStyle",
+     "params": {
+      "stroke": "text",
+      "fill": "text",
+      "fillOpacity": 0.08,
+      "dashed": false
+     },
+     "speed": "base",
+     "note": "the outline becomes the sheet itself"
     }
    ],
-   "endFrame": "Sheet 340 × 480.8 at (540, 719.6) with the teal half exactly on it; 'A4의 설계 비율 ≈ 1.414' at y 290 (≈ 1.414 yellow). Caption '왜 이 비율일까요?'",
+   "endFrame": "Solid text sheet 310 × 438.4 at (376.3, 732.8) and the teal half 219.2 × 310 at (731.0, 797.0), both bottoms at y 952, no labels yet; 'A4의 설계 비율 ≈ 1.414' at y 410 (≈ 1.414 yellow). Caption '왜 이 비율일까요?'",
    "claims": [
     "C1",
     "C3"
@@ -483,50 +559,9 @@
      "at": {
       "word": "짧은"
      },
-     "target": "sheet",
-     "action": "moveTo",
-     "params": {
-      "center": [
-       377.83,
-       687.87
-      ],
-      "w": 300.0,
-      "h": 424.26
-     },
-     "speed": "base",
-     "note": "the pair spreads apart and zooms out to 300 wide, bottom y 900; B4's picture continues"
-    },
-    {
-     "at": {
-      "word": "짧은"
-     },
-     "target": "half",
-     "action": "moveTo",
-     "params": {
-      "center": [
-       723.9,
-       750.0
-      ],
-      "w": 212.13,
-      "h": 300.0
-     },
-     "speed": "base",
-     "note": "the fitted half shrinks back to its real size (212.1 × 300) beside the sheet; ends follow"
-    },
-    {
-     "at": {
-      "word": "짧은"
-     },
-     "target": "sheet",
-     "action": "setStyle",
-     "params": {
-      "stroke": "text",
-      "fill": "text",
-      "fillOpacity": 0.08,
-      "dashed": false
-     },
-     "speed": "base",
-     "note": "the outline becomes the sheet itself"
+     "target": "ratioNote",
+     "action": "exit",
+     "note": "the number steps aside until √2 names it in B8"
     },
     {
      "at": {
@@ -597,7 +632,7 @@
      "note": "the half's sides follow from the fold: width x/2, height 1 (the old short side)"
     }
    ],
-   "endFrame": "Sheet 300 × 424.3 at (377.8, 687.9), solid text outline with yellow long (vertical) and blue short (horizontal) edges, labels 1 (blue, below) and x (yellow, right). Half 212.1 × 300 at (723.9, 750), teal fill, yellow/blue edges, labels x/2 (blue, below) and 1 (yellow, right). Both bottoms at y 900. ratioNote at y 290. Caption '해 볼게요.'",
+   "endFrame": "Sheet 310 × 438.4 at (376.3, 732.8), solid text outline with yellow long (vertical) and blue short (horizontal) edges, labels 1 (blue, below) and x (yellow, right). Half 219.2 × 310 at (731.0, 797.0), teal fill, yellow/blue edges, labels x/2 (blue, below) and 1 (yellow, right). Bottoms at y 952; nothing above them. Caption '해 볼게요.'",
    "claims": [
     "C2"
    ]
@@ -628,12 +663,12 @@
      "props": {
       "text": "$\\times x$",
       "at": [
-       723.45,
-       420
+       728.48,
+       470
       ],
       "color": "text"
      },
-     "where": "above the growing half (its top ends at y 475.7)"
+     "where": "above the growing half (its top ends at y 514)"
     }
    ],
    "cues": [
@@ -666,11 +701,11 @@
      "action": "moveTo",
      "params": {
       "center": [
-       723.45,
-       687.87
+       728.48,
+       732.8
       ],
-      "w": 300.0,
-      "h": 424.26
+      "w": 310.0,
+      "h": 438.41
      },
      "until": {
       "word": "높이가"
@@ -685,8 +720,8 @@
      "action": "moveTo",
      "params": {
       "center": [
-       333.45,
-       687.87
+       328.48,
+       732.8
       ]
      },
      "until": {
@@ -703,7 +738,7 @@
      "params": {
       "labels": {
        "bottom": {
-        "tex": "\\dfrac{x}{2}",
+        "tex": "\\dfrac{x}{2}\\times x",
         "color": "blue"
        },
        "right": {
@@ -713,7 +748,7 @@
       }
      },
      "speed": "base",
-     "note": "height label 1 → x"
+     "note": "both of the half's sides grew x times, so both labels update as it grows: height 1 → x, width x/2 → x/2 × x (no stale label)"
     },
     {
      "at": {
@@ -738,7 +773,7 @@
      "speed": "base"
     }
    ],
-   "endFrame": "Sheet 300 × 424.3 at (333.4, 687.9) with labels 1 and x; half now 300 × 424.3 at (723.5, 687.9), labels x/2 (blue, below) and x (yellow, right, ink ends near x 920); tops level at y 475.7. '×x' at (723, 420). ratioNote at y 290. Caption '높이가 맞아요.'",
+   "endFrame": "Sheet 310 × 438.4 at (328.5, 732.8) with labels 1 and x; half now 310 × 438.4 at (728.5, 732.8), labels x/2 × x (blue, below) and x (yellow, right, ink ends near x 930); tops level at y 513.6. '×x' at (728, 470). Caption '높이가 맞아요.'",
    "claims": []
   },
   {
@@ -789,9 +824,9 @@
        }
       ],
       "centerX": 540,
-      "y": 1175
+      "y": 1106
      },
-     "where": "one row under the sheets, baseline y 1175 (ink y 1067–1241 at 80 px); every step of B8 happens on this row"
+     "where": "one row right under the lifted pair's width labels, baseline y 1106 (ink y 998–1172 at 80 px); its two sides arrive from those labels, and every step of B8 happens on this row"
     }
    ],
    "cues": [
@@ -807,11 +842,43 @@
       "word": "너비도"
      },
      "target": "sheet",
+     "action": "moveTo",
+     "params": {
+      "center": [
+       328.48,
+       614.2
+      ]
+     },
+     "speed": "base",
+     "note": "the pair lifts 118.6 px, both bottoms staying on one line (y 833.4), to make room for the row"
+    },
+    {
+     "at": {
+      "word": "너비도"
+     },
+     "target": "half",
+     "action": "moveTo",
+     "params": {
+      "center": [
+       728.48,
+       614.2
+      ],
+      "w": 310.0,
+      "h": 438.41
+     },
+     "speed": "base"
+    },
+    {
+     "at": {
+      "word": "너비도"
+     },
+     "target": "sheet",
      "action": "pulse",
      "params": {
       "edges": "short"
      },
-     "speed": "base"
+     "speed": "base",
+     "note": "the two widths, on the common baseline"
     },
     {
      "at": {
@@ -828,39 +895,41 @@
      "at": {
       "word": "길이가"
      },
-     "target": "half",
-     "action": "setStyle",
-     "params": {
-      "labels": {
-       "bottom": {
-        "tex": "\\dfrac{x}{2}\\times x",
-        "color": "blue"
-       },
-       "right": {
-        "tex": "x",
-        "color": "yellow"
-       }
-      }
-     },
-     "speed": "base",
-     "note": "the half's width grew too: x/2 → x/2 × x. On 길이가, not 이: the take's 이 has no audible onset (20 ms in the alignment)"
-    },
-    {
-     "at": {
-      "word": "길이가"
-     },
      "target": "eq",
      "action": "reveal",
      "params": {
       "parts": [
        "lhs"
-      ]
+      ],
+      "fromLabel": {
+       "of": "half",
+       "side": "bottom"
+      }
      },
-     "speed": "fast"
+     "speed": "base",
+     "note": "'이 길이가': the half's width label itself (\\dfrac{x}{2}\\times x, on screen since '키우면', 2.4 s) flies down and grows into the row's left side; the player takes it off the sheet on this frame"
     },
     {
      "at": {
       "word": "일과"
+     },
+     "target": "eq",
+     "action": "reveal",
+     "params": {
+      "parts": [
+       "rhs"
+      ],
+      "fromLabel": {
+       "of": "sheet",
+       "side": "bottom"
+      }
+     },
+     "speed": "base",
+     "note": "'1과': the sheet's width label flies into the right side. Its straight path from (329, 869) to the slot passes about 45 px above the row's left side, and '=' isn't in the row yet"
+    },
+    {
+     "at": {
+      "word": "같아야"
      },
      "target": "sheet",
      "action": "pulse",
@@ -868,25 +937,36 @@
       "edges": "short",
       "color": "blue"
      },
-     "speed": "base",
-     "note": "the 1 it must equal"
+     "speed": "base"
     },
     {
      "at": {
-      "word": "일과"
+      "word": "같아야"
+     },
+     "target": "half",
+     "action": "pulse",
+     "params": {
+      "edges": "short",
+      "color": "blue"
+     },
+     "speed": "base"
+    },
+    {
+     "at": {
+      "word": "해요"
      },
      "target": "eq",
      "action": "reveal",
      "params": {
       "parts": [
-       "eq",
-       "rhs"
+       "eq"
       ]
      },
-     "speed": "fast"
+     "speed": "fast",
+     "note": "'=' last, after the 1 has landed (f726), so no flight crosses it"
     }
    ],
-   "endFrame": "Sheet and half as in B6; the half's bottom label '\\dfrac{x}{2}\\times x' (blue, 171 wide, centered x 723, ink to y ≈ 1039). Row 'x/2 × x = 1' centered on x 540, baseline 1175 (lhs and 1 blue). ratioNote at y 290. Caption '같아야 해요.'",
+   "endFrame": "Sheet at (328.5, 614.2) and half at (728.5, 614.2), both 310 × 438.4, bottoms at y 833.4, each with only its yellow x on the right (no width labels left on the sheets). Row 'x/2 × x = 1' (both sides blue) centered on x 540, baseline 1106. No top note. Caption '같아야 해요.'",
    "claims": [
     "C3"
    ]
@@ -910,7 +990,22 @@
     }
    ],
    "pauseAfter": 0.5,
-   "elements": [],
+   "elements": [
+    {
+     "id": "ratioNote2",
+     "component": "Note",
+     "props": {
+      "text": "A4의 설계 비율 $\\sqrt{2} \\approx 1.414$",
+      "at": [
+       540,
+       330
+      ],
+      "color": "text",
+      "mathColor": "yellow"
+     },
+     "where": "top of the visual zone, centered, above the pair (tops at y 395)"
+    }
+   ],
    "cues": [
     {
      "at": {
@@ -985,7 +1080,8 @@
        ]
       }
      },
-     "speed": "base"
+     "speed": "base",
+     "note": "token morph: x² takes lhs's last x, the new 2 takes tb's 2; the rest fade"
     },
     {
      "at": {
@@ -1020,7 +1116,17 @@
        ]
       }
      },
-     "speed": "base"
+     "speed": "base",
+     "note": "with x^2 split into x and ², x stays on screen and slides while '엑스는' is spoken; √2's 2 is the old 2, only ² and the radical fade"
+    },
+    {
+     "at": {
+      "word": "루트"
+     },
+     "target": "ratioNote2",
+     "action": "appear",
+     "speed": "fast",
+     "note": "the found number comes back with its name"
     },
     {
      "at": {
@@ -1034,21 +1140,9 @@
      },
      "speed": "base",
      "note": "after the last transform has landed"
-    },
-    {
-     "at": {
-      "word": "루트"
-     },
-     "target": "ratioNote",
-     "action": "setText",
-     "params": {
-      "text": "A4의 설계 비율 $\\sqrt{2} \\approx 1.414$"
-     },
-     "speed": "base",
-     "note": "the found ratio gets its name: the algebra lands on the sweep's number"
     }
    ],
-   "endFrame": "Row 'x = √2' (both yellow, √2 boxed yellow) centered on x 540, baseline 1175; sheet and half as in B7; ratioNote 'A4의 설계 비율 √2 ≈ 1.414' at y 290. Caption '$x$는 $\\sqrt{2}$가 돼요.'",
+   "endFrame": "Row 'x = √2' (both yellow, √2 boxed yellow) centered on x 540, baseline 1106; sheet and half as in B7; 'A4의 설계 비율 √2 ≈ 1.414' at y 330. Caption '$x$는 $\\sqrt{2}$가 돼요.'",
    "claims": [
     "C3"
    ]
@@ -1106,6 +1200,19 @@
       }
      },
      "where": "right of the sheet; its label makes the group wide, so the sheet sits left of center"
+    },
+    {
+     "id": "diffNote",
+     "component": "Note",
+     "props": {
+      "text": "설계값과 약 $0.3\\,\\mathrm{mm}$ 차이",
+      "at": [
+       540,
+       1095
+      ],
+      "color": "muted"
+     },
+     "where": "under the 210 mm label: what '조금' means (C14: A4's design size ≈ 210.2 × 297.3 mm)"
     }
    ],
    "cues": [
@@ -1127,7 +1234,7 @@
      "at": {
       "word": "실제"
      },
-     "target": "ratioNote",
+     "target": "ratioNote2",
      "action": "exit"
     },
     {
@@ -1151,10 +1258,13 @@
      "params": {
       "center": [
        393.3,
-       687.87
-      ]
+       645.44
+      ],
+      "w": 360.0,
+      "h": 509.12
      },
-     "speed": "base"
+     "speed": "base",
+     "note": "the real sheet, alone and bigger (360 wide)"
     },
     {
      "at": {
@@ -1182,9 +1292,18 @@
      "target": "dim297",
      "action": "appear",
      "speed": "base"
+    },
+    {
+     "at": {
+      "word": "조금"
+     },
+     "target": "diffNote",
+     "action": "appear",
+     "speed": "fast",
+     "note": "'조금 달라요' points at a size: under a millimetre"
     }
    ],
-   "endFrame": "Sheet 300 × 424.3 at (393.3, 687.9), text outline, name '실제 A4'; blue dimension line 40 px below with '210 mm', yellow one 40 px right with '297 mm' (ink ends near x 837). Nothing else. Caption 'mm 단위라 조금 달라요.'",
+   "endFrame": "Sheet 360 × 509.1 at (393.3, 645.4), text outline, name '실제 A4'; blue dimension line 40 px below with '210 mm', yellow one 40 px right with '297 mm' (ink ends near x 867); '설계값과 약 0.3 mm 차이' (muted) at y 1095. Caption 'mm 단위라 조금 달라요.'",
    "claims": [
     "C4",
     "C8",
@@ -1223,10 +1342,10 @@
      "props": {
       "center": [
        540.0,
-       660.0
+       730.0
       ],
-      "w": 424.26,
-      "h": 600.0,
+      "w": 509.12,
+      "h": 720.0,
       "stroke": "muted",
       "fillOpacity": 0,
       "dashed": true,
@@ -1237,7 +1356,7 @@
        }
       }
      },
-     "where": "A3 outline 424.3 × 600 (y 360–960) centered on x 540, label below it (ink y 972–1024); declared before page so it draws beneath it, as a4Ghost does under a4Half"
+     "where": "A3 outline 509.1 × 720 (y 370–1090) centered on x 540, label below it; declared before page so it draws beneath it, as a4Ghost does under a4Half"
     },
     {
      "id": "page",
@@ -1245,14 +1364,14 @@
      "props": {
       "center": [
        540.0,
-       660.0
+       730.0
       ],
-      "w": 300.0,
-      "h": 424.26,
+      "w": 360.0,
+      "h": 509.12,
       "stroke": "text",
       "page": true
      },
-     "where": "an A4 document (title line, text lines, a small figure) centered in the A3 outline"
+     "where": "an A4 document (title line, text lines, a small figure), 360 × 509.1, centered in the A3 outline"
     },
     {
      "id": "pctNote",
@@ -1261,7 +1380,7 @@
       "text": "$141\\% \\approx \\sqrt{2}$배",
       "at": [
        540,
-       290
+       300
       ],
       "color": "text"
      },
@@ -1287,6 +1406,13 @@
      "at": {
       "word": "그래서"
      },
+     "target": "diffNote",
+     "action": "exit"
+    },
+    {
+     "at": {
+      "word": "그래서"
+     },
      "target": "sheet",
      "action": "setStyle",
      "params": {
@@ -1305,7 +1431,7 @@
      "params": {
       "center": [
        540.0,
-       660.0
+       730.0
       ]
      },
      "speed": "base"
@@ -1356,15 +1482,15 @@
      "params": {
       "center": [
        540.0,
-       660.0
+       730.0
       ],
-      "w": 423.0,
-      "h": 598.21
+      "w": 507.6,
+      "h": 717.85
      },
      "until": {
       "word": "거의"
      },
-     "note": "141%: the page and its content grow about the A3's center to 423 × 598.2, under 1 px short of the outline on each side; no flash or pulse (almost, not exactly)"
+     "note": "141%: the page and its content grow about the A3's center to 507.6 × 717.8, about 1 px short of the outline on each side; no flash or pulse (almost, not exactly)"
     },
     {
      "at": {
@@ -1379,7 +1505,7 @@
      "note": "content clears in the gap after '맞아요', before B11's fold"
     }
    ],
-   "endFrame": "A3 outline (dashed muted, 424.3 × 600 at (540.0, 660)) covered by the page 423 × 598.2 on the same center, content cleared (blank page); 'A3' below it; '141% ≈ √2배' at y 290. Caption 'A3에 거의 딱 맞아요.'",
+   "endFrame": "A3 outline (dashed muted, 509.1 × 720 at (540, 730)) covered by the page 507.6 × 717.8 on the same center, content cleared (blank page); 'A3' below it; '141% ≈ √2배' at y 300. Caption 'A3에 거의 딱 맞아요.'",
    "claims": [
     "C12",
     "C13"
@@ -1410,11 +1536,11 @@
      "component": "PaperRect",
      "props": {
       "center": [
-       740.0,
-       705.88
+       735.0,
+       692.94
       ],
-      "w": 300.0,
-      "h": 388.24,
+      "w": 320.0,
+      "h": 414.12,
       "stroke": "muted",
       "fillOpacity": 0,
       "dashed": true
@@ -1426,11 +1552,11 @@
      "component": "PaperRect",
      "props": {
       "center": [
-       740.0,
-       802.94
+       735.0,
+       796.47
       ],
-      "w": 300.0,
-      "h": 194.12,
+      "w": 320.0,
+      "h": 207.06,
       "stroke": "teal",
       "name": "레터"
      },
@@ -1474,7 +1600,7 @@
      "until": {
       "word": "모양이라서요"
      },
-     "note": "the long side halved, like the opening. The fold's first 30% (line) overlaps showMidline, so the flap starts turning right on '접어도' and lands on '모양이라서요': the page is now its teal lower half (423 × 299.1), an A4"
+     "note": "the long side halved, like the opening. The fold's first 30% (line) overlaps showMidline, so the flap starts turning right on '접어도' and lands on '모양이라서요': the page is now its teal lower half (507.6 × 358.9), an A4"
     },
     {
      "at": {
@@ -1484,11 +1610,11 @@
      "action": "moveTo",
      "params": {
       "center": [
-       340.0,
-       687.87
+       345.0,
+       673.73
       ],
-      "w": 300.0,
-      "h": 424.26
+      "w": 320.0,
+      "h": 452.55
      },
      "speed": "base",
      "note": "same shape at a smaller size: the A3 outline shrinks into a4Ghost's frame-0 box"
@@ -1501,11 +1627,11 @@
      "action": "moveTo",
      "params": {
       "center": [
-       340.0,
-       793.93
+       345.0,
+       786.86
       ],
-      "w": 300.0,
-      "h": 212.13
+      "w": 320.0,
+      "h": 226.27
      },
      "speed": "base",
      "note": "the folded half shrinks into a4Half's frame-0 box"
@@ -1531,7 +1657,7 @@
       "mode": "fade"
      },
      "speed": "fast",
-     "note": "the shrink is ~95% done here (A3's right edge within ~10 px of x 490), so the two never overlap"
+     "note": "the shrink is ~95% done here (A3's right edge within ~15 px of its end), so the two never overlap"
     },
     {
      "at": {
@@ -1545,7 +1671,7 @@
      "speed": "fast"
     }
    ],
-   "endFrame": "Identical to B1's frame 0: left, dashed muted outline 300 × 424.3 at (340, 687.9) with the teal lower half 300 × 212.1 at (340, 793.9) named 'A4'; right, dashed muted outline 300 × 388.2 at (740, 705.9) with the teal lower half 300 × 194.1 at (740, 802.9) named '레터'; no notes. Caption '같은 모양이라서요.'",
+   "endFrame": "Identical to B1's frame 0: left, dashed muted outline 320 × 452.5 at (345, 673.7) with the teal lower half 320 × 226.3 at (345, 786.9) named 'A4'; right, dashed muted outline 320 × 414.1 at (735, 692.9) with the teal lower half 320 × 207.1 at (735, 796.5) named '레터'; no notes. Caption '같은 모양이라서요.'",
    "claims": [
     "C1",
     "C2"
