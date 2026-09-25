@@ -1,5 +1,115 @@
 # Review · 001-a4-paper-ratio
 
+## v2 · Round 3
+
+**Verdict: ship.**
+
+This round reviewed the final candidate, rendered at 16:19 from 5fbeafd
+(storyboard) and 8033ed4 (studio): 41.6 s, 1248 frames. Easing changed
+globally, so this is a full pass.
+
+- **Audio:** the samples are identical to round 2's. Only the storyboard hash
+  in the file's metadata differs.
+- **Round 2's three issues are fixed.** I found no new issues.
+- **check-render:** same result as rounds 1 and 2, only the two accepted
+  items.
+
+Evidence is in `review/v2r3/`: `sheet-ends-b1-b5.png`, `sheet-ends-b6-b11.png`
+(f0 and every beat's last frame), and the cited frames.
+
+### Round 2, re-checked
+
+| Round 2 | Now |
+|---------|-----|
+| Exits were near-cuts (100 → 32 → 10 → 3 → 0% ink per frame) | **Fixed.** Every exit I measured fades evenly over 6 frames: 100 → 83 → 67 → 50 → 34 → 18 → 0%. That held for B2's foldNote, B4's compareNote, B6's ×x, B9's equation row and B10's dimensions. They now read as fades (A4 at f127, `v2r3/f0127.png`; B9's row at f894, `v2r3/f0894.png`). |
+| B7's flights jumped 102–110 px in their first frame | **Fixed.** The half's width label now moves 2–3 px/frame at lift-off, peaks at about 42 px/frame mid-flight (f699–f700, `v2r3/f0697.png`), and settles by f705. The "1" flight eases the same way. |
+| B8's returning note 25 px above the pair | **Fixed.** Its ink ends at y 327, and the pair's tops start at 412: 85 px (`v2r3/f0890.png`). |
+| B9's diff note read as a footnote to "210 mm" | **Fixed.** "설계값과 최대 약 0.3 mm 차이" (ink y 1093–1145, x 190–890) sits 64 px below "210 mm" and spans the whole group, so it reads as being about the sheet (`v2r3/f1033.png`). "최대" makes it exact: the height is 0.30 mm off, the width 0.22 mm (C14). |
+
+### The new changes, judged
+
+- **Outline copies over the landing halves (B1).**
+  - Once each half lands, its teal edge carries the outline's gray dashes
+    (f123, `v2r3/f0123.png`).
+  - A4's whole border reads as outline and half coinciding. Letter's right
+    side reads as two boundaries: the half's solid teal edge, then the red
+    gap, then the dashed outline.
+  - The copies fade in over the originals at f3, so frame 0 is unchanged, and
+    the loop check still passes (145 px differ).
+  - On "이쪽만" the merged A4 border flashes white (f64–f72).
+  - In B2 Letter's copy rides the slide and fades over f139–f145 with no
+    trail.
+- **The ×x note exits on "맞아요" (f629–f635),** before B7 lifts the half
+  through its place.
+- **Slower exits against moves that start on the same word.** B2's slide, B9's
+  grow and B10's move all start while exits are still fading. None of them
+  reaches an exiting element before it's gone:
+  - at f128, Letter's left edge is 56 px from A4's fading right edge, and A4
+    is gone by f130;
+  - in B9, the sheet's right edge reaches the fading half's old edge only
+    after the half has gone;
+  - in B10, the "297 mm" label is gone by f1040.
+- **B4's note** now waits for the slower compareNote exit and appears over
+  f346–f350, still on "여기선". Reaction is still +1.
+- **Carried nit, unchanged:** at f716–f717 the flying "1" passes just above and
+  right of the row's last x, 37 and 13 px above it, at about 45 px/frame
+  (`v2r3/f0716.png`). It only reads as "x¹" in a still.
+
+### check-render
+
+My `--out` run matched the tracked `check.md` and `check.json` byte for byte:
+**1 fail, 1 warn, 14 pass**.
+
+- **The two accepted items are unchanged:**
+  - words fails on B7's "이", which has no audible onset;
+  - readable warns on the page's "A4" (18 frames) and letterHalf2's "레터"
+    (12 frames). Both continue into frame 0 (`v2r3/f1247.png` matches f0 row
+    for row).
+- **Everything else passes:**
+  - freshness;
+  - technical;
+  - bounds: ink x 145–935, y 256–1191;
+  - centering: within ±12 px;
+  - legibility: 31 px;
+  - overlaps, labels and blank runs;
+  - captions: 25 on their cue;
+  - reaction: +1 to +2 frames;
+  - loudness: −14.1 LUFS, −2.1 dBTP;
+  - A/V sync: 0 ms;
+  - loop.
+
+### Checked and fine
+
+- **End frames.** Every beat's last frame matches its `endFrame`, with stroke
+  centers within 1 px. The changed geometry: at f752 the pair's tops are at
+  y 415 and bottoms at 853, and the row's ink spans y 1015–1191. At f890 the
+  note is at y 257–327. The other beats are as in round 2.
+- **Motion,** sampled every 1–3 frames at every beat boundary and long move:
+  - B1: turn, grow, gap, pulse;
+  - B2: slide, stretch;
+  - B3: sweep and settle;
+  - B4: note swap, pulse, split;
+  - B5: labels;
+  - B6: grow and relabel;
+  - B7: lift and flights, "=" last;
+  - B8: token morphs, with x on screen throughout and the box on "이가";
+  - B9: grow, dimensions, diff note on "조금";
+  - B10: 141% grow;
+  - B11: fold, shrink, Letter after it.
+- **Balance.** Beat-end ink centers are at y 668–817 (zone center 760).
+  Spacing on each side of the box's "=" is 37 and 37 px.
+- **Captions.** All 25 match the storyboard, one line each. At the loop seam
+  there's no caption for f0–f2, and the first one fades in at f3 as the voice
+  starts.
+- **Narration.** A new transcription matches round 2's word for word, as
+  expected from identical samples. It matches every line of the 읽기용 text.
+- **Facts.** `verify.py` passes. Every number on screen recomputes as in
+  round 2, and "최대 약 0.3 mm" is the larger of 0.22 and 0.30 mm.
+
+### What the brief should have told me
+
+Nothing new this round.
+
 ## v2 · Round 2
 
 **Verdict: ship.**
