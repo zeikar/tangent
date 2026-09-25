@@ -241,7 +241,7 @@ beats.forEach(b => {
     return { el: d, idx: anchorIndex(b, c.at), text: c.text };
   });
 
-  const scL = document.createElement('div'); scL.className = 'label'; scL.textContent = '나레이션과 애니메이션 (단어가 발음되는 순간 시작)';
+  const scL = document.createElement('div'); scL.className = 'label'; scL.textContent = '내레이션과 애니메이션 (단어가 발음되는 순간 시작)';
   const score = document.createElement('div'); score.className = 'score';
   const slots = b.words.map((wd, i) => {
     const btn = document.createElement('button'); btn.className = 'word'; btn.type = 'button';
