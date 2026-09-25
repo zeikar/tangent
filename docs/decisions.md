@@ -125,6 +125,8 @@ files along, and stops at the human checkpoints.
   commit that produced the cut: the final video, the original TTS take (FLAC,
   lossless), and the mixed narration. That is the exact-media backup; git
   stays text-only. The approved video is also copied to `publish/` for upload.
+  After upload, the YouTube URL goes into the episode's `publish.md` and the
+  release notes.
 
 ## Language: Korean first, English later
 

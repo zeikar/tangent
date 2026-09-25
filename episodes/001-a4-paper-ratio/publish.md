@@ -1,5 +1,7 @@
 # 001 · A4 용지는 왜 하필 210×297일까?
 
+게시: https://youtube.com/shorts/nlG5vMoo5w0 (2026-09-26)
+
 영상: `publish/001-a4-paper-ratio.mp4` · 썸네일: `publish/001-a4-paper-ratio.thumb.png`
 
 ## 제목

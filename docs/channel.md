@@ -100,6 +100,8 @@ the claim map) go below a rule at the end.
 ````markdown
 # <NNN> · <title>
 
+게시: <YouTube URL> (<date>)   ← added after upload
+
 영상: `publish/<slug>.mp4` · 썸네일: `publish/<slug>.thumb.png`
 
 ## 제목
