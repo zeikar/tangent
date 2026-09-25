@@ -1,4 +1,4 @@
-"""Checks storyboard.json against script.md, research.md and the brief's rules.
+"""Checks storyboard.json against script.md, research.md and the storyboard skill's rules.
 
 usage: python3 studio/scripts/validate-storyboard.py episodes/<slug>
 """
@@ -13,6 +13,7 @@ research = open(f"{ep}/research.md").read()
 
 errors = []
 err = errors.append
+notes = []
 
 # script.md beats: id -> (display, readAloud, pause)
 sections = re.split(r"^## ", script, flags=re.M)[1:]
@@ -86,7 +87,9 @@ for b in sb["beats"]:
     if b["readAloud"] != read:
         err(f"{bid}: readAloud differs from script.md")
     if b["pauseAfter"] != pause:
-        err(f"{bid}: pauseAfter {b['pauseAfter']} vs script {pause}")
+        # The script's "말 없이 N초" is the writer's first guess; after that the
+        # storyboard owns pacing (fix rounds retune it), so this is only a note.
+        notes.append(f"note: {bid}: pauseAfter {b['pauseAfter']} vs script {pause}")
     if not 0 <= b["pauseAfter"] <= 1.5:
         err(f"{bid}: pauseAfter out of range")
     ws = words(read)
@@ -155,4 +158,7 @@ for b in sb["beats"]:
             err(f"{bid}: element {e['id']} never appears")
 
 print("still on screen at the end:", sorted(live))
+if notes:
+    print("\n".join(notes))
 print("\n".join(errors) if errors else "OK: all checks passed")
+sys.exit(1 if errors else 0)

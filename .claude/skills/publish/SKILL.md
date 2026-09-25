@@ -1,13 +1,20 @@
 ---
 name: publish
-description: This skill should be used when an approved tangent episode needs its upload metadata and upload tray, e.g. "prepare 002 for upload", "/publish 002-<slug>", "write the title and description", or when the episode runbook reaches the publish stage. A fresh agent writes episodes/<slug>/publish.md (title, description, tags, playlist, thumbnail) and fills publish/.
-argument-hint: <slug>
+description: >-
+  This skill should be used when an approved tangent episode needs its upload
+  metadata and upload tray, e.g. "prepare 002 for upload", "/publish
+  002-<slug>", "002 업로드 정보 만들어줘", or when the episode runbook reaches the
+  publish stage. A fresh agent writes episodes/<slug>/publish.md (title,
+  description, tags, playlist, thumbnail) and fills publish/.
+argument-hint: "<slug>"
 context: fork
 ---
 
 # Publish: metadata and the upload tray
 
-Arguments: `$ARGUMENTS`: the episode slug (folder `episodes/<slug>/`).
+Arguments: `$ARGUMENTS`: the episode slug (folder `episodes/<slug>/`). If
+the slug isn't an existing episode folder with `render.mp4` and a QA
+`review.md`, stop and report without writing anything.
 
 Prepare one approved episode for upload: title, description, tags, playlist,
 thumbnail, and the files in `publish/`. This runs after QA says "ship"; the

@@ -1,25 +1,40 @@
 ---
 name: storyboard
-description: This skill should be used when a tangent episode's approved script and take need a storyboard, e.g. "storyboard 002", "/storyboard 002-<slug>", "revise the storyboard", or when the episode runbook reaches the storyboard stage. A fresh agent writes episodes/<slug>/storyboard.json against the take's real word timings.
-argument-hint: <slug> [what to revise]
+description: >-
+  This skill should be used when a tangent episode's approved script and take
+  need a storyboard, e.g. "storyboard 002", "/storyboard 002-<slug>", "002
+  스토리보드", "/storyboard 002-<slug> revise: <notes>", or when the episode
+  runbook reaches the storyboard stage. A fresh agent writes
+  episodes/<slug>/storyboard.json against the take's real word timings.
+argument-hint: "<slug> [revise: <notes>]"
 context: fork
 ---
 
 # Storyboard: the spec production draws from
 
 Arguments: `$ARGUMENTS`: the episode slug (folder `episodes/<slug>/`),
-optionally followed by what to revise.
+optionally followed by `revise:` and notes. If the slug isn't an existing
+episode folder with `script.md` and `narration.json`, stop and report
+without writing anything. If `cues.json` exists, production has started and
+owns `storyboard.json`: stop and report instead of editing it.
 
 Turn the approved script into `storyboard.json`: what is on screen, when,
 and which component draws it, precisely enough that nobody improvises. Read
 `docs/decisions.md` (Style, component library, Pipeline) first. Write only
-`storyboard.json`; don't commit.
+`storyboard.json`; don't commit. Run commands from `studio/` with
+`ep=../episodes/<slug>`, as `studio/README.md` does.
 
 Inputs in the episode folder: the approved `script.md` (plus `topic.md` and
-`research.md`) and the approved take: `narration.json` names its `source`,
-and `<source>.words.json` holds real word start times in seconds (frame =
-start × 30; the final narration adds each beat's `pauseAfter` after that
-beat). Check timing against these real starts, not estimates.
+`research.md`) and the approved take: `narration.json`'s `source` names the
+audio file (e.g. `take1@1.08.wav`), and the file of the same name ending in
+`.words.json` (`take1@1.08.words.json`) holds real word start times in
+seconds (frame = start × 30; the final narration adds each beat's
+`pauseAfter` after that beat). Check timing against these real starts, not
+estimates.
+
+A revision (`revise:` notes, usually the human's from the storyboard
+checkpoint) edits the existing file in place: keep element ids and color
+meanings, and change only what the notes reach.
 
 Each beat's **비주얼** line is the writer's picture: realize it. If a picture
 can't be drawn as written, or reads worse than an alternative, say so in the
@@ -36,7 +51,9 @@ report instead of silently redesigning it.
   trailing pause.
 - `pauseAfter` (seconds, 0–1.5) is editorial pacing: production inserts that
   much silence into the audio after the beat. It is the only place seconds
-  appear.
+  appear. Start from the script's `(끝에 말 없이 <N>초)` holds (0 where there
+  is none); from here on the storyboard owns pacing, and the validator only
+  notes a difference.
 - How long an animation runs: `until` (another anchor), or `speed`: `fast` /
   `base` / `slow` (style-guide durations). Nothing else.
 - Player rules to rely on: cues sharing an anchor run in parallel, except that
@@ -68,9 +85,9 @@ dollar-sign math. Chunks together must cover the beat's 화면용 text in order.
   `purple`. Pick a color meaning and keep it for the whole episode (e.g. the
   long side is always yellow). Write the meanings in Korean, briefly: the
   human sees them on the checkpoint page.
-- Existing components live in `studio/src/components/` (Tex, PaperRect,
-  Mismatch, Equation, NumberLine, Dimension, HalvingNest, Note, Captions);
-  read their props there and reuse them. Anything else is new: name it, and
+- Existing components live in `studio/src/components/` (e.g. Tex, PaperRect,
+  Equation, NumberLine, Note, Captions; list the folder for the rest); read
+  their props there and reuse them. Anything else is new: name it, and
   spec it once in `components`. Prefer a few general primitives with props
   over one component per beat.
 - Elements persist across beats until an `exit` cue. Declare each element in
@@ -122,13 +139,14 @@ dollar-sign math. Chunks together must cover the beat's 화면용 text in order.
 
 ## Before finishing
 
-- Run `python3 studio/scripts/validate-storyboard.py episodes/<slug>`: it
-  checks that the file parses, `readAloud` equals script.md's 읽기용, anchors
-  exist, captions cover the 화면용 text, components and targets are declared,
-  and geometry stays in bounds. It can't see sweeps or label extents; check
-  those with a scratch render (`studio/scripts/beat-stills.mts`, or
-  `check-render.mts --out <scratch dir>` on a proxy render) when existing
-  components can draw the beat.
+- Run `python3 scripts/validate-storyboard.py $ep` until it prints "OK" (it
+  exits 1 on errors): it checks that the file parses, `readAloud` equals
+  script.md's 읽기용, anchors exist, captions cover the 화면용 text,
+  components and targets are declared, and geometry stays in bounds.
+- It can't see sweeps or label extents. Measure every TeX label with
+  `scripts/measure-tex.mts`, work out sweeps from the geometry, and list any
+  beat whose extents are still a guess; production's render check measures
+  them, and production may retune layout to pass it.
 - The orchestrator then builds the checkpoint page
   (`studio/scripts/storyboard-view.py`) for the human.
 - Report back: the component list (new ones with a one-line spec), any beat

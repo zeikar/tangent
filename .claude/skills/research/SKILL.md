@@ -1,18 +1,26 @@
 ---
 name: research
-description: This skill should be used when a tangent episode needs its sourced fact base, e.g. "research episode 002", "/research 002-<slug>", "revise research.md", or when the episode runbook reaches the research stage. A fresh agent writes episodes/<slug>/research.md and verify.py from topic.md.
-argument-hint: <slug> [what to revise]
+description: >-
+  This skill should be used when a tangent episode needs its sourced fact
+  base, e.g. "research episode 002", "/research 002-<slug>", "002 리서치",
+  "revise research.md", or when the episode runbook reaches the research
+  stage. A fresh agent writes episodes/<slug>/research.md and verify.py from
+  topic.md. Not for general web research outside an episode.
+argument-hint: "<slug> [revise: <notes>]"
 context: fork
 ---
 
 # Research: the episode's fact base
 
 Arguments: `$ARGUMENTS`: the episode slug (folder `episodes/<slug>/`),
-optionally followed by what to revise.
+optionally followed by `revise:` and what to change. If the slug isn't an
+existing episode folder with a `topic.md`, stop and report without writing
+anything.
 
 Write the sourced fact base the episode stands on. The script may only state
 what `research.md` supports, and QA and the publish step check against it.
-Read `docs/decisions.md` first.
+Read `docs/decisions.md` first; `episodes/001-a4-paper-ratio/research.md` is
+a shipped example (sections 출처, 주장, 틀리기 쉬운 표현; sources S1, S2, ...).
 
 Input: `topic.md` (and, when revising, the existing `research.md`). Output:
 `research.md` and `verify.py` in the episode folder. Edit nothing else and
@@ -28,7 +36,10 @@ don't commit; the orchestrator does.
 - For each source: author or body, title, date or edition, URL, and the access
   date.
 - Quote the exact sentence that supports each claim, in the source's language.
-  Check each quote against the fetched text with code, not by eye.
+  Save each source's raw text (`curl` the page or PDF into a scratch
+  directory from `mktemp -d`; PDF text via `uv run --with pypdf`) and
+  match every quote against it with code. WebFetch returns a model's reading
+  of the page, not the page, so it can't confirm a quote.
 
 ## Claims
 

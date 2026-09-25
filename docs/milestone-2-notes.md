@@ -29,14 +29,25 @@ Milestone 1's next-step candidates 1–3, done before episode 002's production
   that); a forked skill invoked while the same skill is still running blocks
   the orchestrator until it returns, so of the two script writers one runs in
   the background and the other holds the turn.
-- **Relay cost:** after the first render, the production agent owns every
+- **Relay cost:** once production starts, the production agent owns every
   fix, spec and code alike, and renders itself. QA numbers its issues, and
   the orchestrator sends one combined round (the human's notes first, then QA,
   then chosen critique points) instead of routing each fix to its owner.
 - **Taste vs. luck:** two writers draft independently; the takes page puts
   both scripts at every speed on one page for the pick. The first render goes
   to the human for feel while QA and the Codex cut critique run in parallel.
+- **Two fresh-eyes reviews before first use** (a skill reviewer agent and
+  Codex) found mostly handoff gaps between skills, not problems inside one:
+  the validator rejected the pacing changes production was now allowed to
+  make; resuming from which files exist would skip checkpoints (QA writes
+  `review.md` before the human's first look), so each episode now keeps
+  `checkpoints.md`, which also records why the human picked a variant; a
+  content change after the first render had no owner; the script skill had
+  no way to take revision notes; and the storyboard's proxy render needs
+  wiring that only exists once production starts, so production now owns
+  `storyboard.json` from its start and the storyboard agent lists the
+  extents it couldn't measure.
 - **To watch in episode 002:** whether a fresh storyboard agent realizes the
-  writer's `비주얼` lines without the writer's context; whether one fixer's
-  context holds up over several rounds; how long the added first-look
-  checkpoint waits on the human.
+  writer's `비주얼` lines without the writer's context or a proxy render;
+  whether one fixer's context holds up over several rounds; how long the
+  added first-look checkpoint waits on the human.

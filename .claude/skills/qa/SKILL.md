@@ -1,7 +1,12 @@
 ---
 name: qa
-description: This skill should be used when a tangent episode's render needs review before a human sees the final, e.g. "QA episode 002", "/qa 002-<slug>", "re-review the render", or when the episode runbook reaches QA. A fresh agent that didn't build the scenes checks render.mp4 against the storyboard, script, and research, and writes episodes/<slug>/review.md.
-argument-hint: <slug> [round notes]
+description: >-
+  This skill should be used when a tangent episode's render needs review
+  before a human sees the final, e.g. "QA episode 002", "/qa 002-<slug>",
+  "re-review the render", or when the episode runbook reaches QA. A fresh
+  agent that didn't build the scenes checks render.mp4 against the storyboard,
+  script, and research, and writes episodes/<slug>/review.md.
+argument-hint: "<slug> [round notes]"
 context: fork
 ---
 
@@ -9,7 +14,8 @@ context: fork
 
 Arguments: `$ARGUMENTS`: the episode slug (folder `episodes/<slug>/`),
 optionally followed by notes for this round (what changed, whether it was
-global).
+global). If the slug isn't an existing episode folder with `render.mp4`,
+stop and report without writing anything.
 
 Review one episode's render. It wasn't built here; judge what is on screen
 and in the audio, not what the code intends. Read `docs/decisions.md`
@@ -22,20 +28,27 @@ including each beat's `endFrame`), `cues.json`, `words.json`,
 `narration.mp3`, `script.md`, `research.md`, `verify.py`. Write only
 `review.md` there, plus evidence under `review/r<N>/` (PNG, gitignored): a
 contact sheet or two and only the frames cited. Keep scratch work in a
-scratch directory of this agent's own, not the builders'. Don't fix anything
-and don't commit.
+directory from `mktemp -d`, not the builders'. Don't fix anything and don't
+commit. Run commands from `studio/` with `ep=../episodes/<slug>`.
+
+## Rounds
+
+Each review is a round: N is one more than the highest round already in
+`review.md` (1 for the first), across renders. A fresh agent on a later round
+reads the previous round's section and what changed since
+(`git log -p -- episodes/<slug> studio/` after the last QA commit).
 
 ## 1. Run the render check first
 
-`cd studio && node scripts/check-render.mts ../episodes/<slug> --out
-<scratch dir>` (~12 s; `--out` keeps the tracked check files untouched). It
-covers freshness (the render's storyboard and studio-code hashes), technical
-(incl. BT.709, 48 kHz), bounds, centering (ink and picture), legibility,
-overlaps (across and inside elements, text under fills, exits still visible
-while new content draws), label ownership, captions (timing, one line, zone),
-readable duration, reaction, mid-beat cues, blank runs, loudness, A/V sync,
-word timing, and the loop, with thresholds in `theme.ts`'s `checks` block.
-Report its summary; every fail is an issue, every warn needs a verdict.
+`node scripts/check-render.mts $ep --out <scratch dir>` (~12 s; `--out`
+keeps the tracked check files untouched). It covers freshness (the render's
+storyboard and studio-code hashes), technical (incl. BT.709, 48 kHz),
+bounds, centering (ink and picture), legibility, overlaps (across and inside
+elements, text under fills, exits still visible while new content draws),
+label ownership, captions (timing, one line, zone), readable duration,
+reaction, mid-beat cues, blank runs, loudness, A/V sync, word timing, and the
+loop, with thresholds in `theme.ts`'s `checks` block. Report its summary;
+every fail is an issue, every warn needs a verdict.
 
 ## 2. Then judge what it can't
 
@@ -50,8 +63,11 @@ beat boundary and long move sampled every 2–3 frames. Check:
 - whether each animation reads as what it means (a fold reads as a fold, a
   scale-to-compare reads as scaling, not as the same size);
 - captions: the text against the storyboard's, and line breaks;
-- narration: the spoken words against the script's 읽기용 text (transcribe;
-  Whisper invents text over silence and writes numbers as digits);
+- narration: the spoken words against the script's 읽기용 text. Transcribe
+  the render's audio as episode 001's QA did: `uvx --from mlx-whisper
+  mlx_whisper <audio> --model mlx-community/whisper-large-v3-turbo --language
+  ko --output-format txt` (first run downloads ~1.6 GB). Whisper invents text
+  over silence and writes numbers as digits;
 - facts: run `python3 verify.py`, and recompute every number on screen.
 
 A later round re-runs check-render and re-judges every changed beat and its
@@ -71,12 +87,14 @@ for the human, not as a defect.
 
 ## `review.md`
 
-- Verdict first: **ship**, **fix then ship**, or **rework**. A later round
-  adds a section at the top and keeps earlier rounds below.
-- Then issues, numbered, most severe first. For each: beat and frame (time
-  and frame number, plus the PNG path), what is wrong, and what would fix it.
-  One production agent owns all fixes, spec and code alike; flag an issue
-  that needs the script (what is said or claimed) as such.
+- Each round is a section `## Round <N> · <date>` added at the top, earlier
+  rounds kept below. Verdict first: **ship**, **fix then ship**, or
+  **rework**.
+- Then issues, numbered, most severe first; they are cited as `r<N>#<k>`. For
+  each: beat and frame (time and frame number, plus the PNG path), what is
+  wrong, and what would fix it. One production agent owns all fixes, spec and
+  code alike; flag an issue that needs the script (what is said or claimed)
+  as such.
 - Then what was checked and found fine, briefly, so the human knows what was
   covered.
 - End with anything this skill should have said.

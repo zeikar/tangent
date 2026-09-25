@@ -76,7 +76,9 @@ re-run, hand-edited, or gated by a human.
 - **Human checkpoints:** topic, script + take, storyboard, the first render
   (feel, before any polish), and the final cut with its upload metadata. Each
   is something to hear or see (the takes page, the storyboard viewer page, the
-  video), not a document to read. No full autonomy early on.
+  video), not a document to read. The orchestrator records each decision, in
+  the human's words, in the episode's `checkpoints.md`: proof the checkpoint
+  passed, and a record of the channel's taste. No full autonomy early on.
 
 ## Agents: one specialist per stage group
 
@@ -95,7 +97,7 @@ Stage numbers follow the `episode` runbook.
 | Research | 2 | `topic.md` → `research.md` (claims, sources, dates), `verify.py` |
 | Script (×2) | 3 | `topic.md`, `research.md` → `script.<variant>.md` |
 | Storyboard | 5 | picked `script.md`, the approved take's words → `storyboard.json` |
-| Production | 6, 8 (fixes) | `storyboard.json`, approved take → beat cues → scenes → `render.mp4`; after the first render, every fix |
+| Production | 6, 8 (fixes) | `storyboard.json` (owned from here on), approved take → beat cues → scenes → `render.mp4`; every fix |
 | QA | 7–8 | render, `research.md` → `review.md` (captions, audio sync, layout, facts) |
 | Publish | 9 | approved render, `script.md`, `research.md`, `docs/channel.md` → `publish.md` (title, description, tags, playlist, thumbnail), `publish/` |
 
@@ -107,12 +109,13 @@ Stage numbers follow the `episode` runbook.
   intent. Between the two stages the orchestrator runs the takes
   (`studio/scripts/narrate.mts`), and the human picks script and take before
   the storyboard.
-- **After the first render, one agent owns every fix.** The production agent
-  edits `storyboard.json` and `studio/` alike and renders itself. In
-  milestone 1, spec fixes and player fixes went to two agents, and relaying
-  what one learned to the other became the main cost (~12 messages in one
-  round) and caused a render race. What is said or claimed (read-aloud,
-  captions, claim IDs) still goes back to the script stage.
+- **Once production starts, one agent owns every fix.** The production
+  agent takes over `storyboard.json` from the storyboard agent, edits it and
+  `studio/` alike, and renders itself. In milestone 1, spec fixes and player
+  fixes went to two agents, and relaying what one learned to the other became
+  the main cost (~12 messages in one round) and caused a render race. What is
+  said or claimed (read-aloud, captions, claim IDs) still goes back to the
+  script stage; production then syncs the storyboard to it.
 - QA is never the agent that built the scenes.
 - **A second model critiques twice.** Codex, in a read-only sandbox
   (`studio/scripts/critique.mts`), reviews each script variant before the
@@ -154,6 +157,10 @@ Stage numbers follow the `episode` runbook.
   sharper in the native language.
 - English STEM shorts are saturated with AI-produced channels. The Korean
   market is smaller with lower CPM; accepted.
+- That gap is the topic niche: a topic proven in English science Shorts or
+  YouTube but not yet told in Korean is worth making. What Korean viewers
+  already know (textbook material, common trivia) isn't; the human passed on
+  a batch of those for 002.
 - English stays cheap to add later if two rules hold from day one: on-screen
   text lives in strings separate from scene code, and animation timing binds to
   beats, not seconds. Then English = translate + re-TTS + re-render.
