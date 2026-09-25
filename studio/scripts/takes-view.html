@@ -1,0 +1,126 @@
+<title>테이크 듣기</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #0F1115;
+  --surface: #161920;
+  --surface-2: #1D212A;
+  --line: #2A2F38;
+  --text: #F2F2F2;
+  --muted: #8A8F98;
+  --yellow: #F4D345;
+  --sans: "Noto Sans KR", "Apple SD Gothic Neo", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.55;
+  padding-inline: 16px;
+  padding-block: 0 64px;
+  margin: 0;
+}
+.wrap { max-width: 1100px; margin-inline: auto; }
+header { padding-block: 40px 24px; display: grid; gap: 12px; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
+h1 { margin: 0; font-size: clamp(26px, 5vw, 40px); font-weight: 900; line-height: 1.15; text-wrap: balance; }
+.ask { margin: 0; color: var(--muted); max-width: 60ch; }
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 20px; }
+section { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; display: grid; gap: 16px; align-content: start; min-width: 0; }
+h2 { margin: 0; font-size: 22px; font-weight: 900; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+h2 small { font: 400 13px var(--mono); color: var(--muted); }
+.takes { display: grid; gap: 10px; }
+.take { display: grid; gap: 4px; }
+.take span { font: 13px var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.take span b { color: var(--yellow); font-weight: 600; }
+audio { width: 100%; height: 36px; }
+.none { color: var(--muted); font-size: 14px; }
+ol { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; border-top: 1px solid var(--line); padding-top: 14px; }
+li { display: grid; gap: 2px; }
+li .id { font: 12px var(--mono); color: var(--muted); }
+li .cap { font-size: 16px; font-weight: 500; }
+math { font-size: 1.1em; }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">tangent · __SLUG__ · 대본 + 테이크</div>
+    <h1 id="h1"></h1>
+    <p class="ask">대본마다 속도별 테이크가 있어요. 들어 보고 대본 하나와 속도 하나를 골라 주세요. 아래 자막은 화면에 나올 글이에요.</p>
+  </header>
+  <div class="cols" id="cols"></div>
+</div>
+
+<script id="columns" type="application/json">__COLUMNS__</script>
+<script>
+const columns = JSON.parse(document.getElementById('columns').textContent);
+
+// Caption text with $...$ math, as the storyboard page renders it.
+function rich(text) {
+  const out = document.createDocumentFragment();
+  text.split(/(\$[^$]+\$)/).forEach(part => {
+    if (part.startsWith('$') && part.endsWith('$') && part.length > 1) {
+      const span = document.createElement('span');
+      try { span.innerHTML = katex.renderToString(part.slice(1, -1), { output: 'mathml', throwOnError: false }); }
+      catch (e) { span.textContent = part; }
+      out.append(span);
+    } else if (part) out.append(document.createTextNode(part));
+  });
+  return out;
+}
+
+function el(tag, cls, text) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (text != null) e.textContent = text;
+  return e;
+}
+
+document.getElementById('h1').append(rich(__H1__));
+const cols = document.getElementById('cols');
+for (const c of columns) {
+  const sec = el('section');
+  const h2 = el('h2', null, c.variant ? `대본 ${c.variant}` : '대본');
+  h2.append(el('small', null, `${c.file} · ${c.syllables}음절`));
+  sec.append(h2);
+
+  const takes = el('div', 'takes');
+  if (!c.audio.length) takes.append(el('div', 'none', '이 대본으로 만든 테이크가 없어요.'));
+  for (const a of c.audio) {
+    const row = el('div', 'take');
+    const label = el('span');
+    const speed = el('b', null, a.tempo === 1 ? '원래 속도' : `${a.tempo}배`);
+    label.append(`take${a.take} · `, speed, ` · ${a.seconds.toFixed(1)}초 · ${a.rate.toFixed(1)}음절/초`);
+    const audio = el('audio');
+    audio.controls = true;
+    audio.preload = 'none';
+    audio.src = `data:audio/mpeg;base64,${a.src}`;
+    row.append(label, audio);
+    takes.append(row);
+  }
+  sec.append(takes);
+
+  const ol = el('ol');
+  for (const b of c.beats) {
+    const li = el('li');
+    li.append(el('span', 'id', `${b.id} · ${b.name}`));
+    const cap = el('span', 'cap');
+    cap.append(rich(b.display));
+    li.append(cap);
+    ol.append(li);
+  }
+  sec.append(ol);
+  cols.append(sec);
+}
+
+// One voice at a time.
+document.addEventListener('play', e => {
+  document.querySelectorAll('audio').forEach(a => { if (a !== e.target) a.pause(); });
+}, true);
+</script>

@@ -1,12 +1,14 @@
 // Cross-model critique: Codex, in a read-only sandbox, reviews an episode as an
 // outside editor, so a different model's blind spots than the Claude agents'.
 //
-//   node scripts/critique.mts ../episodes/<slug> script   (before the take)
-//   node scripts/critique.mts ../episodes/<slug> cut      (after QA says ship)
+//   node scripts/critique.mts ../episodes/<slug> script [script.a.md]  (before the takes)
+//   node scripts/critique.mts ../episodes/<slug> cut                   (after the first render)
 //
-// The brief is docs/briefs/critic-<stage>.md. For "cut", contact sheets of
-// render.mp4 at 2 fps are attached as images, with the narration and each
-// beat's time range in the prompt. Writes <episode>/critique-<stage>.md.
+// The brief is scripts/critique/<stage>.md. "script" reviews script.md, or the
+// variant named, and writes critique-script.md (critique-script.a.md for
+// script.a.md). For "cut", contact sheets of render.mp4 at 2 fps are attached
+// as images, with the narration and each beat's time range in the prompt;
+// writes critique-cut.md.
 import { execFileSync } from "node:child_process";
 import { mkdtempSync, readdirSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -14,15 +16,16 @@ import { basename, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(fileURLToPath(import.meta.url), "../../..");
-const [episodeArg, stage] = process.argv.slice(2);
+const [episodeArg, stage, scriptFile = "script.md"] = process.argv.slice(2);
 if (!episodeArg || (stage !== "script" && stage !== "cut")) {
-  throw new Error("usage: node scripts/critique.mts <episode dir> script|cut");
+  throw new Error("usage: node scripts/critique.mts <episode dir> script [<script file>] | cut");
 }
 const episode = resolve(episodeArg);
-const out = join(episode, `critique-${stage}.md`);
+const out = join(episode, stage === "script" ? `critique-${scriptFile.replace(/\.md$/, "")}.md` : "critique-cut.md");
 
-let prompt = readFileSync(join(root, "docs/briefs", `critic-${stage}.md`), "utf8");
+let prompt = readFileSync(join(root, "studio/scripts/critique", `${stage}.md`), "utf8");
 prompt += `\n\nEpisode folder: ${relative(root, episode)}\n`;
+if (stage === "script") prompt += `Script file: ${scriptFile}\n`;
 
 const images: string[] = [];
 if (stage === "cut") {

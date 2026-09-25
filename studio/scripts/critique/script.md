@@ -7,10 +7,11 @@ did not write this script. Another model did, and a separate QA checks facts
 and layout, so spend your attention on whether a viewer scrolling Shorts
 would stop, wonder, and stay to the end.
 
-Read `topic.md`, `research.md`, and `script.md` in the episode folder given
-below, and `docs/briefs/script-storyboard.md` (the writer's brief, especially
-"Telling it"). Beats have 화면용 (captions), 읽기용 (spoken), and 비주얼
-(one-line picture).
+Read `topic.md` and `research.md` in the episode folder given below, the
+script file named below, and `.claude/skills/script/SKILL.md` (the writer's
+brief, especially "Telling it"). Beats have 화면용 (captions), 읽기용
+(spoken), and 비주얼 (one-line picture). The human may be choosing between
+this script and another writer's; judge this one on its own.
 
 Judge it as a whole, the way a viewer would: would they stop in the first two
 seconds, follow it without effort, and feel a small "oh" at the end? Short
