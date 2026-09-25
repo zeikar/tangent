@@ -20,9 +20,11 @@ as the format.
 - **AI disclosure:** answer per `docs/channel.md` and say why in one line.
   Check the episode for anything that changes the answer (AI music, realistic
   AI imagery).
-- **Thumbnail:** choose one frame that shows the subject and the answer at
-  once, not mid-transition, with nothing important in the Shorts UI zones.
-  Record its time and frame number and what it shows.
+- **Thumbnail:** choose one frame that shows the subject and the title's
+  question, never the answer (docs/channel.md), not mid-transition, with
+  nothing important in the Shorts UI zones. Prefer a picture that holds for
+  at least ~1 s so it can be hit in the app's frame selector. Record its time
+  and frame number and what it shows.
 
 ## Files
 

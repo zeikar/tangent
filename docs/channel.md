@@ -41,12 +41,14 @@ still says the narration is an AI voice, voluntarily.
   비율의 비밀" (clumsy).
 - **Description:** first two lines show the phenomenon, not the answer; then
   the key math in plain text with its variables defined; decimals written so
-  they don't read as exact (297 ÷ 210 = 1.41429 next to √2 = 1.41421, not
+  they don't read as exact (297 ÷ 210 ≈ 1.41429 next to √2 ≈ 1.41421, not
   "1.414…"). Then 출처: only research.md sources the video relies on and that
   were actually read (a standard we couldn't open is named in the body, not
-  cited). Then the AI line, "내레이션은 AI 음성(TTS)이고, 애니메이션은 코드로
+  cited; a standard read through a preview is cited with that note). Then
+  the AI line, "내레이션은 AI 음성(TTS)이고, 애니메이션은 코드로
   그렸어요." (standard spelling 내레이션; no "직접", which overstates), then
-  three hashtags (the first three show above the title). Keep a line-by-line
+  three hashtags. The first three show above the title, so they follow the
+  title's rule too: no answer (001 uses #용지규격, not #루트2). Keep a line-by-line
   claim map under the description block in publish.md.
 - **Tags:** the topic's search terms in Korean and English, spaced and
   unspaced (A4 용지, A4용지), plus the channel name; nothing the video doesn't
