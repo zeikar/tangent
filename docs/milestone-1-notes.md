@@ -378,3 +378,31 @@ sheets plus cited frames (round 2's 391 PNGs pruned to 66).
   findings. A critic at the script stage would have caught it before any
   storyboard or render. Codex critique is now a pipeline step twice (script,
   final cut).
+
+### v2: the improved pipeline's first run (2026-09-25)
+
+Same topic, remade with the new order (take before storyboard), the Codex
+critics, check-render, and fresh agents for research, script, and QA.
+
+- **Research agent** (first use of the role, ~25 min): ISO 216 as a primary
+  source, copier manuals for 141%/71%, fixed two v1 claims (A0 rounding, the
+  Lichtenberg story). A fresh reviewer and a quote-matching script checked it.
+- **Script:** fresh agent + two Codex rounds ("restructure" on v1's script →
+  "revise" → "revise") before the human heard anything. The human approved the
+  take at 1.08× on first listen. The critique cap (two rounds per stage) was
+  needed: the critic always finds something.
+- **Storyboard on real timings:** no timing collisions surfaced after render,
+  unlike v1. The agent verified bounds and centering with check-render on a
+  proxy render before production built anything.
+- **Production:** found a nondeterministic-render bug (text measured before its
+  font loaded) only because a check's number changed between two renders;
+  rendering twice is now in the brief. Equation steps became token morphs
+  (shared tokens slide, nothing overlaps), removing the last reason to reach
+  for Manim in this episode.
+- **Parallel agents designed the same interface twice** (label flying into an
+  equation: storyboard specified `from {at, scale}`, production built
+  `fromLabel`). Lesson: the storyboard states intent; production owns the
+  mechanism and publishes it before the storyboard uses it.
+- **Final-cut critique round 1 (Codex)** found hook contrast and middle pacing
+  issues that QA (verdict: ship) had rated minor; together they drove one
+  storyboard + component polish round without touching the script or take.
