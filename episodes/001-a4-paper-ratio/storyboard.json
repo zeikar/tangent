@@ -1,1781 +1,871 @@
 {
- "slug": "001-a4-paper-ratio",
- "loop": true,
- "notes": [
-  "Geometry is px in the 1080×1920 frame, origin top-left; center is [x, y].",
-  "Sizes: B1 and B11's slots are 320 wide (the halves' quarter turn sweeps a circle of radius 199 px about their centers, which is what fits between x 140 and 940); the swept sheet in B2–B4 is 400 wide; the proof pair in B4–B8 is 310 wide each; the real A4 in B9 is 360 wide and the A3 in B10 is 509 × 720.",
-  "Vertical use: B1's notes sit under the sheets; B2–B4's sheet sits on y 1052 above compareNote; B5–B6's pair sits low (bottoms y 952) and B7 lifts it to y 853.4 so the equation row fits under it; B9–B10 fill y 370–1154.",
-  "Compositions center on x 540 and keep all ink, labels and every moving shape's whole sweep within x 140–940, y ≥ 240. check-render wants both the whole ink and the picture without edge labels within ±25 px of x 540 at each beat end, so the proof pairs (B4–B8) sit a few px right of group-center, and the A3 label goes below its outline.",
-  "Draw order is declaration order across the episode (Mismatch beneath its two sheets). The loop depends on it: a4Ghost draws beneath a4Half at frame 0, and a3 beneath page at the end.",
-  "The loop: B11's last frame must equal B1's frame 0 (dashed ghosts, teal lower halves, names A4 and 레터, no notes). a3 ends as a4Ghost's box, page ends as a4Half's box with name 'A4', letterGhost2 and letterHalf2 copy sheet and half's frame-0 props. Every prop that draws pixels must match: stroke, dashed, fillOpacity, strokeWidth, names.",
-  "check-render will warn 'readable' at the end: the page's 'A4' and letterHalf2's '레터' are fully visible only for the last few frames. Expected: the loop continues them into frame 0, where both are visible.",
-  "Comparisons match heights (standAndFit match 'height'), because B6 explains the fit that way: grow the folded half x times until the heights meet, then the widths must meet too.",
-  "√2 = 1.4142; Letter h/w = 11/8.5 = 1.2941. The ideal sheet (h/w = √2) also stands for the real A4 in B9–B10: 210 × 297 mm differs from it by under 0.1 px at this size, which is why B9 says the difference in words (≈ 0.3 mm) instead of drawing it.",
-  "Nothing shows a number until B4. The sweep shows only the gap. The top ratio note leaves at B5 and returns, with √2, in B8.",
-  "Every exit is a 0.2 s fade; an appear sharing its anchor with exits waits for them. Handoffs between elements with identical boxes (page over sheet in B10) put the appear and the exit on different anchors, so there is no blink.",
-  "B7's word '이' has no audible onset in this take (20 ms in the alignment), so no cue is anchored on it; only the caption chunk starts there.",
-  "Edge colors follow the role, not the physical edge: yellow is a sheet's long side (its height, since every compared sheet stands upright), blue its short side (width). So the original's short side is blue '1' while the same edge, as the folded half's height, is yellow '1'. The reasoning is height against height, width against width, which role colors show directly."
- ],
- "colors": {
-  "text": "종이 자체와 이름, 평범한 수식",
-  "muted": "보조: 원래 윤곽(점선), 접는 선, 설명 메모, A3 라벨, 문서의 글줄",
-  "teal": "접힌 절반",
-  "red": "안 맞는 곳",
-  "yellow": "높이 = 긴 변(세워 둔 종이라서): x, √2, 1.414, 297 mm, 세운 절반의 높이 1",
-  "blue": "너비 = 짧은 변: 1, x/2, x/2 × x, 210 mm"
- },
- "components": [
-  {
-   "name": "PaperRect",
-   "status": "existing",
-   "spec": "As built for this episode: v1's actions plus standAndFit {ref, match: width|height, follow}, setStyle dashed and page, the page prop. Unchanged this round."
+  "slug": "001-a4-paper-ratio",
+  "loop": true,
+  "notes": [
+    "Geometry is px in the 1080×1920 frame, origin top-left; center is [x, y].",
+    "Compositions center on the frame, x = 540 (theme.ts content.centerX), not on the asymmetric safe area, and keep content within x 140–940. Where a sheet carries a wide label on one side (B8's '297 mm'), the sheet and label are centered as a group.",
+    "An element is invisible until its appear cue, unless it has visibleAtStart (drawn from the beat's first frame).",
+    "Draw order is declaration order across the episode: an element declared later draws on top (Mismatch excepted, see its spec).",
+    "Scaling (moveTo with w/h, resize, standAndFit, focusKept) changes geometry only: stroke widths and text sizes never scale.",
+    "Cues sharing an anchor run in parallel, except that an appear or reveal waits for the exits on its anchor to finish (the player's rule, so new content never draws over old). Every exit is a duration.exit (0.2 s) fade whatever its speed, unless it has until. Any other cue with neither speed nor until uses base.",
+    "Easing from studio/src/style/theme.ts: ease.out for appear, reveal and exit (they move on their word), ease.smooth for everything else, unless a cue's params say ease: linear.",
+    "h/w is long ÷ short for every portrait sheet; √2 = 1.4142."
+  ],
+  "colors": {
+    "text": "the sheet itself (and the white flash when a half lands back on it in B1), plain math",
+    "muted": "the original outline (dashed ghost), fold lines, dimmed digits, number-line axis",
+    "yellow": "long side: its edges, its label (x, √2, 297 mm), the value 1.414 (live h/w in B7, the shared digits in B8)",
+    "blue": "short side: its edges, its label (1, x/2, 210 mm)",
+    "teal": "the folded half and the flash when the √2 sheet fits",
+    "red": "does not fit: mismatch shading, the Letter mark on the number line, Letter's 1.55 after folding"
   },
-  {
-   "name": "Note",
-   "status": "existing",
-   "spec": "As built: one line of text with $…$ math at `at`; appear, exit, setText (token morph)."
-  },
-  {
-   "name": "Mismatch",
-   "status": "change",
-   "spec": "As built (the red symmetric difference of two live sheets, beneath both; production is raising its fill to a clearly red, higher-contrast style). New action pulse: over the cue's span the shaded region flashes (bump 0 → 1 → 0) to full opacity and back, with a 4 px outline in the same color that fades with the flash. Used once, on '이쪽만' in B1, together with a4Half's pulse."
-  },
-  {
-   "name": "Equation",
-   "status": "existing",
-   "spec": "As built: parts, reveal, transformTo token morphs (x^2 is x plus a superscript 2; \\sqrt{...} wraps its radicand's tokens), box, exit, and reveal fromLabel {of, side}: exactly one part, which starts as that sheet's edge label as drawn the frame before and flies, growing, into its slot; the player takes the label off the sheet on the same frame. The label's TeX must render like the part in the display-style row (B7: \\dfrac{x}{2}\\times x for \\frac{x}{2} \\times x; 1 for 1)."
-  },
-  {
-   "name": "Dimension",
-   "status": "existing",
-   "spec": "As built (v1 spec): measurement line along a sheet's edge with a label beyond it; tracks the sheet."
-  }
- ],
- "beats": [
-  {
-   "id": "B1",
-   "name": "훅",
-   "readAloud": "똑같이 반으로 접었는데, 왜 이쪽만 딱 맞을까요?",
-   "captions": [
+  "components": [
     {
-     "text": "똑같이 반으로 접었는데,",
-     "at": {
-      "word": "똑같이"
-     }
+      "name": "Tex",
+      "status": "existing, needs a trust prop",
+      "spec": "KaTeX renderer (studio/src/components/Tex.tsx); props tex, display, fontSize, color. Every math label below renders through it. Equation needs KaTeX's trust option for \\htmlId, so Tex gains a `trust` prop (or Equation calls katex directly)."
     },
     {
-     "text": "왜 이쪽만 딱 맞을까요?",
-     "at": {
-      "word": "왜"
-     }
+      "name": "PaperRect",
+      "status": "new",
+      "spec": "A sheet of paper: an axis-aligned rectangle. Props: center [x,y], w, h (px); stroke (color, default text); strokeWidth (default 6); fill (color, default = stroke) at fillOpacity (default 0.08); dashed (bool: 18 px dash, 12 px gap); edgeColors {long?, short?} overrides stroke per edge pair (long = the longer pair, recomputed live); labels {bottom?, right?}: {tex, color}, drawn with Tex at type.mathInline, upright, centered on that edge's midpoint with their ink 12 px (mark.edgeLabelGap) outside the edge, measured to the ink, re-anchored whenever the geometry changes; name: plain text centered inside (type.label, color text); valueLabel {side: right, color}: the right label shows the live h/w with 3 decimals; followHalfOf: element id; this element then has no own geometry and every frame takes the standAndFit end result of that element's half (see standAndFit). Labels never rotate or fold: in this storyboard no element carries labels or a name through a fold or rotate. Actions: appear {mode?: draw|fade} (draw, the default: stroke draws on clockwise from the top-left corner, then fill, labels and name fade in; fade: everything fades in together); exit (fade out with labels); moveTo {center, w?, h?}; resize {ratio} (keeps w and the bottom edge, h = w × ratio); showMidline (dashed muted line across the middle, parallel to the short sides, drawn from its center outward); fold (always across the long side, never the other way. First 30%: the name fades out over 0–15%, then the dashed muted midline draws in from the center over 15–30%, so the line never crosses a visible name. Remaining 70%: the top half (the flap) flips down onto the bottom half about the midline, drawn as a y-scale 1 → −1 of the flap; the flap keeps the sheet's stroke with its fill raised to 0.2 while it flips; over the same 70% the whole sheet's stroke and fill crossfade to teal. Afterwards the element IS the bottom half: stroke teal, fill teal at 0.08; the midline is gone, it has become the half's top edge); rotate {deg} (clockwise about its center; the center must not be moving at the same time); standAndFit {ref} (the match-widths rule for 'same shape' overlays: first 40% rotate 90° clockwise about its center, remaining 60% scale uniformly and move so its width equals ref's width and the bottom-left corners coincide; a similar rectangle then lands exactly on ref, any other one sticks out at the top or falls short of it); setStyle {any style prop} (colors crossfade; a label's tex change morphs old into new); pulse {edges?: long|short|all, color?} (stroke width to 2× and back, optionally flashing to color; pulses on different edges combine)."
+    },
+    {
+      "name": "Mismatch",
+      "status": "new",
+      "spec": "Shades where two rectangles disagree: the region inside exactly one of elements a and b (symmetric difference), filled with color (default red) at opacity 0.35, no stroke, recomputed every frame from their live geometry. Always drawn beneath a and b, whatever the declaration order. Actions: appear (fade in), exit."
+    },
+    {
+      "name": "Equation",
+      "status": "new",
+      "spec": "One line of KaTeX built from addressable parts. Props: parts [{id, tex, color}]; fontSize (default type.mathDisplay); y = the baseline, so '=' and digits stay put when parts change; either centerX (whole row centered there) or align {part, x} (that part's horizontal center at x, used to line up rows on '='). Rendered in display style (\\displaystyle) without KaTeX's display-mode margins, as ONE KaTeX expression with each part wrapped (\\htmlId) so spacing is KaTeX's own. Parts are invisible until revealed, but the layout reserves their space. Actions: reveal {parts} (fade in while rising the last 20 px into place; no parts = all); transformTo {parts, morph?} (new part list and layout on the same baseline; parts with the same id slide to their new place and take their new color; morph {newId: [oldIds]} moves those old parts onto the new part while crossfading into it; other old parts fade out, other new parts fade in); recolor {colors: {partId: color}}; box {part, color} (rounded rectangle around the part, 12 px padding, 4 px stroke, drawn on); exit."
+    },
+    {
+      "name": "NumberLine",
+      "status": "new",
+      "spec": "Horizontal number line. Props: min, max, x0, x1 (px of min and max), y; ends (bool: min/max numbers below the ends, muted, type.label); marks [{value, color, text | tex}] (a 24 px tick in color plus a label below the line: text is plain text styled like PaperRect.name (type.label), tex renders with Tex at type.mathInline; either way lowercase letters reach the 30 px floor); markerFrom: element id whose live h/w places a yellow down-pointing triangle (28 px wide) just above the line. Line muted, 4 px. Actions: appear (line draws left to right, then ticks, labels and marker fade in); pulseMark {value} (that mark's tick and label scale 1.3× and back); exit."
+    },
+    {
+      "name": "Dimension",
+      "status": "new",
+      "spec": "Measurement line along one edge of an element: parallel to the edge, same length, 16 px end ticks, 4 px stroke, offset outward. Props: of (element id), side (bottom|right), offset (px), label {tex, color}; the line takes the label color. The label sits beyond the line (below it for bottom, right of it for right), upright, type.mathInline. Tracks the element's live geometry. Actions: appear (line grows from its middle outward, then the label fades in), exit."
+    },
+    {
+      "name": "HalvingNest",
+      "status": "new",
+      "spec": "A sheet cut in half again and again (the A-series picture). Props: center, w, h (the starting sheet, portrait); title: name (plain text, styled like PaperRect.name), a muted middle dot, then sub (Tex at type.mathInline, muted), on one line centered over the sheet with its bottom 24 px above the sheet's top edge, outside the sheet so no cut line ever crosses it; labels [plain text per level, type.label]; stroke (default text). Outline and cut lines use stroke at width 6; every piece is filled with stroke at 0.08, exactly like a default PaperRect. Every cut goes across the current piece's long side (parallel to its short sides). Level 1 horizontal, keep bottom; level 2 vertical, keep right; level 3 horizontal, keep bottom; level 4 vertical, keep right. At levels 1 to 3 the half set aside keeps its outline and gets that level's label, muted, centered in it. At the last level the set-aside half stays unlabeled and the kept piece gets the label, in text. Actions: appear (outline draws on, then the title fades in; the title stays through every split and fades out with the rest in focusKept); split {levels} (levels run back to back, evenly spread over the cue's span; each cut line draws in, then its label fades in); pulseKept {color} (kept piece's stroke flashes to color and back); focusKept {center, w, h, name} (everything but the kept piece fades out while the kept piece moves and scales to that geometry; stroke width and label size never scale. The end state must be pixel-identical to a default-style PaperRect with that geometry and name; production may swap one in on the last frame); exit."
     }
-   ],
-   "pauseAfter": 0.5,
-   "elements": [
+  ],
+  "beats": [
     {
-     "id": "a4Ghost",
-     "component": "PaperRect",
-     "visibleAtStart": true,
-     "props": {
-      "center": [
-       345.0,
-       673.73
+      "id": "B1",
+      "name": "훅",
+      "readAloud": "에이포를 반으로 접어도 모양이 그대로예요. 몇 번을 접어도요.",
+      "captions": [
+        {"text": "A4를 반으로 접어도", "at": {"word": "에이포를"}},
+        {"text": "모양이 그대로예요.", "at": {"word": "모양이"}},
+        {"text": "몇 번을 접어도요.", "at": {"word": "몇"}}
       ],
-      "w": 320.0,
-      "h": 452.55,
-      "stroke": "muted",
-      "fillOpacity": 0,
-      "dashed": true
-     },
-     "where": "left slot: A4's original outline, 320 × 452.5 (x 185–505, y 447.5–900); frame 0 and the loop's last frame"
+      "pauseAfter": 0.5,
+      "elements": [
+        {
+          "id": "a4Ghost",
+          "component": "PaperRect",
+          "props": {"center": [540, 745], "w": 480, "h": 678.8, "stroke": "muted", "fillOpacity": 0, "dashed": true},
+          "where": "visual zone, centered; the original outline, left behind when a4 folds"
+        },
+        {
+          "id": "a4",
+          "component": "PaperRect",
+          "visibleAtStart": true,
+          "props": {"center": [540, 745], "w": 480, "h": 678.8, "stroke": "text", "name": "A4"},
+          "where": "visual zone, centered; the first frame is exactly this sheet (hook, loop target)"
+        }
+      ],
+      "cues": [
+        {
+          "at": {"word": "에이포를"},
+          "target": "a4Ghost",
+          "action": "appear",
+          "params": {"mode": "fade"},
+          "speed": "fast",
+          "note": "appears under a4, so it only shows once the flap lifts; frame 0 stays a4 alone"
+        },
+        {
+          "at": {"word": "에이포를"},
+          "target": "a4",
+          "action": "fold",
+          "until": {"word": "접어도"},
+          "note": "the sheet starts folding on the first word: the hook picture moves from frame one"
+        },
+        {
+          "at": {"word": "접어도"},
+          "target": "a4",
+          "action": "standAndFit",
+          "params": {"ref": "a4Ghost"},
+          "until": {"word": "그대로예요"},
+          "note": "the half stands up and grows back onto the original outline"
+        },
+        {
+          "at": {"word": "그대로예요"},
+          "target": "a4",
+          "action": "pulse",
+          "params": {"edges": "all", "color": "text"},
+          "speed": "base",
+          "note": "lands exactly: '그대로'"
+        },
+        {"at": {"word": "몇"}, "target": "a4", "action": "fold", "until": {"word": "접어도요"}},
+        {
+          "at": {"word": "접어도요"},
+          "target": "a4",
+          "action": "standAndFit",
+          "params": {"ref": "a4Ghost"},
+          "until": {"pause": true},
+          "note": "lands as the pause starts, so the pulse below flashes on the landing"
+        },
+        {
+          "at": {"pause": true},
+          "target": "a4",
+          "action": "pulse",
+          "params": {"edges": "all", "color": "text"},
+          "speed": "fast"
+        }
+      ],
+      "endFrame": "Visual zone: the teal half, fitted back to 480×679, lies exactly on the dashed muted a4Ghost outline centered at (540, 745); no name label, nothing else. Caption: '몇 번을 접어도요.'",
+      "claims": ["C1", "C2"]
     },
     {
-     "id": "a4Half",
-     "component": "PaperRect",
-     "visibleAtStart": true,
-     "props": {
-      "center": [
-       345.0,
-       786.86
+      "id": "B2",
+      "name": "반례",
+      "readAloud": "미국 레터 용지는 달라요. 접으면 더 길쭉해져요.",
+      "captions": [{"text": "미국 레터 용지는 달라요.", "at": {"word": "미국"}}, {"text": "접으면 더 길쭉해져요.", "at": {"word": "접으면"}}],
+      "pauseAfter": 0.5,
+      "elements": [
+        {
+          "id": "letterGhost",
+          "component": "PaperRect",
+          "props": {"center": [540, 745], "w": 480, "h": 621.2, "stroke": "muted", "fillOpacity": 0, "dashed": true},
+          "where": "visual zone, centered, same spot and width as the A4 in B1"
+        },
+        {
+          "id": "letter",
+          "component": "PaperRect",
+          "props": {"center": [540, 745], "w": 480, "h": 621.2, "stroke": "text", "name": "Letter"},
+          "where": "visual zone, centered, on top of letterGhost (8.5 × 11 in: h/w = 1.294)"
+        },
+        {
+          "id": "letterGap",
+          "component": "Mismatch",
+          "props": {"a": "letterGhost", "b": "letter", "color": "red"},
+          "where": "the strip where the fitted half sticks out above the original (about y 314–434)"
+        },
+        {
+          "id": "letterRatio",
+          "component": "Equation",
+          "props": {
+            "parts": [
+              {"id": "before", "tex": "1.29", "color": "text"},
+              {"id": "arrow", "tex": "\\to", "color": "muted"},
+              {"id": "after", "tex": "1.55", "color": "red"}
+            ],
+            "fontSize": 52,
+            "centerX": 540,
+            "y": 1240
+          },
+          "where": "below the sheet, baseline y 1240: the Letter half's corner reaches y ≈ 1186 mid-rotation, so it stays clear"
+        }
       ],
-      "w": 320.0,
-      "h": 226.27,
-      "stroke": "teal",
-      "name": "A4"
-     },
-     "where": "A4's lower half, already folded (the long side halved): 320 × 226.3 inside the bottom of a4Ghost; name centered in it"
+      "cues": [
+        {"at": {"word": "미국"}, "target": "a4", "action": "exit", "speed": "fast"},
+        {"at": {"word": "미국"}, "target": "a4Ghost", "action": "exit", "speed": "fast"},
+        {"at": {"word": "미국"}, "target": "letterGhost", "action": "appear", "speed": "fast"},
+        {
+          "at": {"word": "미국"},
+          "target": "letter",
+          "action": "appear",
+          "speed": "fast",
+          "note": "fast: once the a4 exits finish first, a base appear would still be drawing when the fold starts on '달라요'"
+        },
+        {
+          "at": {"word": "레터"},
+          "target": "letterRatio",
+          "action": "reveal",
+          "params": {"parts": ["before"]},
+          "speed": "fast",
+          "note": "Letter's long ÷ short before folding"
+        },
+        {"at": {"word": "달라요"}, "target": "letter", "action": "fold", "until": {"word": "접으면"}},
+        {
+          "at": {"word": "접으면"},
+          "target": "letter",
+          "action": "standAndFit",
+          "params": {"ref": "letterGhost"},
+          "until": {"word": "길쭉해져요"},
+          "note": "same move as B1, but the fitted half is taller than the original"
+        },
+        {
+          "at": {"word": "길쭉해져요"},
+          "target": "letterGap",
+          "action": "appear",
+          "speed": "fast",
+          "note": "the fit has finished by now, so the shading never shows mid-rotation"
+        },
+        {
+          "at": {"word": "길쭉해져요"},
+          "target": "letterRatio",
+          "action": "reveal",
+          "params": {"parts": ["arrow", "after"]},
+          "speed": "fast"
+        }
+      ],
+      "endFrame": "Dashed muted letterGhost (480×621) centered at (540, 745); teal fitted half 480×742 sharing its bottom edge (y 1055.6) and sticking out above it; red strip between y ≈ 314 and 434; '1.29 → 1.55' (1.55 red) on baseline y 1240. Caption: '접으면 더 길쭉해져요.'",
+      "claims": ["C11"]
     },
     {
-     "id": "sheet",
-     "component": "PaperRect",
-     "visibleAtStart": true,
-     "props": {
-      "center": [
-       735.0,
-       692.94
+      "id": "B3",
+      "name": "변수 두기",
+      "readAloud": "어떤 비율이면 될까요? 짧은 변을 일, 긴 변을 엑스라고 할게요.",
+      "captions": [
+        {"text": "어떤 비율이면 될까요?", "at": {"word": "어떤"}},
+        {"text": "짧은 변을 $1$,", "at": {"word": "짧은"}},
+        {"text": "긴 변을 $x$라고 할게요.", "at": {"word": "긴"}}
       ],
-      "w": 320.0,
-      "h": 414.12,
-      "stroke": "muted",
-      "fillOpacity": 0,
-      "dashed": true
-     },
-     "where": "right slot: Letter's original outline (8.5 × 11 in: 320 × 414.1, x 575–895). The same element is swept in B2–B3 and becomes the original sheet of the reasoning (B4–B10)"
+      "pauseAfter": 0,
+      "elements": [
+        {
+          "id": "rect",
+          "component": "PaperRect",
+          "props": {"center": [540, 620], "w": 340, "h": 480.8, "stroke": "text"},
+          "where": "visual zone, centered horizontally, raised (center y 620) to leave room for the half's x/2 label and B5's equation; drawn at h/w = √2 but unnamed"
+        }
+      ],
+      "cues": [
+        {"at": {"word": "어떤"}, "target": "letter", "action": "exit", "speed": "fast"},
+        {"at": {"word": "어떤"}, "target": "letterGhost", "action": "exit", "speed": "fast"},
+        {"at": {"word": "어떤"}, "target": "letterGap", "action": "exit", "speed": "fast"},
+        {"at": {"word": "어떤"}, "target": "letterRatio", "action": "exit", "speed": "fast"},
+        {"at": {"word": "어떤"}, "target": "rect", "action": "appear", "speed": "base"},
+        {
+          "at": {"word": "짧은"},
+          "target": "rect",
+          "action": "setStyle",
+          "params": {"edgeColors": {"short": "blue"}},
+          "speed": "fast"
+        },
+        {
+          "at": {"word": "일"},
+          "target": "rect",
+          "action": "setStyle",
+          "params": {"labels": {"bottom": {"tex": "1", "color": "blue"}}},
+          "speed": "fast"
+        },
+        {
+          "at": {"word": "긴"},
+          "target": "rect",
+          "action": "setStyle",
+          "params": {"edgeColors": {"short": "blue", "long": "yellow"}},
+          "speed": "fast"
+        },
+        {
+          "at": {"word": "엑스라고"},
+          "target": "rect",
+          "action": "setStyle",
+          "params": {"labels": {"bottom": {"tex": "1", "color": "blue"}, "right": {"tex": "x", "color": "yellow"}}},
+          "speed": "fast"
+        }
+      ],
+      "endFrame": "One sheet 340×481 centered at (540, 620): top and bottom edges blue with '1' (blue) below, left and right edges yellow with 'x' (yellow) to the right. Nothing else. Caption: '긴 변을 $x$라고 할게요.'",
+      "claims": ["C3"]
     },
     {
-     "id": "half",
-     "component": "PaperRect",
-     "visibleAtStart": true,
-     "props": {
-      "center": [
-       735.0,
-       796.47
+      "id": "B4",
+      "name": "접기",
+      "readAloud": "반으로 접어 세우면, 긴 변은 일, 짧은 변은 이분의 엑스가 돼요.",
+      "captions": [
+        {"text": "반으로 접어 세우면", "at": {"word": "반으로"}},
+        {"text": "긴 변은 $1$,", "at": {"word": "긴"}},
+        {"text": "짧은 변은 $\\frac{x}{2}$가 돼요.", "at": {"word": "짧은"}}
       ],
-      "w": 320.0,
-      "h": 207.06,
-      "stroke": "teal",
-      "name": "레터"
-     },
-     "where": "Letter's lower half, already folded: 320 × 207.1 inside the bottom of sheet; name centered in it"
+      "pauseAfter": 0,
+      "elements": [
+        {
+          "id": "half",
+          "component": "PaperRect",
+          "props": {
+            "center": [322, 499.8],
+            "w": 340,
+            "h": 240.4,
+            "stroke": "teal",
+            "fill": "teal",
+            "fillOpacity": 0.15
+          },
+          "where": "starts exactly on the top half of rect (after rect has moved left), then lifts off to the right"
+        }
+      ],
+      "cues": [
+        {
+          "at": {"word": "반으로"},
+          "target": "rect",
+          "action": "moveTo",
+          "params": {"center": [322, 620]},
+          "speed": "fast"
+        },
+        {
+          "at": {"word": "반으로"},
+          "target": "rect",
+          "action": "showMidline",
+          "speed": "fast",
+          "note": "the fold line runs parallel to the short sides"
+        },
+        {
+          "at": {"word": "접어"},
+          "target": "half",
+          "action": "appear",
+          "params": {"mode": "fade"},
+          "until": {"word": "세우면"}
+        },
+        {
+          "at": {"word": "접어"},
+          "target": "half",
+          "action": "moveTo",
+          "params": {"center": [721, 452], "ease": "linear"},
+          "until": {"word": "세우면"},
+          "note": "the top half lifts off up and to the right, still lying on its side, to the highest spot where standing it up stays inside the frame; linear, so its bottom edge clears rect's x label within 4 frames"
+        },
+        {
+          "at": {"word": "세우면"},
+          "target": "half",
+          "action": "rotate",
+          "params": {"deg": 90},
+          "until": {"word": "긴"},
+          "note": "stands up where it was lifted: the old short side (1) is now vertical; lands before the set-down on '긴' starts, so the moving sweep never leaves x 940"
+        },
+        {
+          "at": {"word": "긴"},
+          "target": "half",
+          "action": "moveTo",
+          "params": {"center": [772, 690.4]},
+          "speed": "fast",
+          "note": "sets down beside rect, bottom edges level (y 860.4)"
+        },
+        {
+          "at": {"word": "긴"},
+          "target": "half",
+          "action": "setStyle",
+          "params": {"edgeColors": {"long": "yellow"}},
+          "speed": "fast"
+        },
+        {
+          "at": {"word": "일"},
+          "target": "half",
+          "action": "setStyle",
+          "params": {"labels": {"right": {"tex": "1", "color": "yellow"}}},
+          "speed": "fast",
+          "note": "the 1 that was a blue short side is now a yellow long side"
+        },
+        {
+          "at": {"word": "짧은"},
+          "target": "half",
+          "action": "setStyle",
+          "params": {"edgeColors": {"long": "yellow", "short": "blue"}},
+          "speed": "fast"
+        },
+        {
+          "at": {"word": "짧은"},
+          "target": "half",
+          "action": "pulse",
+          "params": {"edges": "short"},
+          "speed": "fast",
+          "note": "teal to blue alone barely shows; the pulse makes the short edges visibly answer '짧은'"
+        },
+        {
+          "at": {"word": "이분의"},
+          "target": "half",
+          "action": "setStyle",
+          "params": {
+            "labels": {"right": {"tex": "1", "color": "yellow"}, "bottom": {"tex": "\\dfrac{x}{2}", "color": "blue"}}
+          },
+          "speed": "fast",
+          "note": "display-style fraction: its x and 2 read at the size of the '1' labels"
+        }
+      ],
+      "endFrame": "Left: rect 340×481 centered (322, 620) with dashed midline, blue '1' below, yellow 'x' right. Right: half upright 240.5×340 centered (772, 690.4), teal fill, yellow long edges with '1' right, blue short edges with a display-style x/2 below (as tall as the '1' labels); both bottoms at y ≈ 860. Caption: '짧은 변은 $\\frac{x}{2}$가 돼요.'",
+      "claims": ["C3"]
     },
     {
-     "id": "a4GhostTop",
-     "component": "PaperRect",
-     "props": {
-      "center": [
-       345.0,
-       673.73
+      "id": "B5",
+      "name": "닮음 조건",
+      "readAloud": "모양이 같으려면, 엑스 대 일과, 일 대 이분의 엑스가 같아야 해요.",
+      "captions": [
+        {"text": "모양이 같으려면", "at": {"word": "모양이"}},
+        {"text": "$x : 1$과 $1 : \\frac{x}{2}$가", "at": {"word": "엑스"}},
+        {"text": "같아야 해요.", "at": {"word": "같아야"}}
       ],
-      "w": 320.0,
-      "h": 452.55,
-      "stroke": "muted",
-      "fillOpacity": 0,
-      "dashed": true
-     },
-     "where": "a copy of a4Ghost drawn above a4Half (declared after it), so the original outline stays visible while the half turns, grows and lands on it; exits at B2's start"
+      "pauseAfter": 0,
+      "elements": [
+        {
+          "id": "ratioEq",
+          "component": "Equation",
+          "props": {
+            "parts": [
+              {"id": "x", "tex": "x", "color": "yellow"},
+              {"id": "c1", "tex": ":", "color": "text"},
+              {"id": "one1", "tex": "1", "color": "blue"},
+              {"id": "eq", "tex": "=", "color": "text"},
+              {"id": "one2", "tex": "1", "color": "yellow"},
+              {"id": "c2", "tex": ":", "color": "text"},
+              {"id": "halfX", "tex": "\\frac{x}{2}", "color": "blue"}
+            ],
+            "centerX": 540,
+            "y": 1150
+          },
+          "where": "below both sheets, centered, baseline y 1150 (about y 1044–1218 with the fraction)"
+        }
+      ],
+      "cues": [
+        {
+          "at": {"word": "엑스"},
+          "target": "ratioEq",
+          "action": "reveal",
+          "params": {"parts": ["x", "c1"]},
+          "speed": "fast"
+        },
+        {
+          "at": {"word": "엑스"},
+          "target": "rect",
+          "action": "pulse",
+          "params": {"edges": "long"},
+          "speed": "fast"
+        },
+        {
+          "at": {"word": "일과"},
+          "target": "ratioEq",
+          "action": "reveal",
+          "params": {"parts": ["one1"]},
+          "speed": "fast"
+        },
+        {
+          "at": {"word": "일과"},
+          "target": "rect",
+          "action": "pulse",
+          "params": {"edges": "short"},
+          "speed": "fast"
+        },
+        {
+          "at": {"word": "일"},
+          "target": "ratioEq",
+          "action": "reveal",
+          "params": {"parts": ["one2", "c2"]},
+          "speed": "fast"
+        },
+        {
+          "at": {"word": "일"},
+          "target": "half",
+          "action": "pulse",
+          "params": {"edges": "long"},
+          "speed": "fast"
+        },
+        {
+          "at": {"word": "이분의"},
+          "target": "ratioEq",
+          "action": "reveal",
+          "params": {"parts": ["halfX"]},
+          "speed": "fast"
+        },
+        {
+          "at": {"word": "이분의"},
+          "target": "half",
+          "action": "pulse",
+          "params": {"edges": "short"},
+          "speed": "fast"
+        },
+        {
+          "at": {"word": "같아야"},
+          "target": "ratioEq",
+          "action": "reveal",
+          "params": {"parts": ["eq"]},
+          "speed": "fast",
+          "note": "'=' arrives last, on '같아야'"
+        }
+      ],
+      "endFrame": "Both sheets as at the end of B4; below them 'x : 1 = 1 : x/2' centered on baseline y 1150, colored long = yellow (x, second 1), short = blue (first 1, x/2). Caption: '같아야 해요.'",
+      "claims": ["C3"]
     },
     {
-     "id": "letterGhostTop",
-     "component": "PaperRect",
-     "props": {
-      "center": [
-       735.0,
-       692.94
+      "id": "B6",
+      "name": "풀기",
+      "readAloud": "정리하면 엑스 제곱은 이, 그러니까 엑스는 루트 이가 돼요.",
+      "captions": [
+        {"text": "정리하면 $x^2 = 2$,", "at": {"word": "정리하면"}},
+        {"text": "그러니까 $x$는 $\\sqrt{2}$가 돼요.", "at": {"word": "그러니까"}}
       ],
-      "w": 320.0,
-      "h": 414.12,
-      "stroke": "muted",
-      "fillOpacity": 0,
-      "dashed": true
-     },
-     "where": "a copy of sheet drawn above half, for the same reason: Letter's outline and its fitted half's edge read as two boundaries across the gap"
+      "pauseAfter": 0.7,
+      "elements": [],
+      "cues": [
+        {
+          "at": {"word": "정리하면"},
+          "target": "ratioEq",
+          "action": "transformTo",
+          "params": {
+            "parts": [
+              {"id": "x", "tex": "x", "color": "yellow"},
+              {"id": "dot", "tex": "\\cdot", "color": "text"},
+              {"id": "halfX", "tex": "\\frac{x}{2}", "color": "blue"},
+              {"id": "eq", "tex": "=", "color": "text"},
+              {"id": "one2", "tex": "1", "color": "text"}
+            ]
+          },
+          "speed": "base",
+          "note": "outer terms multiply to the inner terms: x · x/2 = 1 · 1"
+        },
+        {
+          "at": {"word": "제곱은"},
+          "target": "ratioEq",
+          "action": "transformTo",
+          "params": {
+            "parts": [
+              {"id": "x2", "tex": "x^2", "color": "yellow"},
+              {"id": "eq", "tex": "=", "color": "text"},
+              {"id": "two", "tex": "2", "color": "text"}
+            ],
+            "morph": {"x2": ["x", "dot", "halfX"], "two": ["one2"]}
+          },
+          "speed": "base"
+        },
+        {
+          "at": {"word": "루트"},
+          "target": "ratioEq",
+          "action": "transformTo",
+          "params": {
+            "parts": [
+              {"id": "xl", "tex": "x", "color": "yellow"},
+              {"id": "eq", "tex": "=", "color": "text"},
+              {"id": "root2", "tex": "\\sqrt{2}", "color": "yellow"}
+            ],
+            "morph": {"xl": ["x2"], "root2": ["two"]}
+          },
+          "speed": "base"
+        },
+        {
+          "at": {"word": "이가"},
+          "target": "rect",
+          "action": "setStyle",
+          "params": {
+            "labels": {"bottom": {"tex": "1", "color": "blue"}, "right": {"tex": "\\sqrt{2}", "color": "yellow"}}
+          },
+          "speed": "base",
+          "note": "the sheet's x label becomes √2: the algebra lands back on the picture"
+        },
+        {
+          "at": {"pause": true},
+          "target": "ratioEq",
+          "action": "box",
+          "params": {"part": "root2", "color": "yellow"},
+          "speed": "fast"
+        }
+      ],
+      "endFrame": "Sheets as in B5 except rect's right label now reads √2 (yellow); equation 'x = √2' on baseline y 1150 with a yellow box around √2. Caption: '그러니까 $x$는 $\\sqrt{2}$가 돼요.'",
+      "claims": ["C3"]
     },
     {
-     "id": "letterGap",
-     "component": "Mismatch",
-     "props": {
-      "a": "sheet",
-      "b": "half",
-      "color": "red"
-     },
-     "where": "where Letter's fitted half misses its outline: a strip x 843–895, the full height, inside the outline"
+      "id": "B7",
+      "name": "하나뿐",
+      "readAloud": "반으로 접어도 모양이 그대로인 건, 일 대 루트 이, 딱 하나예요.",
+      "captions": [
+        {"text": "반으로 접어도", "at": {"word": "반으로"}},
+        {"text": "모양이 그대로인 건", "at": {"word": "모양이"}},
+        {"text": "$1 : \\sqrt{2}$, 딱 하나예요.", "at": {"word": "일"}}
+      ],
+      "pauseAfter": 1.0,
+      "elements": [
+        {
+          "id": "sweep",
+          "component": "PaperRect",
+          "props": {
+            "center": [540, 748.0],
+            "w": 420,
+            "h": 504.0,
+            "stroke": "text",
+            "edgeColors": {"long": "yellow", "short": "blue"},
+            "valueLabel": {"side": "right", "color": "yellow"}
+          },
+          "where": "visual zone, centered horizontally, bottom edge fixed at y 1000; h/w starts at 1.2; live h/w shown right of it in yellow"
+        },
+        {
+          "id": "sweepHalf",
+          "component": "PaperRect",
+          "props": {"followHalfOf": "sweep", "stroke": "teal", "strokeWidth": 3, "fillOpacity": 0},
+          "where": "sweep's half, stood up and width-matched, sharing sweep's bottom-left corner; thin, so sweep's yellow/blue edges show around it when they coincide"
+        },
+        {
+          "id": "sweepGap",
+          "component": "Mismatch",
+          "props": {"a": "sweep", "b": "sweepHalf", "color": "red"},
+          "where": "a strip at the top: above sweep while h/w < √2, inside it while h/w > √2"
+        },
+        {
+          "id": "dial",
+          "component": "NumberLine",
+          "props": {
+            "min": 1.2,
+            "max": 1.7,
+            "x0": 180,
+            "x1": 900,
+            "y": 1130,
+            "ends": false,
+            "marks": [
+              {"value": 1.294, "text": "Letter", "color": "red"},
+              {"value": 1.4142, "tex": "\\sqrt{2}", "color": "yellow"}
+            ],
+            "markerFrom": "sweep"
+          },
+          "where": "below the sheet, x 180–900 at y 1130; marks at x ≈ 315 (Letter) and 488 (√2); no end numbers: at the enlarged mark size they would crowd 'Letter', and the sheet's live label carries the value"
+        }
+      ],
+      "cues": [
+        {"at": {"word": "반으로"}, "target": "rect", "action": "exit", "speed": "fast"},
+        {"at": {"word": "반으로"}, "target": "half", "action": "exit", "speed": "fast"},
+        {"at": {"word": "반으로"}, "target": "ratioEq", "action": "exit", "speed": "fast"},
+        {"at": {"word": "반으로"}, "target": "sweep", "action": "appear", "speed": "fast"},
+        {
+          "at": {"word": "반으로"},
+          "target": "sweepHalf",
+          "action": "appear",
+          "params": {"mode": "fade"},
+          "speed": "fast"
+        },
+        {"at": {"word": "반으로"}, "target": "sweepGap", "action": "appear", "speed": "fast"},
+        {"at": {"word": "반으로"}, "target": "dial", "action": "appear", "speed": "base"},
+        {
+          "at": {"word": "모양이"},
+          "target": "sweep",
+          "action": "resize",
+          "params": {"ratio": 1.7, "ease": "linear"},
+          "until": {"word": "일"},
+          "note": "sweeps past Letter (gap shrinks), through √2 (gap vanishes), on to 1.7 (gap grows again)"
+        },
+        {
+          "at": {"word": "일"},
+          "target": "sweep",
+          "action": "resize",
+          "params": {"ratio": 1.4142},
+          "until": {"word": "딱"},
+          "note": "settles on √2 while '일 대 루트 이' is spoken"
+        },
+        {
+          "at": {"word": "딱"},
+          "target": "sweep",
+          "action": "pulse",
+          "params": {"edges": "all", "color": "teal"},
+          "speed": "base"
+        },
+        {
+          "at": {"word": "딱"},
+          "target": "sweepHalf",
+          "action": "pulse",
+          "params": {"edges": "all", "color": "teal"},
+          "speed": "base"
+        },
+        {
+          "at": {"word": "딱"},
+          "target": "dial",
+          "action": "pulseMark",
+          "params": {"value": 1.4142},
+          "speed": "base"
+        }
+      ],
+      "endFrame": "sweep at h/w = 1.414 (420×594, bottom at y 1000) with the teal half outline exactly on it and no red anywhere; right label '1.414'; number line with the marker on the √2 mark. Caption: '$1 : \\sqrt{2}$, 딱 하나예요.'",
+      "claims": ["C3", "C11"]
     },
     {
-     "id": "foldNote",
-     "component": "Note",
-     "props": {
-      "text": "긴 변을 반으로 접은 뒤",
-      "at": [
-       540,
-       1040
+      "id": "B8",
+      "name": "실제 A4",
+      "readAloud": "에이포는 가로 이백십, 세로 이백구십칠. 나눠 보면 일 점 사일사, 거의 정확히 루트 이와 같아요.",
+      "captions": [
+        {"text": "A4는 가로 210,", "at": {"word": "에이포는"}},
+        {"text": "세로 297.", "at": {"word": "세로"}},
+        {"text": "나눠 보면 1.414,", "at": {"word": "나눠"}},
+        {"text": "거의 정확히 $\\sqrt{2}$와 같아요.", "at": {"word": "거의"}}
       ],
-      "color": "muted"
-     },
-     "where": "under the sheets (the turning halves reach y 986, 26 px above its ink): the contrast reads before the words"
+      "pauseAfter": 0,
+      "elements": [
+        {
+          "id": "dimW",
+          "component": "Dimension",
+          "props": {
+            "of": "sweep",
+            "side": "bottom",
+            "offset": 40,
+            "label": {"tex": "210\\,\\text{mm}", "color": "blue"}
+          },
+          "where": "under the A4 (line at y ≈ 840, label below it)"
+        },
+        {
+          "id": "dimH",
+          "component": "Dimension",
+          "props": {
+            "of": "sweep",
+            "side": "right",
+            "offset": 40,
+            "label": {"tex": "297\\,\\text{mm}", "color": "yellow"}
+          },
+          "where": "right of the A4 (line at x 610, label from x ≈ 634, about 230 px wide, ends near x 864)"
+        },
+        {
+          "id": "divRow",
+          "component": "Equation",
+          "props": {
+            "parts": [
+              {"id": "lhs", "tex": "297 \\div 210", "color": "text"},
+              {"id": "eq", "tex": "\\approx", "color": "text"},
+              {"id": "d1", "tex": "1.414", "color": "text"},
+              {"id": "d2", "tex": "29", "color": "text"}
+            ],
+            "fontSize": 64,
+            "align": {"part": "eq", "x": 577},
+            "y": 1066
+          },
+          "where": "below the A4, '≈' (both values are rounded) at x 577 so the row is centered on the frame; baseline 1066 leaves about 80 px under the enlarged '210 mm'"
+        },
+        {
+          "id": "rootRow",
+          "component": "Equation",
+          "props": {
+            "parts": [
+              {"id": "lhs", "tex": "\\sqrt{2}", "color": "text"},
+              {"id": "eq", "tex": "\\approx", "color": "text"},
+              {"id": "d1", "tex": "1.414", "color": "text"},
+              {"id": "d2", "tex": "21", "color": "text"}
+            ],
+            "fontSize": 64,
+            "align": {"part": "eq", "x": 577},
+            "y": 1186
+          },
+          "where": "under divRow, '≈' at x 577 so the digits line up column by column"
+        }
+      ],
+      "cues": [
+        {"at": {"word": "에이포는"}, "target": "sweepHalf", "action": "exit", "speed": "fast"},
+        {"at": {"word": "에이포는"}, "target": "sweepGap", "action": "exit", "speed": "fast"},
+        {"at": {"word": "에이포는"}, "target": "dial", "action": "exit", "speed": "fast"},
+        {
+          "at": {"word": "에이포는"},
+          "target": "sweep",
+          "action": "setStyle",
+          "params": {"valueLabel": null, "name": "A4"},
+          "speed": "fast",
+          "note": "the √2 sheet from B7 is revealed as A4"
+        },
+        {
+          "at": {"word": "에이포는"},
+          "target": "sweep",
+          "action": "moveTo",
+          "params": {"center": [400, 560], "w": 340, "h": 480.8},
+          "speed": "base"
+        },
+        {"at": {"word": "가로"}, "target": "dimW", "action": "appear", "speed": "base"},
+        {"at": {"word": "세로"}, "target": "dimH", "action": "appear", "speed": "base"},
+        {
+          "at": {"word": "나눠"},
+          "target": "divRow",
+          "action": "reveal",
+          "params": {"parts": ["lhs", "eq"]},
+          "speed": "fast"
+        },
+        {
+          "at": {"word": "일"},
+          "target": "divRow",
+          "action": "reveal",
+          "params": {"parts": ["d1", "d2"]},
+          "speed": "fast"
+        },
+        {"at": {"word": "거의"}, "target": "rootRow", "action": "reveal", "speed": "fast"},
+        {
+          "at": {"word": "루트"},
+          "target": "divRow",
+          "action": "recolor",
+          "params": {"colors": {"d1": "yellow", "d2": "muted"}},
+          "speed": "fast",
+          "note": "the shared 1.414 lights up; the differing tail dims ('거의')"
+        },
+        {
+          "at": {"word": "루트"},
+          "target": "rootRow",
+          "action": "recolor",
+          "params": {"colors": {"d1": "yellow", "d2": "muted"}},
+          "speed": "fast"
+        }
+      ],
+      "endFrame": "A4 sheet 340×481 centered (400, 560), yellow long / blue short edges, name 'A4'; '210 mm' (blue) below, '297 mm' (yellow) right; rows '297 ÷ 210 ≈ 1.41429' and '√2 ≈ 1.41421' aligned on '≈', with 1.414 yellow in both and 29 / 21 muted. Caption: '거의 정확히 $\\sqrt{2}$와 같아요.'",
+      "claims": ["C4", "C8"]
     },
     {
-     "id": "compareNote",
-     "component": "Note",
-     "props": {
-      "text": "크기를 맞춰 비교",
-      "at": [
-       540,
-       1105
+      "id": "B9",
+      "name": "A0에서 A4로",
+      "readAloud": "에이제로를 반씩 네 번 접으면, 바로 에이포예요. 몇 번을 접어도, 모양은 그대로죠.",
+      "captions": [
+        {"text": "A0를 반씩", "at": {"word": "에이제로를"}},
+        {"text": "네 번 접으면", "at": {"word": "네"}},
+        {"text": "바로 A4예요.", "at": {"word": "바로"}},
+        {"text": "몇 번을 접어도", "at": {"word": "몇"}},
+        {"text": "모양은 그대로죠.", "at": {"word": "모양은"}}
       ],
-      "color": "muted"
-     },
-     "where": "second line under foldNote; stays through B4"
+      "pauseAfter": 0.5,
+      "elements": [
+        {
+          "id": "nest",
+          "component": "HalvingNest",
+          "props": {
+            "center": [540, 700],
+            "w": 440,
+            "h": 622.3,
+            "name": "A0",
+            "sub": "1\\,\\text{m}^2",
+            "labels": ["A1", "A2", "A3", "A4"],
+            "stroke": "text"
+          },
+          "where": "visual zone, centered at (540, 700); A0 440×622, x 320–760, y 389–1011, title 'A0 · 1 m²' above it (about y 290–365); the kept A4 ends 110×155.5 at the bottom-right corner"
+        }
+      ],
+      "cues": [
+        {"at": {"word": "에이제로를"}, "target": "sweep", "action": "exit", "speed": "fast"},
+        {"at": {"word": "에이제로를"}, "target": "dimW", "action": "exit", "speed": "fast"},
+        {"at": {"word": "에이제로를"}, "target": "dimH", "action": "exit", "speed": "fast"},
+        {"at": {"word": "에이제로를"}, "target": "divRow", "action": "exit", "speed": "fast"},
+        {"at": {"word": "에이제로를"}, "target": "rootRow", "action": "exit", "speed": "fast"},
+        {
+          "at": {"word": "에이제로를"},
+          "target": "nest",
+          "action": "appear",
+          "speed": "fast",
+          "note": "fast: once the B8 exits finish first, the outline is drawn by '반씩', where the first cut starts"
+        },
+        {
+          "at": {"word": "반씩"},
+          "target": "nest",
+          "action": "split",
+          "params": {"levels": 4},
+          "until": {"word": "에이포예요"},
+          "note": "four cuts, A1 → A4, the last one landing on '에이포'"
+        },
+        {
+          "at": {"word": "에이포예요"},
+          "target": "nest",
+          "action": "pulseKept",
+          "params": {"color": "teal"},
+          "speed": "base"
+        },
+        {
+          "at": {"word": "몇"},
+          "target": "nest",
+          "action": "focusKept",
+          "params": {"center": [540, 745], "w": 480, "h": 678.8, "name": "A4"},
+          "until": {"word": "그대로죠"},
+          "note": "loop: ends on B1's first frame"
+        }
+      ],
+      "endFrame": "Visual zone pixel-identical to B1's first frame: one A4 sheet 480×679 centered (540, 745), stroke text, fill text at 0.08, name 'A4', nothing else. Caption: '모양은 그대로죠.'",
+      "claims": ["C2", "C5", "C6"]
     }
-   ],
-   "cues": [
-    {
-     "at": {
-      "word": "똑같이"
-     },
-     "target": "foldNote",
-     "action": "appear",
-     "speed": "fast"
-    },
-    {
-     "at": {
-      "word": "똑같이"
-     },
-     "target": "a4GhostTop",
-     "action": "appear",
-     "params": {
-      "mode": "fade"
-     },
-     "speed": "fast",
-     "note": "fades in exactly over a4Ghost, so nothing changes until the growing half passes beneath it; not at frame 0, which keeps the loop"
-    },
-    {
-     "at": {
-      "word": "똑같이"
-     },
-     "target": "letterGhostTop",
-     "action": "appear",
-     "params": {
-      "mode": "fade"
-     },
-     "speed": "fast"
-    },
-    {
-     "at": {
-      "word": "똑같이"
-     },
-     "target": "a4Half",
-     "action": "standAndFit",
-     "params": {
-      "ref": "a4Ghost",
-      "match": "height"
-     },
-     "until": {
-      "word": "접었는데"
-     },
-     "note": "0.87 s: a 0.35 s quarter turn, then grows to the outline's height; lands at 1.0 s, so the fit/gap contrast reads in the first second"
-    },
-    {
-     "at": {
-      "word": "똑같이"
-     },
-     "target": "half",
-     "action": "standAndFit",
-     "params": {
-      "ref": "sheet",
-      "match": "height",
-      "follow": true
-     },
-     "until": {
-      "word": "접었는데"
-     },
-     "note": "same move, in parallel; follow keeps it fitted to sheet's live geometry from here on (B2 moves and stretches sheet)"
-    },
-    {
-     "at": {
-      "word": "반으로"
-     },
-     "target": "compareNote",
-     "action": "appear",
-     "speed": "fast",
-     "note": "as the halves start to grow"
-    },
-    {
-     "at": {
-      "word": "접었는데"
-     },
-     "target": "letterGap",
-     "action": "appear",
-     "speed": "fast",
-     "note": "both fits have landed; Letter's gap shows in red"
-    },
-    {
-     "at": {
-      "word": "이쪽만"
-     },
-     "target": "a4Half",
-     "action": "pulse",
-     "params": {
-      "edges": "all",
-      "color": "text"
-     },
-     "speed": "base",
-     "note": "'이쪽만': the merge flashes: the fitted half and the outline it landed on, together"
-    },
-    {
-     "at": {
-      "word": "이쪽만"
-     },
-     "target": "a4GhostTop",
-     "action": "pulse",
-     "params": {
-      "edges": "all",
-      "color": "text"
-     },
-     "speed": "base"
-    },
-    {
-     "at": {
-      "word": "이쪽만"
-     },
-     "target": "letterGap",
-     "action": "pulse",
-     "speed": "base",
-     "note": "Letter's gap flashes at the same moment: the pair of outcomes, side by side"
-    }
-   ],
-   "endFrame": "Left: dashed muted a4Ghost 320 × 452.5 with the teal half fitted exactly on it, name 'A4' at (345, 673.7). Right: dashed muted Letter outline 320 × 414.1 (x 575–895, y 485.9–900) with the teal fitted half 268.0 × 414.1 from x 575, name '레터' at its center, red strip x 843–895. Notes '긴 변을 반으로 접은 뒤' (y 1040) and '크기를 맞춰 비교' (y 1105), muted, below the sheets. Caption '왜 이쪽만 딱 맞을까요?'",
-   "claims": [
-    "C2",
-    "C11"
-   ]
-  },
-  {
-   "id": "B2",
-   "name": "추측",
-   "readAloud": "길쭉한 정도를 바꾸면, 딱 맞는 순간이 있을까요?",
-   "captions": [
-    {
-     "text": "길쭉한 정도를 바꾸면,",
-     "at": {
-      "word": "길쭉한"
-     }
-    },
-    {
-     "text": "딱 맞는 순간이 있을까요?",
-     "at": {
-      "word": "딱"
-     }
-    }
-   ],
-   "pauseAfter": 0.8,
-   "elements": [],
-   "cues": [
-    {
-     "at": {
-      "word": "길쭉한"
-     },
-     "target": "a4Ghost",
-     "action": "exit"
-    },
-    {
-     "at": {
-      "word": "길쭉한"
-     },
-     "target": "a4Half",
-     "action": "exit"
-    },
-    {
-     "at": {
-      "word": "길쭉한"
-     },
-     "target": "a4GhostTop",
-     "action": "exit"
-    },
-    {
-     "at": {
-      "word": "길쭉한"
-     },
-     "target": "letterGhostTop",
-     "action": "moveTo",
-     "params": {
-      "center": [
-       540,
-       793.18
-      ],
-      "w": 400.0,
-      "h": 517.65
-     },
-     "speed": "base",
-     "note": "rides along with sheet's slide so it leaves no trail, then fades"
-    },
-    {
-     "at": {
-      "word": "길쭉한"
-     },
-     "target": "foldNote",
-     "action": "exit"
-    },
-    {
-     "at": {
-      "word": "길쭉한"
-     },
-     "target": "half",
-     "action": "setStyle",
-     "params": {
-      "name": null
-     },
-     "speed": "fast",
-     "note": "from here the sheet is any rectangle, not Letter"
-    },
-    {
-     "at": {
-      "word": "길쭉한"
-     },
-     "target": "sheet",
-     "action": "moveTo",
-     "params": {
-      "center": [
-       540,
-       793.18
-      ],
-      "w": 400.0,
-      "h": 517.65
-     },
-     "speed": "base",
-     "note": "Letter's pair slides to the center and grows to 400 wide (bottom y 1052); half and letterGap follow"
-    },
-    {
-     "at": {
-      "word": "정도를"
-     },
-     "target": "letterGhostTop",
-     "action": "exit",
-     "note": "the comparison is over; the sweep uses sheet, drawn beneath the half as before"
-    },
-    {
-     "at": {
-      "word": "바꾸면"
-     },
-     "target": "sheet",
-     "action": "resize",
-     "params": {
-      "ratio": 1.36,
-      "ease": "linear"
-     },
-     "until": {
-      "pause": true
-     },
-     "note": "the search starts while the question is asked: the long side stretches (short side and bottom fixed), the red gap narrows from 65 to 30 px but stays"
-    }
-   ],
-   "endFrame": "Dashed muted sheet 400 × 544.0 centered at (540, 780.0) (x 340–740, bottom 1052); teal fitted half 369.9 wide from x 340; red strip x 710–740; compareNote at y 1105. No numbers anywhere. Caption '딱 맞는 순간이 있을까요?'",
-   "claims": [
-    "C11"
-   ]
-  },
-  {
-   "id": "B3",
-   "name": "탐색",
-   "readAloud": "조금씩 바꿔 볼게요.",
-   "captions": [
-    {
-     "text": "조금씩 바꿔 볼게요.",
-     "at": {
-      "word": "조금씩"
-     }
-    }
-   ],
-   "pauseAfter": 1.2,
-   "elements": [],
-   "cues": [
-    {
-     "at": {
-      "word": "조금씩"
-     },
-     "target": "sheet",
-     "action": "resize",
-     "params": {
-      "ratio": 1.62,
-      "ease": "linear"
-     },
-     "until": {
-      "pause": true
-     },
-     "note": "continues B2's stretch: the gap closes, vanishes at √2 (about frame 252), and comes back outside the sheet on the right"
-    },
-    {
-     "at": {
-      "pause": true
-     },
-     "target": "sheet",
-     "action": "resize",
-     "params": {
-      "ratio": 1.4142
-     },
-     "speed": "slow",
-     "note": "settles on √2 in silence, about 1 s before '여기선': the fit is seen before it is said"
-    }
-   ],
-   "endFrame": "Sheet at h/w = √2: 400 × 565.7 centered at (540, 769.2) (y 486.3–1052); the teal fitted half exactly on it; no visible red. compareNote at y 1105. Caption '조금씩 바꿔 볼게요.' Mid-sweep (h/w 1.62): sheet top y 404.0, fitted half 524.9 wide (right edge x 864.9), red strip x 740–864.9.",
-   "claims": []
-  },
-  {
-   "id": "B4",
-   "name": "발견",
-   "readAloud": "여기선 딱 맞네요. 왜 이 비율일까요?",
-   "captions": [
-    {
-     "text": "여기선 딱 맞네요.",
-     "at": {
-      "word": "여기선"
-     }
-    },
-    {
-     "text": "왜 이 비율일까요?",
-     "at": {
-      "word": "왜"
-     }
-    }
-   ],
-   "pauseAfter": 0.6,
-   "elements": [
-    {
-     "id": "ratioNote",
-     "component": "Note",
-     "props": {
-      "text": "A4의 설계 비율 $\\approx 1.414$",
-      "at": [
-       540,
-       410
-      ],
-      "color": "text",
-      "mathColor": "yellow"
-     },
-     "where": "above the sheet (its top is at y 486), centered; the first number in the episode"
-    }
-   ],
-   "cues": [
-    {
-     "at": {
-      "word": "여기선"
-     },
-     "target": "letterGap",
-     "action": "exit",
-     "note": "nothing to shade at √2; gone before '왜' pulls the pair apart"
-    },
-    {
-     "at": {
-      "word": "여기선"
-     },
-     "target": "compareNote",
-     "action": "exit"
-    },
-    {
-     "at": {
-      "word": "여기선"
-     },
-     "target": "ratioNote",
-     "action": "appear",
-     "speed": "fast",
-     "note": "waits for the exits (player rule)"
-    },
-    {
-     "at": {
-      "word": "딱"
-     },
-     "target": "half",
-     "action": "pulse",
-     "params": {
-      "edges": "all",
-      "color": "text"
-     },
-     "speed": "base"
-    },
-    {
-     "at": {
-      "word": "왜"
-     },
-     "target": "sheet",
-     "action": "moveTo",
-     "params": {
-      "center": [
-       376.35,
-       732.8
-      ],
-      "w": 310.0,
-      "h": 438.41
-     },
-     "speed": "base",
-     "note": "the proof starts on the question: the pair zooms out to 310 wide and spreads apart"
-    },
-    {
-     "at": {
-      "word": "왜"
-     },
-     "target": "half",
-     "action": "moveTo",
-     "params": {
-      "center": [
-       730.95,
-       797.0
-      ],
-      "w": 219.2,
-      "h": 310.0
-     },
-     "speed": "base",
-     "note": "the fitted half shrinks back to its real size (219.2 × 310) beside the sheet; ends follow"
-    },
-    {
-     "at": {
-      "word": "왜"
-     },
-     "target": "sheet",
-     "action": "setStyle",
-     "params": {
-      "stroke": "text",
-      "fill": "text",
-      "fillOpacity": 0.08,
-      "dashed": false
-     },
-     "speed": "base",
-     "note": "the outline becomes the sheet itself"
-    }
-   ],
-   "endFrame": "Solid text sheet 310 × 438.4 at (376.3, 732.8) and the teal half 219.2 × 310 at (731.0, 797.0), both bottoms at y 952, no labels yet; 'A4의 설계 비율 ≈ 1.414' at y 410 (≈ 1.414 yellow). Caption '왜 이 비율일까요?'",
-   "claims": [
-    "C1",
-    "C3"
-   ]
-  },
-  {
-   "id": "B5",
-   "name": "이름 붙이기",
-   "readAloud": "짧은 변을 일, 긴 변을 엑스라고 해 볼게요.",
-   "captions": [
-    {
-     "text": "짧은 변을 1,",
-     "at": {
-      "word": "짧은"
-     }
-    },
-    {
-     "text": "긴 변을 $x$라고",
-     "at": {
-      "word": "긴"
-     }
-    },
-    {
-     "text": "해 볼게요.",
-     "at": {
-      "word": "해"
-     }
-    }
-   ],
-   "pauseAfter": 0,
-   "elements": [],
-   "cues": [
-    {
-     "at": {
-      "word": "짧은"
-     },
-     "target": "ratioNote",
-     "action": "exit",
-     "note": "the number steps aside until √2 names it in B8"
-    },
-    {
-     "at": {
-      "word": "일"
-     },
-     "target": "sheet",
-     "action": "setStyle",
-     "params": {
-      "edgeColors": {
-       "short": "blue"
-      },
-      "labels": {
-       "bottom": {
-        "tex": "1",
-        "color": "blue"
-       }
-      }
-     },
-     "speed": "fast"
-    },
-    {
-     "at": {
-      "word": "엑스라고"
-     },
-     "target": "sheet",
-     "action": "setStyle",
-     "params": {
-      "edgeColors": {
-       "long": "yellow",
-       "short": "blue"
-      },
-      "labels": {
-       "bottom": {
-        "tex": "1",
-        "color": "blue"
-       },
-       "right": {
-        "tex": "x",
-        "color": "yellow"
-       }
-      }
-     },
-     "speed": "fast"
-    },
-    {
-     "at": {
-      "word": "볼게요"
-     },
-     "target": "half",
-     "action": "setStyle",
-     "params": {
-      "edgeColors": {
-       "long": "yellow",
-       "short": "blue"
-      },
-      "labels": {
-       "bottom": {
-        "tex": "\\dfrac{x}{2}",
-        "color": "blue"
-       },
-       "right": {
-        "tex": "1",
-        "color": "yellow"
-       }
-      }
-     },
-     "speed": "fast",
-     "note": "the half's sides follow from the fold: width x/2, height 1 (the old short side)"
-    }
-   ],
-   "endFrame": "Sheet 310 × 438.4 at (376.3, 732.8), solid text outline with yellow long (vertical) and blue short (horizontal) edges, labels 1 (blue, below) and x (yellow, right). Half 219.2 × 310 at (731.0, 797.0), teal fill, yellow/blue edges, labels x/2 (blue, below) and 1 (yellow, right). Bottoms at y 952; nothing above them. Caption '해 볼게요.'",
-   "claims": [
-    "C2"
-   ]
-  },
-  {
-   "id": "B6",
-   "name": "높이 맞추기",
-   "readAloud": "접힌 종이를 엑스 배 키우면, 높이가 맞아요.",
-   "captions": [
-    {
-     "text": "접힌 종이를 $x$배 키우면,",
-     "at": {
-      "word": "접힌"
-     }
-    },
-    {
-     "text": "높이가 맞아요.",
-     "at": {
-      "word": "높이가"
-     }
-    }
-   ],
-   "pauseAfter": 0,
-   "elements": [
-    {
-     "id": "timesNote",
-     "component": "Note",
-     "props": {
-      "text": "$\\times x$",
-      "at": [
-       728.48,
-       470
-      ],
-      "color": "text"
-     },
-     "where": "above the growing half (its top ends at y 514)"
-    }
-   ],
-   "cues": [
-    {
-     "at": {
-      "word": "접힌"
-     },
-     "target": "half",
-     "action": "pulse",
-     "params": {
-      "edges": "all",
-      "color": "teal"
-     },
-     "speed": "base",
-     "note": "this one: the folded paper"
-    },
-    {
-     "at": {
-      "word": "엑스"
-     },
-     "target": "timesNote",
-     "action": "appear",
-     "speed": "fast"
-    },
-    {
-     "at": {
-      "word": "엑스"
-     },
-     "target": "half",
-     "action": "moveTo",
-     "params": {
-      "center": [
-       728.48,
-       732.8
-      ],
-      "w": 310.0,
-      "h": 438.41
-     },
-     "until": {
-      "word": "높이가"
-     },
-     "note": "grows √2 times about its bottom edge: height 1 → x, level with the sheet"
-    },
-    {
-     "at": {
-      "word": "엑스"
-     },
-     "target": "sheet",
-     "action": "moveTo",
-     "params": {
-      "center": [
-       328.48,
-       732.8
-      ]
-     },
-     "until": {
-      "word": "높이가"
-     },
-     "note": "keeps the pair centered as the half widens"
-    },
-    {
-     "at": {
-      "word": "키우면"
-     },
-     "target": "half",
-     "action": "setStyle",
-     "params": {
-      "labels": {
-       "bottom": {
-        "tex": "\\dfrac{x}{2}\\times x",
-        "color": "blue"
-       },
-       "right": {
-        "tex": "x",
-        "color": "yellow"
-       }
-      }
-     },
-     "speed": "base",
-     "note": "both of the half's sides grew x times, so both labels update as it grows: height 1 → x, width x/2 → x/2 × x (no stale label)"
-    },
-    {
-     "at": {
-      "word": "높이가"
-     },
-     "target": "sheet",
-     "action": "pulse",
-     "params": {
-      "edges": "long"
-     },
-     "speed": "base"
-    },
-    {
-     "at": {
-      "word": "높이가"
-     },
-     "target": "half",
-     "action": "pulse",
-     "params": {
-      "edges": "long"
-     },
-     "speed": "base"
-    },
-    {
-     "at": {
-      "word": "맞아요"
-     },
-     "target": "timesNote",
-     "action": "exit",
-     "note": "gone before B7 lifts the half up through its place, however soft the exit fade"
-    }
-   ],
-   "endFrame": "Sheet 310 × 438.4 at (328.5, 732.8) with labels 1 and x; half now 310 × 438.4 at (728.5, 732.8), labels x/2 × x (blue, below) and x (yellow, right, ink ends near x 930); tops level at y 513.6. '×x' gone (it left on '맞아요'). Caption '높이가 맞아요.'",
-   "claims": []
-  },
-  {
-   "id": "B7",
-   "name": "너비 맞추기",
-   "readAloud": "너비도 맞으려면, 이 길이가 일과 같아야 해요.",
-   "captions": [
-    {
-     "text": "너비도 맞으려면,",
-     "at": {
-      "word": "너비도"
-     }
-    },
-    {
-     "text": "이 길이가 1과",
-     "at": {
-      "word": "이"
-     }
-    },
-    {
-     "text": "같아야 해요.",
-     "at": {
-      "word": "같아야"
-     }
-    }
-   ],
-   "pauseAfter": 0.3,
-   "elements": [
-    {
-     "id": "eq",
-     "component": "Equation",
-     "props": {
-      "parts": [
-       {
-        "id": "lhs",
-        "tex": "\\frac{x}{2} \\times x",
-        "color": "blue"
-       },
-       {
-        "id": "eq",
-        "tex": "=",
-        "color": "text"
-       },
-       {
-        "id": "rhs",
-        "tex": "1",
-        "color": "blue"
-       }
-      ],
-      "centerX": 540,
-      "y": 1126
-     },
-     "where": "one row right under the lifted pair's width labels, baseline y 1126 (ink y 1018–1192 at 80 px); its two sides arrive from those labels, and every step of B8 happens on this row"
-    }
-   ],
-   "cues": [
-    {
-     "at": {
-      "word": "너비도"
-     },
-     "target": "sheet",
-     "action": "moveTo",
-     "params": {
-      "center": [
-       328.48,
-       634.2
-      ]
-     },
-     "speed": "base",
-     "note": "the pair lifts 98.6 px, both bottoms staying on one line (y 853.4), to make room for the row"
-    },
-    {
-     "at": {
-      "word": "너비도"
-     },
-     "target": "half",
-     "action": "moveTo",
-     "params": {
-      "center": [
-       728.48,
-       634.2
-      ],
-      "w": 310.0,
-      "h": 438.41
-     },
-     "speed": "base"
-    },
-    {
-     "at": {
-      "word": "너비도"
-     },
-     "target": "sheet",
-     "action": "pulse",
-     "params": {
-      "edges": "short"
-     },
-     "speed": "base",
-     "note": "the two widths, on the common baseline"
-    },
-    {
-     "at": {
-      "word": "너비도"
-     },
-     "target": "half",
-     "action": "pulse",
-     "params": {
-      "edges": "short"
-     },
-     "speed": "base"
-    },
-    {
-     "at": {
-      "word": "길이가"
-     },
-     "target": "eq",
-     "action": "reveal",
-     "params": {
-      "parts": [
-       "lhs"
-      ],
-      "fromLabel": {
-       "of": "half",
-       "side": "bottom"
-      }
-     },
-     "speed": "base",
-     "note": "'이 길이가': the half's width label itself (\\dfrac{x}{2}\\times x, on screen since '키우면', 2.4 s) flies down and grows into the row's left side; the player takes it off the sheet on this frame"
-    },
-    {
-     "at": {
-      "word": "일과"
-     },
-     "target": "eq",
-     "action": "reveal",
-     "params": {
-      "parts": [
-       "rhs"
-      ],
-      "fromLabel": {
-       "of": "sheet",
-       "side": "bottom"
-      }
-     },
-     "speed": "base",
-     "note": "'1과': the sheet's width label flies into the right side. Its straight path from (329, 869) to the slot passes about 45 px above the row's left side, and '=' isn't in the row yet"
-    },
-    {
-     "at": {
-      "word": "같아야"
-     },
-     "target": "sheet",
-     "action": "pulse",
-     "params": {
-      "edges": "short",
-      "color": "blue"
-     },
-     "speed": "base"
-    },
-    {
-     "at": {
-      "word": "같아야"
-     },
-     "target": "half",
-     "action": "pulse",
-     "params": {
-      "edges": "short",
-      "color": "blue"
-     },
-     "speed": "base"
-    },
-    {
-     "at": {
-      "word": "해요"
-     },
-     "target": "eq",
-     "action": "reveal",
-     "params": {
-      "parts": [
-       "eq"
-      ]
-     },
-     "speed": "fast",
-     "note": "'=' last, after the 1 has landed (f726), so no flight crosses it"
-    }
-   ],
-   "endFrame": "Sheet at (328.5, 634.2) and half at (728.5, 634.2), both 310 × 438.4, bottoms at y 853.4, each with only its yellow x on the right (no width labels left on the sheets). Row 'x/2 × x = 1' (both sides blue) centered on x 540, baseline 1126. No top note. Caption '같아야 해요.'",
-   "claims": [
-    "C3"
-   ]
-  },
-  {
-   "id": "B8",
-   "name": "풀기",
-   "readAloud": "그러려면 엑스를 제곱하면 이, 엑스는 루트 이가 돼요.",
-   "captions": [
-    {
-     "text": "그러려면 $x$를 제곱하면 2,",
-     "at": {
-      "word": "그러려면"
-     }
-    },
-    {
-     "text": "$x$는 $\\sqrt{2}$가 돼요.",
-     "at": {
-      "word": "엑스는"
-     }
-    }
-   ],
-   "pauseAfter": 0.5,
-   "elements": [
-    {
-     "id": "ratioNote2",
-     "component": "Note",
-     "props": {
-      "text": "A4의 설계 비율 $\\sqrt{2} \\approx 1.414$",
-      "at": [
-       540,
-       290
-      ],
-      "color": "text",
-      "mathColor": "yellow"
-     },
-     "where": "top of the visual zone, centered, above the pair (tops at y 415)"
-    }
-   ],
-   "cues": [
-    {
-     "at": {
-      "word": "그러려면"
-     },
-     "target": "eq",
-     "action": "transformTo",
-     "params": {
-      "parts": [
-       {
-        "id": "lhs",
-        "tex": "\\frac{x}{2} \\times x",
-        "color": "blue"
-       },
-       {
-        "id": "ta",
-        "tex": "\\times 2",
-        "color": "text"
-       },
-       {
-        "id": "eq",
-        "tex": "=",
-        "color": "text"
-       },
-       {
-        "id": "rhs",
-        "tex": "1",
-        "color": "blue"
-       },
-       {
-        "id": "tb",
-        "tex": "\\times 2",
-        "color": "text"
-       }
-      ]
-     },
-     "speed": "base",
-     "note": "both sides × 2: the step a non-expert misses, shown not said (row is 747 wide at 80 px, x 166–913)"
-    },
-    {
-     "at": {
-      "word": "제곱하면"
-     },
-     "target": "eq",
-     "action": "transformTo",
-     "params": {
-      "parts": [
-       {
-        "id": "x2",
-        "tex": "x^2",
-        "color": "text"
-       },
-       {
-        "id": "eq",
-        "tex": "=",
-        "color": "text"
-       },
-       {
-        "id": "two",
-        "tex": "2",
-        "color": "text"
-       }
-      ],
-      "morph": {
-       "x2": [
-        "lhs",
-        "ta"
-       ],
-       "two": [
-        "rhs",
-        "tb"
-       ]
-      }
-     },
-     "speed": "base",
-     "note": "token morph: x² takes lhs's last x, the new 2 takes tb's 2; the rest fade"
-    },
-    {
-     "at": {
-      "word": "엑스는"
-     },
-     "target": "eq",
-     "action": "transformTo",
-     "params": {
-      "parts": [
-       {
-        "id": "x",
-        "tex": "x",
-        "color": "yellow"
-       },
-       {
-        "id": "eq",
-        "tex": "=",
-        "color": "text"
-       },
-       {
-        "id": "sq",
-        "tex": "\\sqrt{2}",
-        "color": "yellow"
-       }
-      ],
-      "morph": {
-       "x": [
-        "x2"
-       ],
-       "sq": [
-        "two"
-       ]
-      }
-     },
-     "speed": "base",
-     "note": "with x^2 split into x and ², x stays on screen and slides while '엑스는' is spoken; √2's 2 is the old 2, only ² and the radical fade"
-    },
-    {
-     "at": {
-      "word": "루트"
-     },
-     "target": "ratioNote2",
-     "action": "appear",
-     "speed": "fast",
-     "note": "the found number comes back with its name"
-    },
-    {
-     "at": {
-      "word": "이가"
-     },
-     "target": "eq",
-     "action": "box",
-     "params": {
-      "part": "sq",
-      "color": "yellow"
-     },
-     "speed": "base",
-     "note": "after the last transform has landed"
-    }
-   ],
-   "endFrame": "Row 'x = √2' (both yellow, √2 boxed yellow) centered on x 540, baseline 1126; sheet and half as in B7; 'A4의 설계 비율 √2 ≈ 1.414' at y 290. Caption '$x$는 $\\sqrt{2}$가 돼요.'",
-   "claims": [
-    "C3"
-   ]
-  },
-  {
-   "id": "B9",
-   "name": "실제 A4",
-   "readAloud": "실제 에이포는 이백십 곱하기 이백구십칠, 밀리미터 단위라 조금 달라요.",
-   "captions": [
-    {
-     "text": "실제 A4는",
-     "at": {
-      "word": "실제"
-     }
-    },
-    {
-     "text": "210 × 297,",
-     "at": {
-      "word": "이백십"
-     }
-    },
-    {
-     "text": "mm 단위라 조금 달라요.",
-     "at": {
-      "word": "밀리미터"
-     }
-    }
-   ],
-   "pauseAfter": 0,
-   "elements": [
-    {
-     "id": "dim210",
-     "component": "Dimension",
-     "props": {
-      "of": "sheet",
-      "side": "bottom",
-      "offset": 40,
-      "label": {
-       "tex": "210\\,\\mathrm{mm}",
-       "color": "blue"
-      }
-     },
-     "where": "below the sheet"
-    },
-    {
-     "id": "dim297",
-     "component": "Dimension",
-     "props": {
-      "of": "sheet",
-      "side": "right",
-      "offset": 40,
-      "label": {
-       "tex": "297\\,\\mathrm{mm}",
-       "color": "yellow"
-      }
-     },
-     "where": "right of the sheet; its label makes the group wide, so the sheet sits left of center"
-    },
-    {
-     "id": "diffNote",
-     "component": "Note",
-     "props": {
-      "text": "설계값과 최대 약 $0.3\\,\\mathrm{mm}$ 차이",
-      "at": [
-       540,
-       1120
-      ],
-      "color": "muted"
-     },
-     "where": "centered under the whole group, well below the 210 mm label so it reads as the sheet's, not the width's: what '조금' means. '최대' because the width is 0.22 mm off and the height 0.30 mm (C14: design ≈ 210.2 × 297.3 mm)"
-    }
-   ],
-   "cues": [
-    {
-     "at": {
-      "word": "실제"
-     },
-     "target": "eq",
-     "action": "exit"
-    },
-    {
-     "at": {
-      "word": "실제"
-     },
-     "target": "half",
-     "action": "exit"
-    },
-    {
-     "at": {
-      "word": "실제"
-     },
-     "target": "ratioNote2",
-     "action": "exit"
-    },
-    {
-     "at": {
-      "word": "실제"
-     },
-     "target": "sheet",
-     "action": "setStyle",
-     "params": {
-      "labels": {},
-      "edgeColors": {}
-     },
-     "speed": "fast"
-    },
-    {
-     "at": {
-      "word": "실제"
-     },
-     "target": "sheet",
-     "action": "moveTo",
-     "params": {
-      "center": [
-       393.3,
-       645.44
-      ],
-      "w": 360.0,
-      "h": 509.12
-     },
-     "speed": "base",
-     "note": "the real sheet, alone and bigger (360 wide)"
-    },
-    {
-     "at": {
-      "word": "에이포는"
-     },
-     "target": "sheet",
-     "action": "setStyle",
-     "params": {
-      "name": "실제 A4"
-     },
-     "speed": "base"
-    },
-    {
-     "at": {
-      "word": "이백십"
-     },
-     "target": "dim210",
-     "action": "appear",
-     "speed": "base"
-    },
-    {
-     "at": {
-      "word": "이백구십칠"
-     },
-     "target": "dim297",
-     "action": "appear",
-     "speed": "base"
-    },
-    {
-     "at": {
-      "word": "조금"
-     },
-     "target": "diffNote",
-     "action": "appear",
-     "speed": "fast",
-     "note": "'조금 달라요' points at a size: under a millimetre"
-    }
-   ],
-   "endFrame": "Sheet 360 × 509.1 at (393.3, 645.4), text outline, name '실제 A4'; blue dimension line 40 px below with '210 mm', yellow one 40 px right with '297 mm' (ink ends near x 867); '설계값과 최대 약 0.3 mm 차이' (muted) at y 1120. Caption 'mm 단위라 조금 달라요.'",
-   "claims": [
-    "C4",
-    "C8",
-    "C14"
-   ]
-  },
-  {
-   "id": "B10",
-   "name": "쓸모",
-   "readAloud": "그래서 에이포 문서를 백사십일 퍼센트로 키우면, 에이쓰리에 거의 딱 맞아요.",
-   "captions": [
-    {
-     "text": "그래서 A4 문서를",
-     "at": {
-      "word": "그래서"
-     }
-    },
-    {
-     "text": "141%로 키우면,",
-     "at": {
-      "word": "백사십일"
-     }
-    },
-    {
-     "text": "A3에 거의 딱 맞아요.",
-     "at": {
-      "word": "에이쓰리에"
-     }
-    }
-   ],
-   "pauseAfter": 0,
-   "elements": [
-    {
-     "id": "a3",
-     "component": "PaperRect",
-     "props": {
-      "center": [
-       540.0,
-       730.0
-      ],
-      "w": 509.12,
-      "h": 720.0,
-      "stroke": "muted",
-      "fillOpacity": 0,
-      "dashed": true,
-      "labels": {
-       "bottom": {
-        "tex": "\\mathrm{A3}",
-        "color": "muted"
-       }
-      }
-     },
-     "where": "A3 outline 509.1 × 720 (y 370–1090) centered on x 540, label below it; declared before page so it draws beneath it, as a4Ghost does under a4Half"
-    },
-    {
-     "id": "page",
-     "component": "PaperRect",
-     "props": {
-      "center": [
-       540.0,
-       730.0
-      ],
-      "w": 360.0,
-      "h": 509.12,
-      "stroke": "text",
-      "page": true
-     },
-     "where": "an A4 document (title line, text lines, a small figure), 360 × 509.1, centered in the A3 outline"
-    },
-    {
-     "id": "pctNote",
-     "component": "Note",
-     "props": {
-      "text": "$141\\% \\approx \\sqrt{2}$배",
-      "at": [
-       540,
-       300
-      ],
-      "color": "text"
-     },
-     "where": "top of the visual zone, centered"
-    }
-   ],
-   "cues": [
-    {
-     "at": {
-      "word": "그래서"
-     },
-     "target": "dim210",
-     "action": "exit"
-    },
-    {
-     "at": {
-      "word": "그래서"
-     },
-     "target": "dim297",
-     "action": "exit"
-    },
-    {
-     "at": {
-      "word": "그래서"
-     },
-     "target": "diffNote",
-     "action": "exit"
-    },
-    {
-     "at": {
-      "word": "그래서"
-     },
-     "target": "sheet",
-     "action": "setStyle",
-     "params": {
-      "name": null,
-      "fillOpacity": 0
-     },
-     "speed": "fast",
-     "note": "fill out first, so the page's fill doesn't double over it"
-    },
-    {
-     "at": {
-      "word": "그래서"
-     },
-     "target": "sheet",
-     "action": "moveTo",
-     "params": {
-      "center": [
-       540.0,
-       730.0
-      ]
-     },
-     "speed": "base"
-    },
-    {
-     "at": {
-      "word": "문서를"
-     },
-     "target": "page",
-     "action": "appear",
-     "params": {
-      "mode": "fade"
-     },
-     "speed": "fast",
-     "note": "lands exactly on sheet (same box, same outline), so only the content reads as new"
-    },
-    {
-     "at": {
-      "word": "백사십일"
-     },
-     "target": "sheet",
-     "action": "exit",
-     "note": "hidden under page's identical outline"
-    },
-    {
-     "at": {
-      "word": "백사십일"
-     },
-     "target": "pctNote",
-     "action": "appear",
-     "speed": "fast"
-    },
-    {
-     "at": {
-      "word": "퍼센트로"
-     },
-     "target": "a3",
-     "action": "appear",
-     "speed": "base",
-     "note": "dashed outline draws on around the page, then 'A3'"
-    },
-    {
-     "at": {
-      "word": "키우면"
-     },
-     "target": "page",
-     "action": "moveTo",
-     "params": {
-      "center": [
-       540.0,
-       730.0
-      ],
-      "w": 507.6,
-      "h": 717.85
-     },
-     "until": {
-      "word": "거의"
-     },
-     "note": "141%: the page and its content grow about the A3's center to 507.6 × 717.8, about 1 px short of the outline on each side; no flash or pulse (almost, not exactly)"
-    },
-    {
-     "at": {
-      "pause": true
-     },
-     "target": "page",
-     "action": "setStyle",
-     "params": {
-      "page": false
-     },
-     "speed": "fast",
-     "note": "content clears in the gap after '맞아요', before B11's fold"
-    }
-   ],
-   "endFrame": "A3 outline (dashed muted, 509.1 × 720 at (540, 730)) covered by the page 507.6 × 717.8 on the same center, content cleared (blank page); 'A3' below it; '141% ≈ √2배' at y 300. Caption 'A3에 거의 딱 맞아요.'",
-   "claims": [
-    "C12",
-    "C13"
-   ]
-  },
-  {
-   "id": "B11",
-   "name": "루프",
-   "readAloud": "반으로 접어도 같은 모양이라서요.",
-   "captions": [
-    {
-     "text": "반으로 접어도",
-     "at": {
-      "word": "반으로"
-     }
-    },
-    {
-     "text": "같은 모양이라서요.",
-     "at": {
-      "word": "같은"
-     }
-    }
-   ],
-   "pauseAfter": 0.5,
-   "elements": [
-    {
-     "id": "letterGhost2",
-     "component": "PaperRect",
-     "props": {
-      "center": [
-       735.0,
-       692.94
-      ],
-      "w": 320.0,
-      "h": 414.12,
-      "stroke": "muted",
-      "fillOpacity": 0,
-      "dashed": true
-     },
-     "where": "exactly B1's sheet at frame 0"
-    },
-    {
-     "id": "letterHalf2",
-     "component": "PaperRect",
-     "props": {
-      "center": [
-       735.0,
-       796.47
-      ],
-      "w": 320.0,
-      "h": 207.06,
-      "stroke": "teal",
-      "name": "레터"
-     },
-     "where": "exactly B1's half at frame 0"
-    }
-   ],
-   "cues": [
-    {
-     "at": {
-      "word": "반으로"
-     },
-     "target": "pctNote",
-     "action": "exit"
-    },
-    {
-     "at": {
-      "word": "반으로"
-     },
-     "target": "a3",
-     "action": "setStyle",
-     "params": {
-      "labels": {}
-     },
-     "speed": "fast"
-    },
-    {
-     "at": {
-      "word": "반으로"
-     },
-     "target": "page",
-     "action": "showMidline",
-     "speed": "fast",
-     "note": "the fold line across the middle, parallel to the short side, drawn before anything moves"
-    },
-    {
-     "at": {
-      "word": "반으로"
-     },
-     "target": "page",
-     "action": "fold",
-     "until": {
-      "word": "모양이라서요"
-     },
-     "note": "the long side halved, like the opening. The fold's first 30% (line) overlaps showMidline, so the flap starts turning right on '접어도' and lands on '모양이라서요': the page is now its teal lower half (507.6 × 358.9), an A4"
-    },
-    {
-     "at": {
-      "word": "모양이라서요"
-     },
-     "target": "a3",
-     "action": "moveTo",
-     "params": {
-      "center": [
-       345.0,
-       673.73
-      ],
-      "w": 320.0,
-      "h": 452.55
-     },
-     "speed": "base",
-     "note": "same shape at a smaller size: the A3 outline shrinks into a4Ghost's frame-0 box"
-    },
-    {
-     "at": {
-      "word": "모양이라서요"
-     },
-     "target": "page",
-     "action": "moveTo",
-     "params": {
-      "center": [
-       345.0,
-       786.86
-      ],
-      "w": 320.0,
-      "h": 226.27
-     },
-     "speed": "base",
-     "note": "the folded half shrinks into a4Half's frame-0 box"
-    },
-    {
-     "at": {
-      "word": "모양이라서요"
-     },
-     "target": "page",
-     "action": "setStyle",
-     "params": {
-      "name": "A4"
-     },
-     "speed": "base"
-    },
-    {
-     "at": {
-      "pause": true
-     },
-     "target": "letterGhost2",
-     "action": "appear",
-     "params": {
-      "mode": "fade"
-     },
-     "speed": "fast",
-     "note": "the shrink is ~95% done here (A3's right edge within ~15 px of its end), so the two never overlap"
-    },
-    {
-     "at": {
-      "pause": true
-     },
-     "target": "letterHalf2",
-     "action": "appear",
-     "params": {
-      "mode": "fade"
-     },
-     "speed": "fast"
-    }
-   ],
-   "endFrame": "Identical to B1's frame 0: left, dashed muted outline 320 × 452.5 at (345, 673.7) with the teal lower half 320 × 226.3 at (345, 786.9) named 'A4'; right, dashed muted outline 320 × 414.1 at (735, 692.9) with the teal lower half 320 × 207.1 at (735, 796.5) named '레터'; no notes. Caption '같은 모양이라서요.'",
-   "claims": [
-    "C1",
-    "C2"
-   ]
-  }
- ]
+  ]
 }

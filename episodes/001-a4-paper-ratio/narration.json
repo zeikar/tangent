@@ -1,6 +1,6 @@
 {
- "source": "take2@1.08.wav",
- "take": "take2.wav",
+ "source": "take1@1.08.wav",
+ "take": "take1.wav",
  "tempo": 1.08,
  "model": "gemini-3.8-flash-tts",
  "voice": "Kore",
