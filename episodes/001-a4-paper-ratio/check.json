@@ -2,7 +2,7 @@
  "episode": "001-a4-paper-ratio",
  "render": "render.mp4",
  "storyboardSha256": "1e564a0e26aef0f725295159c3238af0fde4adbff08ee3a8b2956d17b4a91861",
- "studioSha256": "6e4e42ba9b320aa9d96bbdd3fadf5190ed45fefa072b4b9b06cd8ecf4009d2a9",
+ "studioSha256": "246232ea444d4267dfdcae97a30b789d32d9e0307100ff4105bc792d61af2bcf",
  "verdict": "pass",
  "counts": {
   "fail": 0,
