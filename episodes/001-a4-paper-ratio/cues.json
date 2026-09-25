@@ -1,711 +1,636 @@
 {
- "storyboardSha256": "58da520cec5955f2608b422b7b651160e081be5616dd64a15360192b3b61be3d",
+ "storyboardSha256": "18f046e8036706d15417682068b3e831a75ef8eb0e443dc2156757941bd0260d",
  "fps": 30,
- "durationInFrames": 1532,
+ "durationInFrames": 1248,
  "beats": [
   {
    "id": "B1",
    "startFrame": 0,
-   "endFrame": 156,
-   "pauseFrame": 123,
+   "endFrame": 123,
+   "pauseFrame": 94,
    "captions": [
     {
-     "word": "에이포를",
-     "frame": 4
+     "word": "똑같이",
+     "frame": 3
     },
     {
-     "word": "모양이",
-     "frame": 48
-    },
-    {
-     "word": "몇",
-     "frame": 91
+     "word": "왜",
+     "frame": 53
     }
    ],
    "cues": [
     {
-     "target": "a4Ghost",
+     "target": "foldNote",
      "action": "appear",
-     "word": "에이포를",
-     "frame": 4
+     "word": "똑같이",
+     "frame": 3
     },
     {
-     "target": "a4",
-     "action": "fold",
-     "word": "에이포를",
-     "frame": 4,
-     "untilFrame": 33
-    },
-    {
-     "target": "a4",
+     "target": "a4Half",
      "action": "standAndFit",
-     "word": "접어도",
-     "frame": 33,
-     "untilFrame": 61
+     "word": "똑같이",
+     "frame": 3,
+     "untilFrame": 71
     },
     {
-     "target": "a4",
-     "action": "pulse",
-     "word": "그대로예요",
-     "frame": 61
-    },
-    {
-     "target": "a4",
-     "action": "fold",
-     "word": "몇",
-     "frame": 91,
-     "untilFrame": 108
-    },
-    {
-     "target": "a4",
+     "target": "half",
      "action": "standAndFit",
-     "word": "접어도요",
-     "frame": 108,
-     "untilFrame": 123
+     "word": "똑같이",
+     "frame": 3,
+     "untilFrame": 71
     },
     {
-     "target": "a4",
+     "target": "compareNote",
+     "action": "appear",
+     "word": "접었는데",
+     "frame": 29
+    },
+    {
+     "target": "letterGap",
+     "action": "appear",
+     "word": "딱",
+     "frame": 71
+    },
+    {
+     "target": "a4Ghost",
      "action": "pulse",
-     "pause": true,
-     "frame": 123
+     "word": "이쪽만",
+     "frame": 58
     }
    ]
   },
   {
    "id": "B2",
-   "startFrame": 157,
-   "endFrame": 282,
-   "pauseFrame": 248,
+   "startFrame": 124,
+   "endFrame": 244,
+   "pauseFrame": 203,
    "captions": [
     {
-     "word": "미국",
-     "frame": 157
+     "word": "길쭉한",
+     "frame": 124
     },
     {
-     "word": "접으면",
-     "frame": 208
+     "word": "딱",
+     "frame": 166
     }
    ],
    "cues": [
     {
-     "target": "a4",
-     "action": "exit",
-     "word": "미국",
-     "frame": 157
-    },
-    {
      "target": "a4Ghost",
      "action": "exit",
-     "word": "미국",
-     "frame": 157
+     "word": "길쭉한",
+     "frame": 124
     },
     {
-     "target": "letterGhost",
-     "action": "appear",
-     "word": "미국",
-     "frame": 157
+     "target": "a4Half",
+     "action": "exit",
+     "word": "길쭉한",
+     "frame": 124
     },
     {
-     "target": "letter",
-     "action": "appear",
-     "word": "미국",
-     "frame": 157
+     "target": "foldNote",
+     "action": "exit",
+     "word": "길쭉한",
+     "frame": 124
     },
     {
-     "target": "letterRatio",
-     "action": "reveal",
-     "word": "레터",
-     "frame": 166
+     "target": "half",
+     "action": "setStyle",
+     "word": "길쭉한",
+     "frame": 124
     },
     {
-     "target": "letter",
-     "action": "fold",
-     "word": "달라요",
-     "frame": 186,
-     "untilFrame": 208
-    },
-    {
-     "target": "letter",
-     "action": "standAndFit",
-     "word": "접으면",
-     "frame": 208,
-     "untilFrame": 228
-    },
-    {
-     "target": "letterGap",
-     "action": "appear",
-     "word": "길쭉해져요",
-     "frame": 228
-    },
-    {
-     "target": "letterRatio",
-     "action": "reveal",
-     "word": "길쭉해져요",
-     "frame": 228
+     "target": "sheet",
+     "action": "moveTo",
+     "word": "정도를",
+     "frame": 139
     }
    ]
   },
   {
    "id": "B3",
-   "startFrame": 283,
-   "endFrame": 428,
-   "pauseFrame": 417,
+   "startFrame": 245,
+   "endFrame": 339,
+   "pauseFrame": 276,
    "captions": [
     {
-     "word": "어떤",
-     "frame": 283
-    },
-    {
-     "word": "짧은",
-     "frame": 342
-    },
-    {
-     "word": "긴",
-     "frame": 375
+     "word": "조금씩",
+     "frame": 245
     }
    ],
    "cues": [
     {
-     "target": "letter",
-     "action": "exit",
-     "word": "어떤",
-     "frame": 283
+     "target": "sheet",
+     "action": "resize",
+     "word": "조금씩",
+     "frame": 245,
+     "untilFrame": 276
     },
     {
-     "target": "letterGhost",
-     "action": "exit",
-     "word": "어떤",
-     "frame": 283
-    },
-    {
-     "target": "letterGap",
-     "action": "exit",
-     "word": "어떤",
-     "frame": 283
-    },
-    {
-     "target": "letterRatio",
-     "action": "exit",
-     "word": "어떤",
-     "frame": 283
-    },
-    {
-     "target": "rect",
-     "action": "appear",
-     "word": "어떤",
-     "frame": 283
-    },
-    {
-     "target": "rect",
-     "action": "setStyle",
-     "word": "짧은",
-     "frame": 342
-    },
-    {
-     "target": "rect",
-     "action": "setStyle",
-     "word": "일",
-     "frame": 364
-    },
-    {
-     "target": "rect",
-     "action": "setStyle",
-     "word": "긴",
-     "frame": 375
-    },
-    {
-     "target": "rect",
-     "action": "setStyle",
-     "word": "엑스라고",
-     "frame": 391
+     "target": "sheet",
+     "action": "resize",
+     "pause": true,
+     "frame": 276
     }
    ]
   },
   {
    "id": "B4",
-   "startFrame": 429,
-   "endFrame": 578,
-   "pauseFrame": 560,
+   "startFrame": 340,
+   "endFrame": 457,
+   "pauseFrame": 425,
    "captions": [
     {
-     "word": "반으로",
-     "frame": 429
+     "word": "여기선",
+     "frame": 340
     },
     {
-     "word": "긴",
-     "frame": 471
-    },
-    {
-     "word": "짧은",
-     "frame": 504
+     "word": "왜",
+     "frame": 388
     }
    ],
    "cues": [
     {
-     "target": "rect",
-     "action": "moveTo",
-     "word": "반으로",
-     "frame": 429
+     "target": "letterGap",
+     "action": "exit",
+     "word": "여기선",
+     "frame": 340
     },
     {
-     "target": "rect",
-     "action": "showMidline",
-     "word": "반으로",
-     "frame": 429
+     "target": "compareNote",
+     "action": "exit",
+     "word": "여기선",
+     "frame": 340
     },
     {
-     "target": "half",
+     "target": "ratioNote",
      "action": "appear",
-     "word": "접어",
-     "frame": 441,
-     "untilFrame": 450
+     "word": "여기선",
+     "frame": 340
     },
     {
      "target": "half",
-     "action": "moveTo",
-     "word": "접어",
-     "frame": 441,
-     "untilFrame": 450
-    },
-    {
-     "target": "half",
-     "action": "rotate",
-     "word": "세우면",
-     "frame": 450
-    },
-    {
-     "target": "half",
-     "action": "moveTo",
-     "word": "긴",
-     "frame": 471
-    },
-    {
-     "target": "half",
-     "action": "setStyle",
-     "word": "긴",
-     "frame": 471
-    },
-    {
-     "target": "half",
-     "action": "setStyle",
-     "word": "일",
-     "frame": 492
-    },
-    {
-     "target": "half",
-     "action": "setStyle",
-     "word": "짧은",
-     "frame": 504
-    },
-    {
-     "target": "half",
-     "action": "setStyle",
-     "word": "이분의",
-     "frame": 529
+     "action": "pulse",
+     "word": "딱",
+     "frame": 353
     }
    ]
   },
   {
    "id": "B5",
-   "startFrame": 579,
-   "endFrame": 727,
-   "pauseFrame": 711,
+   "startFrame": 458,
+   "endFrame": 555,
+   "pauseFrame": 543,
    "captions": [
     {
-     "word": "모양이",
-     "frame": 579
+     "word": "짧은",
+     "frame": 458
     },
     {
-     "word": "엑스",
-     "frame": 615
+     "word": "긴",
+     "frame": 497
     },
     {
-     "word": "같아야",
-     "frame": 693
+     "word": "해",
+     "frame": 528
     }
    ],
    "cues": [
     {
-     "target": "ratioEq",
-     "action": "reveal",
-     "word": "엑스",
-     "frame": 615
-    },
-    {
-     "target": "rect",
-     "action": "pulse",
-     "word": "엑스",
-     "frame": 615
-    },
-    {
-     "target": "ratioEq",
-     "action": "reveal",
-     "word": "일과",
-     "frame": 632
-    },
-    {
-     "target": "rect",
-     "action": "pulse",
-     "word": "일과",
-     "frame": 632
-    },
-    {
-     "target": "ratioEq",
-     "action": "reveal",
-     "word": "일",
-     "frame": 651
+     "target": "sheet",
+     "action": "moveTo",
+     "word": "짧은",
+     "frame": 458
     },
     {
      "target": "half",
-     "action": "pulse",
-     "word": "일",
-     "frame": 651
+     "action": "moveTo",
+     "word": "짧은",
+     "frame": 458
     },
     {
-     "target": "ratioEq",
-     "action": "reveal",
-     "word": "이분의",
-     "frame": 666
+     "target": "sheet",
+     "action": "setStyle",
+     "word": "짧은",
+     "frame": 458
+    },
+    {
+     "target": "sheet",
+     "action": "setStyle",
+     "word": "일",
+     "frame": 483
+    },
+    {
+     "target": "sheet",
+     "action": "setStyle",
+     "word": "엑스라고",
+     "frame": 515
     },
     {
      "target": "half",
-     "action": "pulse",
-     "word": "이분의",
-     "frame": 666
-    },
-    {
-     "target": "ratioEq",
-     "action": "reveal",
-     "word": "같아야",
-     "frame": 693
+     "action": "setStyle",
+     "word": "볼게요",
+     "frame": 530
     }
    ]
   },
   {
    "id": "B6",
-   "startFrame": 728,
-   "endFrame": 900,
-   "pauseFrame": 862,
+   "startFrame": 556,
+   "endFrame": 651,
+   "pauseFrame": 639,
    "captions": [
     {
-     "word": "정리하면",
-     "frame": 728
+     "word": "접힌",
+     "frame": 556
     },
     {
-     "word": "그러니까",
-     "frame": 800
+     "word": "높이가",
+     "frame": 617
     }
    ],
    "cues": [
     {
-     "target": "ratioEq",
-     "action": "transformTo",
-     "word": "정리하면",
-     "frame": 728
+     "target": "half",
+     "action": "pulse",
+     "word": "접힌",
+     "frame": 556
     },
     {
-     "target": "ratioEq",
-     "action": "transformTo",
-     "word": "제곱은",
-     "frame": 765
+     "target": "timesNote",
+     "action": "appear",
+     "word": "엑스",
+     "frame": 584
     },
     {
-     "target": "ratioEq",
-     "action": "transformTo",
-     "word": "루트",
-     "frame": 834
+     "target": "half",
+     "action": "moveTo",
+     "word": "엑스",
+     "frame": 584,
+     "untilFrame": 617
     },
     {
-     "target": "rect",
+     "target": "sheet",
+     "action": "moveTo",
+     "word": "엑스",
+     "frame": 584,
+     "untilFrame": 617
+    },
+    {
+     "target": "half",
      "action": "setStyle",
-     "word": "이가",
-     "frame": 848
+     "word": "키우면",
+     "frame": 597
     },
     {
-     "target": "ratioEq",
-     "action": "box",
-     "pause": true,
-     "frame": 862
+     "target": "sheet",
+     "action": "pulse",
+     "word": "높이가",
+     "frame": 617
+    },
+    {
+     "target": "half",
+     "action": "pulse",
+     "word": "높이가",
+     "frame": 617
     }
    ]
   },
   {
    "id": "B7",
-   "startFrame": 901,
-   "endFrame": 1090,
-   "pauseFrame": 1039,
+   "startFrame": 652,
+   "endFrame": 752,
+   "pauseFrame": 732,
    "captions": [
     {
-     "word": "반으로",
-     "frame": 901
+     "word": "너비도",
+     "frame": 652
     },
     {
-     "word": "모양이",
-     "frame": 927
+     "word": "이",
+     "frame": 685
     },
     {
-     "word": "일",
-     "frame": 977
+     "word": "같아야",
+     "frame": 715
     }
    ],
    "cues": [
     {
-     "target": "rect",
+     "target": "timesNote",
      "action": "exit",
-     "word": "반으로",
-     "frame": 901
+     "word": "너비도",
+     "frame": 652
+    },
+    {
+     "target": "sheet",
+     "action": "pulse",
+     "word": "너비도",
+     "frame": 652
     },
     {
      "target": "half",
-     "action": "exit",
-     "word": "반으로",
-     "frame": 901
-    },
-    {
-     "target": "ratioEq",
-     "action": "exit",
-     "word": "반으로",
-     "frame": 901
-    },
-    {
-     "target": "sweep",
-     "action": "appear",
-     "word": "반으로",
-     "frame": 901
-    },
-    {
-     "target": "sweepHalf",
-     "action": "appear",
-     "word": "반으로",
-     "frame": 901
-    },
-    {
-     "target": "sweepGap",
-     "action": "appear",
-     "word": "반으로",
-     "frame": 901
-    },
-    {
-     "target": "dial",
-     "action": "appear",
-     "word": "반으로",
-     "frame": 901
-    },
-    {
-     "target": "sweep",
-     "action": "resize",
-     "word": "모양이",
-     "frame": 927,
-     "untilFrame": 977
-    },
-    {
-     "target": "sweep",
-     "action": "resize",
-     "word": "일",
-     "frame": 977,
-     "untilFrame": 1014
-    },
-    {
-     "target": "sweep",
      "action": "pulse",
-     "word": "딱",
-     "frame": 1014
+     "word": "너비도",
+     "frame": 652
     },
     {
-     "target": "sweepHalf",
+     "target": "half",
+     "action": "setStyle",
+     "word": "길이가",
+     "frame": 689
+    },
+    {
+     "target": "eq",
+     "action": "reveal",
+     "word": "길이가",
+     "frame": 689
+    },
+    {
+     "target": "sheet",
      "action": "pulse",
-     "word": "딱",
-     "frame": 1014
+     "word": "일과",
+     "frame": 705
     },
     {
-     "target": "dial",
-     "action": "pulseMark",
-     "word": "딱",
-     "frame": 1014
+     "target": "eq",
+     "action": "reveal",
+     "word": "일과",
+     "frame": 705
     }
    ]
   },
   {
    "id": "B8",
-   "startFrame": 1091,
-   "endFrame": 1337,
-   "pauseFrame": 1311,
+   "startFrame": 753,
+   "endFrame": 890,
+   "pauseFrame": 858,
    "captions": [
     {
-     "word": "에이포는",
-     "frame": 1091
+     "word": "그러려면",
+     "frame": 753
     },
     {
-     "word": "세로",
-     "frame": 1139
-    },
-    {
-     "word": "나눠",
-     "frame": 1184
-    },
-    {
-     "word": "거의",
-     "frame": 1249
+     "word": "엑스는",
+     "frame": 821
     }
    ],
    "cues": [
     {
-     "target": "sweepHalf",
-     "action": "exit",
-     "word": "에이포는",
-     "frame": 1091
+     "target": "eq",
+     "action": "transformTo",
+     "word": "그러려면",
+     "frame": 753
     },
     {
-     "target": "sweepGap",
-     "action": "exit",
-     "word": "에이포는",
-     "frame": 1091
+     "target": "eq",
+     "action": "transformTo",
+     "word": "제곱하면",
+     "frame": 786
     },
     {
-     "target": "dial",
-     "action": "exit",
-     "word": "에이포는",
-     "frame": 1091
+     "target": "eq",
+     "action": "transformTo",
+     "word": "엑스는",
+     "frame": 821
     },
     {
-     "target": "sweep",
-     "action": "setStyle",
-     "word": "에이포는",
-     "frame": 1091
+     "target": "eq",
+     "action": "box",
+     "word": "이가",
+     "frame": 847
     },
     {
-     "target": "sweep",
-     "action": "moveTo",
-     "word": "에이포는",
-     "frame": 1091
-    },
-    {
-     "target": "dimW",
-     "action": "appear",
-     "word": "가로",
-     "frame": 1110
-    },
-    {
-     "target": "dimH",
-     "action": "appear",
-     "word": "세로",
-     "frame": 1139
-    },
-    {
-     "target": "divRow",
-     "action": "reveal",
-     "word": "나눠",
-     "frame": 1184
-    },
-    {
-     "target": "divRow",
-     "action": "reveal",
-     "word": "일",
-     "frame": 1209
-    },
-    {
-     "target": "rootRow",
-     "action": "reveal",
-     "word": "거의",
-     "frame": 1249
-    },
-    {
-     "target": "divRow",
-     "action": "recolor",
+     "target": "ratioNote",
+     "action": "setText",
      "word": "루트",
-     "frame": 1280
-    },
-    {
-     "target": "rootRow",
-     "action": "recolor",
-     "word": "루트",
-     "frame": 1280
+     "frame": 837
     }
    ]
   },
   {
    "id": "B9",
-   "startFrame": 1338,
-   "endFrame": 1531,
-   "pauseFrame": 1517,
+   "startFrame": 891,
+   "endFrame": 1033,
+   "pauseFrame": 1023,
    "captions": [
     {
-     "word": "에이제로를",
-     "frame": 1338
+     "word": "실제",
+     "frame": 891
     },
     {
-     "word": "네",
-     "frame": 1374
+     "word": "이백십",
+     "frame": 923
     },
     {
-     "word": "바로",
-     "frame": 1406
-    },
-    {
-     "word": "몇",
-     "frame": 1449
-    },
-    {
-     "word": "모양은",
-     "frame": 1484
+     "word": "밀리미터",
+     "frame": 973
     }
    ],
    "cues": [
     {
-     "target": "sweep",
+     "target": "eq",
      "action": "exit",
-     "word": "에이제로를",
-     "frame": 1338
+     "word": "실제",
+     "frame": 891
     },
     {
-     "target": "dimW",
+     "target": "half",
      "action": "exit",
-     "word": "에이제로를",
-     "frame": 1338
+     "word": "실제",
+     "frame": 891
     },
     {
-     "target": "dimH",
+     "target": "ratioNote",
      "action": "exit",
-     "word": "에이제로를",
-     "frame": 1338
+     "word": "실제",
+     "frame": 891
     },
     {
-     "target": "divRow",
-     "action": "exit",
-     "word": "에이제로를",
-     "frame": 1338
+     "target": "sheet",
+     "action": "setStyle",
+     "word": "실제",
+     "frame": 891
     },
     {
-     "target": "rootRow",
-     "action": "exit",
-     "word": "에이제로를",
-     "frame": 1338
+     "target": "sheet",
+     "action": "moveTo",
+     "word": "실제",
+     "frame": 891
     },
     {
-     "target": "nest",
+     "target": "sheet",
+     "action": "setStyle",
+     "word": "에이포는",
+     "frame": 902
+    },
+    {
+     "target": "dim210",
      "action": "appear",
-     "word": "에이제로를",
-     "frame": 1338
+     "word": "이백십",
+     "frame": 923
     },
     {
-     "target": "nest",
-     "action": "split",
-     "word": "반씩",
-     "frame": 1360,
-     "untilFrame": 1418
+     "target": "dim297",
+     "action": "appear",
+     "word": "이백구십칠",
+     "frame": 951
+    }
+   ]
+  },
+  {
+   "id": "B10",
+   "startFrame": 1034,
+   "endFrame": 1180,
+   "pauseFrame": 1168,
+   "captions": [
+    {
+     "word": "그래서",
+     "frame": 1034
     },
     {
-     "target": "nest",
-     "action": "pulseKept",
-     "word": "에이포예요",
-     "frame": 1418
+     "word": "백사십일",
+     "frame": 1073
     },
     {
-     "target": "nest",
-     "action": "focusKept",
-     "word": "몇",
-     "frame": 1449,
-     "untilFrame": 1498
+     "word": "에이쓰리에",
+     "frame": 1129
+    }
+   ],
+   "cues": [
+    {
+     "target": "dim210",
+     "action": "exit",
+     "word": "그래서",
+     "frame": 1034
+    },
+    {
+     "target": "dim297",
+     "action": "exit",
+     "word": "그래서",
+     "frame": 1034
+    },
+    {
+     "target": "sheet",
+     "action": "setStyle",
+     "word": "그래서",
+     "frame": 1034
+    },
+    {
+     "target": "sheet",
+     "action": "moveTo",
+     "word": "그래서",
+     "frame": 1034
+    },
+    {
+     "target": "page",
+     "action": "appear",
+     "word": "문서를",
+     "frame": 1058
+    },
+    {
+     "target": "sheet",
+     "action": "exit",
+     "word": "백사십일",
+     "frame": 1073
+    },
+    {
+     "target": "pctNote",
+     "action": "appear",
+     "word": "백사십일",
+     "frame": 1073
+    },
+    {
+     "target": "a3",
+     "action": "appear",
+     "word": "퍼센트로",
+     "frame": 1094
+    },
+    {
+     "target": "page",
+     "action": "moveTo",
+     "word": "키우면",
+     "frame": 1109,
+     "untilFrame": 1144
+    },
+    {
+     "target": "page",
+     "action": "setStyle",
+     "pause": true,
+     "frame": 1168
+    }
+   ]
+  },
+  {
+   "id": "B11",
+   "startFrame": 1181,
+   "endFrame": 1247,
+   "pauseFrame": 1232,
+   "captions": [
+    {
+     "word": "반으로",
+     "frame": 1181
+    },
+    {
+     "word": "같은",
+     "frame": 1205
+    }
+   ],
+   "cues": [
+    {
+     "target": "pctNote",
+     "action": "exit",
+     "word": "반으로",
+     "frame": 1181
+    },
+    {
+     "target": "a3",
+     "action": "setStyle",
+     "word": "반으로",
+     "frame": 1181
+    },
+    {
+     "target": "page",
+     "action": "showMidline",
+     "word": "반으로",
+     "frame": 1181
+    },
+    {
+     "target": "page",
+     "action": "fold",
+     "word": "반으로",
+     "frame": 1181,
+     "untilFrame": 1215
+    },
+    {
+     "target": "a3",
+     "action": "moveTo",
+     "word": "모양이라서요",
+     "frame": 1215
+    },
+    {
+     "target": "page",
+     "action": "moveTo",
+     "word": "모양이라서요",
+     "frame": 1215
+    },
+    {
+     "target": "page",
+     "action": "setStyle",
+     "word": "모양이라서요",
+     "frame": 1215
+    },
+    {
+     "target": "letterGhost2",
+     "action": "appear",
+     "pause": true,
+     "frame": 1232
+    },
+    {
+     "target": "letterHalf2",
+     "action": "appear",
+     "pause": true,
+     "frame": 1232
     }
    ]
   }

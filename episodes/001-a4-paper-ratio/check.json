@@ -1,13 +1,13 @@
 {
  "episode": "001-a4-paper-ratio",
  "render": "render.mp4",
- "storyboardSha256": "58da520cec5955f2608b422b7b651160e081be5616dd64a15360192b3b61be3d",
- "studioSha256": "2f5fd8c4deb81a6db0374bc207346af80189a14a4da34088303c2d712581d7f2",
- "verdict": "pass",
+ "storyboardSha256": "18f046e8036706d15417682068b3e831a75ef8eb0e443dc2156757941bd0260d",
+ "studioSha256": "49517a3136a90c595886a2afca0ce564e2f77e89735ef53cee81b7ba518424a6",
+ "verdict": "fail",
  "counts": {
-  "fail": 0,
-  "warn": 3,
-  "pass": 13,
+  "fail": 1,
+  "warn": 1,
+  "pass": 14,
   "skip": 0
  },
  "contactSheet": "check/sheet.png",
@@ -21,80 +21,94 @@
   {
    "id": "technical",
    "status": "pass",
-   "summary": "1080×1920 yuv420p bt709 tv, 30 fps, 1532 frames (51.07 s); audio 48000 Hz, last 100 ms at -120 dBFS",
+   "summary": "1080×1920 yuv420p bt709 tv, 30 fps, 1248 frames (41.60 s); audio 48000 Hz, last 100 ms at -120 dBFS",
    "cites": []
   },
   {
    "id": "bounds",
    "status": "pass",
-   "summary": "all 1532 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 145–939, y 240–1254",
+   "summary": "all 1248 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 152–927, y 256–1251",
    "cites": []
   },
   {
    "id": "centering",
    "status": "pass",
-   "summary": "B1 0/0, B2 0/0, B3 +24/0, B4 +2/-18, B5 +3/-18, B6 +3/-18, B7 +10/0, B8 0/+1, B9 +1/0 (px off x 540: all ink / picture without edge labels; tolerance ±25)",
+   "summary": "B1 0/0, B2 -3/0, B3 -3/0, B4 -2/0, B5 +9/-11, B6 +12/-12, B7 +14/-12, B8 +14/-5, B9 +1/+0, B10 0/0, B11 0/0 (px off x 540: all ink / picture without edge labels; tolerance ±25)",
    "details": [
     {
      "beat": "B1",
-     "frame": 156,
+     "frame": 123,
      "off": 0,
      "pictureOff": 0,
      "status": "pass"
     },
     {
      "beat": "B2",
-     "frame": 282,
-     "off": 0,
+     "frame": 244,
+     "off": -3,
      "pictureOff": 0,
      "status": "pass"
     },
     {
      "beat": "B3",
-     "frame": 428,
-     "off": 23.5,
+     "frame": 339,
+     "off": -3,
      "pictureOff": 0,
      "status": "pass"
     },
     {
      "beat": "B4",
-     "frame": 578,
-     "off": 1.5,
-     "pictureOff": -17.899999999999977,
-     "status": "pass"
-    },
-    {
-     "beat": "B5",
-     "frame": 727,
-     "off": 2.5,
-     "pictureOff": -17.899999999999977,
-     "status": "pass"
-    },
-    {
-     "beat": "B6",
-     "frame": 900,
-     "off": 2.5,
-     "pictureOff": -17.899999999999977,
-     "status": "pass"
-    },
-    {
-     "beat": "B7",
-     "frame": 1090,
-     "off": 10,
+     "frame": 457,
+     "off": -2.5,
      "pictureOff": 0,
      "status": "pass"
     },
     {
+     "beat": "B5",
+     "frame": 555,
+     "off": 8.5,
+     "pictureOff": -10.649999999999977,
+     "status": "pass"
+    },
+    {
+     "beat": "B6",
+     "frame": 651,
+     "off": 12,
+     "pictureOff": -11.549999999999955,
+     "status": "pass"
+    },
+    {
+     "beat": "B7",
+     "frame": 752,
+     "off": 13.5,
+     "pictureOff": -11.549999999999955,
+     "status": "pass"
+    },
+    {
      "beat": "B8",
-     "frame": 1337,
-     "off": 0,
-     "pictureOff": 0.6499999999999773,
+     "frame": 890,
+     "off": 13.5,
+     "pictureOff": -4.600000000000023,
      "status": "pass"
     },
     {
      "beat": "B9",
-     "frame": 1531,
+     "frame": 1033,
      "off": 0.5,
+     "pictureOff": 0.25,
+     "status": "pass"
+    },
+    {
+     "beat": "B10",
+     "frame": 1180,
+     "off": 0,
+     "pictureOff": 0,
+     "status": "pass"
+    },
+    {
+     "beat": "B11",
+     "frame": 1247,
+     "off": 0,
      "pictureOff": 0,
      "status": "pass"
     }
@@ -104,55 +118,31 @@
   {
    "id": "legibility",
    "status": "pass",
-   "summary": "smallest glyph \"r\" 30.1 px in letter \"Letter\" (floor 30 px, 146 text items)",
+   "summary": "smallest glyph \"m\" 31 px in dim210 \"210\\,\\mathrm{mm}\" (floor 30 px, 52 text items)",
    "details": [
     {
-     "id": "letter",
-     "kind": "name",
-     "text": "Letter",
-     "char": "r",
-     "height": 30.1,
-     "frame": 172
-    },
-    {
-     "id": "dial",
+     "id": "dim210",
      "kind": "label",
-     "text": "Letter",
-     "char": "r",
-     "height": 30.1,
-     "frame": 923
-    },
-    {
-     "id": "dimW",
-     "kind": "label",
-     "text": "210\\,\\text{mm}",
+     "text": "210\\,\\mathrm{mm}",
      "char": "m",
      "height": 31,
-     "frame": 1126
+     "frame": 939
     },
     {
-     "id": "dimH",
+     "id": "dim297",
      "kind": "label",
-     "text": "297\\,\\text{mm}",
+     "text": "297\\,\\mathrm{mm}",
      "char": "m",
      "height": 31,
-     "frame": 1155
+     "frame": 967
     },
     {
-     "id": "nest",
-     "kind": "label",
-     "text": "A0 · 1m2",
-     "char": "m",
-     "height": 31,
-     "frame": 1353
-    },
-    {
-     "id": "rect",
+     "id": "sheet",
      "kind": "edge-label",
      "text": "x",
      "char": "x",
      "height": 31.8,
-     "frame": 399
+     "frame": 523
     },
     {
      "id": "half",
@@ -160,50 +150,82 @@
      "text": "\\dfrac{x}{2}",
      "char": "x",
      "height": 31.8,
-     "frame": 537
+     "frame": 538
+    },
+    {
+     "id": "timesNote",
+     "kind": "label",
+     "text": "\\displaystyle \\times x",
+     "char": "x",
+     "height": 31.8,
+     "frame": 588
+    },
+    {
+     "id": "half",
+     "kind": "edge-label",
+     "text": "x",
+     "char": "x",
+     "height": 31.8,
+     "frame": 612
+    },
+    {
+     "id": "half",
+     "kind": "edge-label",
+     "text": "\\dfrac{x}{2}\\times x",
+     "char": "x",
+     "height": 31.8,
+     "frame": 704
     },
     {
      "id": "captions",
      "kind": "caption",
-     "text": "정리하면 x2=2,",
-     "char": "2",
-     "height": 32.1,
-     "frame": 728
+     "text": "mm 단위라 조금 달라요.",
+     "char": "m",
+     "height": 32.2,
+     "frame": 973
     },
     {
      "id": "captions",
      "kind": "caption",
-     "text": "긴 변을 x라고 할게요.",
+     "text": "긴 변을 x라고",
      "char": "x",
      "height": 32.3,
-     "frame": 375
+     "frame": 497
     },
     {
      "id": "captions",
      "kind": "caption",
-     "text": "짧은 변은 2x가 돼요.",
+     "text": "접힌 종이를 x배 키우면,",
      "char": "x",
      "height": 32.3,
-     "frame": 504
+     "frame": 556
     },
     {
      "id": "captions",
      "kind": "caption",
-     "text": "x:1과 1:2x가",
+     "text": "그러려면 x를 제곱하면 2,",
      "char": "x",
      "height": 32.3,
-     "frame": 615
+     "frame": 753
     },
     {
      "id": "captions",
      "kind": "caption",
-     "text": "그러니까 x는 2가 돼요.",
+     "text": "x는 2가 돼요.",
      "char": "x",
      "height": 32.3,
-     "frame": 800
+     "frame": 821
     },
     {
-     "id": "a4",
+     "id": "compareNote",
+     "kind": "label",
+     "text": "크기를 맞춰 비교",
+     "char": "교",
+     "height": 38.5,
+     "frame": 33
+    },
+    {
+     "id": "a4Half",
      "kind": "name",
      "text": "A4",
      "char": "A",
@@ -211,167 +233,130 @@
      "frame": 0
     },
     {
-     "id": "sweep",
+     "id": "ratioNote",
+     "kind": "label",
+     "text": "A4의 설계 비율 ≈1.414",
+     "char": "A",
+     "height": 39.6,
+     "frame": 350
+    },
+    {
+     "id": "ratioNote",
+     "kind": "label",
+     "text": "A4의 설계 비율 2≈1.414",
+     "char": "A",
+     "height": 39.6,
+     "frame": 852
+    },
+    {
+     "id": "sheet",
+     "kind": "name",
+     "text": "실제 A4",
+     "char": "A",
+     "height": 39.6,
+     "frame": 917
+    },
+    {
+     "id": "page",
      "kind": "name",
      "text": "A4",
      "char": "A",
      "height": 39.6,
-     "frame": 1099
+     "frame": 1230
     },
     {
-     "id": "nest",
+     "id": "foldNote",
      "kind": "label",
-     "text": "A1",
-     "char": "A",
-     "height": 39.6,
-     "frame": 1373
-    },
-    {
-     "id": "nest",
-     "kind": "label",
-     "text": "A2",
-     "char": "A",
-     "height": 39.6,
-     "frame": 1388
-    },
-    {
-     "id": "nest",
-     "kind": "label",
-     "text": "A3",
-     "char": "A",
-     "height": 39.6,
-     "frame": 1402
-    },
-    {
-     "id": "nest",
-     "kind": "name",
-     "text": "A4",
-     "char": "A",
-     "height": 39.6,
-     "frame": 1417
+     "text": "긴 변을 반으로 접은 뒤",
+     "char": "로",
+     "height": 40.3,
+     "frame": 7
     },
     {
      "id": "captions",
      "kind": "caption",
-     "text": "모양이 그대로예요.",
+     "text": "그래서 A4 문서를",
      "char": "그",
      "height": 41.4,
-     "frame": 48
-    },
-    {
-     "id": "captions",
-     "kind": "caption",
-     "text": "모양이 그대로인 건",
-     "char": "그",
-     "height": 41.4,
-     "frame": 927
+     "frame": 1034
     }
    ],
    "cites": []
   },
   {
    "id": "overlaps",
-   "status": "warn",
-   "summary": "f442–444: half's lines cross rect \"x\" (while moving); f442–443: half's fill covers rect \"x\" (while moving)",
-   "details": [
-    {
-     "status": "warn",
-     "what": "half's lines cross rect \"x\" (while moving)",
-     "frames": [
-      442,
-      443,
-      444
-     ]
-    },
-    {
-     "status": "warn",
-     "what": "half's fill covers rect \"x\" (while moving)",
-     "frames": [
-      442,
-      443
-     ]
-    }
-   ],
-   "cites": [
-    {
-     "frame": 443,
-     "note": "overlaps: f442–444: half's lines cross rect \"x\" (while moving)",
-     "file": "f0443.png"
-    },
-    {
-     "frame": 443,
-     "note": "overlaps: f442–443: half's fill covers rect \"x\" (while moving)",
-     "file": "f0443.png"
-    }
-   ]
+   "status": "pass",
+   "summary": "no text meets other text, lines, or a fill drawn over it (in or across elements); no entrance draws while an exit is still visible",
+   "details": [],
+   "cites": []
   },
   {
    "id": "labels",
    "status": "pass",
-   "summary": "every resting edge label sits at least 2.5× nearer its own edge than any other line; closest: rect \"\\sqrt{2}\" 9 px from its edge, 51 px from half's",
+   "summary": "every resting edge label sits at least 2.5× nearer its own edge than any other line; closest: sheet \"x\" 12 px from its edge, 35 px from half's",
    "details": [
     {
-     "id": "rect",
-     "text": "\\sqrt{2}",
-     "frame": 863,
-     "own": 9,
-     "other": 51.3,
+     "id": "sheet",
+     "text": "x",
+     "frame": 566,
+     "own": 11.5,
+     "other": 35.3,
      "otherId": "half",
-     "ratio": 5.7
+     "ratio": 3.07
+    },
+    {
+     "id": "half",
+     "text": "\\dfrac{x}{2}\\times x",
+     "frame": 848,
+     "own": 8.2,
+     "other": 26.7,
+     "otherId": "eq",
+     "ratio": 3.26
+    },
+    {
+     "id": "a3",
+     "text": "\\mathrm{A3}",
+     "frame": 1145,
+     "own": 6.7,
+     "other": 92.3,
+     "otherId": "page",
+     "ratio": 13.78
     },
     {
      "id": "half",
      "text": "\\dfrac{x}{2}",
-     "frame": 863,
+     "frame": 538,
      "own": 8.2,
-     "other": 59.1,
-     "otherId": "ratioEq",
-     "ratio": 7.21
-    },
-    {
-     "id": "rect",
-     "text": "x",
-     "frame": 656,
-     "own": 11.5,
-     "other": 105.4,
-     "otherId": "half",
-     "ratio": 9.17
-    },
-    {
-     "id": "sweep",
-     "text": "1.200",
-     "frame": 921,
-     "own": 14.8,
-     "other": 355.8,
-     "otherId": "dial",
-     "ratio": 24.04
+     "other": 173.4,
+     "otherId": "sheet",
+     "ratio": 21.14
     },
     {
      "id": "half",
      "text": "1",
-     "frame": 863,
+     "frame": 538,
      "own": 14.8,
-     "other": 383.3,
-     "otherId": "ratioEq",
-     "ratio": 25.9
+     "other": 317,
+     "otherId": "sheet",
+     "ratio": 21.42
     },
     {
-     "id": "sweep",
-     "text": "1.414",
-     "frame": 1035,
-     "own": 14.8,
-     "other": 402.4,
-     "otherId": "dial",
-     "ratio": 27.19
-    },
-    {
-     "id": "rect",
+     "id": "sheet",
      "text": "1",
-     "frame": 863,
+     "frame": 566,
      "own": 7.5,
-     "other": 251.7,
-     "otherId": "ratioEq",
-     "ratio": 33.56
+     "other": 221.8,
+     "otherId": "half",
+     "ratio": 29.57
+    },
+    {
+     "id": "half",
+     "text": "x",
+     "frame": 638,
+     "own": 11.4,
+     "other": 401.4,
+     "otherId": "sheet",
+     "ratio": 35.21
     }
    ],
    "cites": []
@@ -379,120 +364,129 @@
   {
    "id": "captions",
    "status": "pass",
-   "summary": "all 28 captions appear 0–0 frames after their cue (limit 3), on one line, inside the caption zone",
+   "summary": "all 25 captions appear 0–0 frames after their cue (limit 3), on one line, inside the caption zone",
    "details": [
     {
-     "text": "A4를 반으로 접어도",
-     "from": 4,
-     "shown": 4,
+     "text": "똑같이 반으로 접었는데,",
+     "from": 3,
+     "shown": 3,
      "late": 0,
      "lines": 1,
      "inside": true,
      "problems": []
     },
     {
-     "text": "모양이 그대로예요.",
-     "from": 48,
-     "shown": 48,
+     "text": "왜 이쪽만 딱 맞을까요?",
+     "from": 53,
+     "shown": 53,
      "late": 0,
      "lines": 1,
      "inside": true,
      "problems": []
     },
     {
-     "text": "몇 번을 접어도요.",
-     "from": 91,
-     "shown": 91,
+     "text": "길쭉한 정도를 바꾸면,",
+     "from": 124,
+     "shown": 124,
      "late": 0,
      "lines": 1,
      "inside": true,
      "problems": []
     },
     {
-     "text": "미국 레터 용지는 달라요.",
-     "from": 157,
-     "shown": 157,
+     "text": "딱 맞는 순간이 있을까요?",
+     "from": 166,
+     "shown": 166,
      "late": 0,
      "lines": 1,
      "inside": true,
      "problems": []
     },
     {
-     "text": "접으면 더 길쭉해져요.",
-     "from": 208,
-     "shown": 208,
+     "text": "조금씩 바꿔 볼게요.",
+     "from": 245,
+     "shown": 245,
      "late": 0,
      "lines": 1,
      "inside": true,
      "problems": []
     },
     {
-     "text": "어떤 비율이면 될까요?",
-     "from": 283,
-     "shown": 283,
+     "text": "여기선 딱 맞네요.",
+     "from": 340,
+     "shown": 340,
      "late": 0,
      "lines": 1,
      "inside": true,
      "problems": []
     },
     {
-     "text": "짧은 변을 $1$,",
-     "from": 342,
-     "shown": 342,
+     "text": "왜 이 비율일까요?",
+     "from": 388,
+     "shown": 388,
      "late": 0,
      "lines": 1,
      "inside": true,
      "problems": []
     },
     {
-     "text": "긴 변을 $x$라고 할게요.",
-     "from": 375,
-     "shown": 375,
+     "text": "짧은 변을 1,",
+     "from": 458,
+     "shown": 458,
      "late": 0,
      "lines": 1,
      "inside": true,
      "problems": []
     },
     {
-     "text": "반으로 접어 세우면",
-     "from": 429,
-     "shown": 429,
+     "text": "긴 변을 $x$라고",
+     "from": 497,
+     "shown": 497,
      "late": 0,
      "lines": 1,
      "inside": true,
      "problems": []
     },
     {
-     "text": "긴 변은 $1$,",
-     "from": 471,
-     "shown": 471,
+     "text": "해 볼게요.",
+     "from": 528,
+     "shown": 528,
      "late": 0,
      "lines": 1,
      "inside": true,
      "problems": []
     },
     {
-     "text": "짧은 변은 $\\frac{x}{2}$가 돼요.",
-     "from": 504,
-     "shown": 504,
+     "text": "접힌 종이를 $x$배 키우면,",
+     "from": 556,
+     "shown": 556,
      "late": 0,
      "lines": 1,
      "inside": true,
      "problems": []
     },
     {
-     "text": "모양이 같으려면",
-     "from": 579,
-     "shown": 579,
+     "text": "높이가 맞아요.",
+     "from": 617,
+     "shown": 617,
      "late": 0,
      "lines": 1,
      "inside": true,
      "problems": []
     },
     {
-     "text": "$x : 1$과 $1 : \\frac{x}{2}$가",
-     "from": 615,
-     "shown": 615,
+     "text": "너비도 맞으려면,",
+     "from": 652,
+     "shown": 652,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "이 길이가 1과",
+     "from": 685,
+     "shown": 685,
      "late": 0,
      "lines": 1,
      "inside": true,
@@ -500,26 +494,80 @@
     },
     {
      "text": "같아야 해요.",
-     "from": 693,
-     "shown": 693,
+     "from": 715,
+     "shown": 715,
      "late": 0,
      "lines": 1,
      "inside": true,
      "problems": []
     },
     {
-     "text": "정리하면 $x^2 = 2$,",
-     "from": 728,
-     "shown": 728,
+     "text": "그러려면 $x$를 제곱하면 2,",
+     "from": 753,
+     "shown": 753,
      "late": 0,
      "lines": 1,
      "inside": true,
      "problems": []
     },
     {
-     "text": "그러니까 $x$는 $\\sqrt{2}$가 돼요.",
-     "from": 800,
-     "shown": 800,
+     "text": "$x$는 $\\sqrt{2}$가 돼요.",
+     "from": 821,
+     "shown": 821,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "실제 A4는",
+     "from": 891,
+     "shown": 891,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "210 × 297,",
+     "from": 923,
+     "shown": 923,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "mm 단위라 조금 달라요.",
+     "from": 973,
+     "shown": 973,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "그래서 A4 문서를",
+     "from": 1034,
+     "shown": 1034,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "141%로 키우면,",
+     "from": 1073,
+     "shown": 1073,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "A3에 거의 딱 맞아요.",
+     "from": 1129,
+     "shown": 1129,
      "late": 0,
      "lines": 1,
      "inside": true,
@@ -527,107 +575,17 @@
     },
     {
      "text": "반으로 접어도",
-     "from": 901,
-     "shown": 901,
+     "from": 1181,
+     "shown": 1181,
      "late": 0,
      "lines": 1,
      "inside": true,
      "problems": []
     },
     {
-     "text": "모양이 그대로인 건",
-     "from": 927,
-     "shown": 927,
-     "late": 0,
-     "lines": 1,
-     "inside": true,
-     "problems": []
-    },
-    {
-     "text": "$1 : \\sqrt{2}$, 딱 하나예요.",
-     "from": 977,
-     "shown": 977,
-     "late": 0,
-     "lines": 1,
-     "inside": true,
-     "problems": []
-    },
-    {
-     "text": "A4는 가로 210,",
-     "from": 1091,
-     "shown": 1091,
-     "late": 0,
-     "lines": 1,
-     "inside": true,
-     "problems": []
-    },
-    {
-     "text": "세로 297.",
-     "from": 1139,
-     "shown": 1139,
-     "late": 0,
-     "lines": 1,
-     "inside": true,
-     "problems": []
-    },
-    {
-     "text": "나눠 보면 1.414,",
-     "from": 1184,
-     "shown": 1184,
-     "late": 0,
-     "lines": 1,
-     "inside": true,
-     "problems": []
-    },
-    {
-     "text": "거의 정확히 $\\sqrt{2}$와 같아요.",
-     "from": 1249,
-     "shown": 1249,
-     "late": 0,
-     "lines": 1,
-     "inside": true,
-     "problems": []
-    },
-    {
-     "text": "A0를 반씩",
-     "from": 1338,
-     "shown": 1338,
-     "late": 0,
-     "lines": 1,
-     "inside": true,
-     "problems": []
-    },
-    {
-     "text": "네 번 접으면",
-     "from": 1374,
-     "shown": 1374,
-     "late": 0,
-     "lines": 1,
-     "inside": true,
-     "problems": []
-    },
-    {
-     "text": "바로 A4예요.",
-     "from": 1406,
-     "shown": 1406,
-     "late": 0,
-     "lines": 1,
-     "inside": true,
-     "problems": []
-    },
-    {
-     "text": "몇 번을 접어도",
-     "from": 1449,
-     "shown": 1449,
-     "late": 0,
-     "lines": 1,
-     "inside": true,
-     "problems": []
-    },
-    {
-     "text": "모양은 그대로죠.",
-     "from": 1484,
-     "shown": 1484,
+     "text": "같은 모양이라서요.",
+     "from": 1205,
+     "shown": 1205,
      "late": 0,
      "lines": 1,
      "inside": true,
@@ -639,98 +597,112 @@
   {
    "id": "readable",
    "status": "warn",
-   "summary": "2 names or labels are fully visible for under 30 frames: a4 \"A4\" 6 frames (f0–5); letter \"Letter\" 15 frames (f172–186)",
+   "summary": "2 names or labels are fully visible for under 30 frames: letterHalf2 \"레터\" 12 frames (f1236–1247); page \"A4\" 18 frames (f1230–1247)",
    "details": [
     {
-     "id": "a4",
+     "id": "letterHalf2",
      "kind": "name",
-     "text": "A4",
-     "best": 6
+     "text": "레터",
+     "best": 12
     },
     {
-     "id": "letter",
+     "id": "page",
      "kind": "name",
-     "text": "Letter",
-     "best": 15
+     "text": "A4",
+     "best": 18
     }
    ],
    "cites": [
     {
-     "frame": 3,
-     "note": "readable: a4 \"A4\" fully visible only 6 frames (f0–5)",
-     "file": "f0003.png"
+     "frame": 1242,
+     "note": "readable: letterHalf2 \"레터\" fully visible only 12 frames (f1236–1247)",
+     "file": "f1242.png"
     },
     {
-     "frame": 179,
-     "note": "readable: letter \"Letter\" fully visible only 15 frames (f172–186)",
-     "file": "f0179.png"
+     "frame": 1239,
+     "note": "readable: page \"A4\" fully visible only 18 frames (f1230–1247)",
+     "file": "f1239.png"
     }
    ]
   },
   {
    "id": "reaction",
    "status": "pass",
-   "summary": "B1 +2, B2 +1, B3 +1, B4 +1, B5 —, B6 +1, B7 +1, B8 +1, B9 +1 (frames from each beat's first word to the first visible change; — = no cue on that word; limit 3)",
+   "summary": "B1 +1, B2 +1, B3 +1, B4 +1, B5 +1, B6 +1, B7 +1, B8 +1, B9 +1, B10 +1, B11 +1 (frames from each beat's first word to the first visible change; — = no cue on that word; limit 3)",
    "details": [
     {
      "beat": "B1",
-     "frame": 4,
+     "frame": 3,
      "hasCue": true,
-     "latency": 2,
+     "latency": 1,
      "status": "pass"
     },
     {
      "beat": "B2",
-     "frame": 157,
+     "frame": 124,
      "hasCue": true,
      "latency": 1,
      "status": "pass"
     },
     {
      "beat": "B3",
-     "frame": 283,
+     "frame": 245,
      "hasCue": true,
      "latency": 1,
      "status": "pass"
     },
     {
      "beat": "B4",
-     "frame": 429,
+     "frame": 340,
      "hasCue": true,
      "latency": 1,
      "status": "pass"
     },
     {
      "beat": "B5",
-     "frame": 579,
-     "hasCue": false,
-     "latency": null,
-     "status": "skip"
+     "frame": 458,
+     "hasCue": true,
+     "latency": 1,
+     "status": "pass"
     },
     {
      "beat": "B6",
-     "frame": 728,
+     "frame": 556,
      "hasCue": true,
      "latency": 1,
      "status": "pass"
     },
     {
      "beat": "B7",
-     "frame": 901,
+     "frame": 652,
      "hasCue": true,
      "latency": 1,
      "status": "pass"
     },
     {
      "beat": "B8",
-     "frame": 1091,
+     "frame": 753,
      "hasCue": true,
      "latency": 1,
      "status": "pass"
     },
     {
      "beat": "B9",
-     "frame": 1338,
+     "frame": 891,
+     "hasCue": true,
+     "latency": 1,
+     "status": "pass"
+    },
+    {
+     "beat": "B10",
+     "frame": 1034,
+     "hasCue": true,
+     "latency": 1,
+     "status": "pass"
+    },
+    {
+     "beat": "B11",
+     "frame": 1181,
      "hasCue": true,
      "latency": 1,
      "status": "pass"
@@ -740,42 +712,10 @@
   },
   {
    "id": "cues",
-   "status": "warn",
-   "summary": "2 cues show nothing within 5 frames of their word: B3 f375 rect.setStyle +6; B4 f504 half.setStyle none",
-   "details": [
-    {
-     "beat": "B3",
-     "frame": 375,
-     "what": "rect.setStyle",
-     "latency": 6
-    },
-    {
-     "beat": "B4",
-     "frame": 504,
-     "what": "half.setStyle",
-     "latency": null
-    }
-   ],
-   "cites": [
-    {
-     "frame": 375,
-     "pair": [
-      374,
-      380
-     ],
-     "note": "cues: B3 rect.setStyle at f375",
-     "file": "cues-1.png"
-    },
-    {
-     "frame": 504,
-     "pair": [
-      503,
-      509
-     ],
-     "note": "cues: B4 half.setStyle at f504",
-     "file": "cues-2.png"
-    }
-   ]
+   "status": "pass",
+   "summary": "every cue after a beat's first word shows a change within 5 frames",
+   "details": [],
+   "cites": []
   },
   {
    "id": "blank",
@@ -786,7 +726,7 @@
   {
    "id": "loudness",
    "status": "pass",
-   "summary": "-14 LUFS integrated (target -14 ±1), true peak -1.8 dBTP (max -1), range 3.8 LU",
+   "summary": "-14.1 LUFS integrated (target -14 ±1), true peak -2.1 dBTP (max -1), range 3.5 LU",
    "cites": []
   },
   {
@@ -797,123 +737,118 @@
   },
   {
    "id": "words",
-   "status": "pass",
-   "summary": "23 of 23 words after a pause start within 90 ms of an audible onset (widest \"딱\" at 33.79 s, +90 ms); limit ±200 ms",
+   "status": "fail",
+   "summary": "21 of 22 words after a pause start within 70 ms of an audible onset (widest \"똑같이\" at 0.1 s, +70 ms); limit ±200 ms; off: \"이\" no onset",
    "details": [
     {
-     "word": "에이포를",
-     "start": 0.13,
+     "word": "똑같이",
+     "start": 0.1,
+     "dev": 70
+    },
+    {
+     "word": "왜",
+     "start": 1.76,
      "dev": -20
     },
     {
-     "word": "몇",
-     "start": 3.03,
-     "dev": 0
-    },
-    {
-     "word": "미국",
-     "start": 5.23,
-     "dev": 10
-    },
-    {
-     "word": "접으면",
-     "start": 6.93,
-     "dev": 10
-    },
-    {
-     "word": "어떤",
-     "start": 9.43,
-     "dev": -40
-    },
-    {
-     "word": "짧은",
-     "start": 11.39,
-     "dev": 60
-    },
-    {
-     "word": "반으로",
-     "start": 14.31,
-     "dev": 10
-    },
-    {
-     "word": "긴",
-     "start": 15.69,
-     "dev": 10
-    },
-    {
-     "word": "모양이",
-     "start": 19.29,
-     "dev": 10
-    },
-    {
-     "word": "일",
-     "start": 21.71,
-     "dev": -10
-    },
-    {
-     "word": "정리하면",
-     "start": 24.25,
-     "dev": 20
-    },
-    {
-     "word": "엑스",
-     "start": 25.13,
-     "dev": -40
-    },
-    {
-     "word": "그러니까",
-     "start": 26.65,
+     "word": "길쭉한",
+     "start": 4.12,
      "dev": 30
     },
     {
-     "word": "반으로",
-     "start": 30.05,
-     "dev": 10
+     "word": "조금씩",
+     "start": 8.16,
+     "dev": 30
     },
     {
-     "word": "일",
-     "start": 32.57,
-     "dev": -70
-    },
-    {
-     "word": "딱",
-     "start": 33.79,
-     "dev": 90
-    },
-    {
-     "word": "에이포는",
-     "start": 36.37,
-     "dev": -50
-    },
-    {
-     "word": "나눠",
-     "start": 39.47,
-     "dev": 0
-    },
-    {
-     "word": "일",
-     "start": 40.31,
-     "dev": -50
-    },
-    {
-     "word": "거의",
-     "start": 41.63,
-     "dev": 20
-    },
-    {
-     "word": "에이제로를",
-     "start": 44.59,
-     "dev": -50
-    },
-    {
-     "word": "몇",
-     "start": 48.29,
+     "word": "여기선",
+     "start": 11.34,
      "dev": -10
     },
     {
-     "word": "모양은",
-     "start": 49.47,
+     "word": "왜",
+     "start": 12.92,
+     "dev": -70
+    },
+    {
+     "word": "이",
+     "start": 13.28,
+     "dev": null
+    },
+    {
+     "word": "짧은",
+     "start": 15.26,
+     "dev": 60
+    },
+    {
+     "word": "긴",
+     "start": 16.58,
+     "dev": 20
+    },
+    {
+     "word": "접힌",
+     "start": 18.54,
+     "dev": 30
+    },
+    {
+     "word": "높이가",
+     "start": 20.58,
+     "dev": -10
+    },
+    {
+     "word": "너비도",
+     "start": 21.74,
+     "dev": 20
+    },
+    {
+     "word": "이",
+     "start": 22.84,
      "dev": -30
+    },
+    {
+     "word": "그러려면",
+     "start": 25.1,
+     "dev": 40
+    },
+    {
+     "word": "엑스를",
+     "start": 25.84,
+     "dev": -20
+    },
+    {
+     "word": "엑스는",
+     "start": 27.36,
+     "dev": -20
+    },
+    {
+     "word": "실제",
+     "start": 29.7,
+     "dev": -20
+    },
+    {
+     "word": "이백십",
+     "start": 30.78,
+     "dev": -50
+    },
+    {
+     "word": "그래서",
+     "start": 34.48,
+     "dev": 10
+    },
+    {
+     "word": "에이포",
+     "start": 35.02,
+     "dev": -40
+    },
+    {
+     "word": "에이쓰리에",
+     "start": 37.64,
+     "dev": -60
+    },
+    {
+     "word": "반으로",
+     "start": 39.36,
+     "dev": 20
     }
    ],
    "cites": []
@@ -921,7 +856,7 @@
   {
    "id": "loop",
    "status": "pass",
-   "summary": "0 visual-zone pixels differ by more than 16 levels between the last and first frame (limit 500)",
+   "summary": "142 visual-zone pixels differ by more than 16 levels between the last and first frame (limit 500)",
    "cites": []
   }
  ]
