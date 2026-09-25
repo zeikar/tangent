@@ -135,7 +135,13 @@ math. Chunks together must cover the beat's 화면용 text in order.
   their props there and reuse them. Anything else is new: name it, and spec it
   once in `components`. Prefer a few general primitives with props over one
   component per beat.
-- Elements persist across beats until an `exit` cue.
+- Elements persist across beats until an `exit` cue. Declare each element in
+  the beat where it first appears; draw order is declaration order, so an
+  element that must sit beneath another is declared just before it.
+- Centering is checked two ways at every beat end: all ink, and the picture
+  without its edge labels, each within ±25 px of x 540. Center the picture
+  itself, not a sheet plus a one-sided label.
+- For Korean text in the visual zone, use `Note` (one line, `$...$` math).
 
 ### Schema
 ```jsonc
