@@ -7,7 +7,8 @@ import katex from "katex";
 
 // Top-level TeX tokens, each renderable on its own: a symbol, a command with
 // its arguments (\dfrac{x}{2}, \sqrt{2}), or a group, with any scripts
-// (x^2). A string that doesn't split cleanly stays one token.
+// (x^2). Spacing (\, \quad, ~) joins the token before it, since it has no
+// ink of its own. A string that doesn't split cleanly stays one token.
 const tokenCache = new Map<string, string[]>();
 export const texTokens = (tex: string): string[] => {
   let toks = tokenCache.get(tex);
@@ -67,7 +68,8 @@ const splitTokens = (tex: string): string[] => {
           break;
         }
       }
-      toks.push(t);
+      if (/^(\\[,:;! ]|\\q?quad|~)$/.test(t) && toks.length) toks[toks.length - 1] += t;
+      else toks.push(t);
     }
     katex.renderToString(wrapTokens(toks, (k) => `\\htmlData{tok=${k}}`), { trust: true, strict: "ignore" });
     return toks;

@@ -6,8 +6,8 @@
 |---|---|---|
 | freshness | pass | render.mp4, cues.json and the studio code all match this storyboard.json |
 | technical | pass | 1080×1920 yuv420p bt709 tv, 30 fps, 1248 frames (41.60 s); audio 48000 Hz, last 100 ms at -120 dBFS |
-| bounds | pass | all 1248 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 152–927, y 256–1252 |
-| centering | pass | B1 0/0, B2 -3/0, B3 -3/0, B4 -2/0, B5 +9/-11, B6 +14/-12, B7 +14/-12, B8 +14/-5, B9 +1/+0, B10 0/0, B11 0/0 (px off x 540: all ink / picture without edge labels; tolerance ±25) |
+| bounds | pass | all 1248 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 152–927, y 256–1251 |
+| centering | pass | B1 0/0, B2 -3/0, B3 -3/0, B4 -2/0, B5 +9/-11, B6 +13/-12, B7 +14/-12, B8 +14/-5, B9 +1/+0, B10 0/0, B11 0/0 (px off x 540: all ink / picture without edge labels; tolerance ±25) |
 | legibility | pass | smallest glyph "m" 31 px in dim210 "210\,\mathrm{mm}" (floor 30 px, 53 text items) |
 | overlaps | pass | no text meets other text, lines, or a fill drawn over it (in or across elements); no entrance draws while an exit is still visible |
 | labels | pass | every resting edge label sits at least 2.5× nearer its own edge than any other line; closest: sheet "x" 12 px from its edge, 35 px from half's |
