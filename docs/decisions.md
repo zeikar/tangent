@@ -96,7 +96,10 @@ files along, and stops at the human checkpoints.
 - **A second model critiques twice.** Codex, in a read-only sandbox
   (`studio/scripts/critique.mts`), reviews the script before the take
   (editorial: hook, curiosity arc, pacing) and the final cut before the human
-  (as a viewer, from contact sheets). Its findings are advice, not gates. In
+  (as a viewer, from contact sheets). Its findings are advice, not gates: at
+  most two critique-and-revise rounds per stage, the orchestrator picks which
+  findings to apply (the critic doesn't see every constraint, e.g. the upload
+  title or the pronunciation list), and then the human judges. In
   milestone 1 an outside Codex review caught what no Claude agent had: the
   episode explained well but never made the viewer wonder.
 - In milestone 1 the briefs are hand-written in `docs/briefs/`. Whatever a brief
