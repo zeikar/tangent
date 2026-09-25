@@ -56,6 +56,9 @@ your report with the number; the human decides (trim, retake, or accept).
   tags the render with the storyboard hash, and runs
   `scripts/check-render.mts`. Fix every fail before reporting; a warn needs a
   one-line reason.
+- Render twice and compare the decoded frames (`ffmpeg -f framemd5`): a
+  measurement race (text laid out before its font loaded) changes pixels
+  between renders and no check catches it.
 - check-render doesn't judge everything (see the QA brief's list). Before
   reporting, also look at the beat-end stills (`scripts/beat-stills.mts`)
   against each beat's `endFrame` text, and at every beat boundary and long
