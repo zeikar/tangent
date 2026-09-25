@@ -133,7 +133,7 @@ math { font-size: 1.1em; }
     </div>
     <div class="controls">
       <div class="row1">
-        <button class="play" id="play" type="button">▶ 나레이션 재생</button>
+        <button class="play" id="play" type="button">▶ 내레이션 재생</button>
         <span class="clock" id="clock">0.0 / 0.0초</span>
         <span class="nowcap" id="nowcap"></span>
       </div>
@@ -297,7 +297,7 @@ const dur = () => audio.duration || aligned.at(-1).start + 1;
 function seek(t) { if (t == null) return; audio.currentTime = Math.max(0, t - 0.05); audio.play().catch(() => {}); }
 playBtn.addEventListener('click', () => audio.paused ? audio.play().catch(() => {}) : audio.pause());
 audio.addEventListener('play', () => playBtn.textContent = '❚❚ 일시정지');
-audio.addEventListener('pause', () => playBtn.textContent = '▶ 나레이션 재생');
+audio.addEventListener('pause', () => playBtn.textContent = '▶ 내레이션 재생');
 
 let lastKey = '';
 function tick() {

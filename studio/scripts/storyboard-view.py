@@ -4,12 +4,14 @@ usage: python3 studio/scripts/storyboard-view.py episodes/<slug> [--fragment]
 
 Writes episodes/<slug>/storyboard.html: captions, each cue under the word that
 triggers it, and the narration playing in sync. Audio comes from the final
-narration (narration.mp3 + words.json) when it exists, otherwise from the
-approved take named in narration.json (<source>.wav + <source>.words.json).
+narration (narration.mp3 + words.json) when it was built from this
+storyboard, otherwise from the approved take named in narration.json
+(<source>.wav + <source>.words.json).
 --fragment omits the doctype and charset header, for publishing as an
 artifact (the host adds its own).
 """
 import base64
+import hashlib
 import json
 import re
 import subprocess
@@ -28,10 +30,16 @@ record = ep / "narration.json"
 source = json.loads(record.read_text())["source"] if record.exists() else "take1.wav"
 source = source.removesuffix(".wav")
 
-if (ep / "narration.mp3").exists() and (ep / "words.json").exists():
+# The final narration only counts if it was built from this storyboard;
+# after a storyboard rewrite it's stale until build-cues runs again.
+cues = ep / "cues.json"
+fresh = (cues.exists() and json.loads(cues.read_text()).get("storyboardSha256")
+         == hashlib.sha256((ep / "storyboard.json").read_bytes()).hexdigest())
+
+if fresh and (ep / "narration.mp3").exists() and (ep / "words.json").exists():
     audio = (ep / "narration.mp3").read_bytes()
     words = json.loads((ep / "words.json").read_text())
-    note = "최종 나레이션이에요(비트 사이 여백 포함)."
+    note = "최종 내레이션이에요(비트 사이 여백 포함)."
 elif (ep / f"{source}.wav").exists() and (ep / f"{source}.words.json").exists():
     # Embed the take as a small mp3; the page only needs it for listening.
     audio = subprocess.run(
