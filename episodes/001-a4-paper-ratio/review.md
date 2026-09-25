@@ -1,5 +1,213 @@
 # Review · 001-a4-paper-ratio
 
+## Final (v1 @1.08×) · Round 1
+
+**Verdict: ship.**
+
+This round reviewed the final render at 84c3dd4: v1's script and storyboard,
+narrated by take1@1.08.wav, on today's studio. It runs 47.5 s (1426 frames),
+inside topic.md's 40–50 s target. This is a new final, so it's a full pass; the
+v1 and v2 rounds below reviewed other renders.
+
+- **check-render** passes with two warns, both accepted.
+- **Narration, captions and facts are clean.** The last frame is
+  pixel-identical to frame 0.
+- **Four small things,** none of which misleads or blocks. The first is the one
+  worth fixing if anything is re-rendered.
+
+Evidence is in `review/f1/`:
+
+- `sheet-ends-f0-b5.png` and `sheet-ends-b6-b9.png`: f0 and every beat's last
+  frame;
+- `sheet-b6-x2.png`: f679–f684;
+- the cited frames.
+
+### Issues
+
+#### 1. Minor: B6's first step briefly shows "x²" (f682–f684, 22.73–22.80 s)
+
+- On "정리하면", x/2 swaps places with "= 1": x/2 arcs up and left while
+  "= 1" ducks under it.
+- At the top of the arc, x/2's numerator x stops just below and left of the
+  half's own x/2 edge label, whose "2" is right above the row's end. Both are
+  blue.
+- At f682 the gap between them is 6 px (`review/f1/f0682.png`), and 11 px at
+  f683 (`f0683.png`). Near the apex the fraction moves only 11–17 px/frame, so
+  for about 3 frames the pair reads as "x²".
+- That happens about a second before the narration says "제곱" (f711), which
+  makes it an odd preview.
+- Production's own nit, and I agree. It's more visible than v2's in-flight
+  "x¹": that was one frame at about 45 px/frame, and this is the slow apex of
+  an arc.
+- check-render's overlaps check doesn't catch it, because the glyphs never
+  touch.
+- **Fix (optional):** a lower arc for the passing token (duck "= 1" more,
+  raise x/2 less), or pass beneath. Owner: production (the swap path in
+  `morph.ts`). Moving the row down, away from the half's label, would also do
+  it; that's the storyboard's.
+
+#### 2. Minor: B5 starts with the picture still for 2.4 s (f500–f572)
+
+- B4's last change (x/2 fading in) ends at f500. Nothing in the visual zone
+  changes until "엑스" at f572 (`f0540.png`).
+- So the picture is still through B4's "돼요", the pause, and B5's opening
+  "모양이 같으려면". Only the caption changes, at f538.
+- This is the longest still stretch in the video. The next longest are B7's
+  intended silent hold (f964–f1017, 1.8 s), and B2's and B8's ends (1.5 s).
+- It's also the only one that spans the start of a new sentence. B5 has no cue
+  on its first word, so it misses the brief's "first visible change ≤ 3
+  frames" (check-render shows "—" for B5).
+- **Fix (optional):** a cue on "모양이", e.g. both sheets pulsing together as
+  "these two, same shape". Owner: storyboard.
+
+#### 3. Nit: B6's second step leaves the right side empty for 0.3 s (f716–f724)
+
+- "x · x/2 = 1 → x² = 2": x and "=" slide and stay. The "1" fades out over
+  f714–f716, and the "2" fades in with the ² at f725 (`f0720.png`).
+- For 9 frames the row reads "x =", and the ² lands just after "제곱은" ends
+  (f723).
+- This follows the token-morph rule: "1" and "2" share nothing, and fades never
+  overlap. Nothing is wrong on screen; it's just a short gap.
+- Owner: production, if anyone wants mapped parts to crossfade in place.
+
+#### 4. Nit: two x/2's stack in one column (B5 end to B6 step 1, f620–f676)
+
+- The equation's x/2 lands 42 px under the half's x/2 edge label, same column,
+  same blue (f675, `f0675.png`). The column reads x, 2, x, 2.
+- It's the same quantity, so it mostly reads as "this term is that side". It's
+  also the geometry behind issue 1.
+- Owner: storyboard (row placement), or leave it.
+
+### check-render
+
+My `--out` run matched the tracked `check.md` and `check.json` byte for byte:
+**0 fail, 2 warn, 14 pass**.
+
+- **overlaps (warn), accepted.**
+  - At f412–f414 the lifting half's bottom edge and its translucent fill
+    brush the top of rect's "x" (`f0413.png`). It's 3 frames at speed, and
+    reads as the half lifting off.
+- **readable (warn), accepted.**
+  - "A4" is fully visible for 6 frames (f0–5, `f0003.png`). The fold starts on
+    the first word. The caption "A4를 반으로 접어도" arrives at f4 and carries
+    the name. On a loop "A4" is on screen from B9, labeling the kept piece
+    from f1318 on, so about 3.6 s before the fold.
+  - "Letter" is fully visible for 13 frames (f162–174, `f0168.png`). It fades
+    in after the outline draws, the fold starts on "달라요", and the narration
+    says "레터" at f155 while the caption carries it.
+  - Both are inherent to v1's hook pacing.
+- **Passes at or near a limit:**
+  - B3's all-ink centering is +24 px (limit ±25). The sheet itself is
+    centered, and the offset is its "x" label hanging right; it looks
+    centered.
+  - The smallest glyph is 30.1 px, the "r" in "Letter" (floor 30).
+  - "어떤" starts 190 ms before its audible onset (limit ±200), so B3's
+    caption and sheet lead the voice by about 6 frames. That's fine for a
+    picture.
+  - B4's turning half touches the top bound: ink at y 240 at f429 (bound
+    y ≥ 240), for about one frame (`f0429.png`).
+- **Everything else passes:**
+  - freshness;
+  - technical: BT.709 TV range, 30 fps, 48 kHz;
+  - bounds: ink x 144–935, y 240–1252;
+  - legibility;
+  - labels;
+  - captions: all 28 on their cue, one line each;
+  - reaction: +1 at every beat except B5 (see issue 2);
+  - cues and blank runs;
+  - loudness: −14.1 LUFS, −2.0 dBTP;
+  - A/V sync: 0 ms;
+  - words: 21 of 21;
+  - loop: 0 px differ (`f1425.png` matches f0).
+
+### Checked and fine
+
+- **End frames.** Every beat's last frame matches its `endFrame`
+  (`sheet-ends-*.png`):
+  - B1: the teal half lies exactly on the dashed outline, with no name;
+  - B2: Letter's half is taller than its outline, with the red overhang at
+    y 314–434 and "1.29 → 1.55";
+  - B3: blue short sides with 1, yellow long sides with x;
+  - B4: the rect with its midline, and the upright half labeled 1 and x/2,
+    bottoms level;
+  - B5: x : 1 = 1 : x/2 in role colors;
+  - B6: the rect's label is √2, and x = √2 is boxed;
+  - B7: the sweep at 1.414 with the half exactly on it, the marker on √2;
+  - B8: 210 mm and 297 mm, with 297 ÷ 210 ≈ 1.41429 over √2 ≈ 1.41421,
+    aligned on ≈, 1.414 yellow and the tails muted;
+  - B9: equal to f0.
+- **Motion,** sampled every 1–3 frames at every beat boundary and long move.
+  Each reads as what it means:
+  - B1: two folds. The flap folds over the midline, and the half turns 90° and
+    grows back onto the outline, with the pulse on "그대로예요" and on the
+    landing.
+  - B2: Letter's fold ends taller than its outline, and the red and "→ 1.55"
+    land on "길쭉해져요".
+  - B3: edges and labels land on their words.
+  - B4: lift, stand up, set down, with the short-edge pulse on "짧은".
+  - B5: each edge pair pulses as its term appears, and "=" comes last.
+  - B6: token morphs with x on screen throughout, and the rect's x becoming √2
+    on "이가".
+  - B7: the gap closes, crosses near 1.414 (f880–f886) and reopens, then
+    settles on 1.414 by f940, with the pulse on "딱".
+  - B8: the sheet becomes A4, and the dimensions and rows arrive on their
+    words.
+  - B9: four cuts, A1 → A4 with names, the A4 pulse, and the zoom into B1's
+    frame.
+  - Exits now fade evenly over 6 frames, and no exit overlaps new content.
+- **Balance.**
+  - Beat-end ink centers are at y 744–814 (zone center 760), except B3 (646)
+    and B4 (686). The sheet sits high there so B4's lift has room above and
+    B5's equation room below. It keeps one position from B3 to B6, which is
+    the right trade.
+  - Horizontal centers are within +22 px.
+- **Readability.**
+  - Red ("1.55", "Letter", the gaps) and muted text are legible on the dark
+    ground.
+  - Display-style x/2 labels read at the size of the 1 labels.
+  - Yellow (long sides) and blue (short sides) are easy to tell apart.
+- **Captions.** All 28 match the storyboard's text, one line each. The inline
+  x/2 in B4's and B5's captions reads clearly.
+- **Narration.**
+  - Whisper large-v3-turbo on the render's audio matches every line of the
+    읽기용 text (digits for spelled numbers: "2분의 x", "1.414", "4번").
+  - The only spacing differences are Whisper's ("레터용지", "접어세우면",
+    "나눠보면").
+- **Facts.**
+  - `verify.py` passes.
+  - Recomputed on screen:
+    - Letter 1.29 → 1.55 (11/8.5 ≈ 1.294, 8.5/5.5 ≈ 1.545, C11);
+    - Letter's fitted half is 742 px tall on a 621 outline, so the overhang
+      is 120 px;
+    - x : 1 = 1 : x/2, so x · x/2 = 1, x² = 2, x = √2 (C3);
+    - B7's value label runs 1.200 → 1.700 → 1.414, with the Letter mark at
+      1.294;
+    - 210 × 297 mm (C4);
+    - 297 ÷ 210 ≈ 1.41429 and √2 ≈ 1.41421, both with ≈ as research.md asks
+      (C8);
+    - "거의 정확히 √2";
+    - A0 · 1 m² as the design area (C5);
+    - A0 → A4 in four halvings (C2, C6).
+- **Shorts UI.** Ink stays within x 144–935 and y 240–1252. The √y mark is
+  the theme's `channelMark`.
+
+### For the human
+
+- **storyboard.json's notes are stale against today's studio.** They say
+  "ease.out for appear, reveal and exit" and give Mismatch opacity 0.35. The
+  render uses the even exit fade, smooth label flights and the 4.3:1 red. The
+  video is right; only the spec text lags. Owner: storyboard, as
+  housekeeping.
+
+### What the brief should have told me
+
+- **A still-picture threshold.** The brief checks the first change after a
+  beat's first word, but not long still stretches inside or across beats. A
+  "longest still run" line in check-render (I measured runs of 0.8 s or
+  more) would make issue 2 a number, not a judgment.
+- **How to name rounds for a new final.** Evidence went to `review/f1/` on
+  the orchestrator's instruction; the brief says `r<N>`.
+
 ## v2 · Round 3
 
 **Verdict: ship.**
