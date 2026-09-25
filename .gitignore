@@ -3,6 +3,7 @@
 .env.*
 node_modules/
 .playwright-mcp/
+.hyperclaude/
 
 # Episode media stays out of git (see
 # docs/decisions.md → Episode folders and git).
