@@ -108,7 +108,7 @@ nobody improvises.
   `base` / `slow` (style-guide durations). Nothing else.
 - Player rules you can rely on: cues sharing an anchor run in parallel, except
   that an appear or reveal sharing its anchor with exits waits until those
-  exits end. Every exit is a 0.2 s ease-out fade, whatever its speed. An
+  exits end. Every exit is a 0.2 s even fade, whatever its speed. An
   element with `visibleAtStart` is drawn from the beat's first frame.
 
 ### Captions

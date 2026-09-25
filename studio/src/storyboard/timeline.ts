@@ -93,14 +93,17 @@ export const mix = (a: string, b: string, t: number) =>
 
 export const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
-// Easing: out for entrances and exits (both start moving on their word),
-// smooth for everything else, unless the cue asks for linear.
+// Easing: out for entrances, an even fade for exits (both start on their
+// word), smooth for everything else, a part flying in from a label included
+// (it's a move), unless the cue asks for linear.
 const easeFor = (c: StoryboardCue) =>
   c.params?.ease === "linear"
     ? ease.linear
-    : c.action === "appear" || c.action === "reveal" || c.action === "exit"
-      ? ease.out
-      : ease.smooth;
+    : c.action === "exit"
+      ? ease.exit
+      : (c.action === "appear" || c.action === "reveal") && !c.params?.fromLabel
+        ? ease.out
+        : ease.smooth;
 
 export const resolveTimeline = (sb: Storyboard, cues: Cues): ElementTimeline[] => {
   if (sb.beats.length !== cues.beats.length) throw new Error("cues.json beats differ from storyboard");

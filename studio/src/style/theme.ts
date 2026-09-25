@@ -53,7 +53,10 @@ const smooth = (t: number) =>
 
 export const ease = {
   smooth, // moves and transforms (default)
-  out: Easing.bezier(0.16, 1, 0.3, 1), // entrances and exits: move at once, settle
+  out: Easing.bezier(0.16, 1, 0.3, 1), // entrances: move at once, settle
+  // Exits fade evenly: they start at once and stay visible across their 0.2 s
+  // (out spent two thirds of it in the first frame, so they read as cuts).
+  exit: (t: number) => t,
   linear: (t: number) => t, // tracing along with time
 } as const;
 
