@@ -1,8 +1,8 @@
 {
  "episode": "001-a4-paper-ratio",
  "render": "render.mp4",
- "storyboardSha256": "e5e117fa4eb6e08c4f6564e6a80539382be6f19afd808c4f0470a17e287465d9",
- "studioSha256": "abafa13c9dbe4b546fea92e175a5480e60fc47975aa8a3e540e10cac8aa8be98",
+ "storyboardSha256": "ed5a8cc4e8198c5a3d126d1f1e437c5e6b8c51d8ecb90ae610d7135a35712dd5",
+ "studioSha256": "6e4e42ba9b320aa9d96bbdd3fadf5190ed45fefa072b4b9b06cd8ecf4009d2a9",
  "verdict": "fail",
  "counts": {
   "fail": 1,
@@ -27,18 +27,18 @@
   {
    "id": "bounds",
    "status": "pass",
-   "summary": "all 1248 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 145–935, y 264–1174",
+   "summary": "all 1248 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 145–935, y 256–1191",
    "cites": []
   },
   {
    "id": "centering",
    "status": "pass",
-   "summary": "B1 -1/0, B2 0/0, B3 0/0, B4 -9/-9, B5 +11/-9, B6 +12/-11, B7 +13/-11, B8 +13/-10, B9 0/+0, B10 0/0, B11 0/0 (px off x 540: all ink / picture without edge labels; tolerance ±25)",
+   "summary": "B1 -2/0, B2 0/0, B3 0/0, B4 -8/-9, B5 +11/-9, B6 +12/-11, B7 +12/-11, B8 +12/-10, B9 -2/0, B10 0/0, B11 0/0 (px off x 540: all ink / picture without edge labels; tolerance ±25)",
    "details": [
     {
      "beat": "B1",
      "frame": 123,
-     "off": -1.5,
+     "off": -2,
      "pictureOff": 0,
      "status": "pass"
     },
@@ -59,7 +59,7 @@
     {
      "beat": "B4",
      "frame": 457,
-     "off": -9.5,
+     "off": -8.5,
      "pictureOff": -9.049999999999955,
      "status": "pass"
     },
@@ -80,28 +80,28 @@
     {
      "beat": "B7",
      "frame": 752,
-     "off": 13,
+     "off": 12,
      "pictureOff": -11.5,
      "status": "pass"
     },
     {
      "beat": "B8",
      "frame": 890,
-     "off": 13,
+     "off": 12,
      "pictureOff": -9.549999999999955,
      "status": "pass"
     },
     {
      "beat": "B9",
      "frame": 1033,
-     "off": 0,
-     "pictureOff": 0.25,
+     "off": -2,
+     "pictureOff": 0,
      "status": "pass"
     },
     {
      "beat": "B10",
      "frame": 1180,
-     "off": -0.5,
+     "off": 0,
      "pictureOff": 0,
      "status": "pass"
     },
@@ -139,7 +139,7 @@
     {
      "id": "diffNote",
      "kind": "label",
-     "text": "설계값과약0.3mm차이",
+     "text": "설계값과최대약0.3mm차이",
      "char": "m",
      "height": 31,
      "frame": 1005
@@ -856,7 +856,7 @@
   {
    "id": "loop",
    "status": "pass",
-   "summary": "151 visual-zone pixels differ by more than 16 levels between the last and first frame (limit 500)",
+   "summary": "145 visual-zone pixels differ by more than 16 levels between the last and first frame (limit 500)",
    "cites": []
   }
  ]

@@ -6,8 +6,8 @@
 |---|---|---|
 | freshness | pass | render.mp4, cues.json and the studio code all match this storyboard.json |
 | technical | pass | 1080×1920 yuv420p bt709 tv, 30 fps, 1248 frames (41.60 s); audio 48000 Hz, last 100 ms at -120 dBFS |
-| bounds | pass | all 1248 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 145–935, y 264–1174 |
-| centering | pass | B1 -1/0, B2 0/0, B3 0/0, B4 -9/-9, B5 +11/-9, B6 +12/-11, B7 +13/-11, B8 +13/-10, B9 0/+0, B10 0/0, B11 0/0 (px off x 540: all ink / picture without edge labels; tolerance ±25) |
+| bounds | pass | all 1248 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 145–935, y 256–1191 |
+| centering | pass | B1 -2/0, B2 0/0, B3 0/0, B4 -8/-9, B5 +11/-9, B6 +12/-11, B7 +12/-11, B8 +12/-10, B9 -2/0, B10 0/0, B11 0/0 (px off x 540: all ink / picture without edge labels; tolerance ±25) |
 | legibility | pass | smallest glyph "m" 31 px in dim210 "210\,\mathrm{mm}" (floor 30 px, 55 text items) |
 | overlaps | pass | no text meets other text, lines, or a fill drawn over it (in or across elements); no entrance draws while an exit is still visible |
 | labels | pass | every resting edge label sits at least 2.5× nearer its own edge than any other line; closest: sheet "x" 12 px from its edge, 35 px from half's |
@@ -19,7 +19,7 @@
 | loudness | pass | -14.1 LUFS integrated (target -14 ±1), true peak -2.1 dBTP (max -1), range 3.5 LU |
 | av-sync | pass | render audio is 0 ms off against narration.mp3 (limit ±20 ms) |
 | words | fail | 21 of 22 words after a pause start within 70 ms of an audible onset (widest "똑같이" at 0.1 s, +70 ms); limit ±200 ms; off: "이" no onset |
-| loop | pass | 151 visual-zone pixels differ by more than 16 levels between the last and first frame (limit 500) |
+| loop | pass | 145 visual-zone pixels differ by more than 16 levels between the last and first frame (limit 500) |
 
 **readable** (warn)
 

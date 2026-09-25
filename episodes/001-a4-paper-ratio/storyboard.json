@@ -4,7 +4,7 @@
  "notes": [
   "Geometry is px in the 1080×1920 frame, origin top-left; center is [x, y].",
   "Sizes: B1 and B11's slots are 320 wide (the halves' quarter turn sweeps a circle of radius 199 px about their centers, which is what fits between x 140 and 940); the swept sheet in B2–B4 is 400 wide; the proof pair in B4–B8 is 310 wide each; the real A4 in B9 is 360 wide and the A3 in B10 is 509 × 720.",
-  "Vertical use: B1's notes sit under the sheets; B2–B4's sheet sits on y 1052 above compareNote; B5–B6's pair sits low (bottoms y 952) and B7 lifts it to y 833.4 so the equation row fits under it; B9–B10 fill y 370–1154.",
+  "Vertical use: B1's notes sit under the sheets; B2–B4's sheet sits on y 1052 above compareNote; B5–B6's pair sits low (bottoms y 952) and B7 lifts it to y 853.4 so the equation row fits under it; B9–B10 fill y 370–1154.",
   "Compositions center on x 540 and keep all ink, labels and every moving shape's whole sweep within x 140–940, y ≥ 240. check-render wants both the whole ink and the picture without edge labels within ±25 px of x 540 at each beat end, so the proof pairs (B4–B8) sit a few px right of group-center, and the A3 label goes below its outline.",
   "Draw order is declaration order across the episode (Mismatch beneath its two sheets). The loop depends on it: a4Ghost draws beneath a4Half at frame 0, and a3 beneath page at the end.",
   "The loop: B11's last frame must equal B1's frame 0 (dashed ghosts, teal lower halves, names A4 and 레터, no notes). a3 ends as a4Ghost's box, page ends as a4Half's box with name 'A4', letterGhost2 and letterHalf2 copy sheet and half's frame-0 props. Every prop that draws pixels must match: stroke, dashed, fillOpacity, strokeWidth, names.",
@@ -139,6 +139,38 @@
      "where": "Letter's lower half, already folded: 320 × 207.1 inside the bottom of sheet; name centered in it"
     },
     {
+     "id": "a4GhostTop",
+     "component": "PaperRect",
+     "props": {
+      "center": [
+       345.0,
+       673.73
+      ],
+      "w": 320.0,
+      "h": 452.55,
+      "stroke": "muted",
+      "fillOpacity": 0,
+      "dashed": true
+     },
+     "where": "a copy of a4Ghost drawn above a4Half (declared after it), so the original outline stays visible while the half turns, grows and lands on it; exits at B2's start"
+    },
+    {
+     "id": "letterGhostTop",
+     "component": "PaperRect",
+     "props": {
+      "center": [
+       735.0,
+       692.94
+      ],
+      "w": 320.0,
+      "h": 414.12,
+      "stroke": "muted",
+      "fillOpacity": 0,
+      "dashed": true
+     },
+     "where": "a copy of sheet drawn above half, for the same reason: Letter's outline and its fitted half's edge read as two boundaries across the gap"
+    },
+    {
      "id": "letterGap",
      "component": "Mismatch",
      "props": {
@@ -182,6 +214,29 @@
      },
      "target": "foldNote",
      "action": "appear",
+     "speed": "fast"
+    },
+    {
+     "at": {
+      "word": "똑같이"
+     },
+     "target": "a4GhostTop",
+     "action": "appear",
+     "params": {
+      "mode": "fade"
+     },
+     "speed": "fast",
+     "note": "fades in exactly over a4Ghost, so nothing changes until the growing half passes beneath it; not at frame 0, which keeps the loop"
+    },
+    {
+     "at": {
+      "word": "똑같이"
+     },
+     "target": "letterGhostTop",
+     "action": "appear",
+     "params": {
+      "mode": "fade"
+     },
      "speed": "fast"
     },
     {
@@ -244,7 +299,19 @@
       "color": "text"
      },
      "speed": "base",
-     "note": "'이쪽만': the fitted A4 half itself flashes"
+     "note": "'이쪽만': the merge flashes: the fitted half and the outline it landed on, together"
+    },
+    {
+     "at": {
+      "word": "이쪽만"
+     },
+     "target": "a4GhostTop",
+     "action": "pulse",
+     "params": {
+      "edges": "all",
+      "color": "text"
+     },
+     "speed": "base"
     },
     {
      "at": {
@@ -301,6 +368,30 @@
      "at": {
       "word": "길쭉한"
      },
+     "target": "a4GhostTop",
+     "action": "exit"
+    },
+    {
+     "at": {
+      "word": "길쭉한"
+     },
+     "target": "letterGhostTop",
+     "action": "moveTo",
+     "params": {
+      "center": [
+       540,
+       793.18
+      ],
+      "w": 400.0,
+      "h": 517.65
+     },
+     "speed": "base",
+     "note": "rides along with sheet's slide so it leaves no trail, then fades"
+    },
+    {
+     "at": {
+      "word": "길쭉한"
+     },
      "target": "foldNote",
      "action": "exit"
     },
@@ -332,6 +423,14 @@
      },
      "speed": "base",
      "note": "Letter's pair slides to the center and grows to 400 wide (bottom y 1052); half and letterGap follow"
+    },
+    {
+     "at": {
+      "word": "정도를"
+     },
+     "target": "letterGhostTop",
+     "action": "exit",
+     "note": "the comparison is over; the sweep uses sheet, drawn beneath the half as before"
     },
     {
      "at": {
@@ -771,9 +870,17 @@
       "edges": "long"
      },
      "speed": "base"
+    },
+    {
+     "at": {
+      "word": "맞아요"
+     },
+     "target": "timesNote",
+     "action": "exit",
+     "note": "gone before B7 lifts the half up through its place, however soft the exit fade"
     }
    ],
-   "endFrame": "Sheet 310 × 438.4 at (328.5, 732.8) with labels 1 and x; half now 310 × 438.4 at (728.5, 732.8), labels x/2 × x (blue, below) and x (yellow, right, ink ends near x 930); tops level at y 513.6. '×x' at (728, 470). Caption '높이가 맞아요.'",
+   "endFrame": "Sheet 310 × 438.4 at (328.5, 732.8) with labels 1 and x; half now 310 × 438.4 at (728.5, 732.8), labels x/2 × x (blue, below) and x (yellow, right, ink ends near x 930); tops level at y 513.6. '×x' gone (it left on '맞아요'). Caption '높이가 맞아요.'",
    "claims": []
   },
   {
@@ -824,19 +931,12 @@
        }
       ],
       "centerX": 540,
-      "y": 1106
+      "y": 1126
      },
-     "where": "one row right under the lifted pair's width labels, baseline y 1106 (ink y 998–1172 at 80 px); its two sides arrive from those labels, and every step of B8 happens on this row"
+     "where": "one row right under the lifted pair's width labels, baseline y 1126 (ink y 1018–1192 at 80 px); its two sides arrive from those labels, and every step of B8 happens on this row"
     }
    ],
    "cues": [
-    {
-     "at": {
-      "word": "너비도"
-     },
-     "target": "timesNote",
-     "action": "exit"
-    },
     {
      "at": {
       "word": "너비도"
@@ -846,11 +946,11 @@
      "params": {
       "center": [
        328.48,
-       614.2
+       634.2
       ]
      },
      "speed": "base",
-     "note": "the pair lifts 118.6 px, both bottoms staying on one line (y 833.4), to make room for the row"
+     "note": "the pair lifts 98.6 px, both bottoms staying on one line (y 853.4), to make room for the row"
     },
     {
      "at": {
@@ -861,7 +961,7 @@
      "params": {
       "center": [
        728.48,
-       614.2
+       634.2
       ],
       "w": 310.0,
       "h": 438.41
@@ -966,7 +1066,7 @@
      "note": "'=' last, after the 1 has landed (f726), so no flight crosses it"
     }
    ],
-   "endFrame": "Sheet at (328.5, 614.2) and half at (728.5, 614.2), both 310 × 438.4, bottoms at y 833.4, each with only its yellow x on the right (no width labels left on the sheets). Row 'x/2 × x = 1' (both sides blue) centered on x 540, baseline 1106. No top note. Caption '같아야 해요.'",
+   "endFrame": "Sheet at (328.5, 634.2) and half at (728.5, 634.2), both 310 × 438.4, bottoms at y 853.4, each with only its yellow x on the right (no width labels left on the sheets). Row 'x/2 × x = 1' (both sides blue) centered on x 540, baseline 1126. No top note. Caption '같아야 해요.'",
    "claims": [
     "C3"
    ]
@@ -998,12 +1098,12 @@
       "text": "A4의 설계 비율 $\\sqrt{2} \\approx 1.414$",
       "at": [
        540,
-       330
+       290
       ],
       "color": "text",
       "mathColor": "yellow"
      },
-     "where": "top of the visual zone, centered, above the pair (tops at y 395)"
+     "where": "top of the visual zone, centered, above the pair (tops at y 415)"
     }
    ],
    "cues": [
@@ -1142,7 +1242,7 @@
      "note": "after the last transform has landed"
     }
    ],
-   "endFrame": "Row 'x = √2' (both yellow, √2 boxed yellow) centered on x 540, baseline 1106; sheet and half as in B7; 'A4의 설계 비율 √2 ≈ 1.414' at y 330. Caption '$x$는 $\\sqrt{2}$가 돼요.'",
+   "endFrame": "Row 'x = √2' (both yellow, √2 boxed yellow) centered on x 540, baseline 1126; sheet and half as in B7; 'A4의 설계 비율 √2 ≈ 1.414' at y 290. Caption '$x$는 $\\sqrt{2}$가 돼요.'",
    "claims": [
     "C3"
    ]
@@ -1205,14 +1305,14 @@
      "id": "diffNote",
      "component": "Note",
      "props": {
-      "text": "설계값과 약 $0.3\\,\\mathrm{mm}$ 차이",
+      "text": "설계값과 최대 약 $0.3\\,\\mathrm{mm}$ 차이",
       "at": [
        540,
-       1095
+       1120
       ],
       "color": "muted"
      },
-     "where": "under the 210 mm label: what '조금' means (C14: A4's design size ≈ 210.2 × 297.3 mm)"
+     "where": "centered under the whole group, well below the 210 mm label so it reads as the sheet's, not the width's: what '조금' means. '최대' because the width is 0.22 mm off and the height 0.30 mm (C14: design ≈ 210.2 × 297.3 mm)"
     }
    ],
    "cues": [
@@ -1303,7 +1403,7 @@
      "note": "'조금 달라요' points at a size: under a millimetre"
     }
    ],
-   "endFrame": "Sheet 360 × 509.1 at (393.3, 645.4), text outline, name '실제 A4'; blue dimension line 40 px below with '210 mm', yellow one 40 px right with '297 mm' (ink ends near x 867); '설계값과 약 0.3 mm 차이' (muted) at y 1095. Caption 'mm 단위라 조금 달라요.'",
+   "endFrame": "Sheet 360 × 509.1 at (393.3, 645.4), text outline, name '실제 A4'; blue dimension line 40 px below with '210 mm', yellow one 40 px right with '297 mm' (ink ends near x 867); '설계값과 최대 약 0.3 mm 차이' (muted) at y 1120. Caption 'mm 단위라 조금 달라요.'",
    "claims": [
     "C4",
     "C8",

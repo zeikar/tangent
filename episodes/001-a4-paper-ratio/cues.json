@@ -1,5 +1,5 @@
 {
- "storyboardSha256": "e5e117fa4eb6e08c4f6564e6a80539382be6f19afd808c4f0470a17e287465d9",
+ "storyboardSha256": "ed5a8cc4e8198c5a3d126d1f1e437c5e6b8c51d8ecb90ae610d7135a35712dd5",
  "fps": 30,
  "durationInFrames": 1248,
  "beats": [
@@ -21,6 +21,18 @@
    "cues": [
     {
      "target": "foldNote",
+     "action": "appear",
+     "word": "똑같이",
+     "frame": 3
+    },
+    {
+     "target": "a4GhostTop",
+     "action": "appear",
+     "word": "똑같이",
+     "frame": 3
+    },
+    {
+     "target": "letterGhostTop",
      "action": "appear",
      "word": "똑같이",
      "frame": 3
@@ -53,6 +65,12 @@
     },
     {
      "target": "a4Half",
+     "action": "pulse",
+     "word": "이쪽만",
+     "frame": 58
+    },
+    {
+     "target": "a4GhostTop",
      "action": "pulse",
      "word": "이쪽만",
      "frame": 58
@@ -94,6 +112,18 @@
      "frame": 124
     },
     {
+     "target": "a4GhostTop",
+     "action": "exit",
+     "word": "길쭉한",
+     "frame": 124
+    },
+    {
+     "target": "letterGhostTop",
+     "action": "moveTo",
+     "word": "길쭉한",
+     "frame": 124
+    },
+    {
      "target": "foldNote",
      "action": "exit",
      "word": "길쭉한",
@@ -110,6 +140,12 @@
      "action": "moveTo",
      "word": "길쭉한",
      "frame": 124
+    },
+    {
+     "target": "letterGhostTop",
+     "action": "exit",
+     "word": "정도를",
+     "frame": 139
     },
     {
      "target": "sheet",
@@ -312,6 +348,12 @@
      "action": "pulse",
      "word": "높이가",
      "frame": 617
+    },
+    {
+     "target": "timesNote",
+     "action": "exit",
+     "word": "맞아요",
+     "frame": 629
     }
    ]
   },
@@ -335,12 +377,6 @@
     }
    ],
    "cues": [
-    {
-     "target": "timesNote",
-     "action": "exit",
-     "word": "너비도",
-     "frame": 652
-    },
     {
      "target": "sheet",
      "action": "moveTo",
