@@ -48,9 +48,9 @@ off-frame) to be the main failure mode.
 
 ## Pipeline: file handoffs between stages
 
-`topic.md → research.md (sourced) → script.md + narration take →
-word timestamps → storyboard.json → beat cues → scenes → render.mp4 →
-review.md → publish.md`
+`topic.md → research.md (sourced) → two script variants + takes →
+script.md + narration take → word timestamps → storyboard.json → beat cues →
+scenes → render.mp4 → review.md → publish.md`
 
 Each stage reads the previous file and writes its own, so any stage can be
 re-run, hand-edited, or gated by a human.
@@ -58,57 +58,77 @@ re-run, hand-edited, or gated by a human.
 - **Storyboard is its own stage.** In this style the visual *is* the
   explanation, so script and visuals are designed together. Otherwise the scene
   agent improvises and narration and picture drift apart.
-- **Audio before the storyboard.** The TTS take is generated right after the
-  script and approved with it: the human hears it and picks a speed variant.
-  The picked take is aligned to word timestamps, and the storyboard is written
-  against those real timings, then cues bind animation to the words. Never time
-  animation by hand-set seconds. (Milestone 1 wrote the storyboard on
-  estimated timings; the real ones exposed collisions only after rendering.)
+- **Two script variants.** Two writers draft the script independently, and
+  the human picks one by ear. Episode 001's v1 and v2 differed in approach and
+  in luck at once, so one draft can't tell the human's taste from a draw;
+  takes are free and a minute each.
+- **Audio before the storyboard.** Each variant's TTS take is generated right
+  after the script, with sped-up copies, and the human picks a script and a
+  speed together on one listening page. The picked take is aligned to word
+  timestamps, and the storyboard is written against those real timings, then
+  cues bind animation to the words. Never time animation by hand-set seconds.
+  (Milestone 1 wrote the storyboard on estimated timings; the real ones
+  exposed collisions only after rendering.)
 - **Review looks at pixels.** Extract frames per beat and check them visually:
   overlap, off-frame, Shorts UI safe areas (bottom/right), legibility. Check
   facts against research.md sources, and check math computationally where
   possible. The reviewer is a fresh agent, not the one that made the scenes.
-- **Human checkpoints:** topic, script + take, storyboard, final cut with its
-  upload metadata. Each is something to hear or see (table-read audio, the
-  storyboard viewer page, the video), not a document to read. No full autonomy
-  early on.
+- **Human checkpoints:** topic, script + take, storyboard, the first render
+  (feel, before any polish), and the final cut with its upload metadata. Each
+  is something to hear or see (the takes page, the storyboard viewer page, the
+  video), not a document to read. No full autonomy early on.
 
 ## Agents: one specialist per stage group
 
 Each stage group belongs to a specialist agent: a fresh subagent that reads the
 previous stage's files and writes its own. Agents collaborate only through
-files. The main conversation orchestrates: it writes each agent's brief, passes
-files along, and stops at the human checkpoints.
+files. Each agent is a stage skill in `.claude/skills/` that runs as a forked
+subagent (`/qa <slug>`). The main conversation orchestrates with the `episode`
+skill, its runbook: it runs the tools between stages, passes files along, and
+stops at the human checkpoints.
+
+Stage numbers follow the `episode` runbook.
 
 | Agent | Stages | Reads → writes |
 | ----- | ------ | -------------- |
 | Topic | 1 | past episodes → `topic.md` (candidates, duplicate check) |
-| Research | 3 | `topic.md` → `research.md` (claims, sources, dates), `verify.py` |
-| Script & storyboard | 4–5 | `topic.md`, `research.md` → `script.md`; then the approved take's words → `storyboard.json` |
-| Production | 6–7 | `storyboard.json`, approved take → beat cues → scenes → `render.mp4` |
-| QA | 8 | render, `research.md` → `review.md` (captions, audio sync, layout, facts) |
+| Research | 2 | `topic.md` → `research.md` (claims, sources, dates), `verify.py` |
+| Script (×2) | 3 | `topic.md`, `research.md` → `script.<variant>.md` |
+| Storyboard | 5 | picked `script.md`, the approved take's words → `storyboard.json` |
+| Production | 6, 8 (fixes) | `storyboard.json`, approved take → beat cues → scenes → `render.mp4`; after the first render, every fix |
+| QA | 7–8 | render, `research.md` → `review.md` (captions, audio sync, layout, facts) |
 | Publish | 9 | approved render, `script.md`, `research.md`, `docs/channel.md` → `publish.md` (title, description, tags, playlist, thumbnail), `publish/` |
 
-- Script and storyboard share one agent because the visual is the explanation
-  (see Pipeline). Between its two passes the orchestrator runs the narration
-  take (`studio/scripts/narrate.mts`), and the human approves script and take
-  before the storyboard.
+- Script and storyboard are designed together because the visual is the
+  explanation (see Pipeline): the writer gives each beat one picture in its
+  `비주얼` line, and the storyboard agent realizes it, reporting where it
+  can't. Milestone 1 used one agent for both passes; skills start fresh each
+  run and can't be resumed across sessions, so the `비주얼` line carries the
+  intent. Between the two stages the orchestrator runs the takes
+  (`studio/scripts/narrate.mts`), and the human picks script and take before
+  the storyboard.
+- **After the first render, one agent owns every fix.** The production agent
+  edits `storyboard.json` and `studio/` alike and renders itself. In
+  milestone 1, spec fixes and player fixes went to two agents, and relaying
+  what one learned to the other became the main cost (~12 messages in one
+  round) and caused a render race. What is said or claimed (read-aloud,
+  captions, claim IDs) still goes back to the script stage.
 - QA is never the agent that built the scenes.
 - **A second model critiques twice.** Codex, in a read-only sandbox
-  (`studio/scripts/critique.mts`), reviews the script before the take
-  (editorial: hook, curiosity arc, pacing) and the final cut before the human
-  (as a viewer, from contact sheets). Its findings are advice, not gates: at
-  most two critique-and-revise rounds per stage, the orchestrator picks which
-  findings to apply (the critic doesn't see every constraint, e.g. the upload
-  title or the pronunciation list), and then the human judges. In
-  milestone 1 an outside Codex review caught what no Claude agent had: the
+  (`studio/scripts/critique.mts`), reviews each script variant before the
+  takes (editorial: hook, curiosity arc, pacing) and the first render as a
+  viewer, from contact sheets, while QA and the human look at it too. Its
+  findings are advice, not gates: at most two critique-and-revise rounds per
+  stage, the orchestrator picks which findings to apply (the critic doesn't
+  see every constraint, e.g. the upload title or the pronunciation list), and
+  then the human judges. In milestone 1 an outside Codex review caught what no Claude agent had: the
   episode explained well but never made the viewer wonder. But the rewrite
   that followed its advice as a checklist (v2) came out busier and was liked
   less than the original, so critique is weighed against the human's feel,
   and the human watches the first render before any critique-driven polish.
-- In milestone 1 the briefs are hand-written in `docs/briefs/`. Whatever a brief
-  has to carry beyond the input files shows what the handoff files are missing.
-  The briefs become the stage skills.
+- Milestone 1's hand-written briefs became the stage skills; the Codex
+  critics' briefs live next to `critique.mts`. Whatever a skill has to carry
+  beyond its input files shows what the handoff files are missing.
 
 ## Episode folders and git
 

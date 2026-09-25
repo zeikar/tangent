@@ -42,6 +42,8 @@ critique, and deterministic render stamping.
    upload (docs/channel.md → Uploading by API).
 5. Episode 002 from topic.md's shelved candidates, run through the skills.
 
+Items 1–3 were done first in milestone 2 (docs/milestone-2-notes.md).
+
 ## v1 production summary
 
 v1 of episode 001 reached QA's "ship" on 2026-09-25 after three rounds
