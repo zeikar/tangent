@@ -8,10 +8,44 @@ For each stage, record: time spent (agent work vs. waiting on a human),
 blockers, repeated or mechanical work, and silent failures (things that looked
 fine until someone looked at the pixels).
 
-## Summary
+## Outcome
 
-Episode 001 shipped on 2026-09-25 after three QA rounds: 51.07 s, QA verdict
-"ship". Times are wall-clock from the log below; "human wait" is time the
+Episode 001 was published on 2026-09-26: v1's story, narrated by v1's take at
+1.08×, rendered on the studio that the whole milestone built (47.5 s). Along
+the way: v1 (three QA rounds, then a post-ship regression fix), a v2 rewrite
+driven by an outside Codex review (three more QA rounds, two critique rounds),
+and the human choosing v1's flow over v2 by feel.
+
+**What the milestone settled**
+- The stack works: Remotion with KaTeX token morphs; no Manim needed.
+- The pipeline order: script + take (approved together) → storyboard on real
+  timings → cues → scenes → render → QA → publish (decisions.md → Pipeline).
+- Specialist agents collaborating through files work; relaying between them
+  is the orchestrator's main cost.
+- Checks and critics measure proxies. The human's feel decides, and belongs
+  before polish loops (decisions.md → Agents).
+
+**Now automated as studio tools:** narration takes with tempo variants,
+forced alignment, cue building, the storyboard player, `check-render`
+(render QA in ~10 s), `measure-tex`, the storyboard viewer page, Codex
+critique, and deterministic render stamping.
+
+**Next (milestone 2 candidates)**
+1. Turn the briefs into stage skills (`.claude/skills/`), starting with the
+   stages that now run the same way every time: narration, production, QA,
+   publish.
+2. Cut relay cost: a shared per-episode change log, or one agent owning both
+   storyboard and production fixes after the first render.
+3. Two script variants at the script checkpoint, and the human's look at the
+   first render before any polish round.
+4. Optional: fill upload metadata through `videos.update` after a Studio
+   upload (docs/channel.md → Uploading by API).
+5. Episode 002 from topic.md's shelved candidates, run through the skills.
+
+## v1 production summary
+
+v1 of episode 001 reached QA's "ship" on 2026-09-25 after three rounds
+(51.07 s). Times are wall-clock from the log below; "human wait" is time the
 pipeline sat on a human decision.
 
 | Stage | Agent time | Human wait | Blockers | Repeated work | Automate next? |

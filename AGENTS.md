@@ -6,8 +6,11 @@ Agent-driven short-form video studio: math / science / tech / engineering
 explainers with code-rendered animation (3Blue1Brown-style). Claude Code agents
 run the production pipeline; a human approves at checkpoints.
 
-Status: pre-code. Read [docs/decisions.md](docs/decisions.md) before proposing
-stack, pipeline, or format changes.
+Status: milestone 1 done; episode 001 published 2026-09-26. Stages run in
+conversation from the hand-written briefs in `docs/briefs/`. Read
+[docs/decisions.md](docs/decisions.md) before proposing stack, pipeline, or
+format changes, and [docs/milestone-1-notes.md](docs/milestone-1-notes.md) for
+what the first episode taught.
 
 ## Planned layout
 

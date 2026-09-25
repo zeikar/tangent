@@ -10,8 +10,9 @@ main topic.*
 Channel: [루트와이 (√y, "root why")](https://www.youtube.com/channel/UCQyrXQkYvmwkQ2W8oaQEy1w)
 on YouTube.
 
-Status: milestone 1, producing the first short by hand, stage by stage. See
-[docs/decisions.md](docs/decisions.md) and
+Status: milestone 1 done. The first short,
+[A4 용지는 왜 하필 210×297일까?](https://github.com/zeikar/tangent/releases/tag/001-a4-paper-ratio),
+was published on 2026-09-26. See [docs/decisions.md](docs/decisions.md) and
 [docs/milestone-1-notes.md](docs/milestone-1-notes.md).
 
 ## License
