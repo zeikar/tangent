@@ -34,10 +34,32 @@ const curvePath = (() => {
   return `M ${pts.join(" L ")}`;
 })();
 
-export const bannerSchema = z.object({ showSafeArea: z.boolean() });
+// One per channel (docs/channel.md). "Root Why" runs wider than 루트와이 at
+// the same size, so its name is smaller to end as far short of the y-axis,
+// and its tagline smaller to stay under the name.
+const copy = {
+  ko: {
+    name: "루트와이",
+    nameSize: 130,
+    tagline: "왜 그런지, 그림 하나로",
+    taglineSize: 46,
+  },
+  en: {
+    name: "Root Why",
+    nameSize: 100,
+    tagline: "The why, in one picture",
+    taglineSize: 42,
+  },
+} as const;
+
+export const bannerSchema = z.object({
+  showSafeArea: z.boolean(),
+  lang: z.enum(["ko", "en"]),
+});
 
 export const Banner: React.FC<z.infer<typeof bannerSchema>> = ({
   showSafeArea,
+  lang,
 }) => (
   <AbsoluteFill style={{ background: color.bg }}>
     <Grid
@@ -108,23 +130,23 @@ export const Banner: React.FC<z.infer<typeof bannerSchema>> = ({
       >
         <div
           style={{
-            fontSize: 130,
+            fontSize: copy[lang].nameSize,
             fontWeight: 800,
             lineHeight: 1.1,
             color: color.text,
           }}
         >
-          루트와이
+          {copy[lang].name}
         </div>
         <div
           style={{
-            fontSize: 46,
+            fontSize: copy[lang].taglineSize,
             fontWeight: 600,
             lineHeight: 1.3,
             color: color.muted,
           }}
         >
-          왜 그런지, 그림 하나로
+          {copy[lang].tagline}
         </div>
       </div>
     </div>

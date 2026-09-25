@@ -47,7 +47,14 @@ export const RemotionRoot: React.FC = () => {
           id="Banner"
           component={Banner}
           schema={bannerSchema}
-          defaultProps={{ showSafeArea: false }}
+          defaultProps={{ showSafeArea: false, lang: "ko" }}
+          {...BANNER}
+        />
+        <Still
+          id="BannerEn"
+          component={Banner}
+          schema={bannerSchema}
+          defaultProps={{ showSafeArea: false, lang: "en" }}
           {...BANNER}
         />
       </Folder>

@@ -20,9 +20,10 @@ Remotion project: style guide and reusable scene components. 1080×1920, 30 fps.
 - `src/compositions/StyleSheet.tsx`: visual check for the style guide.
 - `src/brand/`: channel branding (루트와이, √y) as stills in the `brand` folder:
   `Logo` (transparent), `Avatar` (profile picture, 800×800), `Watermark` (video
-  watermark, 150×150), `Banner` (channel banner; `showSafeArea` outlines what
-  every device shows). `makeEpisode` also draws `Logo` on every frame of every
-  episode, as `channelMark` in `theme.ts` places it.
+  watermark, 150×150), `Banner` / `BannerEn` (channel banners for the Korean
+  and English channels; `showSafeArea` outlines what every device shows).
+  `makeEpisode` also draws `Logo` on every frame of every episode, as
+  `channelMark` in `theme.ts` places it.
 - `.claude/skills/`: Remotion's official agent skills (markup, render, captions,
   docs), loaded when an agent works in this directory. Not committed, since
   their repo declares no license; install them after cloning (below).
@@ -38,6 +39,7 @@ npx remotion still StyleSheet out/a.png --props='{"showSafeArea":true}'
 npx remotion render StyleSheet out/a.mp4
 npx remotion still Avatar out/brand/avatar.png
 npx remotion still Banner out/brand/banner.png --scale=1.25   # 2560×1440 for TV
+npx remotion still BannerEn out/brand/banner-en.png --scale=1.25
 npx remotion still Logo out/brand/logo.png
 npx remotion still Watermark out/brand/watermark.png
 ```

@@ -1,8 +1,17 @@
 # Channel
 
 Channel-wide settings, and the rules the publish step follows for each
-episode. Channel:
-[루트와이 (√y, "root why")](https://www.youtube.com/channel/UCQyrXQkYvmwkQ2W8oaQEy1w).
+episode. Channels:
+
+- [루트와이 (√y, "root why")](https://www.youtube.com/channel/UCQyrXQkYvmwkQ2W8oaQEy1w)
+  (`@루트와이`): Korean. Every episode is published here, and everything below
+  applies to it.
+- [Root Why](https://www.youtube.com/channel/UCPf5uD3ktXORf20cHAnGRtA)
+  (`@sqrtwhy`): English, created 2026-09-26 and held for English versions
+  (decisions.md → Language). Nothing uploaded yet; its settings go here when
+  English versions start. Same avatar and watermark; banner is `BannerEn`.
+  `@rootwhy` belongs to an unrelated channel with a similar premise, and a
+  spoken "root why" typed without the `-` or `_` lands there, hence `sqrtwhy`.
 
 ## Channel settings (YouTube Studio → 설정 → 채널)
 
