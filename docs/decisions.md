@@ -102,7 +102,10 @@ files along, and stops at the human checkpoints.
   findings to apply (the critic doesn't see every constraint, e.g. the upload
   title or the pronunciation list), and then the human judges. In
   milestone 1 an outside Codex review caught what no Claude agent had: the
-  episode explained well but never made the viewer wonder.
+  episode explained well but never made the viewer wonder. But the rewrite
+  that followed its advice as a checklist (v2) came out busier and was liked
+  less than the original, so critique is weighed against the human's feel,
+  and the human watches the first render before any critique-driven polish.
 - In milestone 1 the briefs are hand-written in `docs/briefs/`. Whatever a brief
   has to carry beyond the input files shows what the handoff files are missing.
   The briefs become the stage skills.

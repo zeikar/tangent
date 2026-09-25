@@ -406,3 +406,29 @@ critics, check-render, and fresh agents for research, script, and QA.
 - **Final-cut critique round 1 (Codex)** found hook contrast and middle pacing
   issues that QA (verdict: ship) had rated minor; together they drove one
   storyboard + component polish round without touching the script or take.
+
+### v1 beat v2 on feel (2026-09-25)
+
+After three QA rounds and two Codex rounds, v2 passed every check, and the
+human still found v1 better: "전체적인 내용? 흐름? 그냥 필". Our reading, which
+the human agreed with: forcing a full curiosity arc (question → guess →
+search → proof → use) into a 45 s Short made it choppy, swapped the classic
+one-line derivation for a four-step one, and each polish round added small
+effects that together made it busy. Randomness (one sample per version) may
+also play a part.
+
+- **Checks and critics measure proxies.** QA finds defects; Codex judged
+  structure from 2 fps frames without audio. Nobody judged feel, and polish
+  loops optimized what was measured.
+- **Rules forced on the writer backfired.** The brief's "Structure" section
+  became a checklist the writer and critic both enforced. It's now principles
+  with reasons ("Telling it"); critics return at most five findings, say what
+  works, and don't ask for fuller arcs or more effects. Newer models do better
+  with judgment than with forcing.
+- **The human's feel belongs before polish.** The human watches the first
+  render before any critique-driven round (decisions.md → Agents).
+- **Cheap way to separate taste from randomness next time:** two script
+  variants at the script checkpoint; takes are free and a minute each.
+- **Final 001 = v1's story and take at 1.08× on today's studio** (token
+  morphs, even fades, red gaps, channel mark, deterministic renders), with the
+  ≈ fix. The v2 files stay in git history.
