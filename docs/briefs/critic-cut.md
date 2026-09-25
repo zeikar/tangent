@@ -14,18 +14,16 @@ range. The episode folder given below has `script.md`, `storyboard.json`
 (the plan), and `research.md`. The bottom ~420 px of the frame is left empty
 on purpose: YouTube's Shorts UI covers it.
 
-Judge:
-1. **Would a viewer stop scrolling in the first 1–3 s, and why?**
-2. **Curiosity arc as watched:** where the viewer wonders, where they're told,
-   where attention could drop.
-3. **Does the picture carry the idea**, or do captions and formulas? Moments
-   where eyes must jump between picture, formula, and caption.
-4. **Readability on a phone** as a feel (you can't measure; say what looks
-   small or busy).
-5. **Ending and loop:** does it land on meaning and return to the start?
-6. **Channel identity:** does anything make 루트와이 memorable?
+Judge it as a whole, the way a viewer on a phone would: would they stop,
+follow without effort, and enjoy it? Calm, clear pictures that give each idea
+room are the channel's style; don't ask for more elements or effects. In the
+first episode, a round of critique-driven additions made the video busier and
+it was liked less.
+
+You see frames at 2 per second and no audio, so be careful with claims about
+pacing and motion; say when a point depends on something you couldn't see.
 
 Answer in Korean. Start with a verdict: **ship**, **ship with notes**, or
-**rework**. Then a short "what works" list, and ranked suggestions, each with
-a time range and a concrete change. Mark anything you'd fix before upload.
-Keep it under ~800 words.
+**rework**. Then what works (so it's kept), and at most five suggestions,
+ranked, each with a time range and a concrete change, marking anything you'd
+fix before upload. Keep it under ~600 words.

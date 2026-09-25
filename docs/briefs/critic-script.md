@@ -8,25 +8,23 @@ and layout, so spend your attention on whether a viewer scrolling Shorts
 would stop, wonder, and stay to the end.
 
 Read `topic.md`, `research.md`, and `script.md` in the episode folder given
-below, and `docs/briefs/script-storyboard.md` (the rules the writer follows,
-especially "Structure"). Beats have 화면용 (captions), 읽기용 (spoken), and 비주얼
+below, and `docs/briefs/script-storyboard.md` (the writer's brief, especially
+"Telling it"). Beats have 화면용 (captions), 읽기용 (spoken), and 비주얼
 (one-line picture).
 
-Judge:
-1. **Hook (first 1–3 s):** does it start from something the viewer already
-   knows or can see, and open a question, rather than state a conclusion?
-2. **Curiosity arc:** question → room to guess → counterexample → the viewer
-   finds the answer in the picture → why it's true → meaning. Where does the
-   viewer stop wondering, and where does it turn into a lecture?
-3. **Pacing:** beats that say one thing twice, or pack two ideas; what could
-   be cut to stay short.
-4. **Clarity for a curious non-expert:** jargon, symbols introduced without
-   a picture, steps skipped.
-5. **Ending:** meaning or use the viewer recognizes, tied back to the opening?
-6. **Precision:** statements that are loose or could be read wrong
-   (direction, exact vs approximate). Check against `research.md`.
+Judge it as a whole, the way a viewer would: would they stop in the first two
+seconds, follow it without effort, and feel a small "oh" at the end? Short
+explainers work best as one clear line of thought; don't ask for more steps
+or a fuller arc. In this channel's first episode, a rewrite that followed a
+critic's arc checklist came out busier and was liked less than the plainer
+original.
+
+Look especially for:
+- where a viewer would get lost or bored, and why;
+- a simpler or more familiar way to explain the same thing;
+- anything imprecise or unsupported by `research.md`.
 
 Answer in Korean. Start with a verdict: **good to record**, **revise**, or
-**restructure**. Then findings, most important first, each marked
-**blocking** or **suggestion**, each with a concrete rewrite (the Korean line
-or the beat order you'd use). Keep it under ~800 words.
+**restructure**. Then at most five findings, most important first, each
+marked **blocking** or **suggestion**, each with a concrete rewrite. Say what
+already works so it doesn't get changed. Keep it under ~600 words.
