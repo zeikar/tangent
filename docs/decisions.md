@@ -20,6 +20,28 @@ LLM-drawn SVG ends up looking like clip art. Kurzgesagt-ish scenes come later
 via image-generated stills split into layers and animated in code (parallax,
 reveals).
 
+## Palette: our own blue and yellow, not Manim's
+
+Milestone 1 used Manim's default accents (`#58C4DD` blue, `#F4D345` yellow,
+…), which are 3b1b's signature colors and what most Manim-made channels use.
+Since 2026-09-26 the accents in `theme.ts` are our own: cobalt `#5285F8` and
+amber `#FEB251`, with teal `#03BDB6`, red `#E25273`, and purple `#C8B7FF`.
+
+- **Blue and yellow stay.** The pair has the widest lightness gap, its hue
+  axis survives red-green color blindness, and the storyboard's color names
+  stay true. Violet and orange scored a little higher on the check below but
+  would have meant renaming every color token.
+- **Measured distance from Manim.** In OKLab (ΔE ×100, where ~2 is barely
+  noticeable), blue moved 18.6 and yellow 8.6.
+- **Every pair stays distinguishable.** The closest pair of the five is at
+  least 10 apart under normal, protan, deutan, and tritan simulation (Machado
+  2009). Manim's blue and teal were 1.7 apart under tritan and under 8
+  otherwise, which is why 001's teal→blue edge change was nearly invisible
+  (milestone-1 notes).
+- **Contrast.** All accents are at least 5:1 on the ground.
+
+The published 001 keeps the old colors.
+
 ## No video-generation AI; image generation OK
 
 All motion is code-rendered. Image generation is allowed for static

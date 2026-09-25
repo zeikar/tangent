@@ -4,17 +4,19 @@ import { Easing } from "remotion";
 
 export const VIDEO = { width: 1080, height: 1920, fps: 30 } as const;
 
-// 3b1b-leaning palette: near-black ground, Manim-style accents.
+// Near-black ground; accents are our own, not Manim's defaults (decisions.md →
+// Palette). Any change here also goes to the palette copies in
+// scripts/storyboard-view.html and scripts/takes-view.html.
 export const color = {
   bg: "#0F1115",
   text: "#F2F2F2",
   muted: "#8A8F98",
   grid: "#2A2F38",
-  blue: "#58C4DD", // primary object
-  yellow: "#F4D345", // highlight / "look here"
-  teal: "#5CD0B3", // secondary object
-  red: "#FC6255", // contrast, error, "not this"
-  purple: "#9A72AC", // tertiary, used sparingly
+  blue: "#5285F8", // primary object
+  yellow: "#FEB251", // highlight / "look here"
+  teal: "#03BDB6", // secondary object
+  red: "#E25273", // contrast, error, "not this"
+  purple: "#C8B7FF", // tertiary, used sparingly
 } as const;
 
 export const font = {
