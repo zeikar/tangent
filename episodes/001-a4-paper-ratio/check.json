@@ -2,7 +2,7 @@
  "episode": "001-a4-paper-ratio",
  "render": "render.mp4",
  "storyboardSha256": "18f046e8036706d15417682068b3e831a75ef8eb0e443dc2156757941bd0260d",
- "studioSha256": "49517a3136a90c595886a2afca0ce564e2f77e89735ef53cee81b7ba518424a6",
+ "studioSha256": "133d1032c052e0dcd5b6a7d177b758916e407ac13fe748592ed87b615e1de083",
  "verdict": "fail",
  "counts": {
   "fail": 1,
@@ -27,13 +27,13 @@
   {
    "id": "bounds",
    "status": "pass",
-   "summary": "all 1248 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 152–927, y 256–1251",
+   "summary": "all 1248 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 152–927, y 256–1252",
    "cites": []
   },
   {
    "id": "centering",
    "status": "pass",
-   "summary": "B1 0/0, B2 -3/0, B3 -3/0, B4 -2/0, B5 +9/-11, B6 +12/-12, B7 +14/-12, B8 +14/-5, B9 +1/+0, B10 0/0, B11 0/0 (px off x 540: all ink / picture without edge labels; tolerance ±25)",
+   "summary": "B1 0/0, B2 -3/0, B3 -3/0, B4 -2/0, B5 +9/-11, B6 +14/-12, B7 +14/-12, B8 +14/-5, B9 +1/+0, B10 0/0, B11 0/0 (px off x 540: all ink / picture without edge labels; tolerance ±25)",
    "details": [
     {
      "beat": "B1",
@@ -73,7 +73,7 @@
     {
      "beat": "B6",
      "frame": 651,
-     "off": 12,
+     "off": 13.5,
      "pictureOff": -11.549999999999955,
      "status": "pass"
     },
@@ -118,7 +118,7 @@
   {
    "id": "legibility",
    "status": "pass",
-   "summary": "smallest glyph \"m\" 31 px in dim210 \"210\\,\\mathrm{mm}\" (floor 30 px, 52 text items)",
+   "summary": "smallest glyph \"m\" 31 px in dim210 \"210\\,\\mathrm{mm}\" (floor 30 px, 53 text items)",
    "details": [
     {
      "id": "dim210",
@@ -166,7 +166,7 @@
      "text": "x",
      "char": "x",
      "height": 31.8,
-     "frame": 612
+     "frame": 614
     },
     {
      "id": "half",
@@ -174,7 +174,7 @@
      "text": "\\dfrac{x}{2}\\times x",
      "char": "x",
      "height": 31.8,
-     "frame": 704
+     "frame": 689
     },
     {
      "id": "captions",

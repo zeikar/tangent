@@ -10,6 +10,8 @@ type Props = {
   // Allows \htmlData / \htmlStyle, which Equation uses to address its parts.
   trust?: boolean;
   style?: React.CSSProperties;
+  // What the probe calls it (data-tex), when `tex` wraps it for drawing.
+  name?: string;
 };
 
 // Renders LaTeX with KaTeX. Invalid TeX throws so a broken formula fails the
@@ -21,6 +23,7 @@ export const Tex: React.FC<Props> = ({
   color = palette.text,
   trust = false,
   style,
+  name = tex,
 }) => {
   const html = useMemo(
     () =>
@@ -35,7 +38,7 @@ export const Tex: React.FC<Props> = ({
   );
   return (
     <span
-      data-tex={tex}
+      data-tex={name}
       style={{ fontSize, color, lineHeight: 1, ...style }}
       dangerouslySetInnerHTML={{ __html: html }}
     />

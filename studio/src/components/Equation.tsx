@@ -1,14 +1,16 @@
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { AbsoluteFill, continueRender, delayRender, useCurrentScale } from "remotion";
-import { ElementTimeline, mix, phase, Scene, themeColor } from "../storyboard/timeline";
+import { Action, ElementTimeline, mix, phase, rawProgress, Scene, themeColor } from "../storyboard/timeline";
 import { fontsLoaded } from "../style/fonts";
 import { content, mark, stroke, type, VIDEO } from "../style/theme";
 import { inkRect } from "./ink";
+import { DrawnToken, drawTokens, InkBox, matchTokens, moveOffset, schedule, texTokens, wrapTokens } from "./morph";
 import { Tex } from "./Tex";
 
 // One line of KaTeX built from addressable parts, rendered as a single
 // expression so spacing is KaTeX's own. Parts reveal, recolor, get boxed, and
-// transform into a new part list on the same baseline.
+// transform into a new part list on the same baseline, token by token (see
+// morph.ts).
 
 type Part = { id: string; tex: string; color: string };
 type Props = {
@@ -19,23 +21,16 @@ type Props = {
   align?: { part: string; x: number };
 };
 
-// Ink box of a part, relative to the expression's left edge and baseline.
+// Ink box of a part or token, relative to the expression's left edge and baseline.
 type Ink = { x0: number; x1: number; y0: number; y1: number };
-type Measured = { baseline: number; ink: Record<string, Ink> };
-// A part as drawn this frame, offset from its own layout slot.
-type Drawn = Part & { opacity: number; dx: number; dy: number };
+type Measured = { baseline: number; ink: Record<string, Ink>; tokens: Record<string, Ink[]> };
 
 const measureTex = (parts: Part[]) =>
-  `\\displaystyle ${parts.map((p) => `\\htmlData{part=${p.id}}{${p.tex}}`).join(" ")}`;
-
-const drawTex = (parts: Drawn[]) =>
   `\\displaystyle ${parts
-    .map(
-      (p) =>
-        `\\htmlStyle{color:${p.color};opacity:${p.opacity.toFixed(4)};position:relative;` +
-        `left:${p.dx.toFixed(2)}px;top:${p.dy.toFixed(2)}px}{${p.tex}}`,
-    )
+    .map((p) => `\\htmlData{part=${p.id}}{${wrapTokens(texTokens(p.tex), (k) => `\\htmlData{tok=${k}}`)}}`)
     .join(" ")}`;
+
+const drawTex = (tokens: DrawnToken[]) => `\\displaystyle ${drawTokens(tokens)}`;
 
 // Zero-size inline-block: sits on the baseline at the expression's left edge.
 const Origin = () => <span data-origin style={{ display: "inline-block", width: 0, height: 0 }} />;
@@ -56,17 +51,22 @@ export const Equation: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, 
       setMeasured(
         refs.current.map((box) => {
           const origin = box!.querySelector("[data-origin]")!.getBoundingClientRect();
-          const ink: Record<string, Ink> = {};
-          box!.querySelectorAll<HTMLElement>("[data-part]").forEach((part) => {
-            const r = inkRect(part);
-            ink[part.dataset.part!] = {
+          const inkOf = (e: Element): Ink => {
+            const r = inkRect(e);
+            return {
               x0: (r.left - origin.left) / scale,
               x1: (r.right - origin.left) / scale,
               y0: (r.top - origin.top) / scale,
               y1: (r.bottom - origin.top) / scale,
             };
+          };
+          const ink: Record<string, Ink> = {};
+          const tokens: Record<string, Ink[]> = {};
+          box!.querySelectorAll<HTMLElement>("[data-part]").forEach((part) => {
+            ink[part.dataset.part!] = inkOf(part);
+            tokens[part.dataset.part!] = [...part.querySelectorAll("[data-tok]")].map(inkOf);
           });
-          return { baseline: (origin.top - box!.getBoundingClientRect().top) / scale, ink };
+          return { baseline: (origin.top - box!.getBoundingClientRect().top) / scale, ink, tokens };
         }),
       );
       continueRender(handle);
@@ -102,16 +102,11 @@ export const Equation: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, 
     }
     return p.centerX! - (Math.min(...xs.map((b) => b.x0)) + Math.max(...xs.map((b) => b.x1))) / 2;
   });
-  const center = (i: number, id: string) => {
-    const b = measured[i].ink[id];
-    return { x: originX[i] + (b.x0 + b.x1) / 2, y: (b.y0 + b.y1) / 2 };
-  };
-
   let cur = 0;
   let vis: Record<string, number> = Object.fromEntries(p.parts.map((q) => [q.id, 0]));
   let col: Record<string, string> = Object.fromEntries(p.parts.map((q) => [q.id, themeColor(q.color)]));
   let rise: Record<string, number> = {};
-  let from: { layout: number; e: number; vis: Record<string, number>; col: Record<string, string>; morph: Record<string, string[]> } | null = null;
+  let from: { layout: number; a: Action; vis: Record<string, number>; col: Record<string, string>; morph: Record<string, string[]> } | null = null;
   let box: { part: string; color: string; drawn: number } | null = null;
   let opacity = 1;
   for (const a of el.actions) {
@@ -126,16 +121,9 @@ export const Equation: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, 
         break;
       case "transformTo": {
         const next = layouts[cur + 1];
-        const morph: Record<string, string[]> = a.params.morph ?? {};
-        from = e < 1 ? { layout: cur, e, vis, col, morph } : null;
-        // A morph target fades in as its sources arrive; any other new part
-        // waits for the second half, once parts sliding past have mostly
-        // cleared its slot.
-        const enter = phase(a, frame, 0.5, 1);
-        vis = Object.fromEntries(next.map((q) => [q.id, q.id in vis ? vis[q.id] : q.id in morph ? e : enter]));
-        col = Object.fromEntries(
-          next.map((q) => [q.id, q.id in col ? mix(col[q.id], themeColor(q.color), e) : themeColor(q.color)]),
-        );
+        from = rawProgress(a, frame) < 1 ? { layout: cur, a, vis, col, morph: a.params.morph ?? {} } : null;
+        vis = Object.fromEntries(next.map((q) => [q.id, q.id in vis ? vis[q.id] : 1]));
+        col = Object.fromEntries(next.map((q) => [q.id, themeColor(q.color)]));
         rise = {};
         cur += 1;
         break;
@@ -155,33 +143,74 @@ export const Equation: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, 
   }
   if (opacity <= 0) return null;
 
-  // The current layout; mid-transform, shared parts slide in from their old slots.
-  const current: Drawn[] = layouts[cur].map((q) => {
-    const d = { ...q, color: col[q.id], opacity: vis[q.id], dx: 0, dy: rise[q.id] ?? 0 };
-    if (from && q.id in from.vis) {
-      const was = center(from.layout, q.id);
-      const now = center(cur, q.id);
-      d.dx = (was.x - now.x) * (1 - from.e);
-      d.dy = (was.y - now.y) * (1 - from.e);
-    }
-    return d;
-  });
-  // The old layout fades out; morph sources move onto their new part.
-  const old: Drawn[] = from
-    ? layouts[from.layout].map((q) => {
-        const f = from!;
-        const shared = layouts[cur].some((n) => n.id === q.id);
-        const target = Object.keys(f.morph).find((n) => f.morph[n].includes(q.id));
-        const d = { ...q, color: f.col[q.id], opacity: shared ? 0 : f.vis[q.id] * (1 - f.e), dx: 0, dy: 0 };
-        if (target) {
-          const was = center(f.layout, q.id);
-          const to = center(cur, target);
-          d.dx = (to.x - was.x) * f.e;
-          d.dy = (to.y - was.y) * f.e;
-        }
-        return d;
-      })
-    : [];
+  const tokensOf = (i: number) => layouts[i].map((q) => texTokens(q.tex));
+  // At rest, every token as its part says; mid-transform, see morph.ts: tokens
+  // the old and new layout share (same part, or a morph target and its
+  // sources) move to their new slot, the others fade out or in in place.
+  let current: DrawnToken[] = layouts[cur].flatMap((q, i) =>
+    tokensOf(cur)[i].map((tex) => ({ tex, color: col[q.id], opacity: vis[q.id], dx: 0, dy: rise[q.id] ?? 0 })),
+  );
+  let old: DrawnToken[] = [];
+  if (from) {
+    const f = from;
+    const [was, now] = [layouts[f.layout], layouts[cur]];
+    const [wasToks, nowToks] = [tokensOf(f.layout), tokensOf(cur)];
+    const at = (i: number, part: string, k: number): InkBox => {
+      const b = measured[i].tokens[part][k];
+      return [originX[i] + b.x0, b.y0, originX[i] + b.x1, b.y1];
+    };
+    // New token (part index, token) -> the old token it moves from.
+    const source = new Map<string, { part: number; k: number }>();
+    const moving = new Set<string>();
+    now.forEach((q, j) => {
+      const ids = was.some((o) => o.id === q.id) ? [q.id] : (f.morph[q.id] ?? []);
+      const src = ids.flatMap((id) => {
+        const i = was.findIndex((o) => o.id === id);
+        return wasToks[i].map((tex, k) => ({ part: i, k, tex }));
+      });
+      for (const [a, b] of matchTokens(src.map((t) => t.tex), nowToks[j])) {
+        if (moving.has(`${src[a].part}.${src[a].k}`)) continue;
+        moving.add(`${src[a].part}.${src[a].k}`);
+        source.set(`${j}.${b}`, src[a]);
+      }
+    });
+    const w = schedule(
+      was.flatMap((o, i) => wasToks[i].flatMap((_, k) => (moving.has(`${i}.${k}`) || !f.vis[o.id] ? [] : [at(f.layout, o.id, k)]))),
+      now.flatMap((q, j) =>
+        nowToks[j].flatMap((_, k) => {
+          const s = source.get(`${j}.${k}`);
+          return s ? [[at(f.layout, was[s.part].id, s.k), at(cur, q.id, k)] as [InkBox, InkBox]] : [];
+        }),
+      ),
+      now.flatMap((q, j) => nowToks[j].flatMap((_, k) => (source.has(`${j}.${k}`) ? [] : [at(cur, q.id, k)]))),
+      f.a.ease,
+    );
+    const out = 1 - phase(f.a, frame, ...w.out);
+    const move = phase(f.a, frame, ...w.move);
+    const enter = phase(f.a, frame, ...w.in);
+    old = was.flatMap((o, i) =>
+      wasToks[i].map((tex, k) => ({
+        tex,
+        color: f.col[o.id],
+        opacity: moving.has(`${i}.${k}`) ? 0 : f.vis[o.id] * out,
+        dx: 0,
+        dy: 0,
+      })),
+    );
+    current = now.flatMap((q, j) =>
+      nowToks[j].map((tex, k) => {
+        const s = source.get(`${j}.${k}`);
+        if (!s) return { tex, color: col[q.id], opacity: enter, dx: 0, dy: 0 };
+        const src = was[s.part].id;
+        return {
+          tex,
+          color: mix(f.col[src], col[q.id], move),
+          opacity: f.vis[src],
+          ...moveOffset(at(f.layout, src, s.k), at(cur, q.id, k), move),
+        };
+      }),
+    );
+  }
 
   // Math must stay inside the content bounds: scale the row about its anchor if a layout overflows.
   const anchorX = p.align ? p.align.x : p.centerX!;
@@ -198,13 +227,13 @@ export const Equation: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, 
     }),
   );
 
-  const row = (i: number, parts: Drawn[]) => (
+  const row = (i: number, tokens: DrawnToken[]) => (
     <div
       data-text="equation"
       style={{ position: "absolute", left: originX[i], top: p.y - measured[i].baseline, whiteSpace: "nowrap" }}
     >
       <Origin />
-      <Tex tex={drawTex(parts)} trust fontSize={fontSize} />
+      <Tex tex={drawTex(tokens)} trust fontSize={fontSize} />
     </div>
   );
   const boxInk = box && measured[cur].ink[box.part];
