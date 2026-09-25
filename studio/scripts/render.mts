@@ -8,18 +8,21 @@
 // cues.json are passed in, so a scratch copy renders too. The output only
 // becomes render.mp4 if storyboard.json is unchanged when the render ends;
 // otherwise it is left as render.stale.mp4 and the script fails. The file
-// carries the storyboard's hash (comment tag) for check-render.mts, which
-// runs last unless --no-check; its failures fail this script too.
+// carries the storyboard's and the studio code's hashes (comment tag) for
+// check-render.mts, which runs last unless --no-check; its failures fail
+// this script too.
 import { execFileSync } from "node:child_process";
 import { mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 import { assertCuesFresh } from "./cues-fresh.mts";
+import { renderTag, studioSha256 } from "./fingerprint.mts";
 
 const [episodeArg, ...flags] = process.argv.slice(2);
 if (!episodeArg) throw new Error("usage: node scripts/render.mts <episode dir> [--no-check]");
 const episode = resolve(episodeArg);
 const slug = basename(episode);
 const { storyboardSha256 } = assertCuesFresh(episode);
+const studioHash = studioSha256();
 const studio = join(import.meta.dirname, "..");
 const video = join(studio, "out", `${slug}-video.mp4`);
 const partial = join(episode, "render.partial.mp4");
@@ -36,17 +39,18 @@ execFileSync("npx", ["remotion", "render", slug, video, "--muted", "--color-spac
 execFileSync(
   "ffmpeg",
   ["-v", "error", "-y", "-i", video, "-i", join(episode, "narration.mp3"), "-map", "0:v", "-map", "1:a",
-   "-c:v", "copy", "-c:a", "aac", "-b:a", "320k", "-movflags", "+faststart",
-   "-metadata", `comment=storyboard-sha256=${storyboardSha256}`, partial],
+   "-c:v", "copy", "-c:a", "aac", "-b:a", "320k", "-ar", "48000", "-movflags", "+faststart",
+   "-metadata", `comment=${renderTag(storyboardSha256, studioHash)}`, partial],
   { stdio: "inherit" },
 );
 
-// The storyboard may have changed while the render ran.
+// The storyboard or the studio code may have changed while the render ran.
 try {
   if (assertCuesFresh(episode).storyboardSha256 !== storyboardSha256) throw new Error("cues.json was rebuilt");
+  if (studioSha256() !== studioHash) throw new Error("studio code changed");
 } catch (e) {
   renameSync(partial, join(episode, "render.stale.mp4"));
-  throw new Error(`storyboard.json or cues.json changed during the render (${(e as Error).message}); ` +
+  throw new Error(`the storyboard or the studio code changed during the render (${(e as Error).message}); ` +
     "left the output as render.stale.mp4. Rerun build-cues.py and render.mts.");
 }
 renameSync(partial, out);

@@ -10,7 +10,20 @@ export const ffprobe = (path: string) =>
       encoding: "utf8",
     }),
   ) as {
-    streams: { codec_type: string; width?: number; height?: number; r_frame_rate?: string; nb_frames?: string; duration?: string }[];
+    streams: {
+      codec_type: string;
+      width?: number;
+      height?: number;
+      r_frame_rate?: string;
+      nb_frames?: string;
+      duration?: string;
+      pix_fmt?: string;
+      color_space?: string;
+      color_primaries?: string;
+      color_transfer?: string;
+      color_range?: string;
+      sample_rate?: string;
+    }[];
     format: { duration: string; tags?: Record<string, string> };
   };
 
@@ -24,7 +37,7 @@ export type PixelOpts = {
   inkLevel: number;
   changeLevel: number;
   changePixels: number;
-  wordFrames: number[]; // frames to time the first visible change from
+  reactFrames: number[]; // frames to time the first visible change from (words, cues)
   reactionWindow: number; // frames to look for it
   loop: boolean;
 };
@@ -34,7 +47,8 @@ export type PixelStats = {
   background: number;
   visual: (Box | null)[]; // ink bbox above the caption band, per frame
   outside: { frame: number; pixels: number; box: Box }[]; // ink outside content x / the zones
-  reaction: Map<number, number | null>; // word frame -> frames to the first visible change
+  reaction: Map<number, number | null>; // react frame -> frames to the first visible change
+  captionChange: number[]; // caption-band pixels changed since the previous frame
   loopPixels: number | null; // visual-zone pixels differing between the last and first frame
 };
 
@@ -46,7 +60,10 @@ export const pixelPass = (render: string, o: PixelOpts): Promise<PixelStats> =>
     const zoneRows = [o.visual.top, o.visual.bottom + 1] as const;
     const zoneSize = (zoneRows[1] - zoneRows[0]) * W;
     const refs = new Map<number, Uint8Array>(); // visual zone of the frame before each word
-    const stats: PixelStats = { frames: 0, background: 0, visual: [], outside: [], reaction: new Map(), loopPixels: null };
+    const stats: PixelStats = { frames: 0, background: 0, visual: [], outside: [], reaction: new Map(), captionChange: [], loopPixels: null };
+    const capStart = o.caption.top * W;
+    const capSize = (o.caption.bottom + 1 - o.caption.top) * W;
+    let prevCaption: Uint8Array | null = null;
     let first: Uint8Array | null = null;
     let last: Uint8Array | null = null;
     let threshold = 0;
@@ -97,8 +114,14 @@ export const pixelPass = (render: string, o: PixelOpts): Promise<PixelStats> =>
 
       const zoneStart = zoneRows[0] * W;
       const zone = () => frame.subarray(zoneStart, zoneStart + zoneSize);
-      // First visible change after each word, against the frame before it.
-      for (const w of o.wordFrames) {
+      // How much the caption band changed since the previous frame.
+      const caption = frame.subarray(capStart, capStart + capSize);
+      let capChanged = 0;
+      if (prevCaption) for (let i = 0; i < capSize; i++) if (Math.abs(caption[i] - prevCaption[i]) > o.changeLevel) capChanged++;
+      stats.captionChange.push(capChanged);
+      prevCaption = Uint8Array.from(caption);
+      // First visible change after each word or cue, against the frame before it.
+      for (const w of o.reactFrames) {
         if (f === w - 1 || (w === 0 && f === 0)) refs.set(w, Uint8Array.from(zone()));
       }
       for (const [w, ref] of refs) {
@@ -132,7 +155,7 @@ export const pixelPass = (render: string, o: PixelOpts): Promise<PixelStats> =>
     ff.on("error", reject);
     ff.on("close", (code) => {
       if (code !== 0) return reject(new Error(`ffmpeg exited ${code} decoding ${render}`));
-      for (const w of o.wordFrames) if (!stats.reaction.has(w)) stats.reaction.set(w, null);
+      for (const w of o.reactFrames) if (!stats.reaction.has(w)) stats.reaction.set(w, null);
       if (first && last) {
         const [a, b]: Uint8Array[] = [first, last];
         let n = 0;

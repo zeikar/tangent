@@ -130,4 +130,10 @@ export const checks = {
   changeLevel: 16, // a pixel changed by more than this...
   changePixels: 100, // ...in more visual-zone pixels than this is a visible change
   loopMaxPixels: 500, // visual-zone pixels allowed to differ (by changeLevel) between the last and first frame
+  labelOwnership: 2.5, // an edge label's gap to any other element's line, at least this many times its gap to its own edge
+  captionLateFrames: 3, // a caption's first visible frame after its cue frame
+  readableFrames: 30, // names and labels fully visible at least this long (warn under)
+  cueFrames: 5, // a cue after a beat's first word to the first visible change (warn over)
+  blankFrames: 3, // frames in a row with an empty visual zone (warn over)
+  delivery: { pixFmt: "yuv420p", colorSpace: "bt709", colorRange: "tv", audioRate: 48000 },
 } as const;

@@ -65,13 +65,18 @@ python3 scripts/storyboard-view.py $ep
 python3 scripts/build-cues.py $ep $ep/take1@1.08.wav $ep/take1@1.08.words.json
 # A still at every beat's endFrame (safe-area guide on) → $ep/frames/
 node scripts/beat-stills.mts $ep
-# Video from Remotion (BT.709), narration muxed by ffmpeg → $ep/render.mp4,
-# then check-render (--no-check to skip; its failures fail the render step)
+# Video from Remotion (BT.709), narration muxed by ffmpeg as 48 kHz AAC
+#   → $ep/render.mp4, stamped with the storyboard's and the studio code's
+#   hashes; then check-render (--no-check to skip; its failures fail the step)
 node scripts/render.mts $ep
-# Check a render: technical, bounds, centering, legibility, overlaps, reaction,
-# loudness, A/V sync, words vs audio, loop (thresholds: `checks` in theme.ts)
-#   → $ep/check.json, check.md, check/ (contact sheet + cited frames); exit 1 on a fail
-node scripts/check-render.mts $ep
+# Check a render: freshness (storyboard and code), technical, bounds,
+# centering, legibility, overlaps (in and across elements, fills included),
+# label ownership, captions, readable time, reaction, cue timing, blank
+# frames, loudness, A/V sync, words vs audio, loop. Thresholds: `checks` in
+# theme.ts. → check.json, check.md, check/ (labeled contact sheet, cited
+# frames, before/after pairs) in $ep or --out <dir>; exit 1 on a fail. The
+# files carry no timestamps: re-checking an unchanged render changes nothing.
+node scripts/check-render.mts $ep [--out <dir>]
 # Ink box and smallest glyph of TeX as the studio renders it (default size
 # type.mathInline; --display for \displaystyle; --token=mathDisplay | --size=N)
 node scripts/measure-tex.mts '\dfrac{x}{2}' 'x^2 = 2' --display

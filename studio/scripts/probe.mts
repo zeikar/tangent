@@ -14,8 +14,10 @@ export type TextItem = {
   opacity: number;
   glyph: [char: string, height: number] | null;
   origin?: [x: number, y: number];
+  lines?: number;
 };
-export type ElementSnap = { id: string; lines: Line[]; fills: [...Box, number][]; texts: TextItem[] };
+export type Fill = [...box: Box, opacity: number, corners?: number[]];
+export type ElementSnap = { id: string; lines: Line[]; fills: Fill[]; texts: TextItem[] };
 export type FrameSnap = { frame: number; els: ElementSnap[]; extra?: unknown };
 
 const studio = join(import.meta.dirname, "..");

@@ -8,7 +8,9 @@
 
 export type Line = [x1: number, y1: number, x2: number, y2: number, width: number, opacity: number];
 export type Box = [left: number, top: number, right: number, bottom: number];
-export type Fill = [...box: Box, opacity: number];
+// A filled region: its bounding box, opacity, and for rectangles the four
+// corners as drawn (a rotating sheet's box is much larger than the sheet).
+export type Fill = [...box: Box, opacity: number, corners?: number[]];
 export type TextItem = {
   kind: string;
   text: string;
@@ -17,6 +19,7 @@ export type TextItem = {
   // Smallest letter or digit (lowercase x-height included) and its ink height.
   glyph: [char: string, height: number] | null;
   origin?: [x: number, y: number]; // a [data-baseline] marker inside the item: left edge, baseline
+  lines?: number; // captions: how many lines the text wraps to
 };
 export type ElementSnap = { id: string; lines: Line[]; fills: Fill[]; texts: TextItem[] };
 
@@ -89,6 +92,14 @@ const textNodeInk = (node: Text) => {
 const union = (a: Box | null, b: Box): Box =>
   a ? [Math.min(a[0], b[0]), Math.min(a[1], b[1]), Math.max(a[2], b[2]), Math.max(a[3], b[3])] : b;
 
+const texOnly = (el: HTMLElement) => {
+  const texs = el.querySelectorAll<HTMLElement>("[data-tex]");
+  if (el.dataset.text === "equation" || texs.length !== 1) return undefined;
+  const walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+  for (let n = walk.nextNode(); n; n = walk.nextNode()) if (n.textContent?.trim() && !texs[0].contains(n)) return undefined;
+  return texs[0].dataset.tex;
+};
+
 const textItem = (el: HTMLElement): TextItem | null => {
   let box: Box | null = null;
   let opacity = 0;
@@ -110,19 +121,39 @@ const textItem = (el: HTMLElement): TextItem | null => {
   });
   if (!box) return null;
   const marker = el.querySelector("[data-baseline]");
+  const kind = el.dataset.text ?? "text";
   return {
-    kind: el.dataset.text ?? "text",
-    // A label that is one Tex reads as its source (KaTeX puts a fraction's
-    // denominator first in the DOM).
-    text:
-      el.dataset.text !== "equation" && el.querySelectorAll("[data-tex]").length === 1
-        ? el.querySelector<HTMLElement>("[data-tex]")!.dataset.tex!
-        : text.replace(/[\s\u200b]+/g, " ").trim(),
+    kind,
+    // A label that is all one Tex reads as its source (KaTeX puts a
+    // fraction's denominator first in the DOM).
+    text: texOnly(el) ?? text.replace(/[\s\u200b]+/g, " ").trim(),
     box: box.map(r1) as Box,
     opacity: r2(opacity),
     glyph: glyph && [glyph[0], r1(glyph[1])],
     ...(marker ? { origin: [r1(marker.getBoundingClientRect().left), r1(marker.getBoundingClientRect().top)] } : {}),
+    ...(kind === "caption" ? { lines: lineCount(el) } : {}),
   };
+};
+
+// Lines of plain text (outside KaTeX, whose fractions stack glyphs without
+// wrapping): each text fragment's rect, grouped by vertical overlap.
+const lineCount = (el: HTMLElement) => {
+  const rows: [number, number][] = [];
+  const walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+  for (let n = walk.nextNode(); n; n = walk.nextNode()) {
+    if (!n.textContent?.trim() || n.parentElement?.closest(".katex")) continue;
+    const range = document.createRange();
+    range.selectNodeContents(n);
+    for (const r of range.getClientRects()) {
+      if (!r.width) continue;
+      const row = rows.find(([t, b]) => r.top < b && r.bottom > t);
+      if (row) {
+        row[0] = Math.min(row[0], r.top);
+        row[1] = Math.max(row[1], r.bottom);
+      } else rows.push([r.top, r.bottom]);
+    }
+  }
+  return rows.length;
 };
 
 const point = (svg: SVGGraphicsElement, x: number, y: number) => {
@@ -135,7 +166,9 @@ export const snapshot = (): ElementSnap[] =>
     const lines: Line[] = [];
     const fills: Fill[] = [];
     el.querySelectorAll<SVGGraphicsElement>("line, rect, path, polygon").forEach((g) => {
-      if (!g.getScreenCTM()) return;
+      // KaTeX draws glyphs (radicals) as SVG on huge clipped canvases; they
+      // belong to the text item, not the diagram.
+      if (!g.getScreenCTM() || g.closest(".katex")) return;
       const cs = getComputedStyle(g);
       if (cs.visibility !== "visible") return;
       const o = opacityOf(g);
@@ -144,19 +177,21 @@ export const snapshot = (): ElementSnap[] =>
       const ctm = g.getScreenCTM()!;
       const w = parseFloat(cs.strokeWidth || "0") * Math.hypot(ctm.a, ctm.b);
       const segs: number[][] = [];
+      let corners: number[][] | undefined;
       if (g instanceof SVGLineElement) {
         segs.push([...point(g, g.x1.baseVal.value, g.y1.baseVal.value), ...point(g, g.x2.baseVal.value, g.y2.baseVal.value)]);
-      } else if (g instanceof SVGRectElement && cs.stroke !== "none") {
+      } else if (g instanceof SVGRectElement) {
         const { x, y, width: rw, height: rh } = g.getBBox();
-        const c = [point(g, x, y), point(g, x + rw, y), point(g, x + rw, y + rh), point(g, x, y + rh)];
-        for (let i = 0; i < 4; i++) segs.push([...c[i], ...c[(i + 1) % 4]]);
+        corners = [point(g, x, y), point(g, x + rw, y), point(g, x + rw, y + rh), point(g, x, y + rh)];
+        if (cs.stroke !== "none") for (let i = 0; i < 4; i++) segs.push([...corners[i], ...corners[(i + 1) % 4]]);
       }
       if (strokeO > 0.01 && w > 0) {
         for (const s of segs) if (s[0] !== s[2] || s[1] !== s[3]) lines.push([...s.map(r1), r1(w), r2(strokeO)] as Line);
       }
       if (!(g instanceof SVGLineElement) && fillO > 0.01 && cs.fill !== "none") {
         const r = g.getBoundingClientRect();
-        if (r.width && r.height) fills.push([r1(r.left), r1(r.top), r1(r.right), r1(r.bottom), r2(fillO)]);
+        if (r.width && r.height)
+          fills.push([r1(r.left), r1(r.top), r1(r.right), r1(r.bottom), r2(fillO), ...(corners ? [corners.flat().map(r1)] : [])] as Fill);
       }
     });
     const texts = [...el.querySelectorAll<HTMLElement>("[data-text]")]
