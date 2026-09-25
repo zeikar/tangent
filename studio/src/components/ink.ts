@@ -106,3 +106,26 @@ export const glyphRect = (el: Element) => {
     bottom: Math.max(...boxes.map((b) => b[3])),
   };
 };
+
+// A token's own ink (text-node glyphs, radical signs, fraction bars) without
+// the tokens nested in it: a radical without its radicand. Null if it has none.
+export const tokenInk = (el: Element) => {
+  const boxes: number[][] = [];
+  const walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+  for (let n = walk.nextNode(); n; n = walk.nextNode()) {
+    if (n.parentElement!.closest("[data-tok]") !== el) continue;
+    const ink = textNodeInk(n as Text);
+    if (ink) boxes.push(ink.box);
+  }
+  el.querySelectorAll("svg, .frac-line").forEach((e) => {
+    const r = e.getBoundingClientRect();
+    if (r.width && e.closest("[data-tok]") === el) boxes.push([r.left, r.top, r.right, r.bottom]);
+  });
+  if (!boxes.length) return null;
+  return {
+    left: Math.min(...boxes.map((b) => b[0])),
+    top: Math.min(...boxes.map((b) => b[1])),
+    right: Math.max(...boxes.map((b) => b[2])),
+    bottom: Math.max(...boxes.map((b) => b[3])),
+  };
+};

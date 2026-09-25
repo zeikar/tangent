@@ -3,8 +3,8 @@ import { AbsoluteFill, continueRender, delayRender, useCurrentScale } from "remo
 import { Action, ElementTimeline, mix, phase, rawProgress, Scene, themeColor } from "../storyboard/timeline";
 import { fontsLoaded } from "../style/fonts";
 import { font, type } from "../style/theme";
-import { glyphRect } from "./ink";
-import { drawTokens, InkBox, matchTokens, moveOffset, schedule, texTokens, wrapTokens } from "./morph";
+import { glyphRect, tokenInk } from "./ink";
+import { drawTokens, InkBox, matchTokens, morph, tokenize, TokenStyle, withAlpha } from "./morph";
 import { Tex } from "./Tex";
 
 // One line of plain text with $...$ math, centered on a point by its ink.
@@ -14,30 +14,39 @@ import { Tex } from "./Tex";
 type Props = { text: string; at: [number, number]; color?: string; mathColor?: string };
 
 type Rel = { l: number; t: number; r: number; b: number }; // ink, relative to the line's top-left
-type Metrics = { ink: Rel; tokens: Rel[] };
-type Style = { color: string; opacity: number; dx: number; dy: number };
+type Metrics = { ink: Rel; tokens: (Rel | null)[] };
 
 // A line's tokens in order: the words of its plain text and the TeX tokens of
-// its math, keyed so a word never matches a math token.
-const tokenKeys = (text: string) =>
-  text.split("$").flatMap((seg, i) =>
-    i % 2 ? texTokens(seg).map((t) => `m:${t}`) : seg.split(/\s+/).filter(Boolean).map((w) => `t:${w}`),
-  );
+// its math (their containers renumbered line-wide), keyed so a word never
+// matches a math token.
+const lineTokens = (text: string) => {
+  const out: { key: string; parent: number | null; math: boolean }[] = [];
+  text.split("$").forEach((seg, i) => {
+    if (i % 2) {
+      const t = tokenize(seg);
+      const base = out.length;
+      t.keys.forEach((key, k) => out.push({ key: `m:${key}`, parent: t.parents[k] === null ? null : base + t.parents[k]!, math: true }));
+    } else {
+      for (const w of seg.split(/\s+/).filter(Boolean)) out.push({ key: `t:${w}`, parent: null, math: false });
+    }
+  });
+  return out;
+};
 
 // The line's content, each token addressable: data-tok marks for measuring,
 // or each token's style for drawing. Whitespace stays plain text.
-const Line: React.FC<{ text: string; styles?: Style[] }> = ({ text, styles }) => {
+const Line: React.FC<{ text: string; styles?: TokenStyle[] }> = ({ text, styles }) => {
   let n = 0;
   return (
     <>
       {text.split("$").map((seg, i) => {
         if (i % 2) {
-          const toks = texTokens(seg);
+          const t = tokenize(seg);
           const base = n;
-          n += toks.length;
+          n += t.keys.length;
           const tex = styles
-            ? drawTokens(toks.map((t, k) => ({ tex: t, ...styles[base + k] })))
-            : wrapTokens(toks, (k) => `\\htmlData{tok=${base + k}}`);
+            ? drawTokens(t, styles.slice(base, n))
+            : t.tex((k) => `\\htmlData{tok=${base + k}}`);
           return <Tex key={i} tex={`\\displaystyle ${tex}`} trust name={seg} />;
         }
         return seg
@@ -51,7 +60,7 @@ const Line: React.FC<{ text: string; styles?: Style[] }> = ({ text, styles }) =>
               <span
                 key={`${i}-${j}`}
                 data-tok={styles ? undefined : k}
-                style={s && { color: s.color, opacity: s.opacity, position: "relative", left: s.dx, top: s.dy }}
+                style={s && { color: withAlpha(s.color, s.opacity), position: "relative", left: s.dx, top: s.dy }}
               >
                 {w}
               </span>
@@ -103,8 +112,7 @@ export const Note: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, scen
       for (const text of todo) {
         const node = nodes.current.get(text)!;
         const outer = node.getBoundingClientRect();
-        const rel = (e: Element): Rel => {
-          const r = glyphRect(e);
+        const rel = (r: { left: number; top: number; right: number; bottom: number }): Rel => {
           return {
             l: (r.left - outer.left) / scale,
             t: (r.top - outer.top) / scale,
@@ -112,9 +120,12 @@ export const Note: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, scen
             b: (r.bottom - outer.top) / scale,
           };
         };
-        const tokens: Rel[] = [];
-        node.querySelectorAll<HTMLElement>("[data-tok]").forEach((e) => (tokens[Number(e.dataset.tok)] = rel(e)));
-        next.set(text, { ink: rel(node), tokens });
+        const tokens: (Rel | null)[] = [];
+        node.querySelectorAll<HTMLElement>("[data-tok]").forEach((e) => {
+          const r = tokenInk(e);
+          tokens[Number(e.dataset.tok)] = r && rel(r);
+        });
+        next.set(text, { ink: rel(glyphRect(node)), tokens });
       }
       setMetrics(next);
       continueRender(handle);
@@ -147,13 +158,13 @@ export const Note: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, scen
 
   const textColor = themeColor(p.color ?? "text");
   const mathColor = themeColor(p.mathColor ?? p.color ?? "text");
-  const colors = (text: string) => tokenKeys(text).map((k) => (k.startsWith("m:") ? mathColor : textColor));
+  const colors = (text: string) => lineTokens(text).map((t) => (t.math ? mathColor : textColor));
   // Top-left of a line whose ink is centered on `at`.
   const home = (text: string) => {
     const { ink } = metrics.get(text)!;
     return { left: p.at[0] - (ink.l + ink.r) / 2, top: p.at[1] - (ink.t + ink.b) / 2 };
   };
-  const row = (text: string, styles: Style[], key: string) => (
+  const row = (text: string, styles: TokenStyle[], key: string) => (
     <div key={key} data-text="label" style={{ ...lineStyle, ...home(text) }}>
       <Line text={text} styles={styles} />
     </div>
@@ -164,31 +175,31 @@ export const Note: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, scen
     return <AbsoluteFill style={{ opacity: s.opacity }}>{row(s.text, styles, s.text)}</AbsoluteFill>;
   }
   const { from, a } = s.change;
-  const keys = [tokenKeys(from), tokenKeys(s.text)];
-  const at = (text: string, k: number): InkBox => {
+  const flat = (text: string, tag: string) => {
     const o = home(text);
-    const b = metrics.get(text)!.tokens[k];
-    return [o.left + b.l, o.top + b.t, o.left + b.r, o.top + b.b];
+    const m = metrics.get(text)!;
+    return lineTokens(text).map((t, k) => {
+      const b = m.tokens[k];
+      return {
+        key: t.key,
+        id: `${tag}${k}`,
+        parent: t.parent === null ? null : `${tag}${t.parent}`,
+        box: b && ([o.left + b.l, o.top + b.t, o.left + b.r, o.top + b.b] as InkBox),
+      };
+    });
   };
-  const pairs = matchTokens(keys[0], keys[1]);
-  const moved = new Map(pairs.map(([i, j]) => [j, i])); // new token -> the old one it moves from
-  const staying = new Set(pairs.map(([i]) => i));
-  const w = schedule(
-    keys[0].flatMap((_, k) => (staying.has(k) ? [] : [at(from, k)])),
-    pairs.map(([i, j]): [InkBox, InkBox] => [at(from, i), at(s.text, j)]),
-    keys[1].flatMap((_, k) => (moved.has(k) ? [] : [at(s.text, k)])),
-    a.ease,
+  const src = flat(from, "o");
+  const dst = flat(s.text, "n");
+  const matched = matchTokens(
+    src.map((t) => t.key),
+    dst.map((t) => t.key),
   );
-  const out = 1 - phase(a, scene.frame, ...w.out);
-  const move = phase(a, scene.frame, ...w.move);
-  const enter = phase(a, scene.frame, ...w.in);
+  const r = morph(src, dst, matched, (p0, p1) => phase(a, scene.frame, p0, p1), a.ease);
   const [fromColors, toColors] = [colors(from), colors(s.text)];
-  const oldStyles = fromColors.map((color, k) => ({ color, opacity: staying.has(k) ? 0 : out, dx: 0, dy: 0 }));
+  const oldStyles = fromColors.map((color, k) => ({ color, opacity: r.old[k], dx: 0, dy: 0 }));
   const newStyles = toColors.map((color, k) => {
-    const i = moved.get(k);
-    return i === undefined
-      ? { color, opacity: enter, dx: 0, dy: 0 }
-      : { color: mix(fromColors[i], color, move), opacity: 1, ...moveOffset(at(from, i), at(s.text, k), move) };
+    const n = r.new[k];
+    return { color: n.source === null ? color : mix(fromColors[n.source], color, r.move), opacity: n.opacity, dx: n.dx, dy: n.dy };
   });
   return (
     <AbsoluteFill style={{ opacity: s.opacity }}>

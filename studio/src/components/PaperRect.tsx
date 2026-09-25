@@ -14,8 +14,8 @@ import {
 import { fontsLoaded } from "../style/fonts";
 import { color, fill, font, mark, stroke, type, VIDEO } from "../style/theme";
 import { Anchored } from "./Anchored";
-import { expressionInk, inkRect } from "./ink";
-import { drawTokens, InkBox, matchTokens, moveOffset, schedule, texTokens, wrapTokens } from "./morph";
+import { expressionInk, tokenInk } from "./ink";
+import { drawTokens, InkBox, matchTokens, morph, tokenize, TokenStyle } from "./morph";
 import { Tex } from "./Tex";
 
 // A sheet of paper: an axis-aligned rectangle that folds, stands up, and
@@ -24,7 +24,7 @@ import { Tex } from "./Tex";
 export type Box = { cx: number; cy: number; w: number; h: number };
 type Pair = "long" | "short";
 type Label = { tex: string; color: string };
-type Side = "bottom" | "right";
+export type Side = "bottom" | "right";
 
 type Props = {
   center?: [number, number];
@@ -265,6 +265,10 @@ export const paperState = (el: ElementTimeline, scene: Scene): PaperState => {
             ? { color: themeColor(q.valueLabel.color), opacity: s.valueLabel ? 1 : e }
             : s.valueLabel && { ...s.valueLabel, opacity: s.valueLabel.opacity * (1 - e) };
         }
+        break;
+      case "handOff":
+        // Internal (timeline.ts): an Equation reveal takes this label off the sheet.
+        s.labels = s.labels.filter((l) => l.side !== q.label);
         break;
       case "pulse": {
         const edges = q.edges ?? "all";
@@ -508,134 +512,135 @@ const Folding: React.FC<{ s: PaperState; flip: number }> = ({ s, flip }) => {
 };
 
 type Rel = { l: number; t: number; r: number; b: number }; // ink, relative to the label's top-left
+type LabelMetrics = { ink: Rel; tokens: (Rel | null)[] };
 
 // Where a label's top-left goes so its ink sits beside the edge: centered
 // below the bottom edge, or right of the right edge and centered on it.
-const labelAt = (box: Box, side: Side, ink: Rel) =>
+export const labelAt = (box: Box, side: Side, ink: Rel) =>
   side === "bottom"
     ? { left: box.cx - (ink.l + ink.r) / 2, top: box.cy + box.h / 2 + mark.edgeLabelGap - ink.t }
     : { left: box.cx + box.w / 2 + mark.edgeLabelGap - ink.l, top: box.cy - (ink.t + ink.b) / 2 };
 
-// Edge label, placed by its ink rather than its line box: KaTeX's box adds
-// more room above a digit than above a fraction, so equal box gaps look unequal.
-const SideLabel: React.FC<{ box: Box; side: Side; opacity: number; tex: string; color: string }> = ({
-  box,
-  side,
-  opacity,
-  tex,
-  color: c,
-}) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const scale = useCurrentScale();
-  const [ink, setInk] = useState<Rel | null>(null);
-  useLayoutEffect(() => {
-    const handle = delayRender(`measure label ${tex}`);
-    fontsLoaded.then(() => {
-      const outer = ref.current!.getBoundingClientRect();
-      const r = expressionInk(ref.current!);
-      setInk({
-        l: (r.left - outer.left) / scale,
-        t: (r.top - outer.top) / scale,
-        r: (r.right - outer.left) / scale,
-        b: (r.bottom - outer.top) / scale,
-      });
-      continueRender(handle);
-    });
-  }, [tex, scale]);
-  const at = ink ? labelAt(box, side, ink) : { left: 0, top: 0 };
-  return (
-    <div
-      ref={ref}
-      data-text="edge-label"
-      style={{ position: "absolute", ...at, opacity: ink ? opacity : 0, display: "flex", whiteSpace: "nowrap" }}
-    >
-      <Tex tex={tex} color={c} />
-    </div>
-  );
+// An edge label's line (its Tex at the default type.mathInline).
+export const labelLineStyle = { position: "absolute", display: "flex", whiteSpace: "nowrap" } as const;
+
+// An edge label's TeX, tokenized (morph.ts): every token in `color`, as drawn
+// at rest, or without a color, each token marked for measuring.
+export const labelTex = (tex: string, color?: string) => {
+  const t = tokenize(tex);
+  return color === undefined
+    ? t.tex((k) => `\\htmlData{tok=${k}}`)
+    : drawTokens(
+        t,
+        t.keys.map(() => ({ color, opacity: 1, dx: 0, dy: 0 })),
+      );
 };
 
-// An edge label changing its text: the tokens both texts share move from the
-// old placement to the new one, the rest fade out or in in place, timed so no
-// two different glyphs overlap (morph.ts).
-const LabelChange: React.FC<{ box: Box; side: Side; opacity: number; frame: number; label: Label; from: Label & { a: Action } }> = ({
-  box,
-  side,
-  opacity,
-  frame,
-  label,
-  from,
-}) => {
-  const texs = [from.tex, label.tex];
-  const toks = texs.map(texTokens);
-  const refs = useRef<(HTMLDivElement | null)[]>([]);
+// Edge label, placed by its ink rather than its line box: KaTeX's box adds
+// more room above a digit than above a fraction, so equal box gaps look
+// unequal. A setStyle that changes its text morphs it (morph.ts): tokens both
+// texts share move from the old placement to the new one, the rest fade out
+// or in in place, and no two different glyphs ever overlap.
+const SideLabel: React.FC<{
+  box: Box;
+  side: Side;
+  opacity: number;
+  label: Label;
+  change?: Label & { a: Action };
+  frame: number;
+}> = ({ box, side, opacity, label, change, frame }) => {
+  const texs = change ? [change.tex, label.tex] : [label.tex];
+  const nodes = useRef(new Map<string, HTMLDivElement>());
   const scale = useCurrentScale();
-  const [measured, setMeasured] = useState<{ ink: Rel; tokens: Rel[] }[] | null>(null);
+  const [metrics, setMetrics] = useState(new Map<string, LabelMetrics>());
+  const missing = JSON.stringify(texs.filter((t) => !metrics.has(t)));
   useLayoutEffect(() => {
-    const handle = delayRender(`measure label change ${from.tex} -> ${label.tex}`);
+    const todo: string[] = JSON.parse(missing);
+    if (!todo.length) return;
+    const handle = delayRender(`measure label ${todo.join(", ")}`);
     fontsLoaded.then(() => {
-      setMeasured(
-        refs.current.map((row) => {
-          const outer = row!.getBoundingClientRect();
-          const rel = (r: { left: number; top: number; right: number; bottom: number }): Rel => ({
-            l: (r.left - outer.left) / scale,
-            t: (r.top - outer.top) / scale,
-            r: (r.right - outer.left) / scale,
-            b: (r.bottom - outer.top) / scale,
-          });
-          return { ink: rel(expressionInk(row!)), tokens: [...row!.querySelectorAll("[data-tok]")].map((e) => rel(inkRect(e))) };
-        }),
-      );
+      const next = new Map(metrics);
+      for (const t of todo) {
+        const node = nodes.current.get(t)!;
+        const outer = node.getBoundingClientRect();
+        const rel = (r: { left: number; top: number; right: number; bottom: number }): Rel => ({
+          l: (r.left - outer.left) / scale,
+          t: (r.top - outer.top) / scale,
+          r: (r.right - outer.left) / scale,
+          b: (r.bottom - outer.top) / scale,
+        });
+        const tokens: (Rel | null)[] = [];
+        node.querySelectorAll<HTMLElement>("[data-tok]").forEach((e) => {
+          const r = tokenInk(e);
+          tokens[Number(e.dataset.tok)] = r && rel(r);
+        });
+        next.set(t, { ink: rel(expressionInk(node)), tokens });
+      }
+      setMetrics(next);
       continueRender(handle);
     });
-  }, [from.tex, label.tex, scale]);
-  const rowStyle = { position: "absolute", display: "flex", whiteSpace: "nowrap" } as const;
-  const measuring = texs.map((_, i) => (
-    <div
-      key={`m${i}`}
-      ref={(d) => {
-        refs.current[i] = d;
-      }}
-      style={{ ...rowStyle, left: 0, top: 0, visibility: "hidden" }}
-    >
-      <Tex tex={wrapTokens(toks[i], (k) => `\\htmlData{tok=${k}}`)} trust />
-    </div>
-  ));
-  if (!measured) return <>{measuring}</>;
+  }, [missing, metrics, scale]);
+  const measuring = texs
+    .filter((t) => !metrics.has(t))
+    .map((t) => (
+      <div
+        key={`m-${t}`}
+        ref={(n) => {
+          if (n) nodes.current.set(t, n);
+          else nodes.current.delete(t);
+        }}
+        style={{ ...labelLineStyle, left: 0, top: 0, visibility: "hidden" }}
+      >
+        <Tex tex={labelTex(t)} trust />
+      </div>
+    ));
+  if (measuring.length) return <>{measuring}</>;
 
-  const origin = measured.map((m) => labelAt(box, side, m.ink));
-  const at = (row: number, k: number): InkBox => {
-    const b = measured[row].tokens[k];
-    return [origin[row].left + b.l, origin[row].top + b.t, origin[row].left + b.r, origin[row].top + b.b];
-  };
-  const pairs = matchTokens(toks[0], toks[1]);
-  const moved = new Map(pairs.map(([i, j]) => [j, i])); // new token -> the old one it moves from
-  const staying = new Set(pairs.map(([i]) => i));
-  const w = schedule(
-    toks[0].flatMap((_, k) => (staying.has(k) ? [] : [at(0, k)])),
-    pairs.map(([i, j]): [InkBox, InkBox] => [at(0, i), at(1, j)]),
-    toks[1].flatMap((_, k) => (moved.has(k) ? [] : [at(1, k)])),
-    from.a.ease,
+  const at = (t: string) => labelAt(box, side, metrics.get(t)!.ink);
+  const line = (t: string, styles: TokenStyle[], key: string) => (
+    <div key={key} data-text="edge-label" style={{ ...labelLineStyle, ...at(t), opacity }}>
+      <Tex tex={drawTokens(tokenize(t), styles)} trust name={t} />
+    </div>
   );
-  const out = 1 - phase(from.a, frame, ...w.out);
-  const move = phase(from.a, frame, ...w.move);
-  const enter = phase(from.a, frame, ...w.in);
-  const rows = [
-    toks[0].map((tex, k) => ({ tex, color: from.color, opacity: staying.has(k) ? 0 : out, dx: 0, dy: 0 })),
-    toks[1].map((tex, k) => {
-      const i = moved.get(k);
-      return i === undefined
-        ? { tex, color: label.color, opacity: enter, dx: 0, dy: 0 }
-        : { tex, color: mix(from.color, label.color, move), opacity: 1, ...moveOffset(at(0, i), at(1, k), move) };
-    }),
-  ];
+  if (!change) return line(label.tex, tokenize(label.tex).keys.map(() => ({ color: label.color, opacity: 1, dx: 0, dy: 0 })), label.tex);
+  const flat = (t: string, tag: string) => {
+    const tk = tokenize(t);
+    const o = at(t);
+    const m = metrics.get(t)!;
+    return tk.keys.map((key, k) => {
+      const b = m.tokens[k];
+      return {
+        key,
+        id: `${tag}${k}`,
+        parent: tk.parents[k] === null ? null : `${tag}${tk.parents[k]}`,
+        box: b && ([o.left + b.l, o.top + b.t, o.left + b.r, o.top + b.b] as InkBox),
+      };
+    });
+  };
+  const src = flat(change.tex, "o");
+  const dst = flat(label.tex, "n");
+  const matched = matchTokens(
+    src.map((t) => t.key),
+    dst.map((t) => t.key),
+  );
+  const r = morph(src, dst, matched, (p0, p1) => phase(change.a, frame, p0, p1), change.a.ease);
   return (
     <>
-      {measuring}
-      {rows.map((tokens, i) => (
-        <div key={i} data-text="edge-label" style={{ ...rowStyle, ...origin[i], opacity }}>
-          <Tex tex={drawTokens(tokens)} trust name={texs[i]} />
-        </div>
-      ))}
+      {line(
+        change.tex,
+        src.map((_, i) => ({ color: change.color, opacity: r.old[i], dx: 0, dy: 0 })),
+        `old-${change.tex}`,
+      )}
+      {line(
+        label.tex,
+        r.new.map((n) => ({
+          color: n.source === null ? label.color : mix(change.color, label.color, r.move),
+          opacity: n.opacity,
+          dx: n.dx,
+          dy: n.dy,
+        })),
+        label.tex,
+      )}
     </>
   );
 };
@@ -667,35 +672,24 @@ export const PaperRect: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el,
           )}
         </g>
       </Svg>
-      {s.labels.map((l) =>
-        l.change ? (
-          <LabelChange
-            key={`${l.side}-change`}
-            box={s.box}
-            side={l.side}
-            opacity={l.opacity * s.content}
-            frame={scene.frame}
-            label={l}
-            from={l.change}
-          />
-        ) : (
-          <SideLabel
-            key={`${l.side}-${l.tex}`}
-            box={s.box}
-            side={l.side}
-            opacity={l.opacity * s.content}
-            tex={l.tex}
-            color={l.color}
-          />
-        ),
-      )}
+      {s.labels.map((l) => (
+        <SideLabel
+          key={l.side}
+          box={s.box}
+          side={l.side}
+          opacity={l.opacity * s.content}
+          label={l}
+          change={l.change}
+          frame={scene.frame}
+        />
+      ))}
       {s.valueLabel ? (
         <SideLabel
           box={s.box}
           side="right"
           opacity={s.valueLabel.opacity * s.content}
-          tex={(s.box.h / s.box.w).toFixed(3)}
-          color={s.valueLabel.color}
+          label={{ tex: (s.box.h / s.box.w).toFixed(3), color: s.valueLabel.color }}
+          frame={scene.frame}
         />
       ) : null}
       {s.names.map((n) => (

@@ -148,6 +148,13 @@ export const resolveTimeline = (sb: Storyboard, cues: Cues): ElementTimeline[] =
     for (const { el, action } of resolved) {
       el.actions.push(action);
       if (action.action === "exit") el.end = action.to;
+      // A part revealed from a sheet's edge label takes the label with it.
+      const fromLabel = action.action === "reveal" ? action.params.fromLabel : undefined;
+      if (fromLabel) {
+        const sheet = elements.get(fromLabel.of);
+        if (!sheet) throw new Error(`${beat.id}: reveal fromLabel of ${fromLabel.of}, which is not declared`);
+        sheet.actions.push({ action: "handOff", params: { label: fromLabel.side }, from: action.from, to: action.from, ease: ease.linear });
+      }
     }
   });
   const list = [...elements.values()];

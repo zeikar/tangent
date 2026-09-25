@@ -76,10 +76,12 @@ const textItem = (el: HTMLElement): TextItem | null => {
     opacity = Math.max(opacity, ink.opacity);
     if (ink.glyph && (!glyph || ink.glyph[1] < glyph[1])) glyph = ink.glyph;
   }
-  // KaTeX draws radicals as SVG and fraction bars as borders.
+  // KaTeX draws radicals as SVG and fraction bars as borders, both in the
+  // current color (a morph fades a token through its color's alpha).
   el.querySelectorAll("svg, .frac-line").forEach((e) => {
     const r = e.getBoundingClientRect();
-    if (r.width && getComputedStyle(e).visibility === "visible" && opacityOf(e) > 0.01) box = union(box, [r.left, r.top, r.right, r.bottom]);
+    const cs = getComputedStyle(e);
+    if (r.width && cs.visibility === "visible" && opacityOf(e) * alphaOf(cs.color) > 0.01) box = union(box, [r.left, r.top, r.right, r.bottom]);
   });
   if (!box) return null;
   const marker = el.querySelector("[data-baseline]");
@@ -131,6 +133,8 @@ export const snapshot = (): ElementSnap[] =>
       // KaTeX draws glyphs (radicals) as SVG on huge clipped canvases; they
       // belong to the text item, not the diagram.
       if (!g.getScreenCTM() || g.closest(".katex")) return;
+      // A filtered shape draws what its filter makes of it (Mismatch's glow), not itself.
+      if (g.closest("[filter]")) return;
       const cs = getComputedStyle(g);
       if (cs.visibility !== "visible") return;
       const o = opacityOf(g);

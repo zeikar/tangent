@@ -67,7 +67,7 @@ export const stroke = {
 export const fill = {
   sheet: 0.08, // paper
   flap: 0.2, // the half of a sheet that is flipping over
-  mismatch: 0.35, // where two shapes disagree
+  mismatch: 0.8, // where two shapes disagree: clearly red, about 4.4:1 against the background
 } as const;
 
 export const mark = {
