@@ -34,8 +34,9 @@ illustration assets only.
 
 Validated in milestone 1: Remotion handled Korean type, KaTeX, 9:16 layout,
 word-synced captions, and audio; a frame renders in under 2 s and the 51 s
-short in about 20 s. No scene needed Manim (equation steps worked as KaTeX
-parts crossfading), so it stays reserved for true glyph morphs and 3D.
+short in about 20 s. No scene needed Manim: equation steps work as KaTeX
+token morphs (shared tokens slide, the rest fade without overlapping), so
+Manim stays reserved for true glyph-shape morphs and 3D.
 
 ## Quality comes from a component library, not free-form generation
 
