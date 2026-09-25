@@ -133,20 +133,20 @@ math { font-size: 1.1em; }
     </div>
     <div class="controls">
       <div class="row1">
-        <button class="play" id="play" type="button">▶ 내레이션 재생</button>
-        <span class="clock" id="clock">0.0 / 0.0초</span>
+        <button class="play" id="play" type="button">▶ Play narration</button>
+        <span class="clock" id="clock">0.0 / 0.0 s</span>
         <span class="nowcap" id="nowcap"></span>
       </div>
       <div class="bar" id="bar"><div class="playhead" id="head"></div></div>
-      <div class="note-audio">__AUDIO_NOTE__ 단어를 누르면 거기서부터 재생돼요.</div>
+      <div class="note-audio">__AUDIO_NOTE__ Click a word to play from there.</div>
     </div>
   </div>
 
   <main id="beats"></main>
 
   <section class="comps">
-    <div class="label">영상 제작 에이전트가 만들 부품</div>
-    <h2>부품</h2>
+    <div class="label">Parts the production agent will build</div>
+    <h2>Components</h2>
     <div id="comps"></div>
   </section>
 </div>
@@ -201,8 +201,8 @@ function anchorIndex(b, at) {
 
 // Header
 document.getElementById('meta').innerHTML =
-  `<span><b>${beats.length}</b> 비트</span><span><b>${beats.reduce((s, b) => s + b.syl, 0)}</b> 음절</span>` +
-  `<span>예상 <b>${total.toFixed(1)}</b>초</span><span>오디오 <b>${aligned.at(-1).end.toFixed(1)}</b>초</span><span>1080 × 1920 · 30 fps</span>`;
+  `<span><b>${beats.length}</b> beats</span><span><b>${beats.reduce((s, b) => s + b.syl, 0)}</b> syllables</span>` +
+  `<span>est. <b>${total.toFixed(1)}</b> s</span><span>audio <b>${aligned.at(-1).end.toFixed(1)}</b> s</span><span>1080 × 1920 · 30 fps</span>`;
 const legend = document.getElementById('legend');
 document.getElementById('h1').append(rich(__H1__));
 Object.entries(sb.colors || {}).forEach(([k, v]) => {
@@ -227,11 +227,11 @@ const main = document.getElementById('beats');
 beats.forEach(b => {
   const sec = document.createElement('section');
   sec.className = 'beat'; sec.id = b.id;
-  sec.innerHTML = `<div class="rail"><div class="id">${b.id}</div><div class="nm"></div><div class="sec">~${b.est.toFixed(1)}초${b.pauseAfter ? ` · 여백 ${b.pauseAfter}초` : ''}</div></div><div class="body"></div>`;
+  sec.innerHTML = `<div class="rail"><div class="id">${b.id}</div><div class="nm"></div><div class="sec">~${b.est.toFixed(1)} s${b.pauseAfter ? ` · pause ${b.pauseAfter} s` : ''}</div></div><div class="body"></div>`;
   sec.querySelector('.nm').textContent = b.name;
   const body = sec.querySelector('.body');
 
-  const capL = document.createElement('div'); capL.className = 'label'; capL.textContent = '자막';
+  const capL = document.createElement('div'); capL.className = 'label'; capL.textContent = 'Captions';
   const caps = document.createElement('div'); caps.className = 'caps';
   b.capEls = (b.captions || []).map(c => {
     const d = document.createElement('div'); d.className = 'c';
@@ -241,7 +241,7 @@ beats.forEach(b => {
     return { el: d, idx: anchorIndex(b, c.at), text: c.text };
   });
 
-  const scL = document.createElement('div'); scL.className = 'label'; scL.textContent = '내레이션과 애니메이션 (단어가 발음되는 순간 시작)';
+  const scL = document.createElement('div'); scL.className = 'label'; scL.textContent = 'Narration and animation (each cue starts as its word is spoken)';
   const score = document.createElement('div'); score.className = 'score';
   const slots = b.words.map((wd, i) => {
     const btn = document.createElement('button'); btn.className = 'word'; btn.type = 'button';
@@ -251,7 +251,7 @@ beats.forEach(b => {
     score.append(btn); wd.el = btn; return btn;
   });
   const pauseSlot = document.createElement('div'); pauseSlot.className = 'word pause';
-  pauseSlot.innerHTML = `<span class="w">⏸ ${b.pauseAfter ? b.pauseAfter + '초' : '끝'}</span><div class="cues"></div>`;
+  pauseSlot.innerHTML = `<span class="w">⏸ ${b.pauseAfter ? b.pauseAfter + ' s' : 'end'}</span><div class="cues"></div>`;
   score.append(pauseSlot); b.pauseEl = pauseSlot;
   b.cues.forEach(c => {
     const i = anchorIndex(b, c.at);
@@ -260,12 +260,12 @@ beats.forEach(b => {
     const col = elColor[c.target]; if (col) tag.style.setProperty('--dot', col);
     tag.innerHTML = `<b></b> · <span></span>`;
     tag.querySelector('b').textContent = c.target;
-    tag.querySelector('span').textContent = c.action + (c.until ? ` → ${c.until.word ?? '여백'}` : '');
+    tag.querySelector('span').textContent = c.action + (c.until ? ` → ${c.until.word ?? 'pause'}` : '');
     if (c.note) tag.title = c.note;
     host.querySelector('.cues').append(tag);
   });
 
-  const endL = document.createElement('div'); endL.className = 'label'; endL.textContent = '마지막 프레임 (품질 검수 기준)';
+  const endL = document.createElement('div'); endL.className = 'label'; endL.textContent = 'Last frame (what QA checks)';
   const end = document.createElement('div'); end.className = 'end'; end.textContent = b.endFrame;
   const cl = document.createElement('div'); cl.className = 'claims';
   (b.claims || []).forEach(x => { const s = document.createElement('span'); s.textContent = x; cl.append(s); });
@@ -296,13 +296,13 @@ const zoneTxt = document.getElementById('zoneTxt');
 const dur = () => audio.duration || aligned.at(-1).start + 1;
 function seek(t) { if (t == null) return; audio.currentTime = Math.max(0, t - 0.05); audio.play().catch(() => {}); }
 playBtn.addEventListener('click', () => audio.paused ? audio.play().catch(() => {}) : audio.pause());
-audio.addEventListener('play', () => playBtn.textContent = '❚❚ 일시정지');
-audio.addEventListener('pause', () => playBtn.textContent = '▶ 내레이션 재생');
+audio.addEventListener('play', () => playBtn.textContent = '❚❚ Pause');
+audio.addEventListener('pause', () => playBtn.textContent = '▶ Play narration');
 
 let lastKey = '';
 function tick() {
   const t = audio.currentTime;
-  clock.textContent = `${t.toFixed(1)} / ${dur().toFixed(1)}초`;
+  clock.textContent = `${t.toFixed(1)} / ${dur().toFixed(1)} s`;
   head.style.left = `${(t / dur()) * 100}%`;
   // Current beat and word from the aligned starts.
   let cb = null, cw = null;

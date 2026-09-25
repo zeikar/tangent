@@ -32,14 +32,15 @@ Use the format in `docs/channel.md` → `publish.md` format: every field the
 uploader pastes (title, description, tags) alone in its own code block, in
 upload order, then the per-upload answers (thumbnail time, playlist,
 audience, AI disclosure), then our notes below a rule. The uploader should be
-able to copy each block without editing it. Leave the `게시:` line out; it is
-added after upload.
+able to copy each block without editing it. Leave the `Published:` line out;
+it is added after upload.
 
 - **Title, description, tags, playlist** per `docs/channel.md`. Korean, the
   same "~요" register as the script. Tags leave out what the upload defaults
   already add.
 - **Facts:** every factual statement in the description comes from a
-  research.md claim, and the 출처 lines are the sources those claims cite.
+  research.md claim, and the description's 출처 (sources) lines are the sources
+  those claims cite.
   Don't add facts the video doesn't show. The claim map goes in the notes.
 - **AI disclosure:** answer per `docs/channel.md` and say why in the notes.
   Check the episode for anything that changes the answer (AI music,

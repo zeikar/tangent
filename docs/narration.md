@@ -1,6 +1,6 @@
 # Narration: voice and pronunciation
 
-Shared rules for every episode's 읽기용 text. The script writer reads this
+Shared rules for every episode's Read-aloud text. The script writer reads this
 before writing; add to it whenever a take mishears or a reviewer catches a
 clash.
 

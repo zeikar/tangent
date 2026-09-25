@@ -39,7 +39,7 @@ fresh = (cues.exists() and json.loads(cues.read_text()).get("storyboardSha256")
 if fresh and (ep / "narration.mp3").exists() and (ep / "words.json").exists():
     audio = (ep / "narration.mp3").read_bytes()
     words = json.loads((ep / "words.json").read_text())
-    note = "최종 내레이션이에요(비트 사이 여백 포함)."
+    note = "Final narration, with the pauses between beats."
 elif (ep / f"{source}.wav").exists() and (ep / f"{source}.words.json").exists():
     # Embed the take as a small mp3; the page only needs it for listening.
     audio = subprocess.run(
@@ -47,7 +47,7 @@ elif (ep / f"{source}.wav").exists() and (ep / f"{source}.words.json").exists():
          "-b:a", "64k", "-f", "mp3", "-"],
         check=True, capture_output=True).stdout
     words = json.loads((ep / f"{source}.words.json").read_text())
-    note = "미리 읽기 테이크예요. 비트 사이 여백(pauseAfter)은 아직 안 들어가 있어요."
+    note = "Table-read take; the pauses between beats (pauseAfter) aren't in it yet."
 else:
     sys.exit(f"{ep}: no narration.mp3 + words.json or {source}.wav + {source}.words.json to play")
 
@@ -60,7 +60,7 @@ def js(o):
 
 
 page = (template
-        .replace("__TITLE__", f"{title} 스토리보드")
+        .replace("__TITLE__", f"{title} · storyboard")
         .replace("__SLUG__", slug)
         .replace("__H1__", js(title))
         .replace("__AUDIO_NOTE__", note)

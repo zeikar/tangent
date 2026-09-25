@@ -115,7 +115,7 @@ episodes/<slug>`) for what earlier rounds changed.
 
 - Change layout, timing (anchors, `until`, `speed`, `pauseAfter`), props,
   element order, and components as needed, keeping each beat's intent: its
-  `endFrame` meaning and the script's 비주얼 line.
+  `endFrame` meaning and the script's Visual line.
 - Don't originate changes to what is said or claimed: `readAloud`, caption
   text, `claims`. If a fix needs one, stop and report; it goes back to the
   script. When the orchestrator hands over an approved script and take

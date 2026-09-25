@@ -60,7 +60,7 @@ Read `checkpoints.md` for the last decision, then the folder:
 | first look | latest review round not **ship** | 8 Fix round |
 | first look | review **ship**, no `publish.md` | 9 Publish |
 | first look | `publish.md` | 9 Final checkpoint |
-| final | no `게시:` line in `publish.md` | 10 Release and upload |
+| final | no `Published:` line in `publish.md` | 10 Release and upload |
 
 A **rework** verdict, or a first look that rejects the flow, goes back to the
 human with the options (restoryboard, rewrite, or push on) before any fix.
@@ -186,7 +186,7 @@ These steps are outward-facing: ask before pushing or creating the release.
   `narration.mp3`, with rebuild steps in the notes (FLAC → WAV → atempo →
   build-cues → render.mts), as in release `001-a4-paper-ratio`.
 - The human uploads by hand (docs/channel.md has the upload defaults). After
-  upload, add `게시: <URL> (<date>)` under the title in `publish.md` and
+  upload, add `Published: <URL> (<date>)` under the title in `publish.md` and
   `**Watch:** <URL>` at the top of the release notes. Commit and push.
 
 ## Rules

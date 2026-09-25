@@ -20,9 +20,9 @@ sections = re.split(r"^## ", script, flags=re.M)[1:]
 beats_md = {}
 for sec in sections:
     bid = sec.split(" ")[0]
-    disp = re.search(r"\*\*화면용:\*\* (.+)", sec).group(1)
-    read = re.search(r"\*\*읽기용:\*\* (.+)", sec).group(1)
-    pause = sum(float(x) for x in re.findall(r"말 없이 ([\d.]+)초", sec))
+    disp = re.search(r"\*\*Display:\*\* (.+)", sec).group(1)
+    read = re.search(r"\*\*Read-aloud:\*\* (.+)", sec).group(1)
+    pause = sum(float(x) for x in re.findall(r"\bhold ([\d.]+) s\b", sec))
     beats_md[bid] = (disp, read, pause)
 
 claims = set(re.findall(r"^\| (C\d+) \|", research, re.M))
@@ -87,7 +87,7 @@ for b in sb["beats"]:
     if b["readAloud"] != read:
         err(f"{bid}: readAloud differs from script.md")
     if b["pauseAfter"] != pause:
-        # The script's "말 없이 N초" is the writer's first guess; after that the
+        # The script's "(hold N s)" is the writer's first guess; after that the
         # storyboard owns pacing (fix rounds retune it), so this is only a note.
         notes.append(f"note: {bid}: pauseAfter {b['pauseAfter']} vs script {pause}")
     if not 0 <= b["pauseAfter"] <= 1.5:
@@ -96,7 +96,7 @@ for b in sb["beats"]:
     # captions
     joined = " ".join(c["text"] for c in b["captions"])
     if joined != disp:
-        err(f"{bid}: captions don't cover 화면용\n  {joined}\n  {disp}")
+        err(f"{bid}: captions don't cover Display\n  {joined}\n  {disp}")
     last = -1
     for c in b["captions"]:
         n = units(c["text"])

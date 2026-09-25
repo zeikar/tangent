@@ -65,37 +65,37 @@ judgment, not a template:
   the picture shows the math, the caption can say what it means.
 - Be precise where it's cheap to be: say the direction of an operation, write
   rounded values with ≈, keep design values apart from measured ones (see
-  research.md's 틀리기 쉬운 표현).
+  research.md's Easy to misstate section).
 
 ## Beats
 
 Split the script into beats (B1, B2, ...), one idea each. Every beat has:
 
-- **화면용** (display): the on-screen caption text. Math goes in dollar
+- **Display**: the on-screen caption text. Math goes in dollar
   signs as KaTeX (`$\frac{x}{2}$`, `$\sqrt{2}$`). Numbers as digits.
-- **읽기용** (read-aloud): the exact TTS input, following
+- **Read-aloud**: the exact TTS input, following
   `docs/narration.md` (spelling out, and clashes to avoid). Spell out every
   number, symbol, formula, Latin letter, and English term in Hangul
   (`$x^2 = 2$` → "엑스 제곱은 이", "A4" → "에이포", "210" → "이백십").
   Commas mark breaths. The word sequence must be something a forced aligner
   can match: Hangul words only, no digits or Latin letters.
-- **비주얼**: one line: what the viewer sees, the single picture that carries
+- **Visual**: one line: what the viewer sees, the single picture that carries
   the idea. A separate storyboard agent turns this line into the spec, so it
   must say what matters about the picture. If a shape is scaled to compare
   with another, the scaling should read as scaling, not as "the same size".
   A silent hold after the beat goes at the end of this line as
-  `(끝에 말 없이 <N>초)`, 0–1.5 s; the storyboard starts its pacing from it.
-- **근거**: the research.md claim IDs (C1, C2, ...) this beat relies on. A
+  `(hold <N> s)`, 0–1.5 s; the storyboard starts its pacing from it.
+- **Claims**: the research.md claim IDs (C1, C2, ...) this beat relies on. A
   factual statement without a claim ID is not allowed; pure arithmetic or
-  logic shown on screen may say "산수".
+  logic shown on screen may say "arithmetic".
 
-Respect research.md's "틀리기 쉬운 표현" section.
+Respect research.md's Easy to misstate section.
 
 ## Length budget
 
 Narration is Gemini TTS (`gemini-3.8-flash-tts`, voice Kore, fast style). Its
 rate varies by take: 4.9–5.3 Hangul syllables per second including natural
-pauses. Budget at **5.0**: estimated seconds = Hangul syllables in 읽기용 ÷
+pauses. Budget at **5.0**: estimated seconds = Hangul syllables in Read-aloud ÷
 5.0. Count syllables with code (e.g. `len(re.findall(r'[가-힣]', text))`),
 not by eye. Leave 2–4 s of the target for the silent holds. The human hears
 the take at 1.0× and sped up (1.08×, 1.15×) and picks one.
@@ -103,9 +103,9 @@ the take at 1.0× and sped up (1.08×, 1.15×) and picks one.
 ## File layout
 
 A short header (total syllables, estimated narration length, estimated total
-with silent holds), then one `## B<n> · <name> (~<sec>초)` section per beat
+with silent holds), then one `## B<n> · <name> (~<sec> s)` section per beat
 with the four bullets above. Tools parse this: no other `##` headings, and
-`**화면용:**` and `**읽기용:**` each on one line. Notes go in the report,
+`**Display:**` and `**Read-aloud:**` each on one line. Notes go in the report,
 not the file.
 
 ## Revising
@@ -122,6 +122,6 @@ effects against "Telling it", and say which findings were skipped and why.
 ## Before finishing
 
 - Recount syllables and check the total against the target.
-- Check every 근거 ID exists in research.md and says what the beat claims.
+- Check every Claims ID exists in research.md and says what the beat claims.
 - Report back: the total length estimate, the hook in one line, and any
   choice that felt uncertain.

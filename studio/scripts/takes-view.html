@@ -1,4 +1,4 @@
-<title>테이크 듣기</title>
+<title>Script takes</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
@@ -50,9 +50,9 @@ math { font-size: 1.1em; }
 
 <div class="wrap">
   <header>
-    <div class="eyebrow">tangent · __SLUG__ · 대본 + 테이크</div>
+    <div class="eyebrow">tangent · __SLUG__ · scripts + takes</div>
     <h1 id="h1"></h1>
-    <p class="ask">대본마다 속도별 테이크가 있어요. 들어 보고 대본 하나와 속도 하나를 골라 주세요. 아래 자막은 화면에 나올 글이에요.</p>
+    <p class="ask">Each script has takes at a few speeds. Listen, then pick one script and one speed. The captions below are the on-screen text.</p>
   </header>
   <div class="cols" id="cols"></div>
 </div>
@@ -86,17 +86,17 @@ document.getElementById('h1').append(rich(__H1__));
 const cols = document.getElementById('cols');
 for (const c of columns) {
   const sec = el('section');
-  const h2 = el('h2', null, c.variant ? `대본 ${c.variant}` : '대본');
-  h2.append(el('small', null, `${c.file} · ${c.syllables}음절`));
+  const h2 = el('h2', null, c.variant ? `Script ${c.variant}` : 'Script');
+  h2.append(el('small', null, `${c.file} · ${c.syllables} syllables`));
   sec.append(h2);
 
   const takes = el('div', 'takes');
-  if (!c.audio.length) takes.append(el('div', 'none', '이 대본으로 만든 테이크가 없어요.'));
+  if (!c.audio.length) takes.append(el('div', 'none', 'No takes of this script yet.'));
   for (const a of c.audio) {
     const row = el('div', 'take');
     const label = el('span');
-    const speed = el('b', null, a.tempo === 1 ? '원래 속도' : `${a.tempo}배`);
-    label.append(`take${a.take} · `, speed, ` · ${a.seconds.toFixed(1)}초 · ${a.rate.toFixed(1)}음절/초`);
+    const speed = el('b', null, a.tempo === 1 ? 'original speed' : `${a.tempo}×`);
+    label.append(`take${a.take} · `, speed, ` · ${a.seconds.toFixed(1)} s · ${a.rate.toFixed(1)} syllables/s`);
     const audio = el('audio');
     audio.controls = true;
     audio.preload = 'none';

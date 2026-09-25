@@ -48,6 +48,6 @@ Milestone 1's next-step candidates 1–3, done before episode 002's production
   `storyboard.json` from its start and the storyboard agent lists the
   extents it couldn't measure.
 - **To watch in episode 002:** whether a fresh storyboard agent realizes the
-  writer's `비주얼` lines without the writer's context or a proxy render;
+  writer's `Visual` lines without the writer's context or a proxy render;
   whether one fixer's context holds up over several rounds; how long the
   added first-look checkpoint waits on the human.

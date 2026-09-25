@@ -125,9 +125,9 @@ Stage numbers follow the `episode` runbook.
 
 - Script and storyboard are designed together because the visual is the
   explanation (see Pipeline): the writer gives each beat one picture in its
-  `비주얼` line, and the storyboard agent realizes it, reporting where it
+  `Visual` line, and the storyboard agent realizes it, reporting where it
   can't. Milestone 1 used one agent for both passes; skills start fresh each
-  run and can't be resumed across sessions, so the `비주얼` line carries the
+  run and can't be resumed across sessions, so the `Visual` line carries the
   intent. Between the two stages the orchestrator runs the takes
   (`studio/scripts/narrate.mts`), and the human picks script and take before
   the storyboard.

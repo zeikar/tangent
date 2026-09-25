@@ -3,7 +3,7 @@
 대본에는 아래 표에 있는 주장만 쓴다. 수치 주장은 `verify.py`로 다시 확인할 수 있다
 (`python3 verify.py`, 전부 통과).
 
-## 출처
+## Sources
 
 접속일은 모두 2026-09-25.
 
@@ -43,9 +43,9 @@
   "Enlarging / Reducing Images" (날짜 표기 없음).
   <https://oip.manual.canon/USRMA-0621-zz-CS-enGB/contents/CS2545_copy_0209_enlargingreducingimages.html>
 
-## 주장
+## Claims
 
-| # | 주장 | 근거 | 계산 검증 |
+| # | Claim | Support | Verification |
 |---|------|------|-----------|
 | C1 | A 시리즈(A0–A10)는 모두 닮은꼴이고, 긴 변 : 짧은 변은 설계상 √2 : 1이다. mm 치수로 계산한 비율은 √2와 0.7% 안쪽으로 다르다. | S4 §4.1 "All the sizes in each series are geometrically similar to one another (the principle of similarity)"; S4 식 (1) "y : x = √2 : 1 = 1,414"; S1 "the height-to-width ratio of all pages is the square root of two (1.4142 : 1)"; S2 "have the same aspect ratio, √2:1, within rounding error" | 표 1 기준 A0–A10 모두 √2와의 차이가 0.7% 이내. 가장 큰 것은 A8·A10(≈ +0.63%)과 A9(≈ −0.62%), A4는 ≈ +0.005% |
 | C2 | 짧은 변과 평행하게 반으로 나누면 바로 아래 크기가 된다. A3를 반으로 자르면 A4 두 장, A4를 반으로 자르면 A5 두 장이다. 크기 번호는 A0에서 몇 번 나눴는지를 뜻한다. 나눈 절반도 비율이 같다. | S4 §4.1 "each size is achieved by dividing the size immediately above it into two equal parts, the division being parallel to the shorter side (the halving principle)"; S4 §5.1 "the number indicates the number of divisions that have been made (according to the rules of 4.1), starting from the basic size which has been given the number 0"; S1 "cut one parallel to its shorter side into two equal pieces, then the resulting page will have again the same width/height ratio"; S2 "when cut or folded in half widthways, the halves also have the same aspect ratio" | 표 1의 모든 n에서 A(n)의 절반 = A(n+1) (긴 변을 반으로 나누고 mm 아래는 버림) |
@@ -62,7 +62,7 @@
 | C13 | 모든 A 크기는 모양이 같아서, 한 A 크기에 맞춘 페이지를 다른 A 크기로 옮길 때 가로세로를 같은 배율로 키우거나 줄이면 그대로 꼭 맞는다. 잘리는 곳도 남는 여백도 없고, 한쪽만 늘일 필요도 없다. 남는 틈은 mm 반올림 탓뿐이라 변 길이의 1.3% 미만이고, A3·A4·A5 이웃끼리는 1 mm 미만이다. 미국 규격은 비율이 번갈아 달라서, 레터(8.5 × 11 인치)를 레저(11 × 17 인치)로 키우면 긴 쪽에 약 70 mm 여백이 남는다. | S1 (A4 잡지 두 쪽을 71%로 A4 한 장에 복사하는 예) "both A4 pages of the journal article together will fill exactly the A4 page produced by the copying machine. ... No wasted paper margins appear, no text has been cut off"; S2 "In scaled photocopying, for example, two A4 sheets reduced to A5 size fit exactly onto one A4 sheet, and an A4 sheet in magnified size onto an A3 sheet; in each case, there is neither waste nor want."; S1 "Not only the operation of copying machines in offices and libraries, but also repro photography, microfilming, and printing are simplified by the 1:sqrt(2) aspect ratio of ISO paper sizes."; S1 "you cannot reduce or magnify from one U.S. format to the next higher or lower without leaving an empty margin"; S5 인치판 "129%: 8 1/2 × 11 → 11 × 17" | 표 1의 모든 A 크기 쌍: 남는 틈이 변 길이의 ≈ 1.24% 이하. A3 ↔ A4 ↔ A5: 최대 ≈ 0.69 mm. 레터 → 레저: 배율 ≈ 129%, 긴 쪽 여백 ≈ 70 mm(17인치 변의 ≈ 16%) |
 | C14 | mm 반올림 때문에 생기는 차이는 1 mm도 안 된다. 설계 치수와 표 치수의 차이는 A0–A10 모두 0.7 mm 미만이고, A4는 설계 ≈ 210.2 × 297.3 mm와 약 0.3 mm 다르다. 표준이 허용하는 오차(150 mm 이하 ±1.5 mm, 150–600 mm ±2 mm)보다 훨씬 작다. | S1 계산식 표(A n의 너비 2^(−1/4−n/2) m, 높이 2^(1/4−n/2) m); S4 §7.1 "the tolerance for a given sheet size is the range outside of which a sheet cannot be regarded as being of a given size"; S4 §7.1 a) "for dimensions ≤ 150 mm: — upper limit +1,5 mm — lower limit −1,5 mm"; S1 "The allowed tolerances are ±1.5 mm for dimensions up to 150 mm, ±2 mm for dimensions above 150 mm up to 600 mm, and ±3 mm for dimensions above 600 mm."; S2 "±2.0 mm for dimensions in the range 150 to 600 mm" | A4: 2^(−2.25) m ≈ 210.22 mm, 2^(−1.75) m ≈ 297.30 mm, 차이 ≈ 0.30 mm. A0–A10 중 가장 큰 차이 ≈ 0.65 mm(A5·A6). 210 × √2 ≈ 296.98 mm (297과 ≈ 0.02 mm 차이) |
 
-## 틀리기 쉬운 표현
+## Easy to misstate
 
 - **반올림한 소수에는 = 대신 ≈를 쓴다.** "297 ÷ 210 = 1.41429", "√2 = 1.41421" ✗ →
   "297 ÷ 210 ≈ 1.41429", "√2 ≈ 1.41421" ✓. 141% ≈ √2, 71% ≈ 1/√2 ≈ 0.707,

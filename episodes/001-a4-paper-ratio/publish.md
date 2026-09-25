@@ -1,15 +1,15 @@
 # 001 · A4 용지는 왜 하필 210×297일까?
 
-게시: https://youtube.com/shorts/nlG5vMoo5w0 (2026-09-26)
+Published: https://youtube.com/shorts/nlG5vMoo5w0 (2026-09-26)
 
-영상: `publish/001-a4-paper-ratio.mp4` · 썸네일: `publish/001-a4-paper-ratio.thumb.png`
+Video: `publish/001-a4-paper-ratio.mp4` · Thumbnail: `publish/001-a4-paper-ratio.thumb.png`
 
-## 제목
+## Title
 ```
 A4 용지는 왜 하필 210×297일까?
 ```
 
-## 설명
+## Description
 ```
 A4 용지는 210 × 297 mm예요. 왜 하필 이런 애매한 숫자일까요?
 반으로 접어 보면 보여요. A4는 몇 번을 접어도 모양이 그대로거든요.
@@ -38,26 +38,26 @@ A0를 반씩 네 번 접으면 바로 A4가 돼요.
 #수학 #A4용지 #용지규격
 ```
 
-## 태그
+## Tags
 ```
 A4, A4 용지, A4용지, A4 비율, A4 크기, A4 사이즈, A4 규격, 210x297, 용지 규격, 종이 비율, ISO 216, A0, 레터 용지, US letter, 루트2, √2, 1:√2, 비율, 닮음, paper size, A4 paper ratio, square root of 2
 ```
 
-## 업로드할 때
-- 썸네일: 36.3초 (35.9–36.7초 사이 아무 데나), A4에 210 mm · 297 mm 치수선과 자막 "세로 297.", 답(1.414, √2)이 나오기 전
-- 재생목록: 일상 속 수학
-- 시청자층: 아니요, 아동용이 아닙니다
-- 변경되거나 합성된 콘텐츠: 아니요
-- 나머지는 업로드 기본 설정 그대로
+## When uploading
+- Thumbnail: 0:36.3 (anywhere in 35.9–36.7 s), A4에 210 mm · 297 mm 치수선과 자막 "세로 297.", 답(1.414, √2)이 나오기 전
+- Playlist: 일상 속 수학
+- Audience: No, it's not made for kids (아니요, 아동용이 아닙니다)
+- Altered or synthetic content: No (아니요)
+- Everything else: the upload defaults
 
 ---
 
-## 메모 (업로드에 쓰지 않음)
+## Notes (not for upload)
 - 2026-09-26 업로드. 최종본은 v1 대본, take1 1.08배(47.53초). 올린 설명에 있던 "내레이션은 AI 음성(TTS)이고…" 줄은 이후 규칙에서 뺐다(docs/channel.md → AI disclosure).
 - 제목: 210 × 297은 A4를 쓰는 사람이면 본 숫자이고, 영상이 비율(1 : √2)과 크기(넓이 1 m²인 A0를 네 번 접은 것) 둘 다 답한다. "반으로 접어도 모양이 똑같을까?"는 대부분 모르는 성질을 전제로 깔아서 버렸다.
 - 썸네일: f1090. 같은 그림이 f1076–f1102(약 0.9초) 이어진다. 그 전은 210 mm만, 그 뒤는 1.414와 √2가 보인다.
 - 태그의 루트와이, 수학, 과학은 업로드 기본 설정에서 들어간다.
-- 줄별 근거(research.md):
+- Line by line (research.md):
   - 210 × 297 mm: C4
   - 몇 번을 접어도 모양이 그대로: C1, C2
   - 레터는 접으면 더 길쭉해짐: C11

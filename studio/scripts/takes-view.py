@@ -25,13 +25,13 @@ template = (Path(__file__).parent / "takes-view.html").read_text()
 
 def read_aloud(text):
     # Exactly what narrate.mts sends, and so what take<N>.txt holds.
-    return "\n".join(m.strip() for m in re.findall(r"\*\*읽기용:\*\*\s*(.+)", text))
+    return "\n".join(m.strip() for m in re.findall(r"\*\*Read-aloud:\*\*\s*(.+)", text))
 
 
 def beats(text):
     out = []
     for m in re.finditer(r"^## (B\d+) · (.+?)\s*$(.*?)(?=^## |\Z)", text, re.M | re.S):
-        disp = re.search(r"\*\*화면용:\*\*\s*(.+)", m.group(3))
+        disp = re.search(r"\*\*Display:\*\*\s*(.+)", m.group(3))
         out.append({"id": m.group(1),
                     "name": re.sub(r"\s*\(~[^)]*\)$", "", m.group(2)),
                     "display": disp.group(1).strip() if disp else ""})

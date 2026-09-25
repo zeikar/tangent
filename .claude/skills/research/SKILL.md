@@ -20,7 +20,8 @@ anything.
 Write the sourced fact base the episode stands on. The script may only state
 what `research.md` supports, and QA and the publish step check against it.
 Read `docs/decisions.md` first; `episodes/001-a4-paper-ratio/research.md` is
-a shipped example (sections 출처, 주장, 틀리기 쉬운 표현; sources S1, S2, ...).
+a shipped example (sections Sources, Claims, Easy to misstate; sources S1,
+S2, ...).
 
 Input: `topic.md` (and, when revising, the existing `research.md`). Output:
 `research.md` and `verify.py` in the episode folder. Edit nothing else and
@@ -49,7 +50,7 @@ don't commit; the orchestrator does.
   validator reads the IDs from them.
 - Every numeric claim gets a check in `verify.py` (plain Python, no
   dependencies; `python3 verify.py` passes).
-- Keep a "틀리기 쉬운 표현" list: wordings that would be false or misleading
+- Keep an "Easy to misstate" list: wordings that would be false or misleading
   (exact vs. approximate, direction, design value vs. measured, who invented
   what), with the correct form. The script writer and QA both use it.
 - When revising, keep existing claim IDs stable; add new IDs rather than

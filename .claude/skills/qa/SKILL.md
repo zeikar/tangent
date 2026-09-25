@@ -63,7 +63,7 @@ beat boundary and long move sampled every 2–3 frames. Check:
 - whether each animation reads as what it means (a fold reads as a fold, a
   scale-to-compare reads as scaling, not as the same size);
 - captions: the text against the storyboard's, and line breaks;
-- narration: the spoken words against the script's 읽기용 text. Transcribe
+- narration: the spoken words against the script's Read-aloud text. Transcribe
   the render's audio as episode 001's QA did: `uvx --from mlx-whisper
   mlx_whisper <audio> --model mlx-community/whisper-large-v3-turbo --language
   ko --output-format txt` (first run downloads ~1.6 GB). Whisper invents text

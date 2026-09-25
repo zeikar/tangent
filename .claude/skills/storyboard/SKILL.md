@@ -36,13 +36,13 @@ A revision (`revise:` notes, usually the human's from the storyboard
 checkpoint) edits the existing file in place: keep element ids and color
 meanings, and change only what the notes reach.
 
-Each beat's **비주얼** line is the writer's picture: realize it. If a picture
+Each beat's **Visual** line is the writer's picture: realize it. If a picture
 can't be drawn as written, or reads worse than an alternative, say so in the
 report instead of silently redesigning it.
 
 ## Timing model
 
-- Narration is **one TTS take** of all 읽기용 lines. Word start times come
+- Narration is **one TTS take** of all Read-aloud lines. Word start times come
   from forced alignment. Every animation cue is anchored to a spoken word;
   never write seconds for when something happens.
 - An anchor is `{ "word": "<eojeol>", "nth": 1 }`: the start of that word in
@@ -51,7 +51,7 @@ report instead of silently redesigning it.
   trailing pause.
 - `pauseAfter` (seconds, 0–1.5) is editorial pacing: production inserts that
   much silence into the audio after the beat. It is the only place seconds
-  appear. Start from the script's `(끝에 말 없이 <N>초)` holds (0 where there
+  appear. Start from the script's `(hold <N> s)` holds (0 where there
   is none); from here on the storyboard owns pacing, and the validator only
   notes a difference.
 - How long an animation runs: `until` (another anchor), or `speed`: `fast` /
@@ -66,9 +66,9 @@ report instead of silently redesigning it.
 
 ## Captions
 
-Captions are phrase chunks of the 화면용 text, 2–4 eojeol each, shown from the
+Captions are phrase chunks of the Display text, 2–4 eojeol each, shown from the
 anchor of the chunk's first spoken word until the next chunk. Keep the
-dollar-sign math. Chunks together must cover the beat's 화면용 text in order.
+dollar-sign math. Chunks together must cover the beat's Display text in order.
 
 ## Screen
 
@@ -114,7 +114,7 @@ dollar-sign math. Chunks together must cover the beat's 화면용 text in order.
     {
       "id": "B1",
       "name": "훅",
-      "readAloud": "…exactly script.md 읽기용…",
+      "readAloud": "…exactly script.md's Read-aloud…",
       "captions": [{ "text": "A4를 반으로 접어도", "at": { "word": "에이포를" } }],
       "pauseAfter": 0.5,
       "elements": [
@@ -141,7 +141,7 @@ dollar-sign math. Chunks together must cover the beat's 화면용 text in order.
 
 - Run `python3 scripts/validate-storyboard.py $ep` until it prints "OK" (it
   exits 1 on errors): it checks that the file parses, `readAloud` equals
-  script.md's 읽기용, anchors exist, captions cover the 화면용 text,
+  script.md's Read-aloud, anchors exist, captions cover the Display text,
   components and targets are declared, and geometry stays in bounds.
 - It can't see sweeps or label extents. Measure every TeX label with
   `scripts/measure-tex.mts`, work out sweeps from the geometry, and list any
@@ -150,5 +150,5 @@ dollar-sign math. Chunks together must cover the beat's 화면용 text in order.
 - The orchestrator then builds the checkpoint page
   (`studio/scripts/storyboard-view.py`) for the human.
 - Report back: the component list (new ones with a one-line spec), any beat
-  whose picture might not be drawable with those components, any 비주얼 line
+  whose picture might not be drawable with those components, any Visual line
   realized differently than written, and missing context.

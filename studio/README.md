@@ -53,8 +53,8 @@ Narration and production (API keys in the repo-root `.env`; `ep` is
 #   → $ep/critique-script.a.md (critique-script.md for script.md), critique-cut.md
 node scripts/critique.mts $ep script script.a.md
 node scripts/critique.mts $ep cut
-# Right after the script: one TTS take of every 읽기용 line in script.md (or a
-# variant), plus sped-up copies to compare
+# Right after the script: one TTS take of every Read-aloud line in script.md
+# (or a variant), plus sped-up copies to compare
 #   → $ep/take<N>.wav, take<N>@1.08.wav, ..., take<N>.txt
 node scripts/narrate.mts $ep --script=script.a.md --tempo=1.08,1.15
 # Listening page for the checkpoint: each script's takes at every speed, with
