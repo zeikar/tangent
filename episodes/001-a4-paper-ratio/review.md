@@ -1,5 +1,191 @@
 # Review · 001-a4-paper-ratio
 
+## v2 · Round 2
+
+**Verdict: ship.**
+
+This round reviewed the render rebuilt at 13:06 from e8527ff (storyboard) and
+5f45b23 (studio): 41.6 s, 1248 frames, with the same take as round 1. Shared
+components changed, so this is a full pass, not a diff review.
+
+- **Round 1's four issues are all fixed.** B8's x now stays on screen, the red
+  gap is clearly red, the "이쪽만" pulse lands, and the √2 box is evenly
+  spaced.
+- **Two of round 1's notes for the human are resolved.** The picture now uses
+  the frame's height, and B6's width label no longer goes stale.
+- **check-render:** same result as round 1, only the two accepted items.
+- **What's left:** three minor points, none of which misleads or hides content.
+
+Evidence is in `review/v2r2/`: `sheet-ends-b1-b5.png`, `sheet-ends-b6-b11.png`
+(f0 and every beat's last frame), and the cited frames.
+
+### Issues
+
+#### 1. Minor: `ease.out` makes exits near-cuts and label flights jump at lift-off
+
+Reveals and exits use `ease.out`, `bezier(0.16, 1, 0.3, 1)`
+(`studio/src/storyboard/timeline.ts:97-103`). That curve does most of its work
+in the first frame.
+
+- **Exits.** Every exit I measured leaves 32% of its ink after one frame, 10%
+  after two, 3% after three, and nothing after four. That held for B2's
+  foldNote, B4's compareNote, B9's equation row and B10's dimensions. So each
+  exit reads as a cut with one ghost frame (f891–f892, `v2r2/f0891.png`,
+  `v2r2/f0892.png`). This is production's reviewer's "exits read almost as
+  cuts", and I agree.
+- **B7's label flights.**
+  - The half's width label jumps 102 px between f689 and f690
+    (`v2r2/f0689.png`, `v2r2/f0690.png`). The sheet's "1" jumps 110 px between
+    f705 and f706 (`v2r2/f0705.png`, `v2r2/f0706.png`).
+  - Both then glide to a stop over about 8 frames. The label seems to
+    teleport off the sheet rather than lift off.
+  - The flight still reads as "this label becomes that part of the equation",
+    because the glyph keeps its shape all the way.
+- **Impact:** nothing is lost or overlapped. It's a matter of feel: beat
+  changes feel abrupt next to 3b1b's smooth fades.
+- **Fix (optional):** give flights `ease.smooth`, since a flight is a move. For
+  exits, use a gentler curve or a linear fade over the same 0.2 s. This is a
+  global change, so it needs this whole pass again.
+- **Owner:** production.
+
+#### 2. Minor: B8's returning note sits 25 px above the pair (f837–f890)
+
+- "A4의 설계 비율 √2 ≈ 1.414" returns on "루트". Its ink ends at y 367, and
+  the pair's top edges start at y 392 (f890, `v2r2/f0890.png`).
+- It reads as cramped against the pair's top edges, though still separate.
+- There's room to move the note up about 50 px (the bound is y 240), or to
+  drop the pair a little: the equation row's ink ends at y 1171, and the
+  captions start at 1280.
+- **Owner:** storyboard.
+
+#### 3. Nit: B9's diff note reads as a footnote to "210 mm" (f1001–f1033)
+
+- "설계값과 약 0.3 mm 차이" (ink y 1068–1120, x 244–835) sits 39 px under
+  "210 mm" (y 980–1029, x 279–509), overlapping it horizontally
+  (`v2r2/f1033.png`). It reads as the width's difference.
+- The width differs from design by 0.22 mm, and the height by 0.30 mm (C14).
+  "약 0.3 mm" is correct for the sheet overall, and research.md phrases it the
+  same way.
+- Centering it under the whole group, or lower, would make it read as being
+  about the sheet.
+- **Owner:** storyboard.
+
+### Production's reviewer's nits, judged
+
+| Nit | Measured | Verdict |
+|-----|----------|---------|
+| Exits read almost as cuts | 100 → 32 → 10 → 3 → 0% ink per frame | Agree; issue 1 |
+| Caption blank at the loop seam (f0–2) | The caption fades in at f3, when the voice starts (0.10 s). On a loop it's a 3-frame gap between two captions, inside the audio's own 0.6 s gap. | Fine |
+| Near-still B1 beat, f13–16 | Changed pixels per frame dip to 4k at f14, against 10–36k around it: the 0.35 s quarter turn eases out, then the grow eases in. | Fine. It reads as turn, then grow, as the storyboard describes. |
+| B2–B3 sweep reads as a bounce | The stretch runs linearly to 1.62 (f276). The top dwells near its peak for about 0.3 s (y 404 → 402 → 408, f276–f286), then eases back to √2 by f304. | Fine. It reads as overshoot and return, which is the story (the gap comes back on the other side). |
+| B6's two-frame label gap | The height label is invisible for about 6 frames, f602–f607 (`v2r2/f0604.png`): "1" fades out over f600–f602, "x" fades in over f608–f615. | Fine. It happens mid-grow and reads as "1 becomes x". |
+| "x¹" as the "1" flies past x (B7, f708–709) | At f708 the flying "1" (x 570–600, y 970–1028) sits 4 px right of the row's last x (519–566) and 34 px above it (`v2r2/f0708.png`). By f709 it's 45 px right. It moves about 60 px/frame. | Fine in motion: it's one frame at speed and only reads as a superscript in a still. |
+
+### check-render
+
+My `--out` run matched the tracked `check.md` and `check.json` byte for byte:
+**1 fail, 1 warn, 14 pass**.
+
+- **words (fail), accepted.** B7's "이" has no audible onset. No cue is
+  anchored on it now, only the caption chunk, and Whisper hears "이 길이가".
+- **readable (warn), accepted.**
+  - The page's "A4" is fully visible for 18 frames (f1230–1247), and
+    letterHalf2's "레터" for 12 (f1236–1247).
+  - Both continue into frame 0 (`v2r2/f1247.png` matches f0) and stay until B2
+    fades them, so on a loop they read for over 4 s.
+- **Everything else passes:**
+  - freshness;
+  - technical: BT.709 TV range, 30 fps, 48 kHz;
+  - bounds: ink x 145–935, y 264–1174;
+  - centering: every beat end within ±13 px;
+  - legibility: smallest glyph 31 px;
+  - overlaps, labels, cues and blank runs;
+  - captions: all 25 on their cue;
+  - reaction: +1 to +2 frames;
+  - loudness: −14.1 LUFS, −2.1 dBTP;
+  - A/V sync: 0 ms;
+  - loop: 151 px differ between the last frame and the first.
+
+### Round 1, re-checked
+
+| Round 1 | Now |
+|---------|-----|
+| B8's terms fade out, leaving a bare "=" (f828–f833) | **Fixed.** In both steps the x stays on screen and slides. On "엑스는", ² fades while x slides and turns yellow (`v2r2/f0826.png`), and the old 2 slides under a radical that grows over it (f836–f840). The row is never empty. |
+| Red gap at 1.7:1 | **Fixed.** Now (203, 80, 72) on (13, 16, 19): 4.3:1 at rest (`v2r2/f0123.png`), 6.2:1 at the pulse peak. |
+| "이쪽만" pulse barely shows | **Fixed.** On "이쪽만" the fitted A4 half's border flashes white while Letter's gap brightens, with a thin red band outside the strokes (f64–f72, `v2r2/f0068.png`). |
+| √2's box 18 px from "=", x 37 px from it | **Fixed.** 37 px on both sides (f890). |
+| For the human: B1–B6 sit high | **Resolved.** Beat-end ink centers are now at y 668–817, against the zone center at 760. Only the loop frame (f0/f1247) sits high, before the notes appear. |
+| For the human: B6's width label stale for 2.4 s | **Resolved.** It becomes x/2 × x on "키우면" (f611–f614), as the half grows. |
+| For the human: "조금 달라요" has nothing to point at | **Resolved** with B9's diff note (see issue 3). |
+| For the human: the x/2 label is never spoken | **Unchanged.** The script is the same, and the half's labels land on "볼게요" (f530). |
+
+### Checked and fine
+
+- **End frames.**
+  - Every beat's last frame matches its `endFrame`. Measured stroke centers
+    are within 1 px of the new geometry:
+    - f123: A4 spans x 185–505 (top at 447), Letter's outline 575–895 (top at
+      486), its half ends at 843;
+    - f244: the sheet's top is at 508, its bottom at 1052;
+    - f339: the sheet's top is at 486;
+    - f457: the sheet spans 221–531 (top 513), the half 621–840 (top 642),
+      bottoms at 952;
+    - f651: the sheet spans 173–483, the half 573–883;
+    - f752: tops are at 395, bottoms at 833;
+    - f1033: the sheet spans 213–573, y 391–900;
+    - f1180: the page spans 286–794, y 371–1089.
+  - f1247 matches f0 row for row.
+- **Motion,** sampled every 1–3 frames at every beat boundary and long move:
+  - B1: the fit lands at f28 and Letter's red gap shows at f30, so the
+    contrast reads within the first second. At f8 the two turning halves'
+    tips pass about 5 px apart horizontally and 34 px apart vertically; they
+    never touch.
+  - B2: A4 and the fold note cut out as the pair starts sliding to center.
+    The stretch starts on "바꾸면" (f151) and narrows the gap from 65 to about
+    30 px.
+  - B3: the sweep; see the table above.
+  - B4: the note swaps in on "여기선" (f340–f350), the half pulses on "딱",
+    and the pair splits on "왜" (f388–f406).
+  - B5: each label lands on its word.
+  - B6: the half grows ×x from its bottom edge.
+  - B7: the pair lifts to make room, the half's width label flies into the
+    row's left side, the "1" flies to the right side, and "=" arrives last
+    (f728–f730). No flight crosses a glyph.
+  - B8: token morphs as described above, the note on "루트", and the box
+    drawn on "이가".
+  - B9: the sheet grows to 360 wide, the dimensions draw on their words, and
+    the diff note appears on "조금".
+  - B10: the page grows to under 1 px inside A3 with no flash.
+  - B11: the fold, the shrink into the left slot, and Letter fading in after
+    it (f1233).
+- **Readability.**
+  - Smallest glyph 31 px.
+  - Muted text is about 5.8:1, red 4.3:1.
+  - Yellow (long sides) and blue (short sides) are easy to tell apart.
+  - At the right bound, the half's "x" label ends at x 932, above the Shorts
+    action buttons.
+- **Captions.** All 25 match the storyboard's text, one line each.
+- **Narration.** It's the same take as round 1. My new transcription matches
+  round 1's word for word and every line of the 읽기용 text.
+- **Facts.**
+  - `verify.py` passes.
+  - Recomputed on screen:
+    - ≈ 1.414 for √2;
+    - x/2 · x = 1, times 2, gives x² = 2, so x = √2;
+    - 210 × 297 mm;
+    - "약 0.3 mm": design 210.22 × 297.30 against 210 × 297 (C14);
+    - 141% ≈ √2, with the page growing from 360 to 507.6 px, 1.41×;
+    - Letter's fitted half is 268.0 px wide (the 11/8.5 scale, C11);
+    - B2's half is 369.9 px wide at ratio 1.36, and B3's is 524.9 px at 1.62.
+
+### What the brief should have told me
+
+- **Easing per action.** The brief should list which easing each kind of
+  action uses (`ease.out` for appear, reveal and exit; `ease.smooth` for
+  moves). I found the flights' jump only by tracking a centroid frame by
+  frame. It would have been quicker to check the curve against what each
+  action is for.
+
 ## v2 · Round 1
 
 **Verdict: ship.**
