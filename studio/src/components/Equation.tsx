@@ -2,7 +2,7 @@ import React, { useLayoutEffect, useRef, useState } from "react";
 import { AbsoluteFill, continueRender, delayRender, useCurrentScale } from "remotion";
 import { Action, ElementTimeline, lerp, mix, phase, rawProgress, Scene, themeColor } from "../storyboard/timeline";
 import { fontsLoaded } from "../style/fonts";
-import { content, mark, stroke, type, VIDEO } from "../style/theme";
+import { content, mark, stroke, type, VIDEO, zone } from "../style/theme";
 import { expressionInk, inkRect, tokenInk } from "./ink";
 import { drawTokens, InkBox, matchTokens, morph, tokenize, TokenStyle } from "./morph";
 import { labelAt, labelLineStyle, labelTex, Side } from "./PaperRect";
@@ -276,7 +276,9 @@ export const Equation: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, 
       ))
         matched.push([a[x], b[y]]);
     });
-    const r = morph(src, dst, matched, (p0, p1) => phase(f.a, frame, p0, p1), f.a.ease);
+    // Token boxes are relative to the baseline; so is the room they may use.
+    const room = { top: zone.visual.top - p.y, bottom: zone.visual.bottom - p.y };
+    const r = morph(src, dst, matched, (p0, p1) => phase(f.a, frame, p0, p1), f.a.ease, room);
     old = was.map((q, j) => wasToks[j].keys.map(() => ({ color: f.col[q.id], opacity: f.vis[q.id], dx: 0, dy: 0 })));
     src.forEach((t, n) => (old[t.part][t.k].opacity *= r.old[n]));
     current = now.map((q, j) => nowToks[j].keys.map(() => ({ color: col[q.id], opacity: 1, dx: 0, dy: 0 })));

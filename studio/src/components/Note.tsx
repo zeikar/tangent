@@ -2,7 +2,7 @@ import React, { useLayoutEffect, useRef, useState } from "react";
 import { AbsoluteFill, continueRender, delayRender, useCurrentScale } from "remotion";
 import { Action, ElementTimeline, mix, phase, rawProgress, Scene, themeColor } from "../storyboard/timeline";
 import { fontsLoaded } from "../style/fonts";
-import { font, type } from "../style/theme";
+import { font, type, zone } from "../style/theme";
 import { glyphRect, tokenInk } from "./ink";
 import { drawTokens, InkBox, matchTokens, morph, tokenize, TokenStyle, withAlpha } from "./morph";
 import { Tex } from "./Tex";
@@ -194,7 +194,7 @@ export const Note: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, scen
     src.map((t) => t.key),
     dst.map((t) => t.key),
   );
-  const r = morph(src, dst, matched, (p0, p1) => phase(a, scene.frame, p0, p1), a.ease);
+  const r = morph(src, dst, matched, (p0, p1) => phase(a, scene.frame, p0, p1), a.ease, zone.visual);
   const [fromColors, toColors] = [colors(from), colors(s.text)];
   const oldStyles = fromColors.map((color, k) => ({ color, opacity: r.old[k], dx: 0, dy: 0 }));
   const newStyles = toColors.map((color, k) => {

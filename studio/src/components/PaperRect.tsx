@@ -12,7 +12,7 @@ import {
   themeColor,
 } from "../storyboard/timeline";
 import { fontsLoaded } from "../style/fonts";
-import { color, fill, font, mark, stroke, type, VIDEO } from "../style/theme";
+import { color, fill, font, mark, stroke, type, VIDEO, zone } from "../style/theme";
 import { Anchored } from "./Anchored";
 import { expressionInk, tokenInk } from "./ink";
 import { drawTokens, InkBox, matchTokens, morph, tokenize, TokenStyle } from "./morph";
@@ -623,7 +623,7 @@ const SideLabel: React.FC<{
     src.map((t) => t.key),
     dst.map((t) => t.key),
   );
-  const r = morph(src, dst, matched, (p0, p1) => phase(change.a, frame, p0, p1), change.a.ease);
+  const r = morph(src, dst, matched, (p0, p1) => phase(change.a, frame, p0, p1), change.a.ease, zone.visual);
   return (
     <>
       {line(

@@ -206,11 +206,79 @@ export const matchTokens = (a: string[], b: string[]): [number, number][] => {
   return pairs;
 };
 
-// A glyph for the schedule: its ink box(es) and ids (a moving glyph has its
-// old and its new id); `apart(a, b)` says whether two ids may not overlap
-// (a radical and its own radicand may).
+// A glyph for the schedule: its ink box and ids (a moving glyph has its old
+// and its new id); `apart(a, b)` says whether two ids may not overlap (a
+// radical and its own radicand may). A move can arc (`arc` px at its middle,
+// negative = up) and can run in part of the move window (`win`).
 export type Glyph = { box: InkBox; ids: string[] };
-export type Move = { from: InkBox; to: InkBox; ids: string[] };
+export type Move = { from: InkBox; to: InkBox; ids: string[]; arc: number; win: [number, number] };
+
+const MARGIN = 2; // px: glyphs closer than this count as touching
+const meets = (a: InkBox, b: InkBox) =>
+  Math.min(a[2], b[2]) - Math.max(a[0], b[0]) > -MARGIN && Math.min(a[3], b[3]) - Math.max(a[1], b[1]) > -MARGIN;
+const clamp = (t: number) => Math.min(Math.max(t, 0), 1);
+const samples = Array.from({ length: 101 }, (_, i) => i / 100);
+// An arc's height at p through its move: up over the first ARC_RISE, level,
+// down over the last (a hop, so tokens it passes near either end clear too).
+const ARC_RISE = 0.1;
+const arcAt = (p: number) => Math.min(1, Math.sin(Math.PI * p) / Math.sin(Math.PI * ARC_RISE));
+// Where a move is at s (0..1 through the move window): along its line, eased,
+// lifted by its arc.
+const moveAt = (m: Move, s: number, ease: (t: number) => number): InkBox => {
+  const p = ease(clamp((s - m.win[0]) / (m.win[1] - m.win[0])));
+  const lift = m.arc * arcAt(p);
+  return [0, 1, 2, 3].map((i) => m.from[i] + (m.to[i] - m.from[i]) * p + (i % 2 ? lift : 0)) as InkBox;
+};
+
+// Moves that would run into each other (tokens changing order on the row):
+// the one in the most collisions leaves the line to pass the rest, lowest
+// arc first. Rows sit under the picture they describe, so down comes first
+// and up stays short (half the row's height), and nothing leaves `room` (the
+// visual zone, in the boxes' coordinates):
+//   1. it dips under the row;
+//   2. it hops over the row;
+//   3. the tokens it crosses duck under while it lifts as little as possible
+//      (a 3b1b swap);
+//   4. it waits until they are done.
+// A move's `family` (the moves of tokens nested in it) goes with it.
+const ARC_STEP = 2; // px
+export type Room = { top: number; bottom: number };
+const planMoves = (
+  moving: Move[],
+  ease: (t: number) => number,
+  clash: (a: Move, b: Move) => boolean,
+  family: (k: number) => number[],
+  room: Room,
+) => {
+  const collide = (a: Move, b: Move) => clash(a, b) && samples.some((s) => meets(moveAt(a, s, ease), moveAt(b, s, ease)));
+  const hits = (k: number) => moving.filter((m, j) => j !== k && collide(moving[k], m));
+  const rowHeight =
+    Math.max(...moving.map((m) => Math.max(m.from[3], m.to[3]))) - Math.min(...moving.map((m) => Math.min(m.from[1], m.to[1])));
+  const down = (n: number) => room.bottom - MARGIN - Math.max(moving[n].from[3], moving[n].to[3]);
+  const up = (n: number) => Math.min(rowHeight / 2, Math.min(moving[n].from[1], moving[n].to[1]) - MARGIN - room.top);
+  const tried = new Set<number>();
+  for (;;) {
+    const counts = moving.map((_, k) => (tried.has(k) ? 0 : hits(k).length));
+    const k = counts.indexOf(Math.max(0, ...counts));
+    if (k < 0 || counts[k] === 0) return;
+    tried.add(k);
+    const set = (n: number, arc: number, win: [number, number]) =>
+      [n, ...family(n)].forEach((g) => ((moving[g].arc = arc), (moving[g].win = win)));
+    const others = hits(k).map((o) => moving.indexOf(o));
+    const clear = () => moving.every((a, i) => moving.every((b, j) => j <= i || !collide(a, b)));
+    const heights = (max: number) => Array.from({ length: Math.max(0, Math.floor(max / ARC_STEP)) }, (_, i) => (i + 1) * ARC_STEP);
+    const placed =
+      heights(down(k)).some((h) => (set(k, h, [0, 1]), hits(k).length === 0)) ||
+      heights(up(k)).some((h) => (set(k, -h, [0, 1]), hits(k).length === 0)) ||
+      [0, ...heights(up(k))].some((a) =>
+        heights(Math.min(...others.map(down))).some((b) => (set(k, -a, [0, 1]), others.forEach((o) => set(o, b, [0, 1])), clear())),
+      );
+    if (!placed) {
+      set(k, 0, [0.5, 1]);
+      others.forEach((o) => set(o, 0, [0, 0.5]));
+    }
+  }
+};
 
 // Windows (shares of the action, eased by `ease`) for the three kinds of
 // glyphs. Outgoing ones fade out over the first OUT; the moves start, and the
@@ -221,7 +289,6 @@ export type Move = { from: InkBox; to: InkBox; ids: string[] };
 const OUT = 0.35;
 const IN_MIN = 0.3;
 const STEP = 0.05; // candidate start times
-const MARGIN = 2; // px: glyphs closer than this count as touching
 const SHOWING = 0.02; // opacity below which a fading glyph no longer counts
 export const schedule = (
   outgoing: Glyph[],
@@ -230,22 +297,17 @@ export const schedule = (
   ease: (t: number) => number,
   apart: (a: string, b: string) => boolean,
 ) => {
-  const meets = (a: InkBox, b: InkBox) =>
-    Math.min(a[2], b[2]) - Math.max(a[0], b[0]) > -MARGIN && Math.min(a[3], b[3]) - Math.max(a[1], b[1]) > -MARGIN;
   const clash = (a: { ids: string[] }, b: { ids: string[] }) => a.ids.some((x) => b.ids.some((y) => apart(x, y)));
-  const clamp = (t: number) => Math.min(Math.max(t, 0), 1);
-  const samples = Array.from({ length: 101 }, (_, i) => i / 100);
   const outEnd = outgoing.length ? OUT : 0;
   const outShowing = (u: number) => outgoing.length > 0 && 1 - ease(clamp(u / OUT)) > SHOWING;
-  const at = (m: Move, t: number): InkBox => m.from.map((v, i) => v + (m.to[i] - v) * t) as InkBox;
   const starts = (from: number, to: number) =>
     Array.from({ length: Math.round((to - from) / STEP) + 1 }, (_, i) => from + i * STEP);
   for (const moveEnd of [1, 1 - IN_MIN]) {
-    const moved = (m0: number, u: number) => ease(clamp((u - m0) / (moveEnd - m0)));
+    const at = (m: Move, m0: number, u: number) => moveAt(m, clamp((u - m0) / (moveEnd - m0)), ease);
     const moveStart =
       starts(0, outEnd).find((m0) =>
         samples.every(
-          (u) => !outShowing(u) || moving.every((m) => outgoing.every((o) => !clash(m, o) || !meets(at(m, moved(m0, u)), o.box))),
+          (u) => !outShowing(u) || moving.every((m) => outgoing.every((o) => !clash(m, o) || !meets(at(m, m0, u), o.box))),
         ),
       ) ?? outEnd;
     const inStart = starts(0, 1 - IN_MIN).find((c) =>
@@ -255,7 +317,7 @@ export const schedule = (
           incoming.every(
             (g) =>
               (!outShowing(u) || outgoing.every((o) => !clash(g, o) || !meets(g.box, o.box))) &&
-              moving.every((m) => !clash(g, m) || !meets(at(m, moved(moveStart, u)), g.box)),
+              moving.every((m) => !clash(g, m) || !meets(at(m, moveStart, u), g.box)),
           ),
         ),
     );
@@ -277,6 +339,7 @@ export const morph = (
   matched: [number, number][],
   progress: (p0: number, p1: number) => number,
   ease: (t: number) => number,
+  room: Room,
 ) => {
   const pairs = matched.filter(([i, j]) => from[i].box && to[j].box);
   const source = new Map(pairs.map(([i, j]) => [j, i]));
@@ -288,13 +351,29 @@ export const morph = (
     return false;
   };
   const apart = (a: string, b: string) => a !== b && !inside(a, b) && !inside(b, a);
+  const moves: Move[] = pairs.map(([i, j]) => ({
+    from: from[i].box!,
+    to: to[j].box!,
+    ids: [from[i].id, to[j].id],
+    arc: 0,
+    win: [0, 1],
+  }));
+  // A container's moving contents travel with it (the same arc and window).
+  planMoves(
+    moves,
+    ease,
+    (a, b) => a.ids.some((x) => b.ids.some((y) => apart(x, y))),
+    (k) => pairs.flatMap(([, j], n) => (n !== k && inside(to[j].id, to[pairs[k][1]].id) ? [n] : [])),
+    room,
+  );
   const w = schedule(
     from.flatMap((t, i) => (staying.has(i) || !t.box ? [] : [{ box: t.box, ids: [t.id] }])),
-    pairs.map(([i, j]) => ({ from: from[i].box!, to: to[j].box!, ids: [from[i].id, to[j].id] })),
+    moves,
     to.flatMap((t, j) => (source.has(j) || !t.box ? [] : [{ box: t.box, ids: [t.id] }])),
     ease,
     apart,
   );
+  const span = w.move[1] - w.move[0];
   const out = 1 - progress(...w.out);
   const move = progress(...w.move);
   const enter = progress(...w.in);
@@ -304,9 +383,11 @@ export const morph = (
     // New tokens: opacity, the old token each comes from, and the offset from its slot.
     new: to.map((t, j) => {
       const i = source.get(j);
-      return i === undefined
-        ? { opacity: enter, source: null, dx: 0, dy: 0 }
-        : { opacity: 1, source: i, ...moveOffset(from[i].box!, t.box!, move) };
+      if (i === undefined) return { opacity: enter, source: null, dx: 0, dy: 0 };
+      const m = moves[pairs.findIndex(([, b]) => b === j)];
+      const p = progress(w.move[0] + m.win[0] * span, w.move[0] + m.win[1] * span);
+      const o = moveOffset(from[i].box!, t.box!, p);
+      return { opacity: 1, source: i, dx: o.dx, dy: o.dy + m.arc * arcAt(p) };
     }),
     move,
   };
