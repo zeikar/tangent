@@ -8,7 +8,8 @@ description: >-
   is said after the first render. Not for code in studio/scripts/. See "When
   to invoke" in the agent body.
 model: inherit
-color: magenta
+color: purple
+disallowedTools: Agent
 ---
 
 # Script: what the viewer hears and reads

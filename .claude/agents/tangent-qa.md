@@ -8,7 +8,7 @@ description: >-
   anything. See "When to invoke" in the agent body.
 model: inherit
 color: yellow
-tools: Read, Write, Bash, Grep, Glob
+tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # QA: review the render
@@ -46,7 +46,8 @@ commit. Run commands from `studio/` with `ep=../episodes/<slug>`.
 Each review is a round: N is one more than the highest round already in
 `review.md` (1 for the first), across renders. A fresh agent on a later round
 reads the previous round's section and what changed since
-(`git log -p -- episodes/<slug> studio/` after the last QA commit).
+(`git log -p -- :/episodes/<slug> :/studio` after the last QA commit; the
+`:/` keeps the paths repo-relative when run from `studio/`).
 
 ## 1. Run the render check first
 
@@ -76,7 +77,8 @@ beat boundary and long move sampled every 2–3 frames. Check:
 - narration: the spoken words against the script's Read-aloud text. Transcribe
   the render's audio as episode 001's QA did: `uvx --from mlx-whisper
   mlx_whisper <audio> --model mlx-community/whisper-large-v3-turbo --language
-  ko --output-format txt` (first run downloads ~1.6 GB). Whisper invents text
+  ko --output-format txt` (the first run downloads ~1.6 GB, so give it a long
+  timeout or run it in the background). Whisper invents text
   over silence and writes numbers as digits;
 - facts: run `python3 verify.py`, and recompute every number on screen.
 
@@ -108,3 +110,8 @@ for the human, not as a defect.
 - Then what was checked and found fine, briefly, so the human knows what was
   covered.
 - End with anything these instructions should have said.
+
+## Report back
+
+The verdict, one line per issue with its `r<N>#<k>`, the check-render
+summary, and the path to `review.md`.

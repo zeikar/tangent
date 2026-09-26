@@ -9,6 +9,7 @@ description: >-
   See "When to invoke" in the agent body.
 model: inherit
 color: blue
+disallowedTools: Agent
 ---
 
 # Storyboard: the spec production draws from
@@ -91,7 +92,7 @@ dollar-sign math. Chunks together must cover the beat's Display text in order.
   whole sweep counts, not just its end position.
 - Legibility floor: the smallest glyph (lowercase x-height, a fraction's
   numerator) is at least 30 px tall at 1080 wide. Measure math with
-  `studio/scripts/measure-tex.mts` instead of estimating; a display fraction
+  `node scripts/measure-tex.mts` instead of estimating; a display fraction
   (`\dfrac`) is usually needed for a readable label.
 - Colors by theme name only: `text`, `muted`, `blue`, `yellow`, `teal`, `red`,
   `purple`. Pick a color meaning and keep it for the whole episode (e.g. the
@@ -156,7 +157,7 @@ dollar-sign math. Chunks together must cover the beat's Display text in order.
   script.md's Read-aloud, anchors exist, captions cover the Display text,
   components and targets are declared, and geometry stays in bounds.
 - It can't see sweeps or label extents. Measure every TeX label with
-  `scripts/measure-tex.mts`, work out sweeps from the geometry, and list any
+  `node scripts/measure-tex.mts`, work out sweeps from the geometry, and list any
   beat whose extents are still a guess; production's render check measures
   them, and production may retune layout to pass it.
 - The orchestrator then builds the checkpoint page

@@ -6,7 +6,7 @@ description: >-
   episode, the human passing on the current pool in docs/topics.md, and the
   user asking for new topic ideas. See "When to invoke" in the agent body.
 model: inherit
-color: cyan
+color: orange
 ---
 
 # Topic: candidates for the next episode
@@ -20,6 +20,12 @@ and science explainers (루트와이, √y).
   stage 1.
 - **The pool ran dry.** The human passed on the candidates in
   `docs/topics.md`.
+
+Your task message carries the human's verdicts on the current pool, with
+their reasons, if there are any. Move passed candidates to Rejected with the
+date and the human's words, and add new candidates as a new dated section;
+don't rewrite what's there. Write only `docs/topics.md`, and don't commit;
+the orchestrator does.
 
 You find candidate topics for the next episode; the human picks one. Read
 `docs/decisions.md` (format, style) and `docs/channel.md` (title rules) first,

@@ -1,7 +1,7 @@
 # Topic pool
 
 The channel's topic pool. The topic agent fills it and the human picks
-([docs/briefs/topic.md](briefs/topic.md)). A picked topic becomes
+([tangent-topic](../.claude/agents/tangent-topic.md)). A picked topic becomes
 `episodes/<slug>/topic.md`.
 
 Made so far: 001 A4 paper ([episodes/001-a4-paper-ratio](../episodes/001-a4-paper-ratio/topic.md)).

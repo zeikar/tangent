@@ -7,11 +7,12 @@
 // takes-view.py tells which script a take reads.
 //
 // --script=script.a.md reads a script variant instead of script.md.
-// --tempo=1.08,1.15 also writes sped-up copies (pitch kept) as
-// take<N>@<tempo>.wav for the human to compare. The picked file is recorded in
-// <episode>/narration.json and is the episode's narration source from then on.
+// --tempo=1.08 also writes a sped-up copy (pitch kept) as take<N>@1.08.wav,
+// the speed episodes play at; a list (1.08,1.15) writes one copy per speed.
+// The picked file is recorded in <episode>/narration.json and is the
+// episode's narration source from then on.
 //
-//   node scripts/narrate.mts ../episodes/<slug> [--script=script.a.md] [--tempo=1.08,1.15]
+//   node scripts/narrate.mts ../episodes/<slug> [--script=script.a.md] [--tempo=1.08]
 import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -25,7 +26,7 @@ const flag = (name: string) =>
 
 const episode = process.argv[2];
 if (!episode) {
-  throw new Error("usage: node scripts/narrate.mts <episode dir> [--script=script.a.md] [--tempo=1.08,1.15]");
+  throw new Error("usage: node scripts/narrate.mts <episode dir> [--script=script.a.md] [--tempo=1.08]");
 }
 const scriptFile = flag("script") ?? "script.md";
 const script = readFileSync(join(episode, scriptFile), "utf8");

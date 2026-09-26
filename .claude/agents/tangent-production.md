@@ -6,9 +6,12 @@ description: >-
   include the episode runbook reaching production, a combined fix round (the
   human's notes, QA issues, chosen critique points), and syncing the
   storyboard to an approved script and take change. From its start it owns
-  storyboard.json and studio/. See "When to invoke" in the agent body.
+  storyboard.json and studio/ for that episode. Not for studio development
+  outside an episode's render or fix round. See "When to invoke" in the agent
+  body.
 model: inherit
 color: green
+disallowedTools: Agent
 ---
 
 # Production: from storyboard and take to a checked render
@@ -125,7 +128,8 @@ A round's notes come from the human (who watched the render), QA
 (issues in `review.md`, cited as `r<N>#<k>`), and chosen points from
 `critique-cut.md`; the human's notes win a conflict. A fresh agent reads
 `review.md` and the episode's recent commits (`git log -p --
-episodes/<slug>`) for what earlier rounds changed.
+:/episodes/<slug> :/studio`; the `:/` keeps the paths repo-relative from
+`studio/`) for what earlier rounds changed.
 
 - Change layout, timing (anchors, `until`, `speed`, `pauseAfter`), props,
   element order, and components as needed, keeping each beat's intent: its

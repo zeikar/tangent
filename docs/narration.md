@@ -9,10 +9,12 @@ clash.
 - Gemini TTS `gemini-3.8-flash-tts`, voice Kore, the style string in
   `studio/scripts/tts.mts` (`GEMINI_STYLE`). The style goes in
   `speech_metadata.style`, never in the text: 3.8 reads the text verbatim.
-- One take for the whole script. At the script checkpoint the human picks a
-  speed from the take and its tempo variants (`narrate.mts --tempo`);
-  `narration.json` records the pick.
-- Measured rate: 4.9–5.3 Hangul syllables per second at tempo 1.0.
+- One take for the whole script, sped up to 1.08× with pitch kept
+  (`narrate.mts --tempo=1.08`), the speed episode 001 settled on. At the
+  script checkpoint the human picks a script, not a speed; `narration.json`
+  records the take.
+- Measured rate: 4.8–5.1 Hangul syllables per second at tempo 1.0, 5.2–5.5 at
+  1.08× (episode 001's takes).
 
 ## Spelling out
 

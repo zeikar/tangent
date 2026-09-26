@@ -67,7 +67,7 @@ python3 scripts/takes-view.py $ep --tempo=1.08
 # storyboard is written against these
 uv run scripts/align.py $ep/take1@1.08.wav $ep/take1.txt $ep/take1@1.08.words.json
 # Check storyboard.json against script.md, research.md and the storyboard
-# skill's rules (exit 1 on errors; a pause that differs from the script is a note)
+# agent's rules (exit 1 on errors; a pause that differs from the script is a note)
 python3 scripts/validate-storyboard.py $ep
 # Checkpoint page for the human: captions, each cue under its word, narration
 # in sync → $ep/storyboard.html (final narration if built, else the picked take)

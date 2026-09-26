@@ -23,10 +23,10 @@ Milestone 1's next-step candidates 1–3, done before episode 002's production
   topic brief was being written in a parallel session and stays in
   `docs/briefs/` for now.
 - **Constraints from the Claude Code docs** that shaped the skills: a forked
-  skill doesn't see the conversation, so each skill stands alone; a
-  background subagent has no Agent tool, so a stage agent can't spawn its own
-  reviewer as milestone 1's script agent did (Codex critique and QA cover
-  that); a forked skill invoked while the same skill is still running blocks
+  skill doesn't see the conversation, so each skill stands alone; a stage
+  agent spawning its own reviewer, as milestone 1's script agent did, would
+  compete with the Codex critique and QA, so the writer, storyboard, and
+  production agents get no Agent tool; a forked skill invoked while the same skill is still running blocks
   the orchestrator until it returns, so of the two script writers one runs in
   the background and the other holds the turn.
 - **Relay cost:** once production starts, the production agent owns every
@@ -51,8 +51,8 @@ Milestone 1's next-step candidates 1–3, done before episode 002's production
   against `plugin-dev:agent-development`: the stage roles are delegated work,
   which agent definitions are for, while the runbook is a procedure for the
   main conversation and stays a skill. What decided it: two writers of the
-  same role run in parallel, the task is a plain message, and QA and publish
-  lose the Edit tool. The topic brief became `tangent-topic` too. Narration
+  same role run in parallel, the task is a plain message, and each role gets
+  its own tool list. The topic brief became `tangent-topic` too. Narration
   speed is fixed at 1.08× (episode 001's pick), so the human compares
   scripts, not speeds, and the writer budgets at 5.3 syllables per second.
 - **To watch in episode 002:** whether a fresh storyboard agent realizes the

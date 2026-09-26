@@ -22,9 +22,13 @@ belongs to the stage agents in `.claude/agents/` (`tangent-topic`,
 Agent tool in the background; the task message names the slug and anything
 the stage needs (a variant letter, revision or fix notes). Each reads the
 previous stage's files, writes its own, and reports back; SendMessage
-resumes it for a revision with its context intact. The orchestrator runs the
-tools between stages, weighs critiques, talks to the human, records the
-human's decisions, and commits. Background: `docs/decisions.md` (Pipeline, Agents),
+resumes it for a revision with its context intact. Give each spawned agent a
+name, `<stage>-<NNN>` plus a variant or round where needed (`script-002-a`,
+`qa-002-2`), and a new name for a fresh re-spawn, so SendMessage reaches the
+right one. Agent files load when a session starts: if the Agent tool doesn't
+list the `tangent-*` agents, the session predates them and needs a restart.
+The orchestrator runs the tools between stages, weighs critiques, talks to
+the human, records the human's decisions, and commits. Background: `docs/decisions.md` (Pipeline, Agents),
 `docs/channel.md`, and `studio/README.md` (every command; run them from
 `studio/` with `ep=../episodes/<slug>`).
 
@@ -70,8 +74,10 @@ human with the options (restoryboard, rewrite, or push on) before any fix.
 
 ## 1. Topic 🛑
 
-Spawn `tangent-topic` for a pool of candidates in `docs/topics.md`. The
-human picks one. Write `episodes/<slug>/topic.md` from the pick (slug
+If `docs/topics.md` has candidates the human hasn't ruled on, show its top
+three and ask. Spawn `tangent-topic` only when the pool is empty or the human
+passed on it, with the human's verdicts and reasons in the task. The human
+picks one. Write `episodes/<slug>/topic.md` from the pick (slug
 rule: decisions.md → Episode folders): insight, hook, key picture, length
 target (40–50 s unless the topic needs otherwise), why it was picked, and the
 shelved candidates. Record the pick in `checkpoints.md`. Commit.
@@ -109,7 +115,10 @@ python3 scripts/takes-view.py $ep --tempo=1.08 --fragment   # → $ep/takes.html
 
 Publish `takes.html` as a private artifact and give the human the link: each
 script's take at 1.08×, with captions to follow along. Ask which script;
-listening decides, not reading. Then, for a pick of script b (take2):
+listening decides, not reading. A script's take is whichever the page lists
+under it (take numbers run in generation order). If a take mispronounces or
+glitches, rerun `narrate.mts` for that script; the page then lists both, and
+the human picks the take too. Then, for a pick of script b read by take2:
 
 ```sh
 git mv $ep/script.b.md $ep/script.md
@@ -120,9 +129,9 @@ uv run scripts/align.py $ep/take2@1.08.wav $ep/take2.txt $ep/take2@1.08.words.js
 
 Write `narration.json` with `source` set to the picked audio file
 (`take2@1.08.wav`; plus `take`, `tempo`, `model`, `voice`, `style`; see
-episode 001's). Record the pick and
-the human's reason in `checkpoints.md` and commit; the unpicked variant stays
-in git history.
+episode 001's). Record the pick and the human's reason in `checkpoints.md` and
+commit the renames, `narration.json`, the take's `.words.json`, and
+`checkpoints.md`; the unpicked variant stays in git history.
 
 ## 5. Storyboard 🛑
 
@@ -163,10 +172,18 @@ the notes if it can't be resumed. It alone edits `storyboard.json` and `studio/`
 nothing is relayed between agents.
 
 A note that changes what is said or claimed goes through the script first:
-revise `script.md` (`tangent-script` with the notes), make a new take with
-`narrate.mts` and `takes-view.py`, let the human listen, align it, and update
-`narration.json`; then the fix round tells production to sync
-`storyboard.json` to the new script and take.
+revise `script.md` (`tangent-script` with the notes), then retake it (also
+the answer when the length gate asks for a retake):
+
+```sh
+node scripts/narrate.mts $ep --tempo=1.08          # → take<N>.wav, take<N>@1.08.wav
+python3 scripts/takes-view.py $ep --tempo=1.08 --fragment
+uv run scripts/align.py $ep/take<N>@1.08.wav $ep/take<N>.txt $ep/take<N>@1.08.words.json
+```
+
+Let the human listen, then point `narration.json`'s `source` and `take` at
+the new take; the fix round tells production to sync `storyboard.json` to the
+new script and take.
 
 Then QA again: resume the QA agent with the round's summary (say whether
 anything global changed, which requires a full pass), or spawn a fresh

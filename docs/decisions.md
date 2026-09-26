@@ -115,9 +115,10 @@ checkpoints.
 
 Agent definitions rather than skills that fork a subagent: two agents of the
 same role run in parallel (a forked skill invoked while it is still running
-blocks the orchestrator until it returns), each role gets its own tools (QA
-and publish can't edit files), and the task arrives as a plain message
-instead of an argument grammar. The runbook stays a skill because it is a
+blocks the orchestrator until it returns), each role gets its own tools
+(QA and publish get no web access and can't spawn agents; which files an
+agent writes is set by its instructions), and the task arrives as a plain
+message instead of an argument grammar. The runbook stays a skill because it is a
 procedure for the main conversation, not delegated work.
 
 Stage numbers follow the `episode` runbook.

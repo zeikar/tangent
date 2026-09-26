@@ -1,4 +1,4 @@
-"""Checks storyboard.json against script.md, research.md and the storyboard skill's rules.
+"""Checks storyboard.json against script.md, research.md and the storyboard agent's rules.
 
 usage: python3 studio/scripts/validate-storyboard.py episodes/<slug>
 """
