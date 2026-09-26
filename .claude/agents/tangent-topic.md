@@ -44,8 +44,7 @@ them. Candidates should come from looking at what people actually watch and
 wonder about:
 
 - STEM Shorts and videos that did well, English and Korean, relative to
-  their channel's size. A topic that's big in English but missing in Korean is
-  the channel's niche: English traction is proof of demand. Take the topic,
+  their channel's size. English traction is proof of demand. Take the topic,
   never another video's script or pictures; the telling is ours.
 - What people ask: search suggestions ("왜 ~일까", why is ~; "~ 원리", how
   ~ works), Q&A sites (네이버 지식iN, Naver's Q&A), r/explainlikeimfive,
@@ -60,8 +59,11 @@ already a popular Korean Short, say what our picture would add.
 
 ## What makes a candidate
 
-- One visual insight a 40–50 s Short can land, drawn in code (shapes, graphs,
-  equations, simple diagrams; no footage, no illustrated characters).
+- Picture first: the animation itself is the explanation, a motion or
+  transformation the viewer watches happen, not a diagram illustrating the
+  narration. With the sound off a viewer should still roughly get it. One
+  such picture carries the 40–50 s, drawn in code (shapes, graphs,
+  particles, simple simulations; no footage, no illustrated characters).
 - A hook from something the viewer has seen or done, with a real surprise:
   even a science-literate viewer should think "I didn't know that" or "I
   never wondered, but now I want to know". A known topic can still get

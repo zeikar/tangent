@@ -25,6 +25,9 @@ Made so far: 001 A4 paper ([episodes/001-a4-paper-ratio](../episodes/001-a4-pape
   관심있거든" ("I'm into this quantum physics kind of stuff too")
   (2026-09-26, while suggesting "자석은 왜 자석일까?" ("Why is a magnet a
   magnet?") themselves).
+- Pick by how well the topic turns into a picture (2026-09-26, relayed by
+  the orchestrator). The animation should be the explanation, not an
+  illustration of the narration. Scored in "Picture-first round" below.
 
 ## 002 candidates (2026-09-26)
 
@@ -545,6 +548,264 @@ it deserves the front spot.
   - Mixing it up with the radium (radioactive) glow of old watches is wrong.
 - **Production:** New: energy levels with traps, a decay curve.
 
+## Picture-first round (2026-09-26)
+
+The test used from here on:
+
+- **The animation is the explanation.** The aha is a motion or
+  transformation the viewer watches happen, not a labeled diagram that
+  illustrates what the narration says.
+- **Mute test.** With the sound off, a viewer still roughly gets it.
+- **2D and code-renderable** in our style (shapes, graphs, particles, simple
+  simulations), with one picture carrying the whole 40–50 s.
+
+Scores run 1–5. A 5 means the motion alone explains it. A 3 means the diagram
+is clear but the explanation still leans on the narration. A 1 means there's
+no picture beyond labels. Coverage counts are information only now
+(decisions.md → Language).
+
+### Picture scores: existing candidates
+
+002 candidates:
+
+| # | Candidate | Score | Key motion | Weak point |
+| - | --------- | ----- | ---------- | ---------- |
+| 1 | Propellers look bent | 5 | A scan line sweeps down over a turning blade and stamps each row; the bent blade builds up behind it | The hook wants a real photo, which we can only redraw |
+| 2 | Wire rope bends | 4 | A glued block of layers vs the same layers free to slide: the free stack bends easily while the strands slide past each other | The d⁴ law behind it is a formula, not a motion |
+| 3 | Wobbly table | 3 | The table turns on a bumpy floor while the lifted leg's height traces a curve that crosses zero | Floor and legs are 3D; the proof is an argument (intermediate value theorem), not something you watch |
+| 4 | Mains hum | 2 | Two wiggly frequency traces slide until they match | A lookup; why the grid wobbles is all narration; fails the mute test |
+| 5 | Excavator push/pull | 3 | Oil fills behind the piston: the full circle vs the ring left around the rod | An area comparison, more diagram than motion |
+| 6 | QR codes | 4 | Points sit on a curve; some are erased or knocked off, and the curve re-threads through the rest | The step from the curve to the QR grid is abstract |
+| 7 | Frozen rice | 3 | Water dipoles swing with the field while those locked in ice barely move; heat spreads in from the melted rim | Molecules are illustration; the runaway loop needs narration |
+| 8 | Selfie nose | 4 | The camera backs away from a top-down face; the projection lines straighten and the projected nose shrinks | A face outline risks looking like clip art |
+| 9 | Escalator | 4 | Dots ride two lanes; the walking lane stays gappy and empties as the escalator gets taller | The height crossover needs a graph and assumptions |
+| 10 | Cold phone | 2 | The operating point on the voltage curve drops by I×R below the cutoff | Graph reading; fails the mute test |
+| 11 | Kettle | 4 | Bubbles leave the hot bottom and collapse in the cooler water above; as it warms they reach the surface | The topic is a sound, so the mute test only half works |
+| 12 | Figure-8 compass | 4 | Readings pile up into an off-center circle as the phone turns; the circle slides back to the origin | Why a figure 8 (every 3D direction) is 3D |
+| 13 | No wind behind a fan | 4 | Particles creep in from all around the intake while a narrow, fast jet shoots out the front; a candle on each side | The flow has to be simplified and still stay honest |
+| 14 | CSAT 4% | 3 | The bell curve is cut into equal-width bands whose areas fill in | The slicing is static. A Galton board (balls piling into the bell) adds motion, but it explains the bell, not the 4% |
+
+Quantum and physics:
+
+| # | Candidate | Score | Key motion | Weak point |
+| - | --------- | ----- | ---------- | ---------- |
+| Q1 | Magnet | 2 | Log-scale bars: 0.4 K of magnetic pull against the 1043 K the alignment survives | The reveal is a number gap. Whether exchange can be pictured in 2D in 45 s is open: same-spin electrons keeping apart is a probability picture, and the easy version ("Pauli lines spins up") is false in general. A 2D spin-lattice (Ising) simulation melting at the Curie point is a strong motion, but it shows alignment against heat, the known part, not why the coupling isn't magnetic |
+| Q2 | Polarizers | 4 | The light's arrow is projected onto each filter's axis and shrinks; slide in a middle filter and light comes back | Filter angles need a clear 2D convention |
+| Q3 | Sun tunneling | 3 | A proton rolls up the barrier and back; a wave leaks through | The wave picture is abstract; the huge numbers carry it |
+| Q4 | Gold | 3 | The absorption edge slides from ultraviolet into blue and the metal turns from silver to gold | Why the edge moves (relativity) can't be pictured |
+| Q5 | Glass | 2 | Photons of each color fail to lift an electron up a tall rung; an ultraviolet photon succeeds | An energy-ladder diagram, led by the narration |
+| Q6 | Glow stickers | 3 | Electrons drop into traps and trickle out one by one as flashes; warming speeds the trickle | The trap picture is abstract |
+
+On hold:
+
+| Candidate | Score | Key motion | Weak point |
+| --------- | ----- | ---------- | ---------- |
+| Bus bunching | 5 | Buses circle a loop; a slightly late one picks up more people and slows, and the one behind catches up until they travel together | Two recent small Korean videos |
+| West Sea tides | 4 | Co-tidal lines sweep around a no-tide point like a clock hand; the range grows toward the Korean coast | Needs a coastline; the basics are textbook |
+| Curved platform gap | 4 | A straight car pulls up to a curved platform; the gap opens in the middle and grows as the curve tightens | Small payoff; covered in Korean |
+| Ackermann steering | 4 | Top view: the inner wheel turns more, so both wheels follow circles around one center | Covered in Korean (280K) |
+| Curie demo | 4 | As a spin-lattice simulation, arrows scramble as it heats and snap back as it cools | The domain explanation is already known; used as Q1's hook only |
+| Lunar birthday | 3 | A date slides 11 days earlier each year and jumps back in leap-month years, returning after 19 | A calendar sawtooth; common knowledge |
+| Round spring wire | 3 | A coil under load; the wire's cross-section twists | Twisting is hard to see |
+| Spaghetti | 3 | A bent rod snaps and the released wave bends the rest past breaking | Needs a slow-motion elastic simulation |
+| Knife slicing | 3 | A blade drawn sideways vs pressed straight down | Covered in Korean (2.41M) |
+| No green stars | 3 | A blackbody curve slides with temperature while the star's color changes, skipping green | A graph plus a color swatch |
+| Hangul 11,172 | 2 | A 19×21×28 grid lights up 2,350 cells | Counting, static |
+| Sky not purple | 2 | The sun's spectrum times scattering times the eye's sensitivity | Multiplying curves |
+| Iron fusion | 2 | Binding energy per nucleon, with iron at the top | A graph |
+| LED color | 2 | An electron drops across the gap and a photon of that color leaves | Textbook |
+| Remote IR | 2 | The remote's 940 nm line sits outside the eye's range but inside the sensor's | A static spectrum |
+| Tensegrity | 2 | Tension and compression paths in the structure | 3D |
+| Mercury liquid | 1 | Nothing moves that explains it | |
+
+### New picture-first candidates (2026-09-26)
+
+Found by looking at what visual explainers do well (3Blue1Brown, Steve
+Mould, minutephysics, Know Art, and simulation channels) and at topics whose
+explanation is a simulation or a geometric motion. Common topics are
+included. Every one needs something `studio/src/components` doesn't have
+yet: rays, particles, or a simulation. Precomputing a simulation's positions
+per frame keeps renders deterministic.
+
+#### N1. The light curve at the bottom of a mug (math), 5
+- **Title draft:** 머그컵 바닥의 빛 무늬는 왜 생길까?
+- **Hook:** "햇빛 드는 창가에서 머그컵 안을 보면, 바닥에 밝은 곡선이 떠 있어요."
+- **Key motion:** Parallel rays enter one at a time and bounce off the cup's
+  round wall. Each reflected ray is a straight line, and where they crowd
+  together the bright curve (a nephroid) draws itself. Move the light to the
+  rim and the curve becomes a cardioid.
+- **Evidence:** English: [Paralogical "That weird light at the bottom of a mug"](https://youtu.be/fJWnA4j0_ho)
+  442K, [Numberphile "Cardioids in Coffee Cups"](https://youtu.be/hKpa9ntjgeo) 170K.
+- **Korean coverage:** None (search returns latte art).
+- **Production:** New: rays reflecting off a circle, additive brightness.
+  Fully 2D.
+- **45-second trap:** Sunlight (parallel rays) makes a nephroid; "cardioid"
+  fits only a point light on the rim. The curve is where rays crowd (an
+  envelope), not a reflected image.
+
+#### N2. Traffic jams with no cause (engineering), 5
+- **Title draft:** 사고도 없는데 고속도로는 왜 막힐까?
+- **Hook:** "사고도 공사도 없는데 차가 멈췄다가, 조금 가면 또 뻥 뚫려요."
+- **Key motion:** Cars as dots on a ring road. One brakes slightly; the
+  braking passes backward from car to car and grows into a dense knot that
+  drifts backward while every car keeps moving forward.
+- **Evidence:** English: [NEEDLE MOVER "How Phantom Traffic Works!"](https://youtube.com/shorts/txoWKW8TOLg)
+  4.28M, [SotonTRG "Phantom Traffic Jams"](https://youtu.be/Rryu85BtALM)
+  3.15M. Sugiyama et al. 2008 (22 cars on a 230 m circle).
+- **Korean coverage:** Well covered with footage of the Japanese experiment:
+  [1.88M Short](https://youtube.com/shorts/KnE8SkJkSrw), 사물궁이 잡학지식 ×
+  the transport ministry 283K. What our picture adds: a simulation where the
+  backward-moving wave is visible, and the density above which it forms.
+- **Production:** New: a car-following simulation on a ring.
+- **45-second trap:** Below a critical density the disturbance dies out, so
+  "one person braked" isn't the whole cause. The wave's backward speed
+  (reported around 15–20 km/h) needs a source.
+
+#### N3. How a flock turns as one (science), 5
+- **Title draft:** 새 떼는 대장도 없이 어떻게 한 몸처럼 움직일까?
+- **Hook:** "수만 마리 새 떼가 대장도 없이 한 몸처럼 방향을 틀어요."
+- **Key motion:** Random dots. Switch on three rules one at a time (don't
+  crowd, match your neighbors' heading, move toward your neighbors) and a
+  flock forms and swirls.
+- **Evidence:** English: [Fireship "how god programmed birds probably"](https://youtube.com/shorts/X8LglXSG53A)
+  3M, [Coding Train flocking](https://youtu.be/mhjuuHl6qHM) 366K. Reynolds
+  1987 (boids); Ballerini et al. 2008 (starlings track about 7 nearest
+  neighbors).
+- **Korean coverage:** Murmuration clips and survival-strategy Shorts (top
+  [14K](https://youtube.com/shorts/GETGcz4EGwY)); no rule simulation found.
+- **Production:** New: an agent simulation, heading arrows. Reused: Note
+  for the rule labels.
+- **45-second trap:** Boids is a model that reproduces flocking, not proof
+  that birds run these rules. Real starlings follow a fixed number of
+  neighbors, not everyone within a radius.
+
+#### N4. Wheels spin backward on video (tech), 5
+- **Title draft:** 영상 속 자동차 바퀴는 왜 거꾸로 돌까?
+- **Hook:** "달리는 차를 찍으면 바퀴가 멈춰 있거나, 심지어 거꾸로 도는 것처럼 보여요."
+- **Key motion:** A spoked wheel turns smoothly while camera frames flash as
+  snapshots. When a spoke moves almost one spoke-spacing between frames, the
+  snapshots line up into a slow backward crawl.
+- **Evidence:** English is small ([59K](https://youtu.be/jVIJKoZ7qp0), Shorts
+  under 30K).
+- **Korean coverage:** Small Shorts ([38K](https://youtube.com/shorts/AdxFqww0Gpk)
+  and several around 1K), a [36K](https://youtu.be/SVkCKjuBQxM) video.
+- **Production:** New: a spoked wheel, a frame-sampling view. Pure
+  geometry, checkable in code.
+- **45-second trap:** It's sampling (frame rate against spoke spacing); the
+  wheel never reverses. Seeing it by eye under steady light is a separate,
+  debated effect.
+
+#### N5. Ripples when you photograph a screen (math), 5
+- **Title draft:** 모니터를 폰으로 찍으면 왜 물결무늬가 생길까?
+- **Hook:** "모니터 화면을 폰으로 찍으면, 화면에 없던 물결무늬가 떠요."
+- **Key motion:** Two fine line gratings with slightly different spacing
+  overlap and big bands appear. Nudge one grating a hair and the bands sweep
+  across far faster.
+- **Evidence:** English: [Tom Scott "The moiré effect lights that guide ships home"](https://youtu.be/d99_h30swtM)
+  3.11M (the same amplification steers ships into port),
+  [Short](https://youtube.com/shorts/-8mmTkckYVU) 232K. Korean autocomplete
+  "모니터 사진 물결 제거" (removing ripples from monitor photos).
+- **Korean coverage:** Small Shorts (top [26K](https://youtube.com/shorts/q-PDI0WXnkI)),
+  YTN 5K.
+- **Production:** New: line gratings (plain SVG). Band spacing
+  1/|f₁ − f₂| is checkable in code.
+- **45-second trap:** In a camera it's the screen's pixel grid sampled by
+  the sensor's grid (aliasing), with color added by the sensor's color
+  filter. Two overlapping line gratings are the model, not the whole story.
+
+#### N6. Coffee stains dark at the rim (science), 4
+- **Title draft:** 커피 얼룩은 왜 테두리만 진할까?
+- **Hook:** "쏟은 커피가 마르면, 가운데는 연하고 테두리만 진한 고리가 남아요."
+- **Key motion:** Side view of a drop whose edge stays pinned while it
+  thins. Water evaporating at the edge is replaced by flow from the middle,
+  which carries the grains outward; a top view shows the ring build up.
+- **Evidence:** English: [microscope video](https://youtu.be/ZaCGoSTMHyc)
+  150K; Deegan et al. 1997 (*Nature*). Korean autocomplete "커피 얼룩의
+  비밀" (the secret of coffee stains).
+- **Korean coverage:** Several Shorts of about 1K give the same explanation
+  ([example](https://youtube.com/shorts/ob_9viObDrw)).
+- **Production:** New: a droplet cross-section, particle flow.
+- **45-second trap:** The pinned edge is the key; "the edge dries first"
+  alone is wrong. Surface-tension (Marangoni) flows can undo the ring.
+
+#### N7. Toast lands butter side down (science), 4
+- **Title draft:** 토스트는 왜 꼭 버터 바른 면으로 떨어질까?
+- **Hook:** "식탁에서 떨어진 토스트, 이상하게 늘 버터 바른 면이 바닥에 닿아요."
+- **Key motion:** The toast tips over the table edge, starts spinning as it
+  pivots, and has turned about half over by the time it reaches the floor. A
+  ghost trail shows the rotation; from a much taller table it would land
+  butter side up.
+- **Evidence:** English: [Be Smart "We made a whole physics video about falling toast"](https://youtube.com/shorts/NPnaac9Qq9A)
+  1.35M, [Short](https://youtube.com/shorts/p7QLXDAsLqI) 158K. Matthews 1995
+  (*Eur. J. Phys.*).
+- **Korean coverage:** Small Shorts ([1.4K](https://youtube.com/shorts/LAeKmNIdN2k)),
+  YTN 8K.
+- **Production:** New: a computed rigid-body fall, a motion trail. The
+  rotation against table height is checkable in code.
+- **45-second trap:** "Usually", not "always"; it depends on how far the
+  toast overhangs. Matthews' link from table height to human height is a
+  further claim to source carefully.
+
+#### N8. Zebra stripes and leopard spots (science), 5
+- **Title draft:** 얼룩말 줄무늬와 표범 점무늬, 같은 식에서 나온다?
+- **Hook:** "얼룩말 줄무늬와 표범 점무늬. 둘 다 수학 식 하나로 그릴 수 있어요."
+- **Key motion:** Start from noise. Two chemicals spread at different speeds,
+  one switching on its neighbors and the other shutting them off farther out;
+  stripes or spots grow out of nothing, and changing one number switches
+  stripes to spots.
+- **Evidence:** English: [MinuteEarth "Can Math Explain How Animals Get Their Patterns?"](https://youtu.be/alH3yc6tX98)
+  806K. Turing 1952; Kondo & Asai 1995 (angelfish stripes that move as the
+  model predicts).
+- **Korean coverage:** A [210K Short](https://youtube.com/shorts/HUKzLNnGy3o)
+  on Turing's pattern work; other "튜링 패턴" (Turing pattern) Shorts are
+  small.
+- **Production:** New: a reaction–diffusion grid simulation (for example
+  Gray–Scott) rendered as a color map. The heaviest compute of the batch.
+- **45-second trap:** The mechanism is well supported for some fish, not
+  proved for zebras or leopards. Say "can make", not "makes".
+
+### Picture-first ranking (그림 우선 순위)
+
+Top 8 across every section, by picture strength first, then the hook. Three
+of them (1, 4, 5) are the same idea, a camera sampling in time or space. They
+could make a series, but 002 needs only one.
+
+1. **폰으로 찍으면 프로펠러는 왜 휘어 보일까?** (5, #1)
+   - Hook: "비행기 창밖 프로펠러를 폰으로 찍으면, 곧은 날개가 엿가락처럼 휘어 있어요."
+   - Key motion: A scan line sweeps down over a turning blade and stacks row
+     after row into a bent blade.
+2. **머그컵 바닥의 빛 무늬는 왜 생길까?** (5, N1)
+   - Hook: "햇빛 드는 창가에서 머그컵 안을 보면, 바닥에 밝은 곡선이 떠 있어요."
+   - Key motion: Rays bounce off the cup wall one by one until their crowding
+     draws the bright curve.
+3. **사고도 없는데 고속도로는 왜 막힐까?** (5, N2)
+   - Hook: "사고도 공사도 없는데 차가 멈췄다가, 조금 가면 또 뻥 뚫려요."
+   - Key motion: One tap of the brakes on a ring road grows into a knot of cars
+     that drifts backward while every car moves forward.
+4. **영상 속 자동차 바퀴는 왜 거꾸로 돌까?** (5, N4)
+   - Hook: "달리는 차를 찍으면 바퀴가 멈춰 있거나, 심지어 거꾸로 도는 것처럼 보여요."
+   - Key motion: A wheel spins forward while the frames' snapshots line up into
+     a backward crawl.
+5. **모니터를 폰으로 찍으면 왜 물결무늬가 생길까?** (5, N5)
+   - Hook: "모니터 화면을 폰으로 찍으면, 화면에 없던 물결무늬가 떠요."
+   - Key motion: Two fine gratings overlap into big bands that race across when
+     one grating shifts a hair.
+6. **버스는 왜 꼭 몰려서 올까?** (5, on hold)
+   - Hook: "20분 동안 안 오던 버스가, 같은 번호로 세 대가 줄줄이 와요."
+   - Key motion: On a loop, a slightly late bus gathers more people and slows
+     until the bus behind catches up and they run together.
+7. **새 떼는 대장도 없이 어떻게 한 몸처럼 움직일까?** (5, N3)
+   - Hook: "수만 마리 새 떼가 대장도 없이 한 몸처럼 방향을 틀어요."
+   - Key motion: Random dots turn into a swirling flock as three rules switch
+     on one by one.
+8. **얼룩말 줄무늬와 표범 점무늬, 같은 식에서 나온다?** (5, N8)
+   - Hook: "얼룩말 줄무늬와 표범 점무늬. 둘 다 수학 식 하나로 그릴 수 있어요."
+   - Key motion: Noise grows into stripes, and one changed number turns the
+     stripes into spots.
+
+Next in line, at 4: the three-filter polarizer (Q2), wire rope, the fan,
+coffee stains, toast, the figure-8 compass, and the selfie nose.
+
 ## On hold: already covered in Korean (2026-09-26)
 
 Seen in the same search but dropped from the 002 candidates because they
@@ -587,7 +848,9 @@ taste), they can become candidates again.
 - 2026-09-26, the human's reason: "already known, common in Korea too". The
   human's original words were "다 아는 얘기 (내가 아는 얘기) 이기도 하고
   뭔가 흔한거 같기도 하고" ("it's something everyone knows (something I
-  know), and it also kind of seems common").
+  know), and it also kind of seems common"). Later clarified (2026-09-26,
+  relayed by the orchestrator): they stay rejected because the human found
+  them dull, not because they're common.
   - Guessing one in a million with twenty questions (binary search, 2^20)
   - Why steel bridges are full of triangles (truss rigidity)
   - The birthday paradox (23 people, 253 pairs)
