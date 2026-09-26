@@ -28,6 +28,13 @@ Made so far: 001 A4 paper ([episodes/001-a4-paper-ratio](../episodes/001-a4-pape
 - Pick by how well the topic turns into a picture (2026-09-26, relayed by
   the orchestrator). The animation should be the explanation, not an
   illustration of the narration. Scored in "Picture-first round" below.
+- Topics don't have to be everyday phenomena. On seeing a sketch page of the
+  picture-first top 8, all real-world phenomena: "실제현상이군. 꼭
+  안그래도 되니까 더 뽑아보자. 수학 과학 공학" ("These are real-world
+  phenomena. They don't have to be, so let's pick more: math, science,
+  engineering") (2026-09-26). Pure math, physics and chemistry ideas, and
+  engineering mechanisms are all fine, and the hook can be a striking claim
+  or picture on its own.
 
 ## 002 candidates (2026-09-26)
 
@@ -805,6 +812,363 @@ could make a series, but 002 needs only one.
 
 Next in line, at 4: the three-filter polarizer (Q2), wire rope, the fan,
 coffee stains, toast, the figure-8 compass, and the selfie nose.
+
+## Beyond everyday phenomena (2026-09-26)
+
+Twelve candidates, four per field, that don't need an everyday object:
+visual proofs and surprising results, physics and chemistry ideas,
+engineering mechanisms. Picture first still leads (the animation is the
+explanation, the mute test, 2D and code-drawable), and the scores use the
+same 1–5 scale as the picture-first round. Within each field they span
+different kinds: geometry, probability, calculus, and number theory;
+statistical physics, waves, mechanics, and crystal growth; gears,
+structures, electrical machines, and machining.
+
+Each has a **sketch spec**: one paragraph a developer can implement as a
+looping canvas animation. Anything random uses a seeded generator, and any
+simulation is computed ahead so every loop and every render is identical.
+Numbers marked "checked" were run in code on 2026-09-26.
+
+| Field | # | Candidate | Score | Key motion | English | Korean |
+| ----- | - | --------- | ----- | ---------- | ------- | ------ |
+| Math | M1 | Straight lines that make a circle | 5 | Dots slide back and forth on straight lines, and together they ride a rolling circle | 34M (Short) | none |
+| Math | M2 | Random dots draw a triangle | 5 | A point jumps halfway to a random corner, again and again, and the Sierpiński triangle appears | 1.05M | 160K (visuals, no explanation found) |
+| Math | M3 | The fastest slide isn't straight | 5 | Beads race down a straight ramp and a cycloid; the cycloid wins, and beads from any height on it tie | 101M (Short) | 300K (Short) |
+| Math | M4 | Primes make spirals | 4 | Integers plotted at angle = radius; zooming out, the primes fall into spiral arms, then straight rays | 3.9M (Short) | 1.4K |
+| Science | S1 | Pollen that jitters on its own | 5 | A big disk jitters among tiny fast ones; hide the tiny ones and it keeps jittering | 440K (Short) | 5.7K |
+| Science | S2 | Sound draws with sand | 5 | Sand shaken off the moving parts of a plate gathers on the still lines; a new note, a new pattern | 2.9M (Short) | 25K |
+| Science | S3 | An upside-down pendulum that won't fall | 5 | An inverted pendulum falls, then stays up once its pivot buzzes | 22K | none |
+| Science | S4 | Why snowflakes grow branches | 4 | Wandering vapor dots stick where they first touch; tips catch more and sprout branches | small | 10K |
+| Engineering | E1 | A gear that turns 50 times slower in one ring | 5 | An oval cam spins a flexible toothed ring inside a rigid one; per cam turn the ring creeps back two teeth | 920K (Short) | 38K |
+| Engineering | E2 | A hanging chain, flipped, is an arch | 5 | A chain settles under gravity, then flips over into an arch in pure compression | 869K | 2.1K |
+| Engineering | E3 | Three coils that don't turn make a spinning field | 5 | Three arrows only grow and shrink along fixed lines, yet their sum spins at constant length | 158K | 152K (exam lectures) |
+| Engineering | E4 | Drilling a square hole | 5 | A curved triangle turns inside a square, touching all four sides, and sweeps out a square | 43K (Short) | 366K |
+
+M1 and E3 are the same idea from two sides: straight-line oscillations adding
+up to a rotation. They could run as a pair.
+
+**Top pick per field:**
+
+- **Math: M1.** The purest mute-test motion in the batch. 34M in English and
+  absent in Korean, and the explanation (a circle rolling inside one twice
+  its size) is itself the motion.
+- **Science: S2.** The sand moving off the shaking parts onto the still lines
+  is literally the explanation, and a new frequency redraws it live. 2.9M in
+  English, small in Korean.
+- **Engineering: E1.** The ratio is something you watch: one cam turn, two
+  teeth of creep, 50:1. It's the gear in robot joints, which gives the hook
+  a present-day angle.
+
+### Math
+
+#### M1. Straight lines that make a circle, 5
+- **Title draft:** 직선으로만 움직이는 점들이 원을 그린다?
+- **Hook:** "점 여덟 개가 각자 직선 위를 왔다 갔다만 해요. 그런데 같이 보면 원이 굴러가요."
+- **Key picture:** Each dot oscillates along its own diameter of a big
+  circle. Together they sit on a small circle half the size, rolling inside
+  the big one. That rolling (the Tusi couple, 13th century) is why each point
+  of it moves in a straight line.
+- **Evidence:** English: ["How Tusi Motion Works"](https://youtube.com/shorts/FZBnAiInyc0)
+  34M, ["How Circles Make Straight Lines!"](https://youtube.com/shorts/Hwmu8yGiKOs) 304K;
+  MindYourDecisions' version 55M (earlier research).
+- **Korean coverage:** None found.
+- **Production:** New: dots on lines, circles. All geometry, checked in code.
+- **Sketch spec:** A big circle of radius R with n diameters at angles
+  θₖ = kπ/n (n grows 1 → 8 over the loop). Dot k sits at
+  xₖ(t) = R·cos(t − θₖ)·(cos θₖ, sin θₖ), so it only slides along its line.
+  Midway, fade in a circle of radius R/2 centered at (R/2)(cos t, sin t):
+  every dot lies on it (checked: |xₖ − c| = R/2), and a marker on its rim
+  shows it rolling inside the big circle, turning backward as it goes. One
+  loop is t from 0 to 2π, about 6 s. The viewer sees separate back-and-forth
+  lines resolve into one rolling circle.
+
+#### M2. Random dots draw a triangle, 5
+- **Title draft:** 아무렇게나 찍은 점이 삼각형 무늬를 그린다?
+- **Hook:** "주사위를 굴려 세 꼭짓점 중 하나로 반만 가는 걸 반복하면, 점들이 이런 무늬를 그려요."
+- **Key picture:** A point jumps halfway toward a randomly chosen corner of a
+  triangle, over and over. The dots never land in the middle hole, and a
+  Sierpiński triangle appears out of pure chance (the chaos game).
+- **Evidence:** English: [Numberphile "Chaos Game"](https://youtu.be/kbKtFN71Lfs)
+  1.05M, [Short](https://youtube.com/shorts/QK2SJo-AxT4) 102K.
+- **Korean coverage:** A Korean-titled channel posts chaos-game visuals
+  ([octagon, 160K](https://youtube.com/shorts/QuK_9WgdDHA)) without an
+  explanation found; no Korean explanation Short.
+- **Production:** New: a point cloud with a seeded generator.
+- **Sketch spec:** Three corners of an equilateral triangle; a start point
+  anywhere. Each step, pick a corner with a seeded PRNG and move the point
+  halfway (fraction r = 0.5) toward it; plot a dot. The first 10 steps are
+  slow, with a line showing each jump; then it speeds up to hundreds of
+  dots per frame, to about 30,000. Then show why: the whole triangle maps
+  onto three half-size copies of itself, one per corner, and the central hole
+  is in none of them. End variants: a square with r = 0.5 fills in evenly
+  (no pattern), a pentagon with r ≈ 0.618 makes a pentaflake. The viewer sees
+  noise turn into a fractal, and the rule decides which.
+
+#### M3. The fastest slide isn't straight, 5
+- **Title draft:** 가장 빨리 미끄러져 내려가는 길은 직선이 아니다?
+- **Hook:** "두 점을 잇는 가장 짧은 길은 직선이지만, 공이 가장 빨리 굴러 내려가는 길은 직선이 아니에요."
+- **Key picture:** Beads released together on a straight ramp and on a
+  cycloid (the curve a point on a rolling wheel traces) to the same end
+  point. The cycloid bead, dropping steeply first to gain speed, arrives
+  first. Then beads released from different heights on the cycloid all
+  reach the bottom at once (tautochrone).
+- **Evidence:** English: ["Brachistochrone curve. Fastest route for a ball."](https://youtube.com/shorts/H-qNPV4WSsE)
+  101M, [Vsauce "The Brachistochrone"](https://youtu.be/skvnj67YGmw) 17.8M.
+- **Korean coverage:** Covered: ["직선 vs 곡선, 어떤 길이 더 빠를까?"](https://youtube.com/shorts/ZehG-nUaOWM)
+  (straight vs curved, which is faster?) 300K and several smaller Shorts.
+  What ours adds is the second beat (the tie from any height) and the
+  rolling wheel drawing the curve.
+- **Production:** New: tracks, beads moved by energy conservation. Reused:
+  Equation for the times.
+- **Sketch spec:** A cycloid x = r(φ − sin φ), y = −r(1 − cos φ) for
+  φ ∈ [0, π], and the straight segment between the same end points; draw the
+  cycloid by rolling a wheel of radius r along the top line. Beads start
+  together at rest; each moves along its track with speed v = √(2g·depth),
+  integrated along arc length. With r = 1 m and g = 9.8 m/s² the cycloid
+  takes 1.004 s and the line 1.190 s (checked: 18% longer); play it at
+  quarter speed with timers. Second beat: release 4 beads at rest from
+  different points on the cycloid; all reach the bottom at π√(r/g) ≈
+  1.004 s, the same time as from the very top (checked by integrating from
+  four starting points). The viewer sees the longer path win, then beads
+  from different heights arrive together.
+
+#### M4. Primes make spirals, 4
+- **Title draft:** 소수를 점으로 찍으면 왜 나선이 생길까?
+- **Hook:** "소수는 규칙 없이 흩어져 있다는데, 이렇게 찍으면 나선이 나타나요."
+- **Key picture:** Plot each whole number n at radius n and angle n
+  radians, and light up the primes. Zooming out, spiral arms appear, then
+  straight rays. Coloring by remainder shows why: 44 radians is almost 7
+  full turns, so n and n + 44 land at nearly the same angle, and the primes
+  can only sit in arms whose remainder shares no factor with 44.
+- **Evidence:** English: [3Blue1Brown "Prime spirals"](https://youtube.com/shorts/h2V3r7oBeMI)
+  3.9M, [long video](https://youtu.be/EK32jo7i5LQ) 7.6M.
+- **Korean coverage:** Small visual Shorts (top [1.4K](https://youtube.com/shorts/M4z0e8jFOjc));
+  no explanation found.
+- **Production:** New: a point field with zoom, color by remainder.
+- **Sketch spec:** For n = 1…N, a dot at (n cos n, n sin n); primes bright,
+  other integers faint (fade them out after the first beat). The view zooms
+  out continuously from N = 50 to N = 20,000 (scale ∝ 1/N). Around N ≈ 1,000,
+  color every dot by n mod 44: each spiral arm is one color, and the arms
+  with even or multiple-of-11 residues go dark among the primes. Near
+  N ≈ 20,000, recolor by n mod 710 (710/113 ≈ 2π): the arms straighten into
+  rays. The viewer sees order appear out of the primes and then learns it's
+  the 44 and 710 near-multiples of 2π, not a secret of the primes. Score 4
+  because the "why" needs the remainder coloring and a line of narration.
+- **45-second trap:** The spirals come from the polar plotting, not from
+  hidden structure in the primes; the only prime fact is that primes avoid
+  residues that share a factor (Dirichlet). Saying "primes have a secret
+  pattern" is the trap.
+
+### Science
+
+#### S1. Pollen that jitters on its own, 5
+- **Title draft:** 물 위 꽃가루는 왜 혼자 떨릴까?
+- **Hook:** "현미경으로 물속 꽃가루를 보면, 아무것도 안 건드리는데 계속 떨려요."
+- **Key picture:** A big disk among hundreds of tiny, fast ones. Each tiny
+  hit is too small to see, but the uneven sum makes the big one jitter.
+  Hide the tiny ones and it looks like it moves by itself: Brownian motion,
+  which Einstein (1905) used to prove atoms exist.
+- **Evidence:** English: ["What is Brownian motion?"](https://youtube.com/shorts/1zuFlw7MI_4)
+  440K, [long](https://youtu.be/4m5JnJBq2AU) 973K.
+- **Korean coverage:** Small Shorts (top [5.7K](https://youtube.com/shorts/K0Uch_mT5MU)).
+- **Production:** New: a hard-disk collision simulation, a trail.
+- **Sketch spec:** A box with 400 small disks (radius 1, random Maxwell
+  speeds from a seeded generator) and one big disk (radius 8, mass 64×),
+  elastic collisions with each other and the walls. Trace the big disk's
+  path. Beat 1: everything visible. Beat 2: the small disks fade to
+  invisible while the big disk keeps zigzagging. Beat 3: double the small
+  disks' speed (higher temperature) and the jitter grows. The trail's reach
+  grows like √t. The viewer sees an invisible crowd pushing a visible
+  particle around.
+- **45-second trap:** Each hit barely moves the grain; what you see is the
+  random imbalance of very many hits, not single impacts.
+
+#### S2. Sound draws with sand, 5
+- **Title draft:** 소리를 틀면 모래가 그림을 그린다?
+- **Hook:** "철판 위에 모래를 뿌리고 소리를 틀면, 모래가 저절로 무늬를 만들어요."
+- **Key picture:** A vibrating plate shakes everywhere except along its
+  still lines (nodes). Sand bounces off the moving parts and comes to rest on
+  the still lines. Change the pitch and the still lines move, and the sand
+  redraws itself (Chladni figures).
+- **Evidence:** English: ["This Is How Invisible Sound Frequencies Create Stunning Geometry"](https://youtube.com/shorts/hI8xEWtD2WY)
+  2.9M, ["Cymatics: Chladni Plate"](https://youtu.be/tFAcYruShow) 2.36M.
+- **Korean coverage:** Small (["소리의 시각화, 클라드니 패턴"](https://youtube.com/shorts/nnevW7od8Jk)
+  (visualizing sound, Chladni patterns) 25K, YTN 10K).
+- **Production:** New: a particle field driven by a mode shape, an optional
+  height color map.
+- **Sketch spec:** A unit-square plate. Mode shape
+  u(x, y) = cos(nπx)cos(mπy) − cos(mπx)cos(nπy) (a standard approximation
+  for a square plate). 5,000 sand dots start evenly spread; each frame every
+  dot gets a seeded random kick of size proportional to |u(x, y)|, so dots
+  wander where the plate shakes and stop where u ≈ 0. Step (n, m) through
+  (1, 2), (2, 3), (3, 5), (4, 5) every few seconds; the sand scatters and
+  regathers. For one beat, show u as a blue-red height map under the sand,
+  animated as u·cos(ωt), to show the still lines are where the color never
+  changes. The viewer sees the sand run to the lines, and a new pitch give
+  new lines.
+- **45-second trap:** Real plates are clamped at the center and their modes
+  differ from this formula; say "a plate like this", and don't claim these
+  are the exact patterns of a given note.
+
+#### S3. An upside-down pendulum that won't fall, 5
+- **Title draft:** 거꾸로 세운 진자가 안 쓰러지는 방법?
+- **Hook:** "막대를 거꾸로 세우면 당연히 쓰러지죠. 그런데 받침을 빠르게 떨어 주면 안 쓰러져요."
+- **Key picture:** An inverted pendulum falls. Then its pivot buzzes up and
+  down, fast and small, and the pendulum wobbles gently around upright and
+  stays there (Kapitza's pendulum). On average, the fast shaking pushes the
+  rod toward whichever end is straight above or below the pivot, and that
+  outweighs gravity.
+- **Evidence:** English is small ([Kapitza Pendulum](https://youtu.be/GgYABmG_bto)
+  22K, Shorts under 3K); the claim itself is the hook.
+- **Korean coverage:** None found.
+- **Production:** New: a pendulum driven by a numerically integrated
+  equation, a magnified pivot.
+- **Sketch spec:** A rigid pendulum of length L = 1 whose pivot moves as
+  y = a·cos(ωt). With θ measured from hanging straight down,
+  θ'' = −(g/L + aω²/L·cos ωt)·sin θ, integrated with RK4 (dt = 2×10⁻⁵ s)
+  ahead of time. Start at θ = π − 0.2 (tilted 0.2 rad from upright). Beat 1:
+  a = 0, it falls. Beat 2: a = 0.1, ω = 60 rad/s (aω = 6 > √(2gL) = 4.43,
+  the stability condition): it stays within 0.24 rad of upright over 6 s
+  (checked). Draw the pivot's motion magnified, and optionally the averaged
+  potential, a curve with a dip at the top. The viewer sees a buzzing base
+  hold a pendulum upright.
+- **45-second trap:** It works only above the threshold aω > √(2gL);
+  shaking gently makes it fall. It's not balancing by feedback.
+
+#### S4. Why snowflakes grow branches, 4
+- **Title draft:** 눈송이는 왜 나뭇가지처럼 자랄까?
+- **Hook:** "눈송이는 동그랗게 뭉치지 않고, 가지를 뻗으며 자라요."
+- **Key picture:** Water vapor molecules wander at random until they touch
+  the crystal and stick. A tip that pokes out reaches the wanderers first,
+  so it grows faster and pokes out further, and branches sprout. The six-fold
+  symmetry comes from the ice lattice.
+- **Evidence:** English is small for the mechanism (DLA and "growing
+  snowflake" Shorts under 500). Libbrecht's snowflake research is the
+  source to use.
+- **Korean coverage:** Small (["눈송이는 왜 다 생긴게 다를까?"](https://youtube.com/shorts/V7JN49_9K_w)
+  (why do snowflakes all look different?) 10K).
+- **Production:** New: a hexagonal-grid growth simulation.
+- **Sketch spec:** Diffusion-limited aggregation on a hexagonal grid. A seed
+  at the center; walkers released from a circle outside the cluster take
+  seeded random steps until they touch the cluster, then stick; each stuck
+  site is mirrored into all 12 symmetric positions for six-fold symmetry. The
+  first few walkers are shown slowly with their paths, and it speeds up to
+  about 20,000 stuck sites. For more realistic plates and dendrites, Reiter's
+  hexagonal automaton (β = 0.4, γ = 0.001) is an alternative. The viewer
+  sees walkers hit tips first and branches sprout.
+- **Score 4:** The six-fold symmetry is imposed by hand in the simulation;
+  the motion explains the branching, not why there are six arms.
+- **45-second trap:** The shape depends on temperature and humidity (plates
+  vs dendrites, the Nakaya diagram); "every snowflake branches" is wrong.
+
+### Engineering
+
+#### E1. A gear that turns 50 times slower in one ring, 5
+- **Title draft:** 한 바퀴 돌려도 두 칸만 가는 톱니바퀴?
+- **Hook:** "로봇 팔 관절 속 톱니바퀴는 안쪽을 한 바퀴 돌려도 겨우 두 칸 움직여요."
+- **Key picture:** An oval cam inside a flexible toothed ring, inside a
+  rigid ring with two more teeth. The cam bends the flexible ring into an
+  oval that meshes only at two points. As the cam spins, the mesh points
+  travel around, and the flexible ring creeps back two teeth per cam turn:
+  100 teeth / 2 = 50:1 reduction in one flat ring (a harmonic drive, or
+  strain wave gear).
+- **Evidence:** English: ["How Do Harmonic Drives Work?"](https://youtube.com/shorts/58UOPvdttQ8)
+  920K, [Short](https://youtube.com/shorts/rJn6oUVLlQI) 899K, [long](https://youtu.be/xlnNj9F37MA) 802K.
+- **Korean coverage:** Small (["하모닉 드라이브, 정밀을 지키는 기술"](https://youtube.com/shorts/pMJ5wRvo86c)
+  (harmonic drive, the technology that keeps precision) 38K, a maker's
+  video 28K).
+- **Production:** New: toothed rings, an elliptical deformation.
+- **Sketch spec:** Outer rigid ring with Nc = 102 internal teeth (fixed).
+  Flexible ring with Nf = 100 external teeth; its shape at material angle ψ
+  is r(ψ) = r₀ + e·cos 2(ψ − ωt) (e about one tooth height), so it bulges
+  to mesh along the cam's long axis. The cam, an ellipse, turns at ω. The
+  flexible ring as a whole rotates at −ω·(Nc − Nf)/Nf = −ω/50. Mark one
+  flexible tooth and one cam end in color, with a counter of cam turns. One
+  cam turn ≈ 2 s. The viewer sees the cam spin fast while the marked tooth
+  creeps back two teeth per turn (checked: 100/2 = 50).
+- **45-second trap:** The teeth don't slide past each other like ordinary
+  gears; the ring flexes. Many teeth are engaged at once near each mesh
+  point, not one pair.
+
+#### E2. A hanging chain, flipped, is an arch, 5
+- **Title draft:** 매달린 쇠사슬을 뒤집으면 무너지지 않는 아치가 된다?
+- **Hook:** "쇠사슬을 양 끝만 잡고 늘어뜨린 모양 그대로 뒤집으면, 가장 튼튼한 아치가 돼요."
+- **Key picture:** A hanging chain takes the shape where every link is only
+  pulled along the chain (a catenary). Flip it over and every force turns
+  into a push along the arch, with no bending, so stone can hold it. A
+  semicircular arch of the same span has a force line that pokes out of the
+  stone, where it would crack. Gaudí designed with hanging chains.
+- **Evidence:** English: ["Arches and Chains"](https://youtu.be/JlL6ZHChhQE)
+  869K; Shorts are small.
+- **Korean coverage:** Small Gaudí Shorts (top [2.1K](https://youtube.com/shorts/i-L4y7oAVQQ)).
+- **Production:** New: a Verlet chain simulation, force arrows. Reused:
+  Equation (y = a·cosh(x/a)).
+- **Sketch spec:** 30 point masses joined by fixed-length links (Verlet
+  integration with distance constraints), both ends pinned, released from a
+  straight line so it drops and settles into y = a·cosh(x/a). Draw small
+  arrows along each link for tension. Then rotate the settled chain 180°
+  about the line through the anchors: the arrows flip to compression, all
+  along the curve. Second beat: overlay a semicircular arch of the same span
+  with the catenary force line drawn inside it; where the line leaves the
+  arch's thickness, draw hinge cracks. The viewer sees gravity design the
+  arch.
+- **45-second trap:** The catenary is ideal for an arch carrying only its
+  own uniform weight; with other loads the best shape changes (a suspension
+  bridge deck makes a parabola).
+
+#### E3. Three coils that don't turn make a spinning field, 5
+- **Title draft:** 가만히 있는 전선 세 개가 자석을 돌린다?
+- **Hook:** "모터 안의 코일은 하나도 안 돌아요. 그런데 그 안의 자기장은 뱅글뱅글 돌아요."
+- **Key picture:** Three coils around a circle, 120° apart, fed with three
+  currents offset by a third of a cycle. Each coil's field only grows and
+  shrinks along its own fixed line. Their sum is one arrow of constant length
+  that spins, and the rotor chases it (a rotating magnetic field, the heart
+  of the induction motor).
+- **Evidence:** English: ["Induction Motor animation I: The Rotating Magnetic Field"](https://youtu.be/vMu6DmfKHTs)
+  158K; Shorts up to 54K.
+- **Korean coverage:** Covered for electrical exam students
+  ([152K lecture](https://youtu.be/R0vHJwAZwDA), Shorts up to 92K), not as a
+  general-audience picture.
+- **Production:** New: pulsing vectors, a side graph of three sines with a
+  cursor. Reused: Equation.
+- **Sketch spec:** Three axes at 0°, 120°, 240°. Coil k's field is
+  Bₖ(t) = cos(ωt − 2πk/3)·uₖ, where uₖ is its axis: an arrow sliding back
+  and forth along a fixed line, colored per phase. A side graph shows the
+  three sine waves with a moving time cursor. Draw the vector sum tip to
+  tail: its length stays 1.5 (checked) while it turns at ω. A compass needle
+  in the center follows it. One turn every 3 s. Final beat: swap two phases
+  and the field spins the other way (how motors reverse). The viewer sees
+  three arrows that never turn add up to one that does.
+- **45-second trap:** An induction motor's rotor turns slightly slower than
+  the field (slip); saying it turns "with" the field is only true for a
+  synchronous motor.
+
+#### E4. Drilling a square hole, 5
+- **Title draft:** 둥글게 도는 드릴로 네모난 구멍을 뚫는다?
+- **Hook:** "드릴은 돌아가니까 구멍은 동그랗죠. 그런데 이 모양 날을 쓰면 네모난 구멍이 뚫려요."
+- **Key picture:** A Reuleaux triangle (three arcs, each centered on the
+  opposite corner) has the same width in every direction, like a circle.
+  So it can turn inside a square while touching all four sides, and it
+  sweeps out a square with slightly rounded corners, 98.8% of the area. The
+  catch: its center has to wander, so the chuck must float.
+- **Evidence:** English: Shorts up to [43K](https://youtube.com/shorts/f9o-ROsGOXM)
+  and [33K](https://youtube.com/shorts/TLsCbHO3YBo).
+- **Korean coverage:** A hands-on video, ["'된다 vs 안 된다' 논란의 삼각드릴"](https://youtu.be/sLuwulIPEE0)
+  (the triangle drill debate, "it works" vs "it doesn't") 366K. What ours
+  adds: the constant-width reason and the wandering center.
+- **Production:** New: arcs, a swept-area trace. All geometry.
+- **Sketch spec:** A unit square and a Reuleaux triangle of width 1. Beat
+  1: the triangle rolls between two parallel lines, which stay the same
+  distance apart (constant width). Beat 2: rotate it by φ from 0 to 2π;
+  for each φ, translate it so its leftmost and bottom points touch the
+  square's left and bottom sides (constant width then makes it touch the
+  right and top sides too). Accumulate the swept region as a filled trace:
+  it covers 2√3 + π/6 − 3 ≈ 98.77% of the square (checked). Draw the
+  triangle's center path, a small rounded square, to show it doesn't stay
+  put. The viewer sees a curved triangle carve a square hole.
+- **45-second trap:** The corners come out slightly rounded; "a perfect
+  square" is wrong. A real drill needs a floating chuck or guide plate to let
+  the center wander.
 
 ## On hold: already covered in Korean (2026-09-26)
 

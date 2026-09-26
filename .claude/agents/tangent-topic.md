@@ -64,9 +64,11 @@ already a popular Korean Short, say what our picture would add.
   narration. With the sound off a viewer should still roughly get it. One
   such picture carries the 40–50 s, drawn in code (shapes, graphs,
   particles, simple simulations; no footage, no illustrated characters).
-- A hook from something the viewer has seen or done, with a real surprise:
-  even a science-literate viewer should think "I didn't know that" or "I
-  never wondered, but now I want to know". A known topic can still get
+- A hook with a real surprise, from something the viewer has seen or done,
+  or a striking claim or picture on its own: a topic needn't be an everyday
+  phenomenon (pure math, physics ideas, and mechanisms are fine). Even a
+  science-literate viewer should think "I didn't know that" or "I never
+  wondered, but now I want to know". A known topic can still get
   there if the picture makes it click (001's A4 ratio is common trivia); a
   textbook puzzle retold the usual way can't.
 - Facts a research agent can source and, where numeric, check in code.
