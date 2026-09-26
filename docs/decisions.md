@@ -179,10 +179,12 @@ Stage numbers follow the `episode` runbook.
   sharper in the native language.
 - English STEM shorts are saturated with AI-produced channels. The Korean
   market is smaller with lower CPM; accepted.
-- That gap is the topic niche: a topic proven in English science Shorts or
-  YouTube but not yet told in Korean is worth making. What Korean viewers
-  already know (textbook material, common trivia) isn't; the human passed on
-  a batch of those for 002.
+- That gap is a source of topics: one proven in English science Shorts or
+  YouTube but not yet told in Korean has shown demand and has no Korean
+  competition. It's a bonus, not a filter. Shorts reach people through the
+  feed, and most viewers haven't seen the existing explanation (001's A4
+  ratio is common Korean trivia). What decides is the human's interest and a
+  picture that explains it better than what's out there.
 - English stays cheap to add later if two rules hold from day one: on-screen
   text lives in strings separate from scene code, and animation timing binds to
   beats, not seconds. Then English = translate + re-TTS + re-render.
