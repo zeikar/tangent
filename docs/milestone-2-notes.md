@@ -1,7 +1,7 @@
 # Milestone 2 notes
 
-A running log of milestone 2: episodes produced through the stage skills in
-`.claude/skills/`, orchestrated from the main conversation by the `episode`
+A running log of milestone 2: episodes produced through the stage agents in
+`.claude/agents/`, orchestrated from the main conversation by the `episode`
 skill. The question is milestone 1's: which stage bottlenecks next. Per
 stage, record agent time, human wait, blockers, repeated or mechanical work,
 and silent failures.
@@ -47,6 +47,14 @@ Milestone 1's next-step candidates 1–3, done before episode 002's production
   wiring that only exists once production starts, so production now owns
   `storyboard.json` from its start and the storyboard agent lists the
   extents it couldn't measure.
+- **Agents instead of forked skills** (same day, before first use). Weighed
+  against `plugin-dev:agent-development`: the stage roles are delegated work,
+  which agent definitions are for, while the runbook is a procedure for the
+  main conversation and stays a skill. What decided it: two writers of the
+  same role run in parallel, the task is a plain message, and QA and publish
+  lose the Edit tool. The topic brief became `tangent-topic` too. Narration
+  speed is fixed at 1.08× (episode 001's pick), so the human compares
+  scripts, not speeds, and the writer budgets at 5.3 syllables per second.
 - **To watch in episode 002:** whether a fresh storyboard agent realizes the
   writer's `Visual` lines without the writer's context or a proxy render;
   whether one fixer's context holds up over several rounds; how long the

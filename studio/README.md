@@ -54,13 +54,14 @@ Narration and production (API keys in the repo-root `.env`; `ep` is
 node scripts/critique.mts $ep script script.a.md
 node scripts/critique.mts $ep cut
 # Right after the script: one TTS take of every Read-aloud line in script.md
-# (or a variant), plus sped-up copies to compare
-#   → $ep/take<N>.wav, take<N>@1.08.wav, ..., take<N>.txt
-node scripts/narrate.mts $ep --script=script.a.md --tempo=1.08,1.15
-# Listening page for the checkpoint: each script's takes at every speed, with
-# its captions → $ep/takes.html (--fragment to publish as an artifact)
-python3 scripts/takes-view.py $ep
-# The human picks a script and a take; record it in $ep/narration.json:
+# (or a variant), plus a sped-up copy (episodes play at 1.08x)
+#   → $ep/take<N>.wav, take<N>@1.08.wav, take<N>.txt
+node scripts/narrate.mts $ep --script=script.a.md --tempo=1.08
+# Listening page for the checkpoint: each script's take, with its captions
+#   → $ep/takes.html (--tempo=1.08 shows only that speed; --fragment to
+#     publish as an artifact)
+python3 scripts/takes-view.py $ep --tempo=1.08
+# The human picks a script; record its take in $ep/narration.json:
 #   {"source": "take1@1.08.wav", "take": "take1.wav", "tempo": 1.08, ...}
 # Word timestamps for the picked take (first run downloads 1.3 GB); the
 # storyboard is written against these

@@ -8,7 +8,7 @@ and layout, so spend your attention on whether a viewer scrolling Shorts
 would stop, wonder, and stay to the end.
 
 Read `topic.md` and `research.md` in the episode folder given below, the
-script file named below, and `.claude/skills/script/SKILL.md` (the writer's
+script file named below, and `.claude/agents/tangent-script.md` (the writer's
 brief, especially "Telling it"). Beats have Display (captions), Read-aloud
 (spoken), and Visual (one-line picture). The human may be choosing between
 this script and another writer's; judge this one on its own.

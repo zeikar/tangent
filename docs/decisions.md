@@ -85,8 +85,8 @@ re-run, hand-edited, or gated by a human.
   in luck at once, so one draft can't tell the human's taste from a draw;
   takes are free and a minute each.
 - **Audio before the storyboard.** Each variant's TTS take is generated right
-  after the script, with sped-up copies, and the human picks a script and a
-  speed together on one listening page. The picked take is aligned to word
+  after the script and sped up to 1.08×, the speed episode 001 settled on;
+  the human picks a script on one listening page, not a speed. The picked take is aligned to word
   timestamps, and the storyboard is written against those real timings, then
   cues bind animation to the words. Never time animation by hand-set seconds.
   (Milestone 1 wrote the storyboard on estimated timings; the real ones
@@ -106,16 +106,25 @@ re-run, hand-edited, or gated by a human.
 
 Each stage group belongs to a specialist agent: a fresh subagent that reads the
 previous stage's files and writes its own. Agents collaborate only through
-files. Each agent is a stage skill in `.claude/skills/` that runs as a forked
-subagent (`/qa <slug>`). The main conversation orchestrates with the `episode`
-skill, its runbook: it runs the tools between stages, passes files along, and
-stops at the human checkpoints.
+files. Each agent is defined in `.claude/agents/` (`tangent-<stage>`) and
+runs as a background subagent: the orchestrator spawns it with a task naming
+the slug and any notes, and resumes it with SendMessage for a revision. The
+main conversation orchestrates with the `episode` skill, its runbook: it runs
+the tools between stages, passes files along, and stops at the human
+checkpoints.
+
+Agent definitions rather than skills that fork a subagent: two agents of the
+same role run in parallel (a forked skill invoked while it is still running
+blocks the orchestrator until it returns), each role gets its own tools (QA
+and publish can't edit files), and the task arrives as a plain message
+instead of an argument grammar. The runbook stays a skill because it is a
+procedure for the main conversation, not delegated work.
 
 Stage numbers follow the `episode` runbook.
 
 | Agent | Stages | Reads → writes |
 | ----- | ------ | -------------- |
-| Topic | 1 | past episodes → `topic.md` (candidates, duplicate check) |
+| Topic | 1 | past episodes, `docs/topics.md` → `docs/topics.md` (candidate pool); the orchestrator writes the pick to `topic.md` |
 | Research | 2 | `topic.md` → `research.md` (claims, sources, dates), `verify.py` |
 | Script (×2) | 3 | `topic.md`, `research.md` → `script.<variant>.md` |
 | Storyboard | 5 | picked `script.md`, the approved take's words → `storyboard.json` |
@@ -126,8 +135,8 @@ Stage numbers follow the `episode` runbook.
 - Script and storyboard are designed together because the visual is the
   explanation (see Pipeline): the writer gives each beat one picture in its
   `Visual` line, and the storyboard agent realizes it, reporting where it
-  can't. Milestone 1 used one agent for both passes; skills start fresh each
-  run and can't be resumed across sessions, so the `Visual` line carries the
+  can't. Milestone 1 used one agent for both passes; agents start fresh and
+  can't be resumed across sessions, so the `Visual` line carries the
   intent. Between the two stages the orchestrator runs the takes
   (`studio/scripts/narrate.mts`), and the human picks script and take before
   the storyboard.
@@ -146,14 +155,15 @@ Stage numbers follow the `episode` runbook.
   findings are advice, not gates: at most two critique-and-revise rounds per
   stage, the orchestrator picks which findings to apply (the critic doesn't
   see every constraint, e.g. the upload title or the pronunciation list), and
-  then the human judges. In milestone 1 an outside Codex review caught what no Claude agent had: the
-  episode explained well but never made the viewer wonder. But the rewrite
+  then the human judges. In milestone 1 an outside Codex review caught what
+  no Claude agent had: the episode explained well but never made the viewer
+  wonder. But the rewrite
   that followed its advice as a checklist (v2) came out busier and was liked
   less than the original, so critique is weighed against the human's feel,
   and the human watches the first render before any critique-driven polish.
-- Milestone 1's hand-written briefs became the stage skills; the Codex
-  critics' briefs live next to `critique.mts`. Whatever a skill has to carry
-  beyond its input files shows what the handoff files are missing.
+- Milestone 1's hand-written briefs became the stage agents; the Codex
+  critics' briefs live next to `critique.mts`. Whatever an agent has to be
+  told beyond its input files shows what the handoff files are missing.
 
 ## Episode folders and git
 

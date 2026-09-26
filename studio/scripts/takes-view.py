@@ -1,11 +1,12 @@
 """Build a one-file listening page for the script + take checkpoint.
 
-usage: python3 studio/scripts/takes-view.py episodes/<slug> [--fragment]
+usage: python3 studio/scripts/takes-view.py episodes/<slug> [--tempo=1.08] [--fragment]
 
 Writes episodes/<slug>/takes.html: one column per script file (script.md, or
 the variants script.a.md, script.b.md, ...) with every take read from it
 (take<N>.wav and its tempo copies, matched by the text in take<N>.txt) and
-the beats' captions, so the human picks a script and a speed by ear.
+the beats' captions, so the human picks a script by ear.
+--tempo=1.08 shows only the copies at that speed (1 for the original take).
 --fragment omits the doctype and charset header, for publishing as an
 artifact (the host adds its own).
 """
@@ -18,6 +19,7 @@ from pathlib import Path
 
 args = [a for a in sys.argv[1:] if not a.startswith("--")]
 fragment = "--fragment" in sys.argv
+only = next((float(a.split("=", 1)[1]) for a in sys.argv if a.startswith("--tempo=")), None)
 ep = Path(args[0])
 slug = ep.resolve().name
 template = (Path(__file__).parent / "takes-view.html").read_text()
@@ -76,7 +78,7 @@ for s in scripts:
         files = [(1.0, ep / f"take{n}.wav")] + sorted(
             (float(w.stem.split("@")[1]), w) for w in ep.glob(f"take{n}@*.wav"))
         for tempo, wav in files:
-            if not wav.exists():
+            if not wav.exists() or (only is not None and tempo != only):
                 continue
             d = duration(wav)
             audio.append({"file": wav.name, "take": n, "tempo": tempo, "seconds": round(d, 2),
