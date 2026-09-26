@@ -125,7 +125,7 @@ Stage numbers follow the `episode` runbook.
 
 | Agent | Stages | Reads → writes |
 | ----- | ------ | -------------- |
-| Topic | 1 | past episodes, `docs/topics.md` → `docs/topics.md` (candidate pool); the orchestrator writes the pick to `topic.md` |
+| Topic | 1 | past episodes, `docs/topics.md` → `docs/topics.md` (ideas, the human's taste); the orchestrator writes the pick to `topic.md` |
 | Research | 2 | `topic.md` → `research.md` (claims, sources, dates), `verify.py` |
 | Script (×2) | 3 | `topic.md`, `research.md` → `script.<variant>.md` |
 | Storyboard | 5 | picked `script.md`, the approved take's words → `storyboard.json` |

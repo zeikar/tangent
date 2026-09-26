@@ -59,3 +59,23 @@ Milestone 1's next-step candidates 1–3, done before episode 002's production
   writer's `Visual` lines without the writer's context or a proxy render;
   whether one fixer's context holds up over several rounds; how long the
   added first-look checkpoint waits on the human.
+
+### A freer topic agent (2026-09-26)
+
+Episode 002's topic search ran four rounds in a parallel session (the pool
+reached ~1,200 lines and some 45 candidates), and the human called the ideas
+formulaic: mostly "why does everyday X do Y". The brief had the agent mine
+popular Shorts, search suggestions, and Q&A sites, fill six fields per
+candidate (evidence links, Korean coverage, production), bring 12–15, and
+keep any field under a third; each round of feedback added another filter or
+score. The same pattern as the script brief in milestone 1: rules forced on
+the writer made the output safe and busy.
+
+`tangent-topic` now gets one bar (a "wait, what?" and one picture that makes
+it obvious), is told to start from what surprises it rather than from what's
+popular, brings only ideas it would bet on (five to ten) with four short
+fields, and names the one it would make first. `docs/topics.md` was reset to
+the human's taste (their own words), what was made, and the ideas already
+shown or rejected, by name only; the old rounds' notes are in git history. A
+fresh reviewer caught that the first reset also dropped the shown list, so
+the new agent would likely have repeated them.

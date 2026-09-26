@@ -74,13 +74,16 @@ human with the options (restoryboard, rewrite, or push on) before any fix.
 
 ## 1. Topic 🛑
 
-If `docs/topics.md` has candidates the human hasn't ruled on, show its top
-three and ask. Spawn `tangent-topic` only when the pool is empty or the human
-passed on it, with the human's verdicts and reasons in the task. The human
-picks one. Write `episodes/<slug>/topic.md` from the pick (slug
+If `docs/topics.md` has ideas the human hasn't ruled on, show them (name,
+hook, and the picture in one line each, and the agent's first pick) and
+ask. Spawn `tangent-topic` only
+when there are none or the human passed on them, with the human's reactions
+and reasons in the task. The human picks one. Write `episodes/<slug>/topic.md` from the pick (slug
 rule: decisions.md → Episode folders): insight, hook, key picture, length
 target (40–50 s unless the topic needs otherwise), why it was picked, and the
-shelved candidates. Record the pick in `checkpoints.md`. Commit.
+shelved candidates. Record the pick in `checkpoints.md`, add it to "Made so
+far" in `docs/topics.md`, and move the other ideas of that round to "Shown,
+not picked". Commit.
 
 ## 2. Research
 
