@@ -166,10 +166,12 @@ export const checks = {
   loudness: { target: -14, tolerance: 1, maxTruePeak: -1 }, // LUFS integrated, LU, dBTP
   avOffsetMs: 20, // render audio vs narration.mp3
   wordOnsetMs: 200, // words.json start vs the audible onset, for words after a pause
-  // Audible onsets: speech (speechDb, per 10 ms) within 60 ms of a dip to
-  // dipDb. Checked for words words.json puts at least wordGap s after the
-  // previous word's end (the aligner's ends run up to ~0.16 s early).
-  onset: { dipDb: -55, speechDb: -35, wordGap: 0.25 },
+  // Audible onsets: speech (speechDb, per 10 ms) within lookbackMs of a dip
+  // to dipDb, dated where the rise out of the dip begins (a voiced stop can
+  // murmur under speechDb for ~80 ms first). Checked for words words.json
+  // puts at least wordGap s after the previous word's end (the aligner's
+  // ends run up to ~0.16 s early).
+  onset: { dipDb: -55, speechDb: -35, lookbackMs: 150, wordGap: 0.25 },
   tailSilenceDb: -50, // the render's last 100 ms must be quieter, or the audio was cut off
   inkLevel: 10, // gray levels above the background that count as ink
   changeLevel: 16, // a pixel changed by more than this...

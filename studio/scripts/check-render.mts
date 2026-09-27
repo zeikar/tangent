@@ -700,11 +700,15 @@ const visibleOpacity = (snap: FrameSnap, id: string) => {
   const sameWords = spoken.length === words.length && spoken.every((w: string, i: number) => w === words[i].word);
   const lv = renderPcm ? levels(renderPcm) : new Float64Array();
   const onsets: number[] = []; // ms
-  for (let k = 6; k < lv.length; k++) {
+  const back = checks.onset.lookbackMs / 10;
+  for (let k = 1; k < lv.length; k++) {
     if (lv[k] < checks.onset.speechDb || lv[k - 1] >= checks.onset.speechDb) continue;
-    if (Math.min(...lv.slice(k - 6, k)) > checks.onset.dipDb) continue;
-    if (onsets.length && k * 10 - onsets[onsets.length - 1] < 100) continue;
-    onsets.push(k * 10);
+    let dip = k - 1; // the last dip frame before the crossing, within the lookback
+    while (dip >= Math.max(0, k - back) && lv[dip] > checks.onset.dipDb) dip--;
+    if (dip < Math.max(0, k - back)) continue;
+    const at = (dip + 1) * 10;
+    if (onsets.length && at - onsets[onsets.length - 1] < 100) continue;
+    onsets.push(at);
   }
   const reach = 400; // ms to look for an onset
   const afterGap = words.filter((w, i) => i === 0 || w.start - words[i - 1].end >= checks.onset.wordGap);
