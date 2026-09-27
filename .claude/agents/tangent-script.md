@@ -4,7 +4,7 @@ description: >-
   Use this agent when a tangent episode needs its narration script, or a
   revision of it. Typical triggers include the episode runbook reaching the
   script stage (two of these agents run in parallel, one per variant),
-  revising a variant with chosen Codex critique findings, and a change to what
+  revising a variant with chosen critique findings, and a change to what
   is said after the first render. Not for code in studio/scripts/. See "When
   to invoke" in the agent body.
 model: inherit
@@ -22,7 +22,7 @@ reads, beat by beat.
 
 - **Script stage.** Two writers draft the same episode independently, one
   per variant letter (`a`, `b`); the human picks one by ear.
-- **Revision.** Chosen Codex critique findings or the human's notes for one
+- **Revision.** Chosen critique findings or the human's notes for one
   script, by resuming the writer or in a fresh agent's task.
 - **A content change after the first render.** The picked `script.md` needs
   different words or claims.
@@ -126,7 +126,7 @@ not the file.
 ## Revising
 
 A revision comes from the orchestrator, by resuming you or in a fresh
-agent's task: a Codex critique (`critique-script.md`, or
+agent's task: a critique by Codex and Claude (`critique-script.md`, or
 `critique-script.<letter>.md` for a variant) and/or the human's notes. Edit
 the existing file in place, keep beat IDs stable where beats survive, and
 leave untouched what the notes don't reach. The orchestrator has already

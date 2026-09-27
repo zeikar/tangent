@@ -149,11 +149,14 @@ Stage numbers follow the `episode` runbook.
   said or claimed (read-aloud, captions, claim IDs) still goes back to the
   script stage; production then syncs the storyboard to it.
 - QA is never the agent that built the scenes.
-- **A second model critiques twice.** Codex, in a read-only sandbox
-  (`studio/scripts/critique.mts`), reviews each script variant before the
-  takes (editorial: hook, curiosity arc, pacing) and the first render as a
-  viewer, from contact sheets, while QA and the human look at it too. Its
-  findings are advice, not gates: at most two critique-and-revise rounds per
+- **Two outside critics, twice.** Codex and a fresh Claude, in parallel and
+  read-only with the same brief (`studio/scripts/critique.mts`), review each
+  script variant before the takes (editorial: hook, curiosity arc, pacing)
+  and the first render as viewers, from contact sheets, while QA and the
+  human look at it too. Codex brings another model's blind spots; the Claude
+  critic, added 2026-09-27 at the human's request, reads with none of the
+  writers' context, and a point both raise weighs more. Their findings are
+  advice, not gates: at most two critique-and-revise rounds per
   stage, the orchestrator picks which findings to apply (the critic doesn't
   see every constraint, e.g. the upload title or the pronunciation list), and
   then the human judges. In milestone 1 an outside Codex review caught what
@@ -162,8 +165,8 @@ Stage numbers follow the `episode` runbook.
   that followed its advice as a checklist (v2) came out busier and was liked
   less than the original, so critique is weighed against the human's feel,
   and the human watches the first render before any critique-driven polish.
-- Milestone 1's hand-written briefs became the stage agents; the Codex
-  critics' briefs live next to `critique.mts`. Whatever an agent has to be
+- Milestone 1's hand-written briefs became the stage agents; the critics'
+  briefs live next to `critique.mts`. Whatever an agent has to be
   told beyond its input files shows what the handoff files are missing.
 
 ## Episode folders and git

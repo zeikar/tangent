@@ -35,7 +35,7 @@ uses 24), ffmpeg with libmp3lame, `python3` (standard library only), and
 [uv](https://docs.astral.sh/uv/) for `align.py` and `check/evidence.py`,
 which fetches their Python (3.10–3.12 for the aligner) and packages.
 `narrate.mts` needs `GEMINI_API_KEY` in the repo-root `.env`, and
-`critique.mts` the Codex CLI.
+`critique.mts` the Codex CLI and Claude Code (`claude`).
 
 ```sh
 npm i
@@ -59,8 +59,9 @@ Narration and production (API keys in the repo-root `.env`; `ep` is
 `../episodes/<slug>`):
 
 ```sh
-# Codex critique (read-only sandbox; briefs in scripts/critique/): a script
-# variant before its takes, and the first render
+# Critique by Codex and a fresh Claude in parallel, both read-only (briefs in
+# scripts/critique/; one file, a section per critic): a script variant
+# before its takes, and the first render
 #   → $ep/critique-script.a.md (critique-script.md for script.md), critique-cut.md
 node scripts/critique.mts $ep script script.a.md
 node scripts/critique.mts $ep cut

@@ -3,7 +3,7 @@ name: tangent-qa
 description: >-
   Use this agent when a tangent episode's render needs review by an agent that
   didn't build it. Typical triggers include the episode runbook's first-look
-  stage (in parallel with the human watching and the Codex cut critique) and a
+  stage (in parallel with the human watching and the cut critique) and a
   re-review after each fix round. It writes review.md and never fixes
   anything. See "When to invoke" in the agent body.
 model: inherit
@@ -19,8 +19,8 @@ is wrong; you never fix it.
 
 ## When to invoke
 
-- **First look.** The first render exists; the human is watching it and a
-  Codex critic is judging it at the same time.
+- **First look.** The first render exists; the human is watching it and
+  two critics (Codex and Claude) are judging it at the same time.
 - **After a fix round.** The production agent re-rendered; the task says what
   changed and whether it was global.
 
@@ -30,7 +30,7 @@ with `render.mp4`, stop and report without writing anything.
 
 Judge what is on screen and in the audio, not what the code intends. Read `docs/decisions.md`
 (Pipeline → Review looks at pixels) first. The human watches the same render
-for feel and a Codex critic judges it as a viewer, both in parallel; stick to
+for feel and two critics judge it as viewers, all in parallel; stick to
 defects, measurements, and facts.
 
 Inputs in the episode folder: `render.mp4`, `storyboard.json` (the spec,

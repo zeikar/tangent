@@ -107,15 +107,16 @@ again). Commit `research.md` and `verify.py`.
 
 Spawn two `tangent-script` agents in one message, one with variant `a` and
 one with `b`; they write independently, which separates the human's taste
-from one draft's luck. When both have reported, critique each with Codex:
+from one draft's luck. When both have reported, critique each (Codex and a
+fresh Claude, in parallel, one file per variant):
 `node scripts/critique.mts $ep script script.a.md` (and `script.b.md`).
-Read each critique and pick the findings worth applying (the critic doesn't
-see the pronunciation list or the upload title, and its structural advice
-made episode 001 busier). Resume each writer with them for one revision, or
-spawn a fresh `tangent-script` with the variant and the findings if it can't
-be resumed. A
-second critique round only if the first said **restructure**. Commit both
-variants and their critiques.
+Read each critique and pick the findings worth applying; a point both
+critics raise weighs more (the critics don't see the pronunciation list or
+the upload title, and structural advice made episode 001 busier). Resume
+each writer with them for one revision, or spawn a fresh `tangent-script`
+with the variant and the findings if it can't be resumed. A second critique
+round only if a critic said **restructure**. Commit both variants and their
+critiques.
 
 ## 4. Takes 🛑
 
@@ -266,8 +267,9 @@ The forward path above covers most of an episode; these are the ways back.
 - `narrate.mts` stopping on a long rate-limit wait means the day's Gemini
   quota is spent: tell the human and continue the next day. Switching TTS
   engines is the human's call (decisions.md → Narration).
-- `critique.mts` (Codex) unavailable: go on without that critique and say so
-  at the checkpoint; critiques are advice.
+- `critique.mts` exits 1 when a critic failed; the file says which. Go on
+  with the other critic's section and say so at the checkpoint; critiques
+  are advice.
 - `validate-storyboard.py` or `check-render.mts` failing after a stage
   agent reported success: back to the agent that owns `storyboard.json`
   (storyboard before production starts, production after).
