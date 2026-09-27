@@ -6,7 +6,8 @@ Remotion project: style guide and reusable scene components. 1080×1920, 30 fps.
   these tokens instead of literal values.
 - `src/style/fonts.ts`: Pretendard (Korean/Latin) and KaTeX faces, loaded with
   `loadFont()` so frames never capture a fallback font. Code that measures
-  text waits on its `fontsLoaded`, not `document.fonts.ready`.
+  text goes through `components/measure.ts`, which waits on `fontsLoaded`
+  (not `document.fonts.ready`) and fails the render if measuring throws.
 - `src/components/`: primitives (`Tex`, `PaperRect`, `Equation`, ...), each
   specced in the storyboard that introduced it.
 - `src/storyboard/`: plays an episode's `storyboard.json` with the frame numbers

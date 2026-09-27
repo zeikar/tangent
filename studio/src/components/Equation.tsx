@@ -1,9 +1,9 @@
 import React, { useLayoutEffect, useRef, useState } from "react";
-import { AbsoluteFill, continueRender, delayRender, useCurrentScale } from "remotion";
+import { AbsoluteFill, useCurrentScale } from "remotion";
 import { Action, ElementTimeline, lerp, mix, phase, rawProgress, Scene, themeColor } from "../storyboard/timeline";
-import { fontsLoaded } from "../style/fonts";
 import { content, mark, stroke, type, VIDEO, zone } from "../style/theme";
 import { expressionInk, inkRect, tokenInk } from "./ink";
+import { measureAfterFonts } from "./measure";
 import { drawTokens, InkBox, matchTokens, morph, tokenize, TokenStyle } from "./morph";
 import { labelAt, labelLineStyle, labelTex, Side } from "./PaperRect";
 import { Tex } from "./Tex";
@@ -66,8 +66,7 @@ export const Equation: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, 
   const measureKey = JSON.stringify([layouts, fontSize, handoffs.map((h) => h.tex)]);
   const [measured, setMeasured] = useState<{ key: string; layouts: Measured[]; labels: LabelInk[] } | null>(null);
   useLayoutEffect(() => {
-    const handle = delayRender(`measure ${el.spec.id}`);
-    fontsLoaded.then(() => {
+    measureAfterFonts(`measure ${el.spec.id}`, () => {
       const layoutInks = refs.current.map((box) => {
         const origin = box!.querySelector("[data-origin]")!.getBoundingClientRect();
         const rel = (r: { left: number; right: number; top: number; bottom: number }): Ink => ({
@@ -104,7 +103,6 @@ export const Equation: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, 
         };
       });
       setMeasured({ key: measureKey, layouts: layoutInks, labels: labelInks });
-      continueRender(handle);
     });
   }, [el.spec.id, measureKey, scale]);
 

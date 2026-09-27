@@ -1,9 +1,9 @@
-import React, { useLayoutEffect, useRef, useState } from "react";
-import { AbsoluteFill, continueRender, delayRender, useCurrentScale } from "remotion";
+import React from "react";
+import { AbsoluteFill } from "remotion";
 import { Action, ElementTimeline, mix, phase, rawProgress, Scene, themeColor } from "../storyboard/timeline";
-import { fontsLoaded } from "../style/fonts";
 import { font, type, zone } from "../style/theme";
-import { glyphRect, tokenInk } from "./ink";
+import { glyphRect } from "./ink";
+import { useTextMetrics } from "./measure";
 import { drawTokens, InkBox, matchTokens, morph, tokenize, TokenStyle, withAlpha } from "./morph";
 import { Tex } from "./Tex";
 
@@ -12,9 +12,6 @@ import { Tex } from "./Tex";
 // two share move, the rest fade. Spec: storyboard.json → components → Note.
 
 type Props = { text: string; at: [number, number]; color?: string; mathColor?: string };
-
-type Rel = { l: number; t: number; r: number; b: number }; // ink, relative to the line's top-left
-type Metrics = { ink: Rel; tokens: (Rel | null)[] };
 
 // A line's tokens in order: the words of its plain text and the TeX tokens of
 // its math (their containers renumbered line-wide), keyed so a word never
@@ -98,39 +95,8 @@ const noteState = (el: ElementTimeline, frame: number) => {
 export const Note: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, scene }) => {
   const p = el.spec.props as Props;
   const s = noteState(el, scene.frame);
-  const scale = useCurrentScale();
-  const nodes = useRef(new Map<string, HTMLDivElement>());
-  const [metrics, setMetrics] = useState(new Map<string, Metrics>());
   const texts = s.opacity > 0 ? (s.change ? [s.change.from, s.text] : [s.text]) : [];
-  const missing = JSON.stringify(texts.filter((t) => !metrics.has(t)));
-  useLayoutEffect(() => {
-    const todo: string[] = JSON.parse(missing);
-    if (!todo.length) return;
-    const handle = delayRender(`measure note ${el.spec.id}`);
-    fontsLoaded.then(() => {
-      const next = new Map(metrics);
-      for (const text of todo) {
-        const node = nodes.current.get(text)!;
-        const outer = node.getBoundingClientRect();
-        const rel = (r: { left: number; top: number; right: number; bottom: number }): Rel => {
-          return {
-            l: (r.left - outer.left) / scale,
-            t: (r.top - outer.top) / scale,
-            r: (r.right - outer.left) / scale,
-            b: (r.bottom - outer.top) / scale,
-          };
-        };
-        const tokens: (Rel | null)[] = [];
-        node.querySelectorAll<HTMLElement>("[data-tok]").forEach((e) => {
-          const r = tokenInk(e);
-          tokens[Number(e.dataset.tok)] = r && rel(r);
-        });
-        next.set(text, { ink: rel(glyphRect(node)), tokens });
-      }
-      setMetrics(next);
-      continueRender(handle);
-    });
-  }, [missing, metrics, scale, el.spec.id]);
+  const { metrics, copyRef } = useTextMetrics(`note ${el.spec.id}`, texts, glyphRect);
   if (!texts.length) return null;
 
   const lineStyle = {
@@ -145,10 +111,7 @@ export const Note: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, scen
     .map((t) => (
       <div
         key={`m-${t}`}
-        ref={(n) => {
-          if (n) nodes.current.set(t, n);
-          else nodes.current.delete(t);
-        }}
+        ref={copyRef(t)}
         style={{ ...lineStyle, left: 0, top: 0, visibility: "hidden" }}
       >
         <Line text={t} />

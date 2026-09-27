@@ -1,5 +1,5 @@
-import React, { useLayoutEffect, useRef, useState } from "react";
-import { AbsoluteFill, continueRender, delayRender, useCurrentScale } from "remotion";
+import React from "react";
+import { AbsoluteFill } from "remotion";
 import {
   Action,
   bump,
@@ -11,10 +11,10 @@ import {
   Scene,
   themeColor,
 } from "../storyboard/timeline";
-import { fontsLoaded } from "../style/fonts";
 import { color, fill, font, mark, stroke, type, VIDEO, zone } from "../style/theme";
 import { Anchored } from "./Anchored";
-import { expressionInk, tokenInk } from "./ink";
+import { expressionInk } from "./ink";
+import { Rel, useTextMetrics } from "./measure";
 import { drawTokens, InkBox, matchTokens, morph, tokenize, TokenStyle } from "./morph";
 import { Tex } from "./Tex";
 
@@ -511,9 +511,6 @@ const Folding: React.FC<{ s: PaperState; flip: number }> = ({ s, flip }) => {
   );
 };
 
-type Rel = { l: number; t: number; r: number; b: number }; // ink, relative to the label's top-left
-type LabelMetrics = { ink: Rel; tokens: (Rel | null)[] };
-
 // Where a label's top-left goes so its ink sits beside the edge: centered
 // below the bottom edge, or right of the right edge and centered on it.
 export const labelAt = (box: Box, side: Side, ink: Rel) =>
@@ -550,45 +547,13 @@ const SideLabel: React.FC<{
   frame: number;
 }> = ({ box, side, opacity, label, change, frame }) => {
   const texs = change ? [change.tex, label.tex] : [label.tex];
-  const nodes = useRef(new Map<string, HTMLDivElement>());
-  const scale = useCurrentScale();
-  const [metrics, setMetrics] = useState(new Map<string, LabelMetrics>());
-  const missing = JSON.stringify(texs.filter((t) => !metrics.has(t)));
-  useLayoutEffect(() => {
-    const todo: string[] = JSON.parse(missing);
-    if (!todo.length) return;
-    const handle = delayRender(`measure label ${todo.join(", ")}`);
-    fontsLoaded.then(() => {
-      const next = new Map(metrics);
-      for (const t of todo) {
-        const node = nodes.current.get(t)!;
-        const outer = node.getBoundingClientRect();
-        const rel = (r: { left: number; top: number; right: number; bottom: number }): Rel => ({
-          l: (r.left - outer.left) / scale,
-          t: (r.top - outer.top) / scale,
-          r: (r.right - outer.left) / scale,
-          b: (r.bottom - outer.top) / scale,
-        });
-        const tokens: (Rel | null)[] = [];
-        node.querySelectorAll<HTMLElement>("[data-tok]").forEach((e) => {
-          const r = tokenInk(e);
-          tokens[Number(e.dataset.tok)] = r && rel(r);
-        });
-        next.set(t, { ink: rel(expressionInk(node)), tokens });
-      }
-      setMetrics(next);
-      continueRender(handle);
-    });
-  }, [missing, metrics, scale]);
+  const { metrics, copyRef } = useTextMetrics("label", texs, expressionInk);
   const measuring = texs
     .filter((t) => !metrics.has(t))
     .map((t) => (
       <div
         key={`m-${t}`}
-        ref={(n) => {
-          if (n) nodes.current.set(t, n);
-          else nodes.current.delete(t);
-        }}
+        ref={copyRef(t)}
         style={{ ...labelLineStyle, left: 0, top: 0, visibility: "hidden" }}
       >
         <Tex tex={labelTex(t)} trust />
