@@ -1,0 +1,846 @@
+{
+ "storyboardSha256": "2d8be7f2b21572bbee1660781ab8bdd975b75ffb4a42ecc9b1f63b4cd5b06251",
+ "narrationSource": "take4@1.08.wav",
+ "takeWordsSha256": "cbcd6e42b3a4386070974272a0fbacb49159a3a91f75b58b134bf4c7b0660803",
+ "fps": 30,
+ "durationInFrames": 1452,
+ "beats": [
+  {
+   "id": "B1",
+   "startFrame": 0,
+   "endFrame": 131,
+   "pauseFrame": 116,
+   "captions": [
+    {
+     "word": "달은",
+     "frame": 3
+    },
+    {
+     "word": "그럼",
+     "frame": 64
+    }
+   ],
+   "cues": [
+    {
+     "target": "moon1",
+     "action": "orbit",
+     "word": "달은",
+     "frame": 3,
+     "untilFrame": 77
+    },
+    {
+     "target": "moon1",
+     "action": "setStyle",
+     "word": "달은",
+     "frame": 3
+    },
+    {
+     "target": "title1",
+     "action": "appear",
+     "word": "자전을",
+     "frame": 14
+    },
+    {
+     "target": "moon1",
+     "action": "pulse",
+     "word": "뒷면도",
+     "frame": 77
+    }
+   ]
+  },
+  {
+   "id": "B2",
+   "startFrame": 132,
+   "endFrame": 369,
+   "pauseFrame": 332,
+   "captions": [
+    {
+     "word": "자전을",
+     "frame": 132
+    },
+    {
+     "word": "앞면이",
+     "frame": 166
+    },
+    {
+     "word": "같은",
+     "frame": 189
+    },
+    {
+     "word": "그래서",
+     "frame": 232
+    },
+    {
+     "word": "도는",
+     "frame": 253
+    },
+    {
+     "word": "모든",
+     "frame": 279
+    },
+    {
+     "word": "지구를",
+     "frame": 311
+    }
+   ],
+   "cues": [
+    {
+     "target": "moon1",
+     "action": "orbit",
+     "word": "자전을",
+     "frame": 132,
+     "untilFrame": 321
+    },
+    {
+     "target": "trace1",
+     "action": "appear",
+     "word": "자전을",
+     "frame": 132
+    },
+    {
+     "target": "moon1",
+     "action": "pulse",
+     "word": "앞면이",
+     "frame": 166
+    },
+    {
+     "target": "star1",
+     "action": "appear",
+     "word": "같은",
+     "frame": 189
+    },
+    {
+     "target": "moon1",
+     "action": "setStyle",
+     "word": "별",
+     "frame": 199
+    },
+    {
+     "target": "trace1",
+     "action": "pulse",
+     "word": "향하죠",
+     "frame": 321
+    }
+   ]
+  },
+  {
+   "id": "B3",
+   "startFrame": 370,
+   "endFrame": 554,
+   "pauseFrame": 537,
+   "captions": [
+    {
+     "word": "진짜",
+     "frame": 370
+    },
+    {
+     "word": "한",
+     "frame": 400
+    },
+    {
+     "word": "한",
+     "frame": 446
+    },
+    {
+     "word": "그래서",
+     "frame": 485
+    },
+    {
+     "word": "늘",
+     "frame": 506
+    }
+   ],
+   "cues": [
+    {
+     "target": "title1",
+     "action": "exit",
+     "word": "진짜",
+     "frame": 370
+    },
+    {
+     "target": "trace1",
+     "action": "exit",
+     "word": "진짜",
+     "frame": 370
+    },
+    {
+     "target": "moon1",
+     "action": "setStyle",
+     "word": "진짜",
+     "frame": 370
+    },
+    {
+     "target": "earth1",
+     "action": "setStyle",
+     "word": "진짜",
+     "frame": 370
+    },
+    {
+     "target": "earth1",
+     "action": "moveTo",
+     "word": "진짜",
+     "frame": 370
+    },
+    {
+     "target": "path1",
+     "action": "moveTo",
+     "word": "진짜",
+     "frame": 370
+    },
+    {
+     "target": "moon1",
+     "action": "moveTo",
+     "word": "진짜",
+     "frame": 370
+    },
+    {
+     "target": "titleFixed",
+     "action": "appear",
+     "word": "달은",
+     "frame": 383
+    },
+    {
+     "target": "titleReal",
+     "action": "appear",
+     "word": "달은",
+     "frame": 383
+    },
+    {
+     "target": "earth2",
+     "action": "appear",
+     "word": "달은",
+     "frame": 383
+    },
+    {
+     "target": "path2",
+     "action": "appear",
+     "word": "달은",
+     "frame": 383
+    },
+    {
+     "target": "moon2",
+     "action": "appear",
+     "word": "달은",
+     "frame": 383
+    },
+    {
+     "target": "tether2",
+     "action": "appear",
+     "word": "달은",
+     "frame": 383
+    },
+    {
+     "target": "moon1",
+     "action": "orbit",
+     "word": "한",
+     "frame": 400,
+     "untilFrame": 523
+    },
+    {
+     "target": "moon2",
+     "action": "orbit",
+     "word": "한",
+     "frame": 400,
+     "untilFrame": 523
+    },
+    {
+     "target": "ghost1Top",
+     "action": "appear",
+     "word": "한",
+     "frame": 400
+    },
+    {
+     "target": "ghost1Left",
+     "action": "appear",
+     "word": "한",
+     "frame": 400
+    },
+    {
+     "target": "ghost1Bottom",
+     "action": "appear",
+     "word": "한",
+     "frame": 400
+    },
+    {
+     "target": "ghost1Right",
+     "action": "appear",
+     "word": "한",
+     "frame": 400
+    },
+    {
+     "target": "ghost2Top",
+     "action": "appear",
+     "word": "한",
+     "frame": 400
+    },
+    {
+     "target": "ghost2Left",
+     "action": "appear",
+     "word": "한",
+     "frame": 400
+    },
+    {
+     "target": "ghost2Bottom",
+     "action": "appear",
+     "word": "한",
+     "frame": 400
+    },
+    {
+     "target": "ghost2Right",
+     "action": "appear",
+     "word": "한",
+     "frame": 400
+    },
+    {
+     "target": "moon2",
+     "action": "pulse",
+     "word": "앞면이",
+     "frame": 494
+    }
+   ]
+  },
+  {
+   "id": "B4",
+   "startFrame": 555,
+   "endFrame": 718,
+   "pauseFrame": 669,
+   "captions": [
+    {
+     "word": "지구에선",
+     "frame": 555
+    },
+    {
+     "word": "것",
+     "frame": 584
+    },
+    {
+     "word": "별을",
+     "frame": 607
+    },
+    {
+     "word": "한",
+     "frame": 644
+    }
+   ],
+   "cues": [
+    {
+     "target": "moon1",
+     "action": "exit",
+     "word": "지구에선",
+     "frame": 555
+    },
+    {
+     "target": "moon2",
+     "action": "exit",
+     "word": "지구에선",
+     "frame": 555
+    },
+    {
+     "target": "tether1",
+     "action": "exit",
+     "word": "지구에선",
+     "frame": 555
+    },
+    {
+     "target": "tether2",
+     "action": "exit",
+     "word": "지구에선",
+     "frame": 555
+    },
+    {
+     "target": "ghost1Top",
+     "action": "setStyle",
+     "word": "지구에선",
+     "frame": 555
+    },
+    {
+     "target": "ghost1Left",
+     "action": "setStyle",
+     "word": "지구에선",
+     "frame": 555
+    },
+    {
+     "target": "ghost1Bottom",
+     "action": "setStyle",
+     "word": "지구에선",
+     "frame": 555
+    },
+    {
+     "target": "ghost1Right",
+     "action": "setStyle",
+     "word": "지구에선",
+     "frame": 555
+    },
+    {
+     "target": "ghost2Top",
+     "action": "setStyle",
+     "word": "지구에선",
+     "frame": 555
+    },
+    {
+     "target": "ghost2Left",
+     "action": "setStyle",
+     "word": "지구에선",
+     "frame": 555
+    },
+    {
+     "target": "ghost2Bottom",
+     "action": "setStyle",
+     "word": "지구에선",
+     "frame": 555
+    },
+    {
+     "target": "ghost2Right",
+     "action": "setStyle",
+     "word": "지구에선",
+     "frame": 555
+    },
+    {
+     "target": "earth2",
+     "action": "pulse",
+     "word": "도는",
+     "frame": 577
+    },
+    {
+     "target": "stars",
+     "action": "appear",
+     "word": "별을",
+     "frame": 607
+    },
+    {
+     "target": "star1",
+     "action": "pulse",
+     "word": "별을",
+     "frame": 607
+    },
+    {
+     "target": "compass1",
+     "action": "appear",
+     "word": "기준으로",
+     "frame": 619,
+     "untilFrame": 644
+    },
+    {
+     "target": "compass2",
+     "action": "appear",
+     "word": "기준으로",
+     "frame": 619,
+     "untilFrame": 644
+    },
+    {
+     "target": "compass2",
+     "action": "sweep",
+     "word": "한",
+     "frame": 644,
+     "untilFrame": 669
+    }
+   ]
+  },
+  {
+   "id": "B5",
+   "startFrame": 719,
+   "endFrame": 902,
+   "pauseFrame": 891,
+   "captions": [
+    {
+     "word": "왜",
+     "frame": 719
+    },
+    {
+     "word": "딱",
+     "frame": 729
+    },
+    {
+     "word": "지구가",
+     "frame": 785
+    },
+    {
+     "word": "달은",
+     "frame": 821
+    },
+    {
+     "word": "살짝",
+     "frame": 854
+    }
+   ],
+   "cues": [
+    {
+     "target": "titleFixed",
+     "action": "exit",
+     "word": "왜",
+     "frame": 719
+    },
+    {
+     "target": "titleReal",
+     "action": "exit",
+     "word": "왜",
+     "frame": 719
+    },
+    {
+     "target": "earth1",
+     "action": "exit",
+     "word": "왜",
+     "frame": 719
+    },
+    {
+     "target": "path1",
+     "action": "exit",
+     "word": "왜",
+     "frame": 719
+    },
+    {
+     "target": "ghost1Top",
+     "action": "exit",
+     "word": "왜",
+     "frame": 719
+    },
+    {
+     "target": "ghost1Left",
+     "action": "exit",
+     "word": "왜",
+     "frame": 719
+    },
+    {
+     "target": "ghost1Bottom",
+     "action": "exit",
+     "word": "왜",
+     "frame": 719
+    },
+    {
+     "target": "ghost1Right",
+     "action": "exit",
+     "word": "왜",
+     "frame": 719
+    },
+    {
+     "target": "ghost2Top",
+     "action": "exit",
+     "word": "왜",
+     "frame": 719
+    },
+    {
+     "target": "ghost2Left",
+     "action": "exit",
+     "word": "왜",
+     "frame": 719
+    },
+    {
+     "target": "ghost2Bottom",
+     "action": "exit",
+     "word": "왜",
+     "frame": 719
+    },
+    {
+     "target": "compass1",
+     "action": "exit",
+     "word": "왜",
+     "frame": 719
+    },
+    {
+     "target": "compass2",
+     "action": "exit",
+     "word": "왜",
+     "frame": 719
+    },
+    {
+     "target": "stars",
+     "action": "exit",
+     "word": "왜",
+     "frame": 719
+    },
+    {
+     "target": "star1",
+     "action": "exit",
+     "word": "왜",
+     "frame": 719
+    },
+    {
+     "target": "path2",
+     "action": "setStyle",
+     "word": "왜",
+     "frame": 719
+    },
+    {
+     "target": "ghost2Right",
+     "action": "setStyle",
+     "word": "왜",
+     "frame": 719,
+     "untilFrame": 742
+    },
+    {
+     "target": "earth2",
+     "action": "moveTo",
+     "word": "왜",
+     "frame": 719,
+     "untilFrame": 742
+    },
+    {
+     "target": "ghost2Right",
+     "action": "moveTo",
+     "word": "왜",
+     "frame": 719,
+     "untilFrame": 742
+    },
+    {
+     "target": "tether3",
+     "action": "appear",
+     "word": "한",
+     "frame": 742
+    },
+    {
+     "target": "earth2",
+     "action": "setStyle",
+     "word": "지구가",
+     "frame": 785
+    },
+    {
+     "target": "ghost2Right",
+     "action": "setStyle",
+     "word": "지구가",
+     "frame": 785
+    },
+    {
+     "target": "ghost2Right",
+     "action": "stretchTo",
+     "word": "당겨서",
+     "frame": 797,
+     "untilFrame": 868
+    },
+    {
+     "target": "earthDir",
+     "action": "appear",
+     "word": "지구",
+     "frame": 831
+    },
+    {
+     "target": "exaggerated",
+     "action": "appear",
+     "word": "길쭉해져요",
+     "frame": 868
+    }
+   ]
+  },
+  {
+   "id": "B6",
+   "startFrame": 903,
+   "endFrame": 1291,
+   "pauseFrame": 1258,
+   "captions": [
+    {
+     "word": "옛날엔",
+     "frame": 903
+    },
+    {
+     "word": "길쭉한",
+     "frame": 957
+    },
+    {
+     "word": "지구를",
+     "frame": 983
+    },
+    {
+     "word": "살짝",
+     "frame": 1028
+    },
+    {
+     "word": "지구가",
+     "frame": 1078
+    },
+    {
+     "word": "자기",
+     "frame": 1112
+    },
+    {
+     "word": "자전에",
+     "frame": 1148
+    },
+    {
+     "word": "공전과",
+     "frame": 1205
+    }
+   ],
+   "cues": [
+    {
+     "target": "oldDays",
+     "action": "appear",
+     "word": "옛날엔",
+     "frame": 903
+    },
+    {
+     "target": "spinArrow",
+     "action": "appear",
+     "word": "더",
+     "frame": 919
+    },
+    {
+     "target": "ghost2Right",
+     "action": "spin",
+     "word": "더",
+     "frame": 919,
+     "untilFrame": 935
+    },
+    {
+     "target": "tether3",
+     "action": "pulse",
+     "word": "지구를",
+     "frame": 983
+    },
+    {
+     "target": "ghost2Right",
+     "action": "tiltTo",
+     "word": "못",
+     "frame": 1009,
+     "untilFrame": 1040
+    },
+    {
+     "target": "pull",
+     "action": "appear",
+     "word": "자기",
+     "frame": 1112
+    },
+    {
+     "target": "ghost2Right",
+     "action": "settle",
+     "word": "브레이크가",
+     "frame": 1162,
+     "untilFrame": 1238
+    },
+    {
+     "target": "ghost2Right",
+     "action": "tiltTo",
+     "word": "브레이크가",
+     "frame": 1162,
+     "untilFrame": 1238
+    },
+    {
+     "target": "pull",
+     "action": "exit",
+     "word": "맞을",
+     "frame": 1238
+    },
+    {
+     "target": "tether3",
+     "action": "pulse",
+     "word": "맞을",
+     "frame": 1238
+    }
+   ]
+  },
+  {
+   "id": "B7",
+   "startFrame": 1292,
+   "endFrame": 1451,
+   "pauseFrame": 1422,
+   "captions": [
+    {
+     "word": "우리가",
+     "frame": 1292
+    },
+    {
+     "word": "보는",
+     "frame": 1325
+    },
+    {
+     "word": "달이",
+     "frame": 1348
+    },
+    {
+     "word": "돌고",
+     "frame": 1394
+    }
+   ],
+   "cues": [
+    {
+     "target": "oldDays",
+     "action": "exit",
+     "word": "우리가",
+     "frame": 1292
+    },
+    {
+     "target": "exaggerated",
+     "action": "exit",
+     "word": "우리가",
+     "frame": 1292
+    },
+    {
+     "target": "earthDir",
+     "action": "exit",
+     "word": "우리가",
+     "frame": 1292
+    },
+    {
+     "target": "earth2",
+     "action": "moveTo",
+     "word": "우리가",
+     "frame": 1292,
+     "untilFrame": 1315
+    },
+    {
+     "target": "ghost2Right",
+     "action": "moveTo",
+     "word": "우리가",
+     "frame": 1292,
+     "untilFrame": 1315
+    },
+    {
+     "target": "ghost2Right",
+     "action": "stretchTo",
+     "word": "우리가",
+     "frame": 1292,
+     "untilFrame": 1315
+    },
+    {
+     "target": "ghost2Right",
+     "action": "setStyle",
+     "word": "우리가",
+     "frame": 1292,
+     "untilFrame": 1315
+    },
+    {
+     "target": "path2",
+     "action": "moveTo",
+     "word": "우리가",
+     "frame": 1292,
+     "untilFrame": 1315
+    },
+    {
+     "target": "stars2",
+     "action": "appear",
+     "word": "같은",
+     "frame": 1306
+    },
+    {
+     "target": "path2",
+     "action": "setStyle",
+     "word": "얼굴을",
+     "frame": 1315
+    },
+    {
+     "target": "ghost2Right",
+     "action": "orbit",
+     "word": "얼굴을",
+     "frame": 1315,
+     "untilFrame": 1422
+    },
+    {
+     "target": "spinArrow",
+     "action": "pulse",
+     "word": "돌고",
+     "frame": 1394
+    },
+    {
+     "target": "spinArrow",
+     "action": "exit",
+     "pause": true,
+     "frame": 1422
+    },
+    {
+     "target": "stars2",
+     "action": "exit",
+     "pause": true,
+     "frame": 1422
+    }
+   ]
+  }
+ ]
+}

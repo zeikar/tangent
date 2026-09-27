@@ -6,6 +6,7 @@ import { LOGO_UNIT, LogoStill } from "./brand/Logo";
 import { WATERMARK, Watermark } from "./brand/Watermark";
 import { StyleSheet, styleSheetSchema } from "./compositions/StyleSheet";
 import { a4Cues, a4PaperRatio } from "./episodes/001-a4-paper-ratio";
+import { moonCues, moonRotation } from "./episodes/002-moon-rotation";
 import { MeasureTex, measureTexSchema } from "./probe/MeasureTex";
 import { episodeSchema } from "./storyboard/Episode";
 import { VIDEO } from "./style/theme";
@@ -28,6 +29,15 @@ export const RemotionRoot: React.FC = () => {
         calculateMetadata={a4PaperRatio.calculateMetadata}
         defaultProps={{ showSafeArea: false }}
         durationInFrames={a4Cues.durationInFrames}
+        {...VIDEO}
+      />
+      <Composition
+        id="002-moon-rotation"
+        component={moonRotation.Component}
+        schema={episodeSchema}
+        calculateMetadata={moonRotation.calculateMetadata}
+        defaultProps={{ showSafeArea: false }}
+        durationInFrames={moonCues.durationInFrames}
         {...VIDEO}
       />
       <Folder name="tools">

@@ -1,0 +1,815 @@
+{
+ "episode": "002-moon-rotation",
+ "render": "render.mp4",
+ "renderSha256": "e346704613ed526647354555f737b72185abc31ad6cec7f5d4d104faf7e3f61c",
+ "storyboardSha256": "2d8be7f2b21572bbee1660781ab8bdd975b75ffb4a42ecc9b1f63b4cd5b06251",
+ "studioSha256": "599b8ba13aed33f55af4899e97fba644b7d456ec49ff32b8dc7f5d43b4e8e226",
+ "verdict": "fail",
+ "counts": {
+  "fail": 1,
+  "warn": 0,
+  "pass": 14,
+  "skip": 1
+ },
+ "contactSheet": "check/sheet.png",
+ "checks": [
+  {
+   "id": "freshness",
+   "status": "pass",
+   "summary": "render.mp4, cues.json and the studio code all match this storyboard.json",
+   "cites": []
+  },
+  {
+   "id": "technical",
+   "status": "pass",
+   "summary": "1080×1920 yuv420p bt709 tv, 30 fps, 1452 frames (48.40 s); audio 48000 Hz, last 100 ms at -120 dBFS",
+   "cites": []
+  },
+  {
+   "id": "bounds",
+   "status": "pass",
+   "summary": "all 1452 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 144–935, y 244–1233",
+   "cites": []
+  },
+  {
+   "id": "centering",
+   "status": "pass",
+   "summary": "B1 0/0, B2 0/0, B3 0/0, B4 +1/+0, B5 -9/-10, B6 0/-1, B7 0/0 (px off x 540: all ink / picture without edge labels; tolerance ±25)",
+   "details": [
+    {
+     "beat": "B1",
+     "frame": 131,
+     "off": 0,
+     "pictureOff": 0,
+     "status": "pass"
+    },
+    {
+     "beat": "B2",
+     "frame": 369,
+     "off": 0,
+     "pictureOff": 0,
+     "status": "pass"
+    },
+    {
+     "beat": "B3",
+     "frame": 554,
+     "off": 0,
+     "pictureOff": 0,
+     "status": "pass"
+    },
+    {
+     "beat": "B4",
+     "frame": 718,
+     "off": 0.5,
+     "pictureOff": 0.2999999999999545,
+     "status": "pass"
+    },
+    {
+     "beat": "B5",
+     "frame": 902,
+     "off": -9.5,
+     "pictureOff": -9.850000000000023,
+     "status": "pass"
+    },
+    {
+     "beat": "B6",
+     "frame": 1291,
+     "off": -0.5,
+     "pictureOff": -0.6000000000000227,
+     "status": "pass"
+    },
+    {
+     "beat": "B7",
+     "frame": 1451,
+     "off": 0,
+     "pictureOff": 0,
+     "status": "pass"
+    }
+   ],
+   "cites": []
+  },
+  {
+   "id": "legibility",
+   "status": "pass",
+   "summary": "smallest glyph \"1\" 39.6 px in titleReal \"자전1바퀴\" (floor 30 px, 45 text items)",
+   "details": [
+    {
+     "id": "titleReal",
+     "kind": "label",
+     "text": "자전1바퀴",
+     "char": "1",
+     "height": 39.6,
+     "frame": 387
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "그럼 뒷면도 보였을 거예요.",
+     "char": "그",
+     "height": 41.4,
+     "frame": 64
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "그래서 한 바퀴",
+     "char": "그",
+     "height": 41.4,
+     "frame": 232
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "그래서 앞면이",
+     "char": "그",
+     "height": 41.4,
+     "frame": 485
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "지구가 그 끝을",
+     "char": "그",
+     "height": 41.4,
+     "frame": 1078
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "달은 자전을 안 한다고요?",
+     "char": "고",
+     "height": 42.2,
+     "frame": 6
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "지구를 똑바로 못 보고",
+     "char": "고",
+     "height": 42.2,
+     "frame": 983
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "돌고 있어서예요.",
+     "char": "고",
+     "height": 42.2,
+     "frame": 1394
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "자전에 브레이크가 걸렸죠.",
+     "char": "크",
+     "height": 42.3,
+     "frame": 1148
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "모든 쪽이 차례로",
+     "char": "모",
+     "height": 43.1,
+     "frame": 279
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "지구를 향하죠.",
+     "char": "죠",
+     "height": 43.4,
+     "frame": 311
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "늘 지구를 향하죠.",
+     "char": "죠",
+     "height": 43.4,
+     "frame": 506
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "도는 동안",
+     "char": "도",
+     "height": 43.5,
+     "frame": 253
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "지구에선 안 도는",
+     "char": "도",
+     "height": 43.5,
+     "frame": 555
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "별을 기준으로 보면",
+     "char": "보",
+     "height": 43.7,
+     "frame": 607
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "보는 건",
+     "char": "보",
+     "height": 43.7,
+     "frame": 1325
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "달은 지구 방향으로",
+     "char": "로",
+     "height": 43.9,
+     "frame": 821
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "자기 쪽으로 당기니",
+     "char": "로",
+     "height": 43.9,
+     "frame": 1112
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "같은 별 쪽만 봐요.",
+     "char": "요",
+     "height": 44.5,
+     "frame": 189
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "한 번 자전해요.",
+     "char": "요",
+     "height": 44.5,
+     "frame": 446
+    }
+   ],
+   "cites": []
+  },
+  {
+   "id": "overlaps",
+   "status": "pass",
+   "summary": "no text meets other text, lines, or a fill drawn over it (in or across elements); no entrance draws while an exit is still visible",
+   "details": [],
+   "cites": []
+  },
+  {
+   "id": "labels",
+   "status": "skip",
+   "summary": "no edge label has another element's line nearby",
+   "details": [],
+   "cites": []
+  },
+  {
+   "id": "captions",
+   "status": "pass",
+   "summary": "all 35 captions appear 0–0 frames after their cue (limit 3), on one line, inside the caption zone",
+   "details": [
+    {
+     "text": "달은 자전을 안 한다고요?",
+     "from": 3,
+     "shown": 3,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "그럼 뒷면도 보였을 거예요.",
+     "from": 64,
+     "shown": 64,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "자전을 안 하면",
+     "from": 132,
+     "shown": 132,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "앞면이 늘",
+     "from": 166,
+     "shown": 166,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "같은 별 쪽만 봐요.",
+     "from": 189,
+     "shown": 189,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "그래서 한 바퀴",
+     "from": 232,
+     "shown": 232,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "도는 동안",
+     "from": 253,
+     "shown": 253,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "모든 쪽이 차례로",
+     "from": 279,
+     "shown": 279,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "지구를 향하죠.",
+     "from": 311,
+     "shown": 311,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "진짜 달은",
+     "from": 370,
+     "shown": 370,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "한 바퀴 공전하는 동안",
+     "from": 400,
+     "shown": 400,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "한 번 자전해요.",
+     "from": 446,
+     "shown": 446,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "그래서 앞면이",
+     "from": 485,
+     "shown": 485,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "늘 지구를 향하죠.",
+     "from": 506,
+     "shown": 506,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "지구에선 안 도는",
+     "from": 555,
+     "shown": 555,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "것 같지만",
+     "from": 584,
+     "shown": 584,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "별을 기준으로 보면",
+     "from": 607,
+     "shown": 607,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "한 바퀴 돌았어요.",
+     "from": 644,
+     "shown": 644,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "왜 하필",
+     "from": 719,
+     "shown": 719,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "딱 한 바퀴일까요?",
+     "from": 729,
+     "shown": 729,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "지구가 당겨서",
+     "from": 785,
+     "shown": 785,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "달은 지구 방향으로",
+     "from": 821,
+     "shown": 821,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "살짝 길쭉해져요.",
+     "from": 854,
+     "shown": 854,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "옛날엔 더 빨리 자전해서",
+     "from": 903,
+     "shown": 903,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "길쭉한 끝이",
+     "from": 957,
+     "shown": 957,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "지구를 똑바로 못 보고",
+     "from": 983,
+     "shown": 983,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "살짝 비껴 있었어요.",
+     "from": 1028,
+     "shown": 1028,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "지구가 그 끝을",
+     "from": 1078,
+     "shown": 1078,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "자기 쪽으로 당기니",
+     "from": 1112,
+     "shown": 1112,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "자전에 브레이크가 걸렸죠.",
+     "from": 1148,
+     "shown": 1148,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "공전과 딱 맞을 때까지요.",
+     "from": 1205,
+     "shown": 1205,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "우리가 늘 같은 얼굴을",
+     "from": 1292,
+     "shown": 1292,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "보는 건",
+     "from": 1325,
+     "shown": 1325,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "달이 안 돌아서가 아니라,",
+     "from": 1348,
+     "shown": 1348,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "돌고 있어서예요.",
+     "from": 1394,
+     "shown": 1394,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    }
+   ],
+   "cites": []
+  },
+  {
+   "id": "readable",
+   "status": "pass",
+   "summary": "every name and label stays fully visible at least 30 frames",
+   "details": [],
+   "cites": []
+  },
+  {
+   "id": "reaction",
+   "status": "pass",
+   "summary": "B1 +1, B2 +1, B3 +1, B4 +1, B5 +1, B6 +1, B7 +1 (frames from each beat's first word to the first visible change; — = no cue on that word; limit 3)",
+   "details": [
+    {
+     "beat": "B1",
+     "frame": 3,
+     "hasCue": true,
+     "latency": 1,
+     "status": "pass"
+    },
+    {
+     "beat": "B2",
+     "frame": 132,
+     "hasCue": true,
+     "latency": 1,
+     "status": "pass"
+    },
+    {
+     "beat": "B3",
+     "frame": 370,
+     "hasCue": true,
+     "latency": 1,
+     "status": "pass"
+    },
+    {
+     "beat": "B4",
+     "frame": 555,
+     "hasCue": true,
+     "latency": 1,
+     "status": "pass"
+    },
+    {
+     "beat": "B5",
+     "frame": 719,
+     "hasCue": true,
+     "latency": 1,
+     "status": "pass"
+    },
+    {
+     "beat": "B6",
+     "frame": 903,
+     "hasCue": true,
+     "latency": 1,
+     "status": "pass"
+    },
+    {
+     "beat": "B7",
+     "frame": 1292,
+     "hasCue": true,
+     "latency": 1,
+     "status": "pass"
+    }
+   ],
+   "cites": []
+  },
+  {
+   "id": "cues",
+   "status": "pass",
+   "summary": "every cue after a beat's first word shows a change within 5 frames",
+   "details": [],
+   "cites": []
+  },
+  {
+   "id": "blank",
+   "status": "pass",
+   "summary": "the visual zone is never empty for more than 3 frames in a row",
+   "cites": []
+  },
+  {
+   "id": "loudness",
+   "status": "pass",
+   "summary": "-14 LUFS integrated (target -14 ±1), true peak -3.2 dBTP (max -1), range 3.9 LU",
+   "cites": []
+  },
+  {
+   "id": "av-sync",
+   "status": "pass",
+   "summary": "render audio is 0 ms off against narration.mp3 (limit ±20 ms)",
+   "cites": []
+  },
+  {
+   "id": "words",
+   "status": "fail",
+   "summary": "22 of 23 words after a pause start within 40 ms of an audible onset (widest \"앞면이\" at 5.54 s, -40 ms); limit ±200 ms; off: \"돌고\" no onset",
+   "details": [
+    {
+     "word": "달은",
+     "start": 0.1,
+     "dev": 10
+    },
+    {
+     "word": "그럼",
+     "start": 2.12,
+     "dev": 30
+    },
+    {
+     "word": "자전을",
+     "start": 4.4,
+     "dev": 20
+    },
+    {
+     "word": "앞면이",
+     "start": 5.54,
+     "dev": -40
+    },
+    {
+     "word": "그래서",
+     "start": 7.74,
+     "dev": 30
+    },
+    {
+     "word": "모든",
+     "start": 9.3,
+     "dev": 0
+    },
+    {
+     "word": "진짜",
+     "start": 12.32,
+     "dev": 0
+    },
+    {
+     "word": "한",
+     "start": 13.34,
+     "dev": 20
+    },
+    {
+     "word": "그래서",
+     "start": 16.18,
+     "dev": 30
+    },
+    {
+     "word": "지구에선",
+     "start": 18.5,
+     "dev": 20
+    },
+    {
+     "word": "별을",
+     "start": 20.24,
+     "dev": 20
+    },
+    {
+     "word": "왜",
+     "start": 23.96,
+     "dev": 0
+    },
+    {
+     "word": "지구가",
+     "start": 26.16,
+     "dev": 30
+    },
+    {
+     "word": "달은",
+     "start": 27.36,
+     "dev": 10
+    },
+    {
+     "word": "옛날엔",
+     "start": 30.1,
+     "dev": 10
+    },
+    {
+     "word": "길쭉한",
+     "start": 31.9,
+     "dev": 20
+    },
+    {
+     "word": "살짝",
+     "start": 34.26,
+     "dev": -20
+    },
+    {
+     "word": "지구가",
+     "start": 35.92,
+     "dev": 30
+    },
+    {
+     "word": "자전에",
+     "start": 38.28,
+     "dev": 30
+    },
+    {
+     "word": "공전과",
+     "start": 40.16,
+     "dev": 20
+    },
+    {
+     "word": "우리가",
+     "start": 43.06,
+     "dev": -20
+    },
+    {
+     "word": "달이",
+     "start": 44.92,
+     "dev": 30
+    },
+    {
+     "word": "돌고",
+     "start": 46.48,
+     "dev": null
+    }
+   ],
+   "cites": []
+  },
+  {
+   "id": "loop",
+   "status": "pass",
+   "summary": "6 visual-zone pixels differ by more than 16 levels between the last and first frame (limit 500)",
+   "cites": []
+  }
+ ]
+}

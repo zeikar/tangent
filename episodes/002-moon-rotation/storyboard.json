@@ -60,7 +60,7 @@
     {
       "name": "StarField",
       "status": "new",
-      "spec": "Fixed stars, the frame the Moon's turning is measured against; they never move. Either named stars, stars [[x, y]] with bright: true (each a 4-point sparkle 28 px across in text at full opacity: B2's '같은 별'), or a faint field: about 24 dots of radius 2–4 px in text at 0.35 opacity, placed once from `seed` inside `region` [x0, y0, x1, y1], with the outermost dots at the region's left and right edges so the field's ink stays centered, and none within 24 px of other ink visible while the field is shown (`avoid` says what that is). Props: stars + bright, or region + seed + avoid (prose). Actions: appear (fade; a bright star also scales 0.6 → 1), exit, pulse (scale 1.3× and back)."
+      "spec": "Fixed stars, the frame the Moon's turning is measured against; they never move. Either named stars, stars [[x, y]] with bright: true (each a 4-point sparkle 28 px across in text at full opacity: B2's '같은 별'), or a faint field: about 24 dots of radius 2–4 px in text at 0.35 opacity, placed once from `seed` inside `region` [x0, y0, x1, y1], with the outermost dots at the region's left and right edges so the field's ink stays centered, and none within 24 px of other ink visible while the field is shown (`avoid` lists that ink as disks {circle: [x, y, r]} and boxes {box: [x0, y0, x1, y1]}). Props: stars + bright, or region + seed + avoid. Actions: appear (fade; a bright star also scales 0.6 → 1), exit, pulse (scale 1.3× and back)."
     },
     {
       "name": "SpinArrow",
@@ -556,9 +556,17 @@
           "props": {
             "region": [150, 250, 930, 1240],
             "seed": 2,
-            "avoid": "every element visible at B4's end: star1, titles, Earths, orbits, ghosts and their pointers, both compasses with the sweep arc"
+            "avoid": [
+              {"circle": [540, 262, 18]},
+              {"box": [221, 380, 439, 430]},
+              {"box": [634, 380, 866, 430]},
+              {"circle": [330, 690, 220]},
+              {"circle": [750, 690, 220]},
+              {"circle": [330, 990, 64]},
+              {"circle": [750, 990, 88]}
+            ]
           },
-          "where": "faint stars behind both panels, in the free space: mostly the band above the titles (y 250–370) beside star1, the band below the compasses (y 1080–1240), and the gaps beside them"
+          "where": "faint stars behind both panels, in the free space: mostly the band above the titles (y 250–370) beside star1, the band below the compasses (y 1080–1240), and the gaps beside them. avoid is every element visible at B4's end: star1 at its pulse's peak, the titles' ink, each panel (Earth, orbit, ghosts and their pointers: 220 px from its Earth), and both compasses with the sweep arc and its head"
         },
         {
           "id": "compass1",
@@ -932,9 +940,9 @@
           "props": {
             "region": [150, 250, 930, 1240],
             "seed": 7,
-            "avoid": "earth2 and the Moon's whole sweep with its spin arrow (the ring 185–395 px from (540, 820)), tether3, path2"
+            "avoid": [{"circle": [540, 820, 395]}]
           },
-          "where": "faint stars outside the orbit: the band above it (y 250–420), the corners, and the band below it (y 1220–1240)"
+          "where": "faint stars outside the orbit: the band above it (y 250–420), the corners, and the band below it (y 1220–1240). avoid is earth2 and the Moon's whole sweep with its spin arrow (the ring 185–395 px from (540, 820)), tether3 and path2"
         }
       ],
       "cues": [
