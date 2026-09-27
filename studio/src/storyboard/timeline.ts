@@ -76,8 +76,11 @@ export const rawProgress = (a: Action, frame: number) =>
   a.to <= a.from ? (frame >= a.from ? 1 : 0) : clamp01((frame - a.from) / (a.to - a.from));
 
 // Eased progress through [p0, p1] of the action's span.
-export const phase = (a: Action, frame: number, p0 = 0, p1 = 1) =>
-  a.ease(clamp01((rawProgress(a, frame) - p0) / (p1 - p0)));
+// An empty window (p0 = p1) is a step at p1.
+export const phase = (a: Action, frame: number, p0 = 0, p1 = 1) => {
+  const raw = rawProgress(a, frame);
+  return a.ease(p1 <= p0 ? (raw >= p1 ? 1 : 0) : clamp01((raw - p0) / (p1 - p0)));
+};
 
 // 0 → 1 → 0 over the action: pulses and flashes.
 export const bump = (a: Action, frame: number) => Math.sin(Math.PI * phase(a, frame));
@@ -114,6 +117,8 @@ export const resolveTimeline = (sb: Storyboard, cues: Cues): ElementTimeline[] =
       throw new Error(`cues.json ${timing.id} does not match storyboard ${beat.id}; rebuild it`);
     }
     for (const spec of beat.elements) {
+      // A reused id would replace the earlier element's whole timeline.
+      if (elements.has(spec.id)) throw new Error(`${beat.id}: ${spec.id} is declared again; give each element its own id`);
       elements.set(spec.id, { spec, start: timing.startFrame, end: Infinity, actions: [] });
     }
     const resolved = beat.cues.map((c, i) => {
@@ -134,18 +139,23 @@ export const resolveTimeline = (sb: Storyboard, cues: Cues): ElementTimeline[] =
       const seconds = c.action === "exit" ? duration.exit : duration[(c.speed ?? "base") as keyof typeof duration];
       const len = t.untilFrame ?? t.frame + Math.round(seconds * cues.fps);
       if (Number.isNaN(len)) throw new Error(`${beat.id}: bad speed ${c.speed}`);
-      return { el, action: { action: c.action, params: c.params ?? {}, from: t.frame, to: len, ease: easeFor(c) } };
+      return {
+        el,
+        action: { action: c.action, params: c.params ?? {}, from: t.frame, to: len, ease: easeFor(c) },
+        until: t.untilFrame !== undefined,
+      };
     });
     // The one exception to "cues sharing an anchor run in parallel": an
     // entrance waits for the exits on its anchor, so new content never draws
     // over old content that is still fading out.
-    for (const { action: a } of resolved) {
+    for (const { action: a, until } of resolved) {
       if (a.action !== "appear" && a.action !== "reveal") continue;
       const exitsEnd = Math.max(
         a.from,
         ...resolved.filter((r) => r.action.action === "exit" && r.action.from === a.from).map((r) => r.action.to),
       );
-      a.to += exitsEnd - a.from;
+      // An until anchor still ends it on its word, unless the exits outlast it.
+      a.to = until ? Math.max(a.to, exitsEnd) : a.to + exitsEnd - a.from;
       a.from = exitsEnd;
     }
     for (const { el, action } of resolved) {

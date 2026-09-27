@@ -1,5 +1,7 @@
 {
  "storyboardSha256": "1e564a0e26aef0f725295159c3238af0fde4adbff08ee3a8b2956d17b4a91861",
+ "narrationSource": "take1@1.08.wav",
+ "takeWordsSha256": "0c28e014b700b6144ed273a59dc2f00d3519a94e457086ae08176250b47b9a39",
  "fps": 30,
  "durationInFrames": 1426,
  "beats": [

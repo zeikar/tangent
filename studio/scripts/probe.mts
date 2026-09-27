@@ -4,6 +4,7 @@ import { execFileSync } from "node:child_process";
 import { join } from "node:path";
 import { renderFrames, selectComposition } from "@remotion/renderer";
 import { PROBE_PREFIX } from "../src/probe/prefix.ts";
+import { runDir } from "./run-dir.mts";
 
 export type Line = [x1: number, y1: number, x2: number, y2: number, width: number, opacity: number];
 export type Box = [left: number, top: number, right: number, bottom: number];
@@ -23,8 +24,9 @@ export type FrameSnap = { frame: number; els: ElementSnap[]; extra?: unknown };
 const studio = join(import.meta.dirname, "..");
 
 // The CLI bundles with remotion.config.ts (rspack); the Node API would not.
+// Each run bundles into its own directory (runDir).
 export const bundleStudio = () => {
-  const dir = join(studio, "out", "bundle");
+  const dir = runDir("tangent-bundle");
   execFileSync("npx", ["remotion", "bundle", "--out-dir", dir], { cwd: studio, stdio: ["ignore", "ignore", "inherit"] });
   return dir;
 };

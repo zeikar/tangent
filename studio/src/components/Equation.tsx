@@ -61,7 +61,10 @@ export const Equation: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, 
   const refs = useRef<(HTMLDivElement | null)[]>([]);
   const labelRefs = useRef<(HTMLDivElement | null)[]>([]);
   const scale = useCurrentScale();
-  const [measured, setMeasured] = useState<{ layouts: Measured[]; labels: LabelInk[] } | null>(null);
+  // Measured for one key; a Studio edit to the TeX makes it stale until the
+  // effect measures again.
+  const measureKey = JSON.stringify([layouts, fontSize, handoffs.map((h) => h.tex)]);
+  const [measured, setMeasured] = useState<{ key: string; layouts: Measured[]; labels: LabelInk[] } | null>(null);
   useLayoutEffect(() => {
     const handle = delayRender(`measure ${el.spec.id}`);
     fontsLoaded.then(() => {
@@ -100,10 +103,10 @@ export const Equation: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, 
           glyphs: { l: (g.left - outer.left) / scale, t: (g.top - outer.top) / scale },
         };
       });
-      setMeasured({ layouts: layoutInks, labels: labelInks });
+      setMeasured({ key: measureKey, layouts: layoutInks, labels: labelInks });
       continueRender(handle);
     });
-  }, [el.spec.id, scale]);
+  }, [el.spec.id, measureKey, scale]);
 
   const measuring = (
     <>
@@ -132,7 +135,7 @@ export const Equation: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, 
       ))}
     </>
   );
-  if (!measured) return <AbsoluteFill>{measuring}</AbsoluteFill>;
+  if (measured?.key !== measureKey) return <AbsoluteFill>{measuring}</AbsoluteFill>;
   const m = measured.layouts;
 
   // Frame x of each layout's left edge: centered on centerX, or one part's
@@ -148,7 +151,7 @@ export const Equation: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, 
   });
 
   let cur = 0;
-  let vis: Record<string, number> = Object.fromEntries(p.parts.map((q) => [q.id, 0]));
+  let vis: Record<string, number> = Object.fromEntries(p.parts.map((q) => [q.id, el.spec.visibleAtStart ? 1 : 0]));
   let col: Record<string, string> = Object.fromEntries(p.parts.map((q) => [q.id, themeColor(q.color)]));
   let rise: Record<string, number> = {};
   let from: { layout: number; a: Action; vis: Record<string, number>; col: Record<string, string>; morph: Record<string, string[]> } | null = null;
@@ -183,6 +186,8 @@ export const Equation: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, 
         vis = Object.fromEntries(next.map((q) => [q.id, q.id in vis ? vis[q.id] : 1]));
         col = Object.fromEntries(next.map((q) => [q.id, themeColor(q.color)]));
         rise = {};
+        // A box stays on its part, and goes when a transform drops the part.
+        if (box && !next.some((q) => q.id === box!.part)) box = null;
         cur += 1;
         break;
       }

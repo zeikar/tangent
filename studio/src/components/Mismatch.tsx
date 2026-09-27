@@ -23,7 +23,7 @@ const outline = ({ box: { cx, cy, w, h }, rot }: PaperState) => {
 export const Mismatch: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, scene }) => {
   const { frame } = scene;
   const p = el.spec.props as { a: string; b: string; color?: string };
-  let opacity = 0;
+  let opacity = el.spec.visibleAtStart ? 1 : 0;
   let flash = 0;
   for (const a of el.actions) {
     if (frame < a.from) break;

@@ -18,8 +18,8 @@ type Props = {
 export const Dimension: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, scene }) => {
   const { frame } = scene;
   const p = el.spec.props as Props;
-  let grow = 0;
-  let labelIn = 0;
+  let grow = el.spec.visibleAtStart ? 1 : 0;
+  let labelIn = grow;
   let opacity = 1;
   for (const a of el.actions) {
     if (frame < a.from) break;

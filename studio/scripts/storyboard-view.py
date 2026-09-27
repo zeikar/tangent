@@ -5,8 +5,8 @@ usage: python3 studio/scripts/storyboard-view.py episodes/<slug> [--fragment]
 Writes episodes/<slug>/storyboard.html: captions, each cue under the word that
 triggers it, and the narration playing in sync. Audio comes from the final
 narration (narration.mp3 + words.json) when it was built from this
-storyboard, otherwise from the approved take named in narration.json
-(<source>.wav + <source>.words.json).
+storyboard and the approved take, otherwise from that take, named in
+narration.json (<source>.wav + <source>.words.json).
 --fragment omits the doctype and charset header, for publishing as an
 artifact (the host adds its own).
 """
@@ -30,11 +30,15 @@ record = ep / "narration.json"
 source = json.loads(record.read_text())["source"] if record.exists() else "take1.wav"
 source = source.removesuffix(".wav")
 
-# The final narration only counts if it was built from this storyboard;
-# after a storyboard rewrite it's stale until build-cues runs again.
+# The final narration only counts if it was built from this storyboard and
+# the approved take; after a rewrite or a retake it's stale until build-cues
+# runs again.
 cues = ep / "cues.json"
-fresh = (cues.exists() and json.loads(cues.read_text()).get("storyboardSha256")
-         == hashlib.sha256((ep / "storyboard.json").read_bytes()).hexdigest())
+built = json.loads(cues.read_text()) if cues.exists() else {}
+take_words = ep / f"{source}.words.json"
+fresh = (built.get("storyboardSha256") == hashlib.sha256((ep / "storyboard.json").read_bytes()).hexdigest()
+         and built.get("narrationSource") == f"{source}.wav" and take_words.exists()
+         and built.get("takeWordsSha256") == hashlib.sha256(take_words.read_bytes()).hexdigest())
 
 if fresh and (ep / "narration.mp3").exists() and (ep / "words.json").exists():
     audio = (ep / "narration.mp3").read_bytes()

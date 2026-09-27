@@ -1,11 +1,12 @@
-"""Turns an aligned narration take into the episode's narration.mp3, words.json
-and cues.json.
+"""Turns the approved narration take into the episode's narration.mp3,
+words.json and cues.json.
 
-usage: python3 studio/scripts/build-cues.py episodes/<slug> \
-           episodes/<slug>/take<N>.wav episodes/<slug>/take<N>.words.json
+usage: python3 studio/scripts/build-cues.py episodes/<slug>
 
-take<N>.words.json is align.py's output for the chosen take. It stays in the
-episode folder (committed), so the build reruns without re-aligning.
+The take is narration.json's `source` (e.g. take1@1.08.wav), with its word
+timings in the matching .words.json (align.py's output, e.g.
+take1@1.08.words.json). That file stays in the episode folder (committed), so
+the build reruns without re-aligning.
 
 - Trims the take's leading silence to LEAD seconds and ends the audio the last
   beat's pauseAfter seconds after its speech ends.
@@ -20,8 +21,12 @@ episode folder (committed), so the build reruns without re-aligning.
   and cues.json: per beat startFrame / endFrame (inclusive) / pauseFrame, and
   the frame of every caption and cue anchor (plus untilFrame), in storyboard
   order. Frames at the fps in studio/src/style/theme.ts. cues.json also
-  records storyboard.json's SHA-256; render.mts and beat-stills.mts refuse
-  a cues.json built from another version of it.
+  records storyboard.json's SHA-256, the take, and its word timings' SHA-256;
+  render.mts, beat-stills.mts and check-render.mts refuse a cues.json built
+  from another storyboard or take (scripts/cues-fresh.mts).
+- Nothing is written until every anchor resolves, and narration.mp3 is copied
+  to studio/public/ only from the episode's own folder, so a scratch copy
+  never replaces the narration the Studio plays.
 
 Where speech ends is measured, not taken from the aligner (its word ends run
 early): the start of the first run of SILENCE_RUN seconds below SILENCE_DB
@@ -46,7 +51,7 @@ SILENCE_RUN = 0.15  # seconds; longer than a stop-consonant closure
 HOP = 0.01
 DUAL_MONO = "pan=stereo|c0=c0|c1=c0"
 
-ep, take_path, words_path = sys.argv[1:4]
+ep = sys.argv[1]
 studio = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 theme = open(os.path.join(studio, "src/style/theme.ts"), encoding="utf-8").read()
 FPS = int(re.search(r"VIDEO = \{[^}]*fps: (\d+)", theme).group(1))
@@ -56,7 +61,13 @@ TARGET_LUFS, MAX_TRUE_PEAK = float(_loud.group(1)), float(_loud.group(2))  # LUF
 
 sb_bytes = open(os.path.join(ep, "storyboard.json"), "rb").read()
 sb = json.loads(sb_bytes)
-aligned = json.load(open(words_path, encoding="utf-8"))
+source = json.load(open(os.path.join(ep, "narration.json"), encoding="utf-8"))["source"]
+if not source.endswith(".wav"):
+    sys.exit("narration.json: source must name a take's .wav")
+take_path = os.path.join(ep, source)
+words_name = source.removesuffix(".wav") + ".words.json"
+words_bytes = open(os.path.join(ep, words_name), "rb").read()
+aligned = json.loads(words_bytes)
 
 with wave.open(take_path) as w:
     if w.getnchannels() != 1 or w.getsampwidth() != 2:
@@ -114,7 +125,7 @@ for b in sb["beats"]:
 if pos != len(aligned) or [w["word"] for bw in beat_words for w in bw] != [
     w for b in sb["beats"] for w in b["readAloud"].split()
 ]:
-    sys.exit("words.json does not match the storyboard's readAloud")
+    sys.exit(f"{words_name} does not match the storyboard's readAloud")
 
 onset = next(i * HOP for i, lv in enumerate(levels) if lv >= SILENCE_DB)
 trim = max(0.0, min(onset, aligned[0]["start"]) - LEAD)
@@ -148,47 +159,6 @@ def frame(t):
     return round(out_time(t) * FPS)
 
 
-# Build the narration: trim, insert silences, cut or pad to n_frames.
-out = array.array("h")
-cursor = int(round(trim * rate))
-for at, pause in inserts:
-    cut = int(round(at * rate))
-    out.extend(samples[cursor:cut])
-    out.extend([0] * int(round(pause * rate)))
-    cursor = cut
-out.extend(samples[cursor:])
-want = int(round(n_frames / FPS * rate))
-del out[want:]
-out.extend([0] * (want - len(out)))
-if sys.byteorder != "little":
-    out.byteswap()
-with tempfile.TemporaryDirectory() as tmp:
-    wav_path = os.path.join(tmp, "narration.wav")
-    with wave.open(wav_path, "wb") as w:
-        w.setnchannels(1)
-        w.setsampwidth(2)
-        w.setframerate(rate)
-        w.writeframes(out.tobytes())
-    lufs, peak = loudness(wav_path, DUAL_MONO)
-    gain = TARGET_LUFS - lufs
-    if peak + gain > MAX_TRUE_PEAK:
-        gain = MAX_TRUE_PEAK - peak
-        print(f"WARNING: true peak limits the gain; narration will be {lufs + gain:.1f} LUFS, "
-              f"not {TARGET_LUFS}", file=sys.stderr)
-    subprocess.run(
-        ["ffmpeg", "-v", "error", "-y", "-i", wav_path, "-af", f"{DUAL_MONO},volume={gain:.2f}dB",
-         "-codec:a", "libmp3lame", "-q:a", "2", os.path.join(ep, "narration.mp3")],
-        check=True,
-    )
-
-shifted = [
-    {"word": w["word"], "start": round(out_time(w["start"]), 3), "end": round(out_time(w["end"]), 3)}
-    for w in aligned
-]
-with open(os.path.join(ep, "words.json"), "w", encoding="utf-8") as f:
-    json.dump(shifted, f, ensure_ascii=False, indent=1)
-
-
 def resolve(anchor, k):
     if anchor.get("pause"):
         return {"pause": True, "frame": frame(ends[k])}
@@ -220,14 +190,60 @@ for k, b in enumerate(beats):
     b_keys = ["id", "startFrame", "endFrame", "pauseFrame", "captions", "cues"]
     beats[k] = {key: b[key] for key in b_keys}
 
+# Build the narration: trim, insert silences, cut or pad to n_frames.
+out = array.array("h")
+cursor = int(round(trim * rate))
+for at, pause in inserts:
+    cut = int(round(at * rate))
+    out.extend(samples[cursor:cut])
+    out.extend([0] * int(round(pause * rate)))
+    cursor = cut
+out.extend(samples[cursor:])
+want = int(round(n_frames / FPS * rate))
+del out[want:]
+out.extend([0] * (want - len(out)))
+if sys.byteorder != "little":
+    out.byteswap()
+with tempfile.TemporaryDirectory(dir=ep) as tmp:
+    wav_path = os.path.join(tmp, "narration.wav")
+    with wave.open(wav_path, "wb") as w:
+        w.setnchannels(1)
+        w.setsampwidth(2)
+        w.setframerate(rate)
+        w.writeframes(out.tobytes())
+    lufs, peak = loudness(wav_path, DUAL_MONO)
+    gain = TARGET_LUFS - lufs
+    if peak + gain > MAX_TRUE_PEAK:
+        gain = MAX_TRUE_PEAK - peak
+        print(f"WARNING: true peak limits the gain; narration will be {lufs + gain:.1f} LUFS, "
+              f"not {TARGET_LUFS}", file=sys.stderr)
+    subprocess.run(
+        ["ffmpeg", "-v", "error", "-y", "-i", wav_path, "-af", f"{DUAL_MONO},volume={gain:.2f}dB",
+         "-codec:a", "libmp3lame", "-q:a", "2", os.path.join(tmp, "narration.mp3")],
+        check=True,
+    )
+    os.replace(os.path.join(tmp, "narration.mp3"), os.path.join(ep, "narration.mp3"))
+
+shifted = [
+    {"word": w["word"], "start": round(out_time(w["start"]), 3), "end": round(out_time(w["end"]), 3)}
+    for w in aligned
+]
+with open(os.path.join(ep, "words.json"), "w", encoding="utf-8") as f:
+    json.dump(shifted, f, ensure_ascii=False, indent=1)
+
 with open(os.path.join(ep, "cues.json"), "w", encoding="utf-8") as f:
-    json.dump({"storyboardSha256": hashlib.sha256(sb_bytes).hexdigest(), "fps": FPS,
-               "durationInFrames": n_frames, "beats": beats}, f,
+    json.dump({"storyboardSha256": hashlib.sha256(sb_bytes).hexdigest(),
+               "narrationSource": source, "takeWordsSha256": hashlib.sha256(words_bytes).hexdigest(),
+               "fps": FPS, "durationInFrames": n_frames, "beats": beats}, f,
               ensure_ascii=False, indent=1)
 
-public = os.path.join(studio, "public", "episodes", os.path.basename(os.path.abspath(ep)))
-os.makedirs(public, exist_ok=True)
-shutil.copyfile(os.path.join(ep, "narration.mp3"), os.path.join(public, "narration.mp3"))
+slug = os.path.basename(os.path.abspath(ep))
+if os.path.realpath(ep) == os.path.realpath(os.path.join(studio, "..", "episodes", slug)):
+    public = os.path.join(studio, "public", "episodes", slug)
+    os.makedirs(public, exist_ok=True)
+    shutil.copyfile(os.path.join(ep, "narration.mp3"), os.path.join(public, "narration.mp3"))
+else:
+    print(f"{ep} is not the repo's episodes/{slug}: narration.mp3 not copied to studio/public/")
 
 lufs_out, peak_out = loudness(os.path.join(ep, "narration.mp3"), "anull")
 print(f"trimmed {trim:.3f}s lead; inserted {[p for _, p in inserts]}; "

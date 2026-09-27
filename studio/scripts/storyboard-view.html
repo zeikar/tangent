@@ -95,6 +95,7 @@ section.beat { display: grid; grid-template-columns: 88px 1fr; gap: 20px; paddin
 .cues { display: grid; gap: 3px; }
 .cue { font: 11px var(--mono); padding: 2px 6px; border-radius: 4px; background: var(--surface-2); color: var(--muted); white-space: nowrap; border-left: 3px solid var(--dot, var(--line)); }
 .cue b { color: var(--text); font-weight: 600; }
+.cue.unmatched, .c small.unmatched { color: var(--red); border-left-color: var(--red); }
 .word.live .cue { color: var(--text); background: color-mix(in srgb, var(--dot, var(--line)) 22%, var(--surface-2)); }
 .end { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; font-size: 14px; color: var(--text); max-width: 72ch; }
 .claims { display: flex; gap: 6px; flex-wrap: wrap; }
@@ -160,7 +161,8 @@ const aligned = JSON.parse(document.getElementById('words').textContent);
 const RATE = 5.3;
 const COLORS = ['text','muted','blue','yellow','teal','red','purple'];
 const colorVar = n => COLORS.includes(n) ? `var(--${n})` : null;
-const strip = s => s.replace(/[.,?!…]/g, '');
+// The anchor rule of build-cues.py and validate-storyboard.py: letters, digits and _ only.
+const strip = s => s.replace(/[^\p{L}\p{N}_]/gu, '');
 
 // Math: KaTeX's MathML output needs no stylesheet or fonts, which the artifact CSP would block.
 function rich(text) {
@@ -195,7 +197,7 @@ const total = beats.reduce((s, b) => s + b.est, 0);
 function anchorIndex(b, at) {
   if (!at || at.pause) return -1; // -1 = the beat's trailing pause
   let n = at.nth || 1;
-  for (let i = 0; i < b.words.length; i++) if (strip(b.words[i].w) === strip(at.word) && --n === 0) return i;
+  for (let i = 0; i < b.words.length; i++) if (strip(b.words[i].w) === at.word && --n === 0) return i;
   return null;
 }
 
@@ -236,9 +238,12 @@ beats.forEach(b => {
   b.capEls = (b.captions || []).map(c => {
     const d = document.createElement('div'); d.className = 'c';
     d.append(rich(c.text));
-    const sm = document.createElement('small'); sm.textContent = `@ ${c.at?.word ?? '…'}`; d.append(sm);
+    const idx = anchorIndex(b, c.at);
+    const sm = document.createElement('small'); sm.textContent = `@ ${c.at?.word ?? '…'}${idx === null ? ' not in readAloud' : ''}`;
+    if (idx === null) sm.className = 'unmatched';
+    d.append(sm);
     caps.append(d);
-    return { el: d, idx: anchorIndex(b, c.at), text: c.text };
+    return { el: d, idx, text: c.text };
   });
 
   const scL = document.createElement('div'); scL.className = 'label'; scL.textContent = 'Narration and animation (each cue starts as its word is spoken)';
@@ -255,12 +260,15 @@ beats.forEach(b => {
   score.append(pauseSlot); b.pauseEl = pauseSlot;
   b.cues.forEach(c => {
     const i = anchorIndex(b, c.at);
+    const untilMissing = c.until && anchorIndex(b, c.until) === null;
     const host = i === -1 ? pauseSlot : (i === null ? pauseSlot : slots[i]);
-    const tag = document.createElement('div'); tag.className = 'cue';
+    const tag = document.createElement('div'); tag.className = i === null || untilMissing ? 'cue unmatched' : 'cue';
     const col = elColor[c.target]; if (col) tag.style.setProperty('--dot', col);
     tag.innerHTML = `<b></b> · <span></span>`;
     tag.querySelector('b').textContent = c.target;
-    tag.querySelector('span').textContent = c.action + (c.until ? ` → ${c.until.word ?? 'pause'}` : '');
+    tag.querySelector('span').textContent = c.action + (c.until ? ` → ${c.until.word ?? 'pause'}` : '')
+      + (i === null ? ` · ${c.at.word} not in readAloud` : '')
+      + (untilMissing ? ` · until ${c.until.word} not in readAloud` : '');
     if (c.note) tag.title = c.note;
     host.querySelector('.cues').append(tag);
   });

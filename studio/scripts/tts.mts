@@ -12,10 +12,23 @@ export const env = (name: string) => {
   return v;
 };
 
-export const call = async (url: string, init: RequestInit) => {
-  const res = await fetch(url, init);
-  if (!res.ok) throw new Error(`${res.status} ${url}\n${await res.text()}`);
-  return res.json();
+// Retries a rate limit or server error twice, unless it's a spent daily
+// quota (Gemini names a PerDay quota in the body) or asks for a long wait.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const call = async (url: string, init: RequestInit): Promise<any> => {
+  for (let attempt = 1; ; attempt++) {
+    const res = await fetch(url, { ...init, signal: AbortSignal.timeout(300_000) });
+    if (res.ok) return res.json();
+    const body = await res.text();
+    const after = res.headers.get("retry-after");
+    const asked = after === null ? NaN : Number.isNaN(Number(after)) ? (Date.parse(after) - Date.now()) / 1000 : Number(after);
+    const wait = Number.isFinite(asked) ? Math.max(0, asked) : 10 * attempt;
+    if ((res.status !== 429 && res.status < 500) || attempt === 3 || wait > 60 || /PerDay/.test(body)) {
+      throw new Error(`${res.status} ${url}\n${body}`);
+    }
+    console.error(`${res.status} from ${url}; retrying in ${wait} s`);
+    await new Promise((r) => setTimeout(r, wait * 1000));
+  }
 };
 
 // Gemini's unary response is WAV or headerless 16-bit mono PCM
@@ -91,7 +104,11 @@ export const geminiSynth = async (
       ?.flatMap((s: any) => s.content ?? [])
       .find((c: any) => c.type === "audio");
     if (!audio) throw new Error(`no audio in response: ${JSON.stringify(json).slice(0, 500)}`);
-    return Buffer.from(audio.data, "base64");
+    const wav = Buffer.from(audio.data, "base64");
+    if (wav.subarray(0, 4).toString("latin1") !== "RIFF") {
+      throw new Error(`audio is not WAV: ${JSON.stringify({ ...audio, data: undefined })}`);
+    }
+    return wav;
   }
   const json = await call(
     `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,

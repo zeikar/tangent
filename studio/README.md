@@ -34,6 +34,8 @@ npm i
 npx skills add remotion-dev/skills -a claude-code --copy -y \
   -s remotion-markup -s remotion-render -s remotion-captions -s remotion-docs
 npm run dev                                   # Studio preview
+npm run lint                                  # eslint, tsc over src/ and scripts/
+npm test                                      # vitest: timeline, validator, cue freshness
 npx remotion still StyleSheet out/a.png --frame=45
 npx remotion still StyleSheet out/a.png --props='{"showSafeArea":true}'
 npx remotion render StyleSheet out/a.mp4
@@ -64,7 +66,8 @@ python3 scripts/takes-view.py $ep --tempo=1.08
 # The human picks a script; record its take in $ep/narration.json:
 #   {"source": "take1@1.08.wav", "take": "take1.wav", "tempo": 1.08, ...}
 # Word timestamps for the picked take (first run downloads 1.3 GB); the
-# storyboard is written against these
+# storyboard is written against these. Exits 1, naming the words, if the take
+# skips or adds speech.
 uv run scripts/align.py $ep/take1@1.08.wav $ep/take1.txt $ep/take1@1.08.words.json
 # Check storyboard.json against script.md, research.md and the storyboard
 # agent's rules (exit 1 on errors; a pause that differs from the script is a note)
@@ -72,17 +75,20 @@ python3 scripts/validate-storyboard.py $ep
 # Checkpoint page for the human: captions, each cue under its word, narration
 # in sync → $ep/storyboard.html (final narration if built, else the picked take)
 python3 scripts/storyboard-view.py $ep
-# Insert pauseAfter silences, normalize to -14 LUFS
-#   → $ep/narration.mp3, words.json, cues.json, and a copy of the narration
+# From narration.json's take: insert pauseAfter silences, normalize to -14 LUFS
+#   → $ep/narration.mp3, words.json, cues.json (stamped with the storyboard
+#     and the take, which render.mts and check-render refuse to mismatch),
+#     and a copy of the narration
 #     in public/episodes/<slug>/ (gitignored), which the composition plays.
 #     An episode renders only after this has run; the rest of the studio
 #     needs no episode media.
-python3 scripts/build-cues.py $ep $ep/take1@1.08.wav $ep/take1@1.08.words.json
+python3 scripts/build-cues.py $ep
 # A still at every beat's endFrame (safe-area guide on) → $ep/frames/
 node scripts/beat-stills.mts $ep
 # Video from Remotion (BT.709), narration muxed by ffmpeg as 48 kHz AAC
-#   → $ep/render.mp4, stamped with the storyboard's and the studio code's
-#   hashes; then check-render (--no-check to skip; its failures fail the step)
+#   → $ep/render.mp4, stamped with the storyboard's, the studio code's and
+#   cues.json's hashes; then check-render (--no-check to skip; its failures
+#   fail the step)
 node scripts/render.mts $ep
 # Check a render: freshness (storyboard and code), technical, bounds,
 # centering, legibility, overlaps (in and across elements, fills included),

@@ -18,6 +18,7 @@ import { tmpdir } from "node:os";
 import { basename, join, resolve } from "node:path";
 import { checks, content, VIDEO, zone } from "../src/style/theme.ts";
 import { type Box, envelopeLag, ffprobe, levels, loudness, pcm, pixelPass } from "./check/media.mts";
+import { cuesSha256, cuesStale } from "./cues-fresh.mts";
 import { readTag, studioSha256 } from "./fingerprint.mts";
 import { bundleStudio, type ElementSnap, type FrameSnap, probeFrames, type TextItem } from "./probe.mts";
 
@@ -44,12 +45,15 @@ const render = join(episode, "render.mp4");
 for (const [name, fix] of [
   ["render.mp4", "run render.mts"],
   ["storyboard.json", "is this an episode folder?"],
+  ["narration.json", "record the approved take (episode runbook, stage 4)"],
   ["cues.json", "run build-cues.py"],
   ["words.json", "run build-cues.py"],
   ["narration.mp3", "run build-cues.py"],
 ]) {
   if (!existsSync(join(episode, name))) throw new Error(`${episode}/${name} is missing: ${fix}`);
 }
+// A check that stops partway must not leave the last run's verdict behind.
+for (const f of ["check.json", "check.md"]) rmSync(join(out, f), { force: true });
 const read = (name: string) => readFileSync(join(episode, name));
 const storyboardBytes = read("storyboard.json");
 const storyboard = JSON.parse(storyboardBytes.toString("utf8"));
@@ -82,9 +86,11 @@ const info = ffprobe(render);
   const tag = readTag(info.format.tags?.comment);
   const problems: string[] = [];
   const unknown: string[] = [];
-  if (cues.storyboardSha256 !== storyboardSha256) problems.push("cues.json was built from another storyboard.json (rerun build-cues.py)");
+  for (const p of cuesStale(episode, cues)) problems.push(`cues.json ${p} (rerun build-cues.py)`);
   if (!tag.storyboard) unknown.push("no storyboard hash");
   else if (tag.storyboard !== storyboardSha256) problems.push("render.mp4 was rendered from another storyboard.json (rerun render.mts)");
+  if (!tag.cues) unknown.push("no cues hash");
+  else if (tag.cues !== cuesSha256(episode)) problems.push("render.mp4 was rendered from another cues.json (rerun render.mts)");
   if (!tag.studio) unknown.push("no studio-code hash");
   else if (tag.studio !== studioHash)
     problems.push("render.mp4 was rendered with other studio code, so the geometry checks measure code it doesn't show (rerun render.mts)");
@@ -149,7 +155,7 @@ const beatFirstWord: { beat: string; frame: number; hasCue: boolean }[] = [];
     const near = cues.beats[k].cues.map((c: { frame: number }) => c.frame).filter((f: number) => Math.abs(f - words[i].start * fps) <= 1);
     const frame = near.length ? Math.min(...near) : Math.round(words[i].start * fps);
     beatFirstWord.push({ beat: b.id, frame, hasCue: near.length > 0 });
-    i += b.readAloud.split(/\s+/).length;
+    i += b.readAloud.trim().split(/\s+/).length;
   });
 }
 const cueFrames: { beat: string; frame: number; what: string }[] = cues.beats.flatMap(
@@ -583,7 +589,7 @@ const visibleOpacity = (snap: FrameSnap, id: string) => {
         const group = `${el.id}|${t.kind}`;
         byGroup.set(group, (byGroup.get(group) ?? new Set()).add(t.text));
         const key = `${group}|${t.text}`;
-        const r = runs.get(key) ?? { id: el.id, kind: t.kind, text: t.text, best: [], cur: [], boxes: new Map() };
+        const r = runs.get(key) ?? { id: el.id, kind: t.kind, text: t.text, best: [] as number[], cur: [] as number[], boxes: new Map() };
         runs.set(key, r);
         if (t.opacity < 0.9) continue;
         seen.add(key);
@@ -690,7 +696,7 @@ const visibleOpacity = (snap: FrameSnap, id: string) => {
   // from the render's own levels) don't depend on the aligner: every word
   // words.json puts after a gap should start at one. (Stop closures inside
   // words make onsets too, so onsets without a word prove nothing.)
-  const spoken = storyboard.beats.flatMap((b: { readAloud: string }) => b.readAloud.split(/\s+/));
+  const spoken = storyboard.beats.flatMap((b: { readAloud: string }) => b.readAloud.trim().split(/\s+/));
   const sameWords = spoken.length === words.length && spoken.every((w: string, i: number) => w === words[i].word);
   const lv = renderPcm ? levels(renderPcm) : new Float64Array();
   const onsets: number[] = []; // ms
@@ -756,7 +762,8 @@ const cited = results
     })),
   );
 for (const r of results) r.cites = cited.filter((c) => c.check === r.id);
-const ends: { beat: string; frame: number }[] = cues.beats.map((b: { id: string; endFrame: number }) => ({ beat: b.id, frame: b.endFrame }));
+// Clamped like the cites: a render shorter than cues.json still gets its report.
+const ends: { beat: string; frame: number }[] = cues.beats.map((b: { id: string; endFrame: number }) => ({ beat: b.id, frame: inVideo(b.endFrame) }));
 const needed = [...new Set([...ends.map((e) => e.frame), ...(loopPromised ? [0] : []), ...cited.flatMap((c) => c.pair ?? [c.frame])])].sort((a, b) => a - b);
 const tmp = mkdtempSync(join(tmpdir(), "check-render-"));
 try {
@@ -811,6 +818,7 @@ writeFileSync(
     {
       episode: slug,
       render: "render.mp4",
+      renderSha256: createHash("sha256").update(readFileSync(render)).digest("hex"),
       storyboardSha256,
       studioSha256: studioHash,
       verdict,

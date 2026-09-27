@@ -51,9 +51,9 @@ export const HalvingNest: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ e
   const sheet: Rect = { l: p.center[0] - p.w / 2, t: p.center[1] - p.h / 2, r: p.center[0] + p.w / 2, b: p.center[1] + p.h / 2 };
   const levels = levelsOf(sheet, p.labels.length);
 
-  let opacity = 0;
-  let draw = 0;
-  let content = 0;
+  let opacity = el.spec.visibleAtStart ? 1 : 0;
+  let draw = opacity;
+  let content = opacity;
   const cut = levels.map(() => 0); // share of each cut line drawn
   const labelIn = levels.map(() => 0);
   let fadeRest = 0; // focusKept, first 30%: everything but the kept piece fades out

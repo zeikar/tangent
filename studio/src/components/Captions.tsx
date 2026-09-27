@@ -5,15 +5,13 @@ import { color, content, duration, ease, font, type, zone } from "../style/theme
 import { Tex } from "./Tex";
 
 // Phrase captions in the caption band: plain text with $...$ math, each shown
-// from its anchor until the next one.
+// from its anchor until the next one. The first fades in; the rest cut.
 
 export const Captions: React.FC<{ captions: Caption[]; frame: number; fps: number }> = ({ captions, frame, fps }) => {
   const i = captions.findIndex((c) => frame >= c.from && frame < c.to);
   if (i < 0) return null;
   const cur = captions[i];
-  // Fade in after a gap; cut straight from one caption to the next.
-  const follows = i > 0 && captions[i - 1].to === cur.from;
-  const opacity = follows ? 1 : ease.out(Math.min((frame - cur.from + 1) / (duration.fast * fps), 1));
+  const opacity = i > 0 ? 1 : ease.out(Math.min((frame - cur.from + 1) / (duration.fast * fps), 1));
   return (
     <AbsoluteFill>
       <div

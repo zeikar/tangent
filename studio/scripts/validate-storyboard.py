@@ -20,8 +20,8 @@ sections = re.split(r"^## ", script, flags=re.M)[1:]
 beats_md = {}
 for sec in sections:
     bid = sec.split(" ")[0]
-    disp = re.search(r"\*\*Display:\*\* (.+)", sec).group(1)
-    read = re.search(r"\*\*Read-aloud:\*\* (.+)", sec).group(1)
+    disp = re.search(r"\*\*Display:\*\*\s*(.+)", sec).group(1).strip()
+    read = re.search(r"\*\*Read-aloud:\*\*\s*(.+)", sec).group(1).strip()
     pause = sum(float(x) for x in re.findall(r"\bhold ([\d.]+) s\b", sec))
     beats_md[bid] = (disp, read, pause)
 
@@ -81,6 +81,7 @@ def geom_ok(where, props):
 
 
 live = {}  # element id -> component
+declared = set()  # every id so far: the player keeps one timeline per id
 for b in sb["beats"]:
     bid = b["id"]
     disp, read, pause = beats_md[bid]
@@ -110,8 +111,9 @@ for b in sb["beats"]:
     for e in b["elements"]:
         if e["component"] not in comp_names:
             err(f"{bid}: component {e['component']} not in components")
-        if e["id"] in live:
+        if e["id"] in declared:
             err(f"{bid}: element {e['id']} declared twice")
+        declared.add(e["id"])
         live[e["id"]] = e["component"]
         geom_ok(f"{bid}/{e['id']}", e["props"])
         for col in colors_in(e["props"]):

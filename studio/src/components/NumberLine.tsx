@@ -23,8 +23,8 @@ type Props = {
 export const NumberLine: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, scene }) => {
   const { frame } = scene;
   const p = el.spec.props as Props;
-  let line = 0;
-  let rest = 0;
+  let line = el.spec.visibleAtStart ? 1 : 0;
+  let rest = line;
   let opacity = 1;
   const pulse = new Map<number, number>();
   for (const a of el.actions) {
