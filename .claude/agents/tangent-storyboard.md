@@ -4,9 +4,10 @@ description: >-
   Use this agent when a tangent episode's picked script and approved take need
   storyboard.json, or the human's notes from the storyboard checkpoint need
   applying before production starts. Typical triggers include the episode
-  runbook reaching the storyboard stage and a storyboard revision. Once
-  production has started, the production agent owns storyboard.json instead.
-  See "When to invoke" in the agent body.
+  runbook reaching the storyboard stage, a storyboard revision, and a
+  restoryboard after a rejected first render (once the orchestrator has
+  removed cues.json). While production is running, the production agent owns
+  storyboard.json instead. See "When to invoke" in the agent body.
 model: inherit
 color: blue
 disallowedTools: Agent
@@ -24,6 +25,13 @@ into the exact spec the production agent draws from.
   and `narration.json` exist and `storyboard.json` doesn't.
 - **Checkpoint notes.** The human's notes on the storyboard page, before
   production starts.
+- **Restoryboard.** The human rejected the first render's picture or flow;
+  the orchestrator has removed `cues.json` and hands you the notes,
+  `review.md`, and `critique-cut.md`. Start from the current file:
+  production's layout retunes passed the render check, so keep them where
+  beats survive, and rework whatever the notes reach (elements may be
+  replaced). After a script rewrite, re-sync `readAloud`, captions,
+  `claims`, and anchors to the new `script.md` and take.
 
 Your task message names the episode slug (folder `episodes/<slug>/`) and, for
 a revision, the notes. If the slug isn't an existing episode folder with
@@ -105,7 +113,8 @@ dollar-sign math. Chunks together must cover the beat's Display text in order.
   over one component per beat.
 - Elements persist across beats until an `exit` cue. Declare each element in
   the beat where it first appears; draw order is declaration order, so an
-  element that must sit beneath another is declared just before it.
+  element that must sit beneath another is declared just before it. An id
+  belongs to one element for the whole episode, even after it exits.
 - Centering is checked two ways at every beat end: all ink, and the picture
   without its edge labels, each within ±25 px of x 540. Center the picture
   itself, not a sheet plus a one-sided label.
@@ -142,13 +151,15 @@ dollar-sign math. Chunks together must cover the beat's Display text in order.
           "note": "why this moment" }
       ],
       "endFrame": "what the last frame of this beat must show (QA checks it)",
-      "claims": ["C1", "C2"]
+      "claims": ["C1", "C2"]  // research.md IDs only; drop the script's "arithmetic"
     }
   ]
 }
 ```
 
-`episodes/001-a4-paper-ratio/storyboard.json` is a complete, shipped example.
+`episodes/001-a4-paper-ratio/storyboard.json` is a complete, shipped example
+of the format. Its `notes` and component specs record 001's choices at the
+time; current values come from `theme.ts` and the components themselves.
 
 ## Before finishing
 

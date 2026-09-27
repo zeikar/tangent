@@ -126,9 +126,9 @@ Stage numbers follow the `episode` runbook.
 | Agent | Stages | Reads → writes |
 | ----- | ------ | -------------- |
 | Topic | 1 | past episodes, `docs/topics.md` → `docs/topics.md` (ideas, the human's taste); the orchestrator writes the pick to `topic.md` |
-| Research | 2 | `topic.md` → `research.md` (claims, sources, dates), `verify.py` |
-| Script (×2) | 3 | `topic.md`, `research.md` → `script.<variant>.md` |
-| Storyboard | 5 | picked `script.md`, the approved take's words → `storyboard.json` |
+| Research | 2, and any missing claim later | `topic.md` → `research.md` (claims, sources, dates), `verify.py` |
+| Script (×2) | 3, 8 (what is said) | `topic.md`, `research.md` → `script.<variant>.md` |
+| Storyboard | 5, and a restoryboard | picked `script.md`, the approved take's words → `storyboard.json` |
 | Production | 6, 8 (fixes) | `storyboard.json` (owned from here on), approved take → beat cues → scenes → `render.mp4`; every fix |
 | QA | 7–8 | render, `research.md` → `review.md` (captions, audio sync, layout, facts) |
 | Publish | 9 | approved render, `script.md`, `research.md`, `docs/channel.md` → `publish.md` (title, description, tags, playlist, thumbnail), `publish/` |

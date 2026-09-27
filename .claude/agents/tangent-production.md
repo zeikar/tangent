@@ -6,7 +6,8 @@ description: >-
   include the episode runbook reaching production, a combined fix round (the
   human's notes, QA issues, chosen critique points), and syncing the
   storyboard to an approved script and take change. From its start it owns
-  storyboard.json and studio/ for that episode. Not for studio development
+  storyboard.json and studio/ for that episode, until a restoryboard hands
+  the storyboard back. Not for studio development
   outside an episode's render or fix round. See "When to invoke" in the agent
   body.
 model: inherit
@@ -56,10 +57,10 @@ episode files stay in the episode folder. Don't commit; the orchestrator does.
 
 The take was generated and approved with the script; don't generate a new
 one. Validate the storyboard (`python3 scripts/validate-storyboard.py $ep`
-prints "OK", else exits 1), then build the cues from the approved take, the
-`source` file and its word timings, e.g. `python3 scripts/build-cues.py $ep
-$ep/take1@1.08.wav $ep/take1@1.08.words.json`. It writes `narration.mp3`, `words.json`, and `cues.json`, with these
-semantics:
+prints "OK", else exits 1), then build the cues from the approved take
+(`python3 scripts/build-cues.py $ep` reads `narration.json`'s `source` and
+its word timings). It writes `narration.mp3`, `words.json`, and `cues.json`,
+with these semantics:
 
 - A beat starts at its first word's start (B1 at frame 0) and ends one frame
   before the next beat starts; the last beat ends `pauseAfter` after its
@@ -68,8 +69,8 @@ semantics:
   aligner's word ends run early). Each `pauseAfter` is inserted as silence
   inside the silent run after the beat; leading silence is trimmed to 0.1 s.
 - The narration is normalized to the loudness target in the theme's `checks`
-  block, and `cues.json` carries the storyboard's hash, so a render from a
-  stale `cues.json` refuses to run.
+  block, and `cues.json` carries the storyboard's and the take's hashes, so a
+  render from a stale `cues.json` refuses to run.
 
 **Length gate:** if the result exceeds `topic.md`'s length target, say so in
 the report with the number; the human decides (trim, retake, or accept).
@@ -99,7 +100,7 @@ the report with the number; the human decides (trim, retake, or accept).
 ## 3. Render and check
 
 - `node scripts/render.mts $ep` renders (BT.709), muxes the narration, tags
-  the render with the storyboard and studio-code hashes, and runs
+  the render with the storyboard, studio-code, and cues hashes, and runs
   `scripts/check-render.mts`. Fix every fail before reporting, retuning
   `storyboard.json` layout where that is the cause; a warn needs a one-line
   reason.

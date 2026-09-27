@@ -30,7 +30,8 @@ list the `tangent-*` agents, the session predates them and needs a restart.
 The orchestrator runs the tools between stages, weighs critiques, talks to
 the human, records the human's decisions, and commits. Background: `docs/decisions.md` (Pipeline, Agents),
 `docs/channel.md`, and `studio/README.md` (every command; run them from
-`studio/` with `ep=../episodes/<slug>`).
+`studio/` with `ep=../episodes/<slug>`, set in each command, since shell
+variables don't carry over between Bash calls).
 
 ## `checkpoints.md`
 
@@ -45,6 +46,8 @@ committed with that stage:
 - <date> · script + take · script b: "<the human's words>"
 - <date> · storyboard · approved (notes: …)
 - <date> · first look · <feel, notes; length gate decision if any>
+- <date> · rework · <restoryboard | rewrite | push on>: "<the human's words>"
+- <date> · retake · take<N>: <why, and what the human heard>
 - <date> · final · approved with metadata
 ```
 
@@ -64,13 +67,17 @@ Read `checkpoints.md` for the last decision, then the folder:
 | script + take | no approved storyboard | 5 Storyboard |
 | storyboard | no `render.mp4` | 6 Production |
 | storyboard | `render.mp4` | 7 First look |
-| first look | latest review round not **ship** | 8 Fix round |
+| first look | latest review round **fix then ship** | 8 Fix round |
+| first look | latest review round **rework** | ask the human (Going back) |
 | first look | review **ship**, no `publish.md` | 9 Publish |
 | first look | `publish.md` | 9 Final checkpoint |
 | final | no `Published:` line in `publish.md` | 10 Release and upload |
+| rework | per the option picked | Going back |
+| retake | `narration.json` not yet on it | point it there; then 8 Fix round, or restoryboard after a rewrite |
 
 A **rework** verdict, or a first look that rejects the flow, goes back to the
-human with the options (restoryboard, rewrite, or push on) before any fix.
+human with the options (restoryboard, rewrite, or push on) before any fix;
+see Going back.
 
 ## 1. Topic 🛑
 
@@ -81,15 +88,20 @@ when there are none or the human passed on them, with the human's reactions
 and reasons in the task. The human picks one. Write `episodes/<slug>/topic.md` from the pick (slug
 rule: decisions.md → Episode folders): insight, hook, key picture, length
 target (40–50 s unless the topic needs otherwise), why it was picked, and the
-shelved candidates. Record the pick in `checkpoints.md`, add it to "Made so
-far" in `docs/topics.md`, and move the other ideas of that round to "Shown,
-not picked". Commit.
+shelved candidates. Its first line is `# NNN · <title>`, which the
+checkpoint pages show. Record the pick in `checkpoints.md`, add it to "Made
+so far" in `docs/topics.md`, move the other ideas of that round to "Shown,
+not picked", and delete the round's dated section. Commit.
 
 ## 2. Research
 
 Spawn `tangent-research` with the slug. Run `python3 verify.py` in the
-episode folder.
-Commit `research.md` and `verify.py`.
+episode folder; if it fails, resume the research agent with the output.
+If the report says the sources don't support what the topic assumes, take
+that to the human as a topic question before committing research, and
+record the answer as a `topic` line: reshape it (edit `topic.md`, resume the
+research agent), or pick another (`git rm -r` the folder and start stage 1
+again). Commit `research.md` and `verify.py`.
 
 ## 3. Script: two variants
 
@@ -184,9 +196,9 @@ python3 scripts/takes-view.py $ep --tempo=1.08 --fragment
 uv run scripts/align.py $ep/take<N>@1.08.wav $ep/take<N>.txt $ep/take<N>@1.08.words.json
 ```
 
-Let the human listen, then point `narration.json`'s `source` and `take` at
-the new take; the fix round tells production to sync `storyboard.json` to the
-new script and take.
+Let the human listen and record it (`retake` in `checkpoints.md`), then
+point `narration.json`'s `source` and `take` at the new take; the fix round
+tells production to sync `storyboard.json` to the new script and take.
 
 Then QA again: resume the QA agent with the round's summary (say whether
 anything global changed, which requires a full pass), or spawn a fresh
@@ -200,7 +212,10 @@ substantial change.
 Spawn `tangent-publish` with the slug. The human sees the final cut and the metadata
 together: send the video, and show the title, the description's first two
 lines, and the thumbnail frame. On approval, record it in `checkpoints.md`
-and commit `publish.md`.
+and commit `publish.md`. A video fix asked for here is a fix round (stage
+8). Once QA says ship on the new render, resume the publish agent (new
+cut) so `publish/` and the thumbnail follow it, then show the human the new
+cut and metadata again.
 
 ## 10. Release and upload
 
@@ -215,6 +230,47 @@ These steps are outward-facing: ask before pushing or creating the release.
   upload, add `Published: <URL> (<date>)` under the title in `publish.md` and
   `**Watch:** <URL>` at the top of the release notes. Commit and push.
 
+## Going back
+
+The forward path above covers most of an episode; these are the ways back.
+
+- **Rework: restoryboard.** The picture or flow is wrong, the script is
+  right. `git rm $ep/cues.json`, which hands `storyboard.json` back to the
+  storyboard agent (it won't touch one production has started on), and
+  rename `render.mp4` to `render.v<N>.mp4` for comparison. Spawn a fresh
+  `tangent-storyboard` with the human's notes, `review.md`, and
+  `critique-cut.md`, then run stage 5 (a new storyboard checkpoint) and
+  stage 6 with a fresh `tangent-production`, which reuses or reworks the
+  studio components from the first pass.
+- **Rework: rewrite.** What is said is wrong. Resume or spawn `tangent-script`
+  on `script.md` with the human's notes; for another approach altogether,
+  `git rm $ep/script.md $ep/critique-script.md` first and run stages 3–4
+  again. Retake it as in stage 8 and let the human listen (a `retake`
+  line), align it, and point `narration.json` at it. Commit that
+  (`docs(<slug>): rewrite`), then restoryboard as above.
+- **Rework: push on.** Stage 8 with the human's notes.
+- **A claim research.md lacks.** A writer, production, or QA that needs a
+  fact without a claim ID reports it. Resume (or spawn) `tangent-research`
+  with the claim, rerun `verify.py`, send the new claim ID back to whoever
+  asked, and commit `research.md` and `verify.py` with that stage. Never
+  write a fact without its claim ID.
+
+## When a tool fails
+
+- `verify.py`: back to the research agent (stage 2).
+- `align.py` exits 1: it names where the take and its text disagree. Play
+  that span to the human, or transcribe it with `mlx_whisper` as QA does
+  (`tangent-qa.md`, narration); a bad take is retaken with `narrate.mts`,
+  the human hears the new one, and it gets a `retake` line.
+- `narrate.mts` stopping on a long rate-limit wait means the day's Gemini
+  quota is spent: tell the human and continue the next day. Switching TTS
+  engines is the human's call (decisions.md → Narration).
+- `critique.mts` (Codex) unavailable: go on without that critique and say so
+  at the checkpoint; critiques are advice.
+- `validate-storyboard.py` or `check-render.mts` failing after a stage
+  agent reported success: back to the agent that owns `storyboard.json`
+  (storyboard before production starts, production after).
+
 ## Rules
 
 - **Checkpoints are things to hear or see:** the takes page, the storyboard
@@ -223,7 +279,8 @@ These steps are outward-facing: ask before pushing or creating the release.
 - **One writer per file at a time.** Parallel agents never share a file. The
   storyboard agent writes `storyboard.json` until production starts; from
   then on only the production agent edits it and `studio/`, and it renders
-  itself.
+  itself. A restoryboard (Going back) hands it back, and production then
+  starts fresh.
 - **Critiques are advice.** At most two critique rounds per stage; the human's
   feel decides.
 - **Commits:** one per stage or fix round, conventional commits with the slug

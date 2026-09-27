@@ -11,7 +11,9 @@ and silent failures.
 ### Skills, one fixer, two variants (2026-09-26)
 
 Milestone 1's next-step candidates 1–3, done before episode 002's production
-(decisions.md → Pipeline, Agents).
+(decisions.md → Pipeline, Agents). The first bullets describe stage skills
+as first built; "Agents instead of forked skills" below replaced them the
+same day.
 
 - **Briefs → skills.** Research, script, storyboard, production, QA, and
   publish are skills that run as forked subagents: each call starts a fresh
@@ -79,3 +81,29 @@ the human's taste (their own words), what was made, and the ideas already
 shown or rejected, by name only; the old rounds' notes are in git history. A
 fresh reviewer caught that the first reset also dropped the shown list, so
 the new agent would likely have repeated them.
+
+### Whole-project review (2026-09-27)
+
+Before episode 002, four fresh reviewers (rendering code, pipeline scripts,
+agents and docs, architecture) and a Codex review read the whole repo. Codex
+and a reviewer found the top two player bugs independently.
+
+- **Silent failures fixed.** The player replaced an element whose id was
+  reused after its exit, and the validator allowed it. `build-cues.py` took
+  the take as free arguments, so cues from an unapproved take (001's 1.0×
+  pair) passed every freshness check; it now reads `narration.json` and
+  stamps the take into `cues.json`. `visibleAtStart` worked only in
+  PaperRect and Note. `align.py`'s word check could never fail; it now fails
+  on a word score below −5 or a gap over 1.5 s (001's takes: worst −2.6,
+  widest 0.84 s; a phrase the take skips scores −9 to −13, an unscripted
+  line leaves 5.1 s). Also: shared temp paths between runs, a stale
+  `check.json` left by a crashed check, parallel takes claiming one number.
+- **Ways back.** The runbook offered "restoryboard" after a rejected first
+  look, but no agent could do it (the storyboard agent stops once
+  `cues.json` exists). It now has a Going back section and a When a tool
+  fails list.
+- **Tests.** `npm test` (vitest: timeline, validator, cue freshness) and
+  `npm run lint`, which now type-checks `scripts/` too.
+- **Left for episode 002's build:** one schema for storyboard and cues
+  (defined in four places today), and a player core that doesn't import
+  PaperRect. 002's new components should shape both.

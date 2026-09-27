@@ -129,14 +129,17 @@ A revision comes from the orchestrator, by resuming you or in a fresh
 agent's task: a Codex critique (`critique-script.md`, or
 `critique-script.<letter>.md` for a variant) and/or the human's notes. Edit
 the existing file in place, keep beat IDs stable where beats survive, and
-leave untouched what the notes don't reach. The critique is advice from a
-reader who doesn't see every constraint (upload title, pronunciation list):
-apply what makes the script clearer or more accurate, skip what adds steps or
-effects against "Telling it", and say which findings were skipped and why.
+leave untouched what the notes don't reach. The orchestrator has already
+weighed the critique against constraints its critic doesn't see (upload
+title, pronunciation list), so apply the findings your task names; the
+critique file is their context, not a list to work through. If a named
+finding would add steps or effects against "Telling it", skip it and say why.
 
 ## Before finishing
 
 - Recount syllables and check the total against the target.
 - Check every Claims ID exists in research.md and says what the beat claims.
+  A fact research.md lacks is reported, not written: name the claim you
+  need, and the orchestrator gets it researched.
 - Report back: the total length estimate, the hook in one line, and any
   choice that felt uncertain.

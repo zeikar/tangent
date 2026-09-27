@@ -53,7 +53,8 @@ reads the previous round's section and what changed since
 
 `node scripts/check-render.mts $ep --out <scratch dir>` (~12 s; `--out`
 keeps the tracked check files untouched). It covers freshness (the render's
-storyboard and studio-code hashes), technical (incl. BT.709, 48 kHz),
+storyboard, studio-code, and cues hashes, and cues against the approved
+take), technical (incl. BT.709, 48 kHz),
 bounds, centering (ink and picture), legibility, overlaps (across and inside
 elements, text under fills, exits still visible while new content draws),
 label ownership, captions (timing, one line, zone), readable duration,

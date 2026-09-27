@@ -97,7 +97,9 @@ fill the metadata with `videos.update`, which the lock doesn't affect.
   channels' names. The channel-wide tags come from the upload defaults. Tags
   matter little for discovery.
 - **Playlists:** by theme. Current: `일상 속 수학` (math in everyday objects).
-  Add a theme playlist when a second episode shares a theme.
+  Add a theme playlist when a second episode shares a theme; until then, an
+  episode whose theme has no playlist goes in none, and publish.md names
+  its theme in the notes.
 - **Thumbnail:** a frame that shows the subject and the title's question, not
   the answer, holding for at least ~1 s. Until custom Shorts thumbnails are
   available to the channel, pick that frame in the mobile app's frame

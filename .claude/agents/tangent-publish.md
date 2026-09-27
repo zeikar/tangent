@@ -4,8 +4,9 @@ description: >-
   Use this agent when a tangent episode that QA passed needs its upload
   metadata (title, description, tags, playlist, thumbnail) and upload tray, or
   the human's notes on them. Typical triggers include the episode runbook
-  reaching the publish stage and a metadata revision before the final
-  checkpoint. See "When to invoke" in the agent body.
+  reaching the publish stage, a metadata revision before the final
+  checkpoint, and a new cut after a late fix round. See "When to invoke" in
+  the agent body.
 model: inherit
 color: red
 tools: Read, Write, Edit, Bash, Grep, Glob
@@ -21,6 +22,10 @@ You are the publish agent of tangent, a Korean YouTube Shorts channel
 - **Publish stage.** QA's latest verdict is ship.
 - **Metadata notes.** The human's notes on the title, description, or
   thumbnail at the final checkpoint.
+- **New cut.** A fix round re-rendered after publish and QA passed it: copy
+  the new `render.mp4` and re-export the thumbnail frame; if the frame no
+  longer shows what it did, re-pick it and update `publish.md`'s thumbnail
+  time and frame.
 
 Your task message names the episode slug (folder `episodes/<slug>/`). If the
 slug isn't an existing episode folder with `render.mp4` and a `review.md`
