@@ -16,6 +16,27 @@ clash.
 - Measured rate: 4.8–5.1 Hangul syllables per second at tempo 1.0, 5.2–5.5 at
   1.08× (episode 001's takes).
 
+## Wording
+
+A line is heard once, at speed, so it has to land on the first listen.
+These come from a survey of Korean 윤문 (polishing) rule sets on
+2026-09-27; their automatic checks misfire on spoken scripts (they strip
+breathing commas and "A가 아니라 B"), so the rules live here in our words
+and the ear judges.
+
+- **Name what a word is relative to.** A word only the picture explains
+  ("위쪽", "앞서" without what it runs ahead of) names its reference in the
+  sentence ("같은 별 쪽", "지구 방향을 지나쳐").
+- **No 번역투:** not ~를 통해, ~에 의해, ~에 있어, 가지고 있다, ~되어지다;
+  not "거의 정확히 X와 같다" (say "X와 거의 같다"); not ~할 때 meaning
+  "each time" or "while" (say ~마다, ~동안).
+- **Spoken connectives:** 그래서, 그러니까, or none, instead of 따라서, 즉,
+  결론적으로, 이처럼.
+- **One register:** 해요체 throughout; no -습니다 or -다 slipping in.
+- **Keep what polishing tools strip:** breathing commas, a question hook,
+  one "A가 아니라 B" turn, and a key verb repeated on purpose to carry a
+  contrast.
+
 ## Spelling out
 
 | Written | Read aloud |

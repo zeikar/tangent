@@ -24,7 +24,10 @@ original.
 Look especially for:
 - where a viewer would get lost or bored, and why;
 - a simpler or more familiar way to explain the same thing;
-- anything imprecise or unsupported by `research.md`.
+- anything imprecise or unsupported by `research.md`;
+- a line that sounds translated or written rather than spoken, or that a
+  listener couldn't follow on one hearing: quote it and give a spoken
+  version (`docs/narration.md`, Wording).
 
 Answer in Korean. Start with a verdict: **good to record**, **revise**, or
 **restructure**. Then at most five findings, most important first, each
