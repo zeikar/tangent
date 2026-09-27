@@ -65,6 +65,9 @@ export type PaperState = {
   valueLabel: { color: string; opacity: number } | null;
 };
 
+// A sheet's live state, for components that follow or compare sheets.
+export const paper = (scene: Scene, id: string) => scene.state(id, "PaperRect") as PaperState;
+
 export const rotated = (b: Box, deg: number): Box =>
   (deg / 90) % 2 === 0 ? b : { ...b, w: b.h, h: b.w };
 
@@ -106,7 +109,7 @@ export const paperState = (el: ElementTimeline, scene: Scene): PaperState => {
   const s: PaperState = {
     opacity: el.spec.visibleAtStart ? 1 : 0,
     box: p.followHalfOf
-      ? fittedHalf(scene.paper(p.followHalfOf).box, "width")
+      ? fittedHalf(paper(scene, p.followHalfOf).box, "width")
       : { cx: p.center![0], cy: p.center![1], w: p.w!, h: p.h! },
     rot: 0,
     stroke: strokeColor,
@@ -174,10 +177,10 @@ export const paperState = (el: ElementTimeline, scene: Scene): PaperState => {
         } else if (q.follow) {
           // The fitted half of ref's live box, from here on: it tracks ref's
           // moves and resizes, and later geometry actions start from it.
-          s.box = lerpBox(rotated(s.box, 90), fittedHalf(scene.paper(q.ref).box, match), phase(a, frame, 0.4, 1));
+          s.box = lerpBox(rotated(s.box, 90), fittedHalf(paper(scene, q.ref).box, match), phase(a, frame, 0.4, 1));
         } else {
           // Fitted to ref as it is when the fit ends; ref moving later leaves it be.
-          const ref = (t < 1 ? scene : scene.at(a.to)).paper(q.ref).box;
+          const ref = paper(t < 1 ? scene : scene.at(a.to), q.ref).box;
           const stood = rotated(s.box, 90);
           s.box = lerpBox(stood, fitTo(stood, ref, match), phase(a, frame, 0.4, 1));
         }
@@ -611,7 +614,7 @@ const SideLabel: React.FC<{
 };
 
 export const PaperRect: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, scene }) => {
-  const s = scene.paper(el.spec.id);
+  const s = paper(scene, el.spec.id);
   if (s.opacity <= 0) return null;
   const hp = horizontalPair(s.box);
   const edgeOf = (pair: Pair) => ({ color: s.edge[pair], width: s.edgeWidth[pair] });

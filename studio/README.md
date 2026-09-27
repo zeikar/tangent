@@ -8,8 +8,11 @@ Remotion project: style guide and reusable scene components. 1080×1920, 30 fps.
   `loadFont()` so frames never capture a fallback font. Code that measures
   text goes through `components/measure.ts`, which waits on `fontsLoaded`
   (not `document.fonts.ready`) and fails the render if measuring throws.
-- `src/components/`: primitives (`Tex`, `PaperRect`, `Equation`, ...), each
-  specced in the storyboard that introduced it.
+- `src/components/`: primitives (`Tex`, `PaperRect`, `Equation`, `Body`, ...),
+  each specced in the storyboard that introduced it. Each is registered in
+  `StoryboardPlayer.tsx` with the live state it lets other elements read
+  (`scene.state`: a sheet's box, a body's center and heading) and, if any,
+  the elements it is drawn beneath; otherwise draw order is declaration order.
 - `src/storyboard/`: plays an episode's `storyboard.json` with the frame numbers
   in its `cues.json`. `src/episodes/<slug>/` wires one episode to it with
   `makeEpisode` (`Episode.tsx`) and registers it in `Root.tsx`; the composition
@@ -18,6 +21,8 @@ Remotion project: style guide and reusable scene components. 1080×1920, 30 fps.
 - `src/probe/`: with the `probe` prop, a composition logs what every frame
   draws (lines, fills, text ink, glyph heights) for `check-render` and
   `measure-tex`; the player marks elements `data-el`, text items `data-text`.
+  It reads strokes from `line`, `polyline` and `rect` only, so curves are
+  drawn as polylines (`components/geometry.ts`).
 - `src/compositions/StyleSheet.tsx`: visual check for the style guide.
 - `src/brand/`: channel branding (루트와이, √y) as stills in the `brand` folder:
   `Logo` (transparent), `Avatar` (profile picture, 800×800), `Watermark` (video

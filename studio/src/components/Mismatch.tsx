@@ -2,12 +2,12 @@ import React from "react";
 import { AbsoluteFill } from "remotion";
 import { bump, ElementTimeline, lerp, phase, Scene, themeColor } from "../storyboard/timeline";
 import { fill, stroke, VIDEO } from "../style/theme";
-import { PaperState } from "./PaperRect";
+import { paper, PaperState } from "./PaperRect";
 
 // Shades the region inside exactly one of two sheets (their symmetric
-// difference), from their live geometry. The player draws it beneath both. A
-// pulse flashes it to full opacity with a band just outside the sheets'
-// strokes around it, so it glows outward.
+// difference), from their live geometry, drawn beneath both (its entry in
+// StoryboardPlayer's registry). A pulse flashes it to full opacity with a
+// band just outside the sheets' strokes around it, so it glows outward.
 
 const outline = ({ box: { cx, cy, w, h }, rot }: PaperState) => {
   const a = (rot * Math.PI) / 180;
@@ -33,7 +33,7 @@ export const Mismatch: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, 
     else throw new Error(`Mismatch ${el.spec.id}: unknown action ${a.action}`);
   }
   if (opacity <= 0) return null;
-  const d = `${outline(scene.paper(p.a))} ${outline(scene.paper(p.b))}`;
+  const d = `${outline(paper(scene, p.a))} ${outline(paper(scene, p.b))}`;
   const c = themeColor(p.color ?? "red");
   const glow = `mismatch-glow-${el.spec.id}`;
   // The region's edges are sheet edges, whose strokes cover it: the band starts

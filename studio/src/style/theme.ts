@@ -65,14 +65,19 @@ export const ease = {
 // Diagram strokes, fills, and marks (px).
 export const stroke = {
   sheet: 6, // paper outlines and cut lines
-  line: 4, // number lines, dimension lines, equation boxes
+  line: 4, // number lines, dimension lines, equation boxes, body rims, tethers
   dash: [18, 12], // dashed outlines and fold lines: dash, gap
+  thin: 3, // orbits, compass hubs
+  arrow: 5, // pointers, rim traces, spin and sweep arcs
+  force: 6, // force arrows
 } as const;
 
 export const fill = {
   sheet: 0.08, // paper
   flap: 0.2, // the half of a sheet that is flipping over
   mismatch: 0.8, // where two shapes disagree: clearly red, about 4.4:1 against the background
+  body: 0.6, // planets and moons, each half alike: no half reads as a dark side
+  bodyPulse: 0.85, // a pulsed body part, at its peak
 } as const;
 
 export const mark = {
@@ -84,7 +89,31 @@ export const mark = {
   boxPadding: 12, // box drawn around an equation part
   boxRadius: 16,
   revealRise: 20, // an equation part rises this far into place
-  pulseScale: 1.3, // a pulsed number-line mark
+  pulseScale: 1.3, // a pulsed number-line mark or star
+  head: 18, // arrowhead length (and width) on a 5 px arrow or arc
+  forceHead: 22, // on a force arrow
+} as const;
+
+// Bodies (Body), what rides on them, and the stars behind them (px, degrees).
+export const sky = {
+  orbitOpacity: 0.5, // orbit circles, in muted
+  tagPulse: 1.15, // a tag's scale when its half pulses
+  pointerGap: 10, // outline to a pointer's base; compass hub to a gathered pointer's base
+  pointerLength: 0.6, // of the body's r...
+  pointerMin: 28, // ...but at least this
+  traceGap: 10, // outline to a rim trace
+  spinGap: 20, // long semi-axis to a spin arrow
+  spinSpan: 120, // a spin arrow's arc
+  hub: 24, // a compass hub's radius
+  sweepGap: 14, // gathered pointers' tips to a compass sweep
+  sweepShort: 20, // a compass sweep stops this short of a full turn
+  star: 28, // a named (bright) star, across
+  starGrow: 0.6, // a bright star appears from this scale
+  dot: [2, 4], // a faint star's radius, smallest and largest
+  dotOpacity: 0.35,
+  dots: 24, // faint stars in a field, about
+  dotClear: 24, // a faint star to any other ink
+  dotSpacing: 56, // faint stars to each other, at least
 } as const;
 
 // Default animation lengths. These are durations, not start times; start times

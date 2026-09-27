@@ -1,7 +1,6 @@
 // Joins an episode's storyboard.json (what happens) with its cues.json (when)
 // into per-element action lists. Scenes read timing from here only.
 import { interpolateColors } from "remotion";
-import type { PaperState } from "../components/PaperRect";
 import { color, duration, ease } from "../style/theme";
 
 type Anchor = { word: string; nth?: number } | { pause: true };
@@ -64,10 +63,16 @@ export type ElementTimeline = {
 
 export type Caption = { text: string; from: number; to: number };
 
-// What a component sees each frame: the frame, and other sheets' live state
-// (Mismatch, Dimension, NumberLine and standAndFit read their geometry); `at`
-// is the same view at another frame.
-export type Scene = { frame: number; paper: (id: string) => PaperState; at: (frame: number) => Scene };
+// What a component sees each frame: the frame, every element, and any
+// element's live state as its component exposes it (StoryboardPlayer's
+// registry; a Mismatch reads its sheets, a Tether its bodies). `state` checks
+// the element is that component; `at` is the same view at another frame.
+export type Scene = {
+  frame: number;
+  elements: ElementTimeline[];
+  state: (id: string, component: string) => unknown;
+  at: (frame: number) => Scene;
+};
 
 const clamp01 = (x: number) => Math.min(Math.max(x, 0), 1);
 

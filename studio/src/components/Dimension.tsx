@@ -3,6 +3,7 @@ import { AbsoluteFill } from "remotion";
 import { ElementTimeline, phase, Scene, themeColor } from "../storyboard/timeline";
 import { mark, stroke, VIDEO } from "../style/theme";
 import { Anchored } from "./Anchored";
+import { paper } from "./PaperRect";
 import { Tex } from "./Tex";
 
 // Measurement line along one edge of a sheet, offset outward, with end ticks
@@ -34,7 +35,7 @@ export const Dimension: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el,
   }
   if (grow <= 0 || opacity <= 0) return null;
 
-  const { cx, cy, w, h } = scene.paper(p.of).box;
+  const { cx, cy, w, h } = paper(scene, p.of).box;
   const c = themeColor(p.label.color);
   const bottom = p.side === "bottom";
   // Line along the edge, as (center, half length) on its axis plus its offset position.

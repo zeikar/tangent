@@ -5,7 +5,7 @@ import { content, mark, stroke, type, VIDEO, zone } from "../style/theme";
 import { expressionInk, inkRect, tokenInk } from "./ink";
 import { measureAfterFonts } from "./measure";
 import { drawTokens, InkBox, matchTokens, morph, tokenize, TokenStyle } from "./morph";
-import { labelAt, labelLineStyle, labelTex, Side } from "./PaperRect";
+import { labelAt, labelLineStyle, labelTex, paper, Side } from "./PaperRect";
 import { Tex } from "./Tex";
 
 // One line of KaTeX built from addressable parts, rendered as a single
@@ -52,7 +52,7 @@ export const Equation: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, 
       if ((a.params.parts as string[] | undefined)?.length !== 1) {
         throw new Error(`Equation ${el.spec.id}: reveal fromLabel takes exactly one part`);
       }
-      const sheet = scene.at(a.from - 1).paper(of);
+      const sheet = paper(scene.at(a.from - 1), of);
       const label = sheet.labels.find((l) => l.side === side);
       if (!label) throw new Error(`Equation ${el.spec.id}: ${of} has no ${side} label at f${a.from - 1} to reveal from`);
       return { a, side, box: sheet.box, tex: label.tex, color: label.color, part: (a.params.parts as string[])[0] };

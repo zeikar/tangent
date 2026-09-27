@@ -3,6 +3,7 @@ import { AbsoluteFill } from "remotion";
 import { bump, ElementTimeline, phase, Scene, themeColor } from "../storyboard/timeline";
 import { color, font, mark, stroke, type, VIDEO } from "../style/theme";
 import { Anchored } from "./Anchored";
+import { paper } from "./PaperRect";
 import { Tex } from "./Tex";
 
 // Horizontal number line with labeled marks and a marker that follows a
@@ -45,7 +46,7 @@ export const NumberLine: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el
   const xOf = (v: number) => p.x0 + ((v - p.min) / (p.max - p.min)) * (p.x1 - p.x0);
   const markerAt = p.markerFrom
     ? (() => {
-        const { w, h } = scene.paper(p.markerFrom).box;
+        const { w, h } = paper(scene, p.markerFrom).box;
         return xOf(Math.min(Math.max(h / w, p.min), p.max));
       })()
     : null;
