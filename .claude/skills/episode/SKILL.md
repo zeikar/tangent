@@ -246,8 +246,9 @@ The forward path above covers most of an episode; these are the ways back.
   on `script.md` with the human's notes; for another approach altogether,
   `git rm $ep/script.md $ep/critique-script.md` first and run stages 3–4
   again. Retake it as in stage 8 and let the human listen (a `retake`
-  line), align it, and point `narration.json` at it. Commit that
-  (`docs(<slug>): rewrite`), then restoryboard as above.
+  line), align it, and point `narration.json` at it. Then restoryboard as
+  above; the rewrite is committed with the new storyboard (stage 5), since
+  the old storyboard no longer matches the script.
 - **Rework: push on.** Stage 8 with the human's notes.
 - **A claim research.md lacks.** A writer, production, or QA that needs a
   fact without a claim ID reports it. Resume (or spawn) `tangent-research`
@@ -285,7 +286,8 @@ The forward path above covers most of an episode; these are the ways back.
   feel decides.
 - **Commits:** one per stage or fix round, conventional commits with the slug
   as scope, adding only this episode's and the changed studio files by path
-  (another session may be working in the same tree). Push only when the
+  (another session may be working in the same tree). `npm run verify` in
+  `studio/` passes first (CI runs it on every push). Push only when the
   human says.
 - **Log the run** in `docs/milestone-2-notes.md`: per stage, agent time,
   human wait, blockers, repeated work, silent failures.

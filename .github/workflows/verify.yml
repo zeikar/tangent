@@ -1,0 +1,21 @@
+# Everything that runs without episode media or API keys: lint, type checks,
+# tests, and every episode's storyboard, cues and verify.py (studio/scripts/verify.mts).
+name: verify
+on:
+  push:
+  pull_request:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: studio
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: studio/package-lock.json
+      - run: npm ci
+      - run: npm run verify

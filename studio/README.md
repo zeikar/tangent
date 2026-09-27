@@ -30,6 +30,13 @@ Remotion project: style guide and reusable scene components. 1080×1920, 30 fps.
   their repo declares no license; install them after cloning (below).
   `skills-lock.json` records what was installed.
 
+Prerequisites: Node 22.18 or later (the `.mts` scripts run directly; CI
+uses 24), ffmpeg with libmp3lame, `python3` (standard library only), and
+[uv](https://docs.astral.sh/uv/) for `align.py` and `check/evidence.py`,
+which fetches their Python (3.10–3.12 for the aligner) and packages.
+`narrate.mts` needs `GEMINI_API_KEY` in the repo-root `.env`, and
+`critique.mts` the Codex CLI.
+
 ```sh
 npm i
 npx skills add remotion-dev/skills -a claude-code --copy -y \
@@ -37,6 +44,7 @@ npx skills add remotion-dev/skills -a claude-code --copy -y \
 npm run dev                                   # Studio preview
 npm run lint                                  # eslint, tsc over src/ and scripts/
 npm test                                      # vitest: timeline, validator, cue freshness
+npm run verify                                # both, then every episode's checks (CI runs this)
 npx remotion still StyleSheet out/a.png --frame=45
 npx remotion still StyleSheet out/a.png --props='{"showSafeArea":true}'
 npx remotion render StyleSheet out/a.mp4
@@ -105,6 +113,11 @@ node scripts/measure-tex.mts '\dfrac{x}{2}' 'x^2 = 2' --display
 # TTS samples of scripts/tts-compare/sentences.json → out/tts-compare/
 node scripts/tts-compare/compare.mts synth gemini gemini-3.8-flash-tts Kore kore
 ```
+
+A released episode rebuilds from its GitHub Release: the release holds the
+original take as FLAC, and its notes give the steps (FLAC → WAV → atempo →
+build-cues → render), written for the scripts at the release's tag, so run
+them there.
 
 Remotion is free for individuals and companies of up to 3 people; see its
 [license](https://github.com/remotion-dev/remotion/blob/main/LICENSE.md).
