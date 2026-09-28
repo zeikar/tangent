@@ -1,6 +1,6 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
-import { ElementTimeline, phase, rawProgress, Scene } from "../storyboard/timeline";
+import { ElementTimeline, lerp, phase, rawProgress, Scene } from "../storyboard/timeline";
 import { color, ease, mark, sky, stroke } from "../style/theme";
 import { body, pointerOf } from "./bodies";
 import { arcPoints, lerpPt, polar, Pt } from "./geometry";
@@ -8,10 +8,11 @@ import { CurvedArrow, lifecycle, Polyline, StraightArrow, Svg } from "./shapes";
 
 // Compares directions against the fixed frame of the stars: copies of the
 // pointers of the bodies in `of`, gathered at one point by translation only,
-// never turning; a sweep then passes them all in order.
+// never turning, one after another, growing to `length` if given; a sweep
+// then passes them all in order.
 // Spec: storyboard.json → components → Compass.
 
-type Props = { of: string[]; center: Pt; hub?: number };
+type Props = { of: string[]; center: Pt; hub?: number; length?: number };
 
 export const Compass: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, scene }) => {
   const { frame } = scene;
@@ -24,16 +25,22 @@ export const Compass: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, s
   });
   if (appear <= 0 || out <= 0) return null;
 
-  // The gather is a move, so it eases smooth, not with the entrance's ease.out
-  // (which covers most of the way in two frames: a jump, not a slide).
+  // The gather is a move, so each slide eases smooth, not with the
+  // entrance's ease.out (which covers most of the way in two frames: a jump,
+  // not a slide). The slides are staggered in list order, so paths that
+  // cross don't all meet at once.
   const gather = el.actions.find((a) => a.action === "appear");
-  const slide = gather ? ease.smooth(rawProgress(gather, frame)) : 1;
   const pointers = p.of.map((id) => pointerOf(body(scene, id)));
-  const copies = pointers.map((ptr) => ({
-    ...ptr,
-    base: lerpPt(ptr.base, polar(p.center, hub + sky.pointerGap, ptr.deg), slide),
-  }));
-  const reach = hub + sky.pointerGap + Math.max(...pointers.map((ptr) => ptr.length)) + sky.sweepGap;
+  const span = 1 - sky.gatherStagger * (pointers.length - 1);
+  const copies = pointers.map((ptr, i) => {
+    const slide = gather ? ease.smooth(Math.min(Math.max((rawProgress(gather, frame) - i * sky.gatherStagger) / span, 0), 1)) : 1;
+    return {
+      ...ptr,
+      base: lerpPt(ptr.base, polar(p.center, hub + sky.pointerGap, ptr.deg), slide),
+      length: lerp(ptr.length, p.length ?? ptr.length, slide),
+    };
+  });
+  const reach = hub + sky.pointerGap + Math.max(...pointers.map((ptr) => p.length ?? ptr.length)) + sky.sweepGap;
   const start = pointers[0].deg;
   return (
     <AbsoluteFill style={{ opacity: out }}>

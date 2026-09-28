@@ -1,7 +1,7 @@
 // Joins an episode's storyboard.json (what happens) with its cues.json (when)
 // into per-element action lists. Scenes read timing from here only.
 import { interpolateColors } from "remotion";
-import { color, duration, ease } from "../style/theme";
+import { color, cruise, cruiseRamp, duration, ease } from "../style/theme";
 
 type Anchor = { word: string; nth?: number } | { pause: true };
 
@@ -103,15 +103,17 @@ export const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
 // Easing: out for entrances, an even fade for exits (both start on their
 // word), smooth for everything else, a part flying in from a label included
-// (it's a move), unless the cue asks for linear.
-const easeFor = (c: StoryboardCue) =>
+// (it's a move), unless the cue asks for linear or cruise (`frames` long).
+const easeFor = (c: StoryboardCue, frames: number, fps: number) =>
   c.params?.ease === "linear"
     ? ease.linear
-    : c.action === "exit"
-      ? ease.exit
-      : (c.action === "appear" || c.action === "reveal") && !c.params?.fromLabel
-        ? ease.out
-        : ease.smooth;
+    : c.params?.ease === "cruise"
+      ? cruise((cruiseRamp * fps) / Math.max(frames, 1))
+      : c.action === "exit"
+        ? ease.exit
+        : (c.action === "appear" || c.action === "reveal") && !c.params?.fromLabel
+          ? ease.out
+          : ease.smooth;
 
 export const resolveTimeline = (sb: Storyboard, cues: Cues): ElementTimeline[] => {
   if (sb.beats.length !== cues.beats.length) throw new Error("cues.json beats differ from storyboard");
@@ -146,7 +148,7 @@ export const resolveTimeline = (sb: Storyboard, cues: Cues): ElementTimeline[] =
       if (Number.isNaN(len)) throw new Error(`${beat.id}: bad speed ${c.speed}`);
       return {
         el,
-        action: { action: c.action, params: c.params ?? {}, from: t.frame, to: len, ease: easeFor(c) },
+        action: { action: c.action, params: c.params ?? {}, from: t.frame, to: len, ease: easeFor(c, len - t.frame, cues.fps) },
         until: t.untilFrame !== undefined,
       };
     });

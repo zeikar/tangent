@@ -60,7 +60,7 @@ const field = (p: Props, id: string): Dot[] => {
 
 // A 4-point sparkle `size` across, centered on c.
 const sparkle = ([x, y]: Pt, size: number): Pt[] => {
-  const [o, i] = [size / 2, size / 8];
+  const [o, i] = [size / 2, size / 6];
   return [
     [x, y - o],
     [x + i, y - i],

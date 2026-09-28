@@ -62,6 +62,18 @@ export const ease = {
   linear: (t: number) => t, // tracing along with time
 } as const;
 
+// A cue's ease: cruise. Constant speed, like linear, but easing out of rest
+// and back into it over cruiseRamp seconds at each end (an orbit that starts
+// and stops). `ramp` is that time as a share of the cue's span.
+export const cruiseRamp = 0.15;
+export const cruise = (ramp: number) => {
+  const r = Math.min(ramp, 0.5);
+  const v = 1 / (1 - r); // the constant speed
+  // Distance over a ramp's first u (0..1): speed rises as smoothstep.
+  const ramped = (u: number) => v * r * (u ** 3 - u ** 4 / 2);
+  return (t: number) => (t < r ? ramped(t / r) : t > 1 - r ? 1 - ramped((1 - t) / r) : v * (t - r / 2));
+};
+
 // Diagram strokes, fills, and marks (px).
 export const stroke = {
   sheet: 6, // paper outlines and cut lines
@@ -69,7 +81,7 @@ export const stroke = {
   dash: [18, 12], // dashed outlines and fold lines: dash, gap
   thin: 3, // orbits, compass hubs
   arrow: 5, // pointers, rim traces, spin and sweep arcs
-  force: 6, // force arrows
+  force: 8, // force arrows
 } as const;
 
 export const fill = {
@@ -91,7 +103,7 @@ export const mark = {
   revealRise: 20, // an equation part rises this far into place
   pulseScale: 1.3, // a pulsed number-line mark or star
   head: 18, // arrowhead length (and width) on a 5 px arrow or arc
-  forceHead: 22, // on a force arrow
+  forceHead: 30, // on a force arrow
 } as const;
 
 // Bodies (Body), what rides on them, and the stars behind them (px, degrees).
@@ -99,15 +111,16 @@ export const sky = {
   orbitOpacity: 0.5, // orbit circles, in muted
   tagPulse: 1.15, // a tag's scale when its half pulses
   pointerGap: 10, // outline to a pointer's base; compass hub to a gathered pointer's base
-  pointerLength: 0.6, // of the body's r...
-  pointerMin: 28, // ...but at least this
+  pointerLength: 0.75, // of the body's r...
+  pointerMin: 36, // ...but at least this
   traceGap: 10, // outline to a rim trace
   spinGap: 20, // long semi-axis to a spin arrow
   spinSpan: 120, // a spin arrow's arc
   hub: 24, // a compass hub's radius
   sweepGap: 14, // gathered pointers' tips to a compass sweep
   sweepShort: 20, // a compass sweep stops this short of a full turn
-  star: 28, // a named (bright) star, across
+  gatherStagger: 0.15, // each gathered pointer starts its slide this share of the gather after the one before
+  star: 40, // a named (bright) star, across
   starGrow: 0.6, // a bright star appears from this scale
   dot: [2, 4], // a faint star's radius, smallest and largest
   dotOpacity: 0.35,

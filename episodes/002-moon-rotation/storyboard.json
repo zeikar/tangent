@@ -8,13 +8,13 @@
     "No sun anywhere: no light direction, shading, terminator, or phases. The Moon's two halves differ by hue only, at similar lightness (both filled at 0.6): the far side is not a dark side (C8).",
     "The tidal bulge is two equal bulges (Earth side and far side: a symmetric ellipse), and when it is off the Earth line it leads, counterclockwise, in the spin direction; tilt is never negative.",
     "Loop: the last frame is the first. Both show Earth (540, 820) r 95 with '지구', its orbit (radius 275), the Moon at 6 o'clock (540, 1095) r 85, round, yellow half up toward Earth and teal half down, no tags, and the dashed Earth line between them; nothing else. At 6 o'clock the non-rotating Moon (B1) and the locked Moon (B7) look identical, because 'up' is 'toward Earth' there. So the episode starts at 6 o'clock, not the script's 3 o'clock, and the replay doesn't snap the marking.",
-    "Three layouts. Single orbit (B1–B2, B7's end): Earth (540, 820) r 95, orbit radius 275, Moon r 85. Two panels side by side (B3–B4): left '자전 안 함' centered on x 330, right '자전 1바퀴' on x 750; each Earth at y 690 r 44, orbit radius 140, Moon r 40, title at y 405, compass at y 990; the star named in B2 stays at the top center (540, 262). Close-up (B5–B6): Earth (250, 745) r 90, Moon r 90 on an orbit of radius 540 at angle 0, i.e. centered (790, 745), the dashed line labeled '지구 방향' between them.",
+    "Three layouts. Single orbit (B1–B2, B7's end): Earth (540, 820) r 95, orbit radius 275, Moon r 85. Two panels side by side (B3–B4): left '자전 안 함' centered on x 330, right '자전 1바퀴' on x 750; each Earth at y 690 r 44, orbit radius 140, Moon r 40, title at y 405, compass at y 1060; the star named in B2 stays at the top center (540, 268). Close-up (B5–B6): Earth (250, 745) r 90, Moon r 90 on an orbit of radius 540 at angle 0, i.e. centered (790, 745), the dashed line labeled '지구 방향' between them.",
     "ghost2Right is the real Moon from B5 on: the right panel's 3 o'clock ghost turns solid and the view zooms into it, so B5's Earth-left, Moon-right is exactly the right panel's 3 o'clock position.",
     "Elements that read other elements' live state (the player must hand every component the scene, not only PaperRect geometry): Body.orbit.around (that body's center); a Body appear with onPassOf (another body's orbit angle over time); OrbitPath.around and its riders' outlines; Tether a, b (both outlines); RimTrace of, toward (heading, outline, direction); Compass of (each body's pointer direction, position, length); SpinArrow of (center, heading, long semi-axis); Arrow from, aim (a body's bulge tip and tilt, a point on a tether).",
     "An element is invisible until its appear cue, unless it has visibleAtStart (drawn from the beat's first frame).",
     "Draw order is declaration order across the episode. The loop needs earth2 < path2 < ghost2Right < tether3, which mirrors earth1 < path1 < moon1 < tether1. The left panel's ghosts are declared after moon1 and so draw over it; at 0.35 over an identical Moon that changes nothing visible.",
     "Cues sharing an anchor run in parallel, except that an appear or reveal waits for the exits on its anchor to finish. Every exit is a 0.2 s even fade whatever its speed. Any other cue with neither speed nor until uses base.",
-    "Easing from studio/src/style/theme.ts: ease.out for appear, ease.exit for exit, ease.smooth for everything else, unless a cue's params say ease: linear. Orbits are linear: a circular orbit runs at constant speed. If a start or stop from rest jerks, production may round off its first and last ~0.15 s.",
+    "Easing from studio/src/style/theme.ts: ease.out for appear, ease.exit for exit, ease.smooth for everything else, unless a cue's params say ease: linear or cruise. Orbits cruise: constant speed, as a circular orbit runs, with the first and last 0.15 s eased out of and into rest (theme.ts cruiseRamp), so a Moon doesn't jolt into motion or stop dead.",
     "Stroke widths and text sizes never scale with a body's r. All text is type.label (56 px, Hangul ink about 50 px tall). Measured in Pretendard SemiBold at that size: '앞면' / '뒷면' / '지구' / '옛날' / '과장' 96 × 50 px, '자전 안 하면' 266, '자전 안 함' 218, '자전 1바퀴' 231, '지구 방향' 205. The widest caption, '그럼 뒷면도 보였을 거예요.', is 631 px in Bold at 60."
   ],
   "colors": {
@@ -35,7 +35,7 @@
     {
       "name": "Body",
       "status": "new",
-      "spec": "A round body drawn in code (Earth, the Moon, a ghost of the Moon), never lit: no sun, shading, terminator, or phase. Props: center [x, y], or orbit {around: body id, radius, angle} (position = around's live center + radius at angle; see notes for angles); r; color (a one-color body: fill at 0.6 and a 4 px stroke at full, both in color) or halves {near, far} (a two-tone body: the near half is centered on the heading, the far half opposite; each filled at 0.6 with a 4 px stroke along its own rim arc, no stroke along the chord between them; the halves differ in hue only); rotation: fixed (the heading stays at `heading` on screen: a body that doesn't rotate) or locked (the near half always faces orbit.around: one turn per orbit, counterclockwise with it); heading (degrees, for fixed); stretch (long ÷ short axis, area kept, default 1) and tilt (degrees the long axis leads the line to orbit.around, counterclockwise positive, default 0): the tidal shape is set by the Earth line, not by the marking, so when the body spins against that line the halves turn inside an outline that stays put; the halves are clipped to the outline; markingOpacity (default 1) scales the halves' fills and rims, and below 1 a text-colored 4 px outline of the shape fades in by (1 − markingOpacity) so the shape always reads; opacity (the whole body; ghosts use 0.35; the pointer is always drawn at full strength); name (upright text at the center, type.label, color text); labels {near, far} (upright text, type.label, color text, each inside its half and at least 6 px clear of the rim and the chord; set only while the chord is near horizontal, where 96 × 50 px fits in r 85); pointer (bool): a straight arrow in text on the heading just outside the near pole: base 10 px outside the outline, length 0.6 r but at least 28 px, 5 px stroke, 18 px head. Actions: appear (fade; with params.onPassOf: <body id>, it waits from the cue until that body's orbit angle reaches this body's orbit angle, mod 360, then fades in, fast: a ghost dropped where the Moon passes); exit; orbit {by} (moves counterclockwise along its orbit by `by` degrees over the cue's span; a fixed body keeps its heading, a locked one turns with the orbit; anything orbiting or tethered to it follows); moveTo {center?, r?, orbitRadius?} (geometry change over the span; bodies orbiting it follow its live center); setStyle {opacity?, markingOpacity?, name?, labels?, pointer?} (numbers ease; text and the pointer fade in and out, null removes; a pointer that appears grows out from its base); stretchTo {ratio}; tiltTo {deg}; spin {rate} (a locked body only: extra counterclockwise spin against the line to orbit.around, in turns per second; eases from the current rate to `rate` across the cue's span, then holds it); settle (a spinning locked body slows to rest so its near half faces orbit.around exactly at the span's end; production picks the whole number of turns that keeps the slowdown smooth, with no visible correction at the end); pulse {part: near | far | outline | all} (that part's stroke to 2× and back and its fill brightened; a label in it scales 1.15× and back)."
+      "spec": "A round body drawn in code (Earth, the Moon, a ghost of the Moon), never lit: no sun, shading, terminator, or phase. Props: center [x, y], or orbit {around: body id, radius, angle} (position = around's live center + radius at angle; see notes for angles); r; color (a one-color body: fill at 0.6 and a 4 px stroke at full, both in color) or halves {near, far} (a two-tone body: the near half is centered on the heading, the far half opposite; each filled at 0.6 with a 4 px stroke along its own rim arc, no stroke along the chord between them; the halves differ in hue only); rotation: fixed (the heading stays at `heading` on screen: a body that doesn't rotate) or locked (the near half always faces orbit.around: one turn per orbit, counterclockwise with it); heading (degrees, for fixed); stretch (long ÷ short axis, area kept, default 1) and tilt (degrees the long axis leads the line to orbit.around, counterclockwise positive, default 0): the tidal shape is set by the Earth line, not by the marking, so when the body spins against that line the halves turn inside an outline that stays put; the halves are clipped to the outline; markingOpacity (default 1) scales the halves' fills and rims, and below 1 a text-colored 4 px outline of the shape fades in by (1 − markingOpacity) so the shape always reads; opacity (the whole body; ghosts use 0.35; the pointer is always drawn at full strength); name (upright text at the center, type.label, color text); labels {near, far} (upright text, type.label, color text, each inside its half and at least 6 px clear of the rim and the chord; set only while the chord is near horizontal, where 96 × 50 px fits in r 85); pointer (bool): a straight arrow in text on the heading just outside the near pole: base 10 px outside the outline, length 0.75 r but at least 36 px, 5 px stroke, 18 px head. Actions: appear (fade; with params.onPassOf: <body id>, it waits from the cue until that body's orbit angle reaches this body's orbit angle, mod 360, then fades in, fast: a ghost dropped where the Moon passes); exit; orbit {by} (moves counterclockwise along its orbit by `by` degrees over the cue's span; a fixed body keeps its heading, a locked one turns with the orbit; anything orbiting or tethered to it follows); moveTo {center?, r?, orbitRadius?} (geometry change over the span; bodies orbiting it follow its live center); setStyle {opacity?, markingOpacity?, name?, labels?, pointer?} (numbers ease; text and the pointer fade in and out, null removes; a pointer that appears grows out from its base); stretchTo {ratio}; tiltTo {deg}; spin {rate} (a locked body only: extra counterclockwise spin against the line to orbit.around, in turns per second; eases from the current rate to `rate` across the cue's span, then holds it); settle (a spinning locked body slows to rest so its near half faces orbit.around exactly at the span's end; production picks the whole number of turns that keeps the slowdown smooth, with no visible correction at the end); pulse {part: near | far | outline | all} (that part's stroke to 2× and back and its fill brightened; a label in it scales 1.15× and back)."
     },
     {
       "name": "OrbitPath",
@@ -55,22 +55,22 @@
     {
       "name": "Compass",
       "status": "new",
-      "spec": "Compares directions against the fixed frame of the stars: copies of the pointers of the bodies in `of`, gathered at one point by translation only, never turning. Props: of (body ids, in orbit order), center, hub (radius, default 24). Actions: appear (a muted 3 px hub circle fades in at center while each listed body's pointer copy slides there without turning, landing with its base 10 px outside the hub and its own length; copies pointing the same way coincide; the bodies keep their own pointers); sweep (a purple 5 px arc is drawn counterclockwise at radius hub + 10 + pointer length + 14, starting at the direction of the first listed body's pointer and passing the others in list order, ending 20° short of a full turn with an 18 px head); exit."
+      "spec": "Compares directions against the fixed frame of the stars: copies of the pointers of the bodies in `of`, gathered at one point by translation only, never turning. Props: of (body ids, in orbit order), center, hub (radius, default 24), length (the copies' length at the compass; default each pointer's own). Actions: appear (a muted 3 px hub circle fades in at center while each listed body's pointer copy slides there without turning, one after another in list order (each starts 0.15 of the span after the one before, so crossing paths don't meet all at once), growing to `length` and landing with its base 10 px outside the hub; copies pointing the same way coincide; the bodies keep their own pointers); sweep (a purple 5 px arc is drawn counterclockwise at radius hub + 10 + copy length + 14, starting at the direction of the first listed body's pointer and passing the others in list order, ending 20° short of a full turn with an 18 px head); exit."
     },
     {
       "name": "StarField",
       "status": "new",
-      "spec": "Fixed stars, the frame the Moon's turning is measured against; they never move. Either named stars, stars [[x, y]] with bright: true (each a 4-point sparkle 28 px across in text at full opacity: B2's '같은 별'), or a faint field: about 24 dots of radius 2–4 px in text at 0.35 opacity, placed once from `seed` inside `region` [x0, y0, x1, y1], with the outermost dots at the region's left and right edges so the field's ink stays centered, and none within 24 px of other ink visible while the field is shown (`avoid` lists that ink as disks {circle: [x, y, r]} and boxes {box: [x0, y0, x1, y1]}). Props: stars + bright, or region + seed + avoid. Actions: appear (fade; a bright star also scales 0.6 → 1), exit, pulse (scale 1.3× and back)."
+      "spec": "Fixed stars, the frame the Moon's turning is measured against; they never move. Either named stars, stars [[x, y]] with bright: true (each a 4-point sparkle 40 px across in text at full opacity: B2's '같은 별'), or a faint field: about 24 dots of radius 2–4 px in text at 0.35 opacity, placed once from `seed` inside `region` [x0, y0, x1, y1], with the outermost dots at the region's left and right edges so the field's ink stays centered, and none within 24 px of other ink visible while the field is shown (`avoid` lists that ink as disks {circle: [x, y, r]} and boxes {box: [x0, y0, x1, y1]}). Props: stars + bright, or region + seed + avoid. Actions: appear (fade; a bright star also scales 0.6 → 1), exit, pulse (scale 1.3× and back)."
     },
     {
       "name": "SpinArrow",
       "status": "new",
-      "spec": "Shows a body's spin: a purple 5 px circular arc around of's center at radius (its long semi-axis + gap), spanning `span` degrees centered on the far pole (heading + 180°), with an 18 px head at its counterclockwise end. It turns exactly with of's heading, so its speed is the body's spin; it doesn't stretch or tilt. Props: of, gap (default 20), span (default 120). Actions: appear (fade), exit, pulse (stroke 2× and back)."
+      "spec": "Shows a body's spin: a purple 5 px circular arc around of's center at radius (its long semi-axis + gap), spanning `span` degrees centered on the far pole (heading + 180°), with an 18 px head at its counterclockwise end. It turns exactly with of's heading, so its speed is the body's spin; it doesn't stretch or tilt. Props: of, gap (default 20), span (default 120). Actions: appear (fade), exit, pulse (stroke 2× and back), setStyle {opacity} (steps it back while something else has the stage)."
     },
     {
       "name": "Arrow",
       "status": "new",
-      "spec": "A straight force arrow between live points: from `from` (a point on a body: {of, at: nearTip | farTip | center}, nearTip being the end of the long axis on the Earth side) toward `aim` (a point on a tether: {of, t}, t = 0 at its a end, 1 at its b end), `length` px long, 6 px stroke, 22 px head, in color. With scaleByTilt {of, deg}, its length is length × (of's current tilt ÷ deg), so it shrinks away as the tilt closes. Props: from, aim, length, color, scaleByTilt. Actions: appear (grows from its tail), exit, pulse."
+      "spec": "A straight force arrow between live points: from `from` (a point on a body: {of, at: nearTip | farTip | center}, nearTip being the end of the long axis on the Earth side) toward `aim` (a point on a tether: {of, t}, t = 0 at its a end, 1 at its b end), `length` px long, 8 px stroke, 30 px head, in color. With scaleByTilt {of, deg}, its length is length × (of's current tilt ÷ deg), so it shrinks away as the tilt closes. Props: from, aim, length, color, scaleByTilt. Actions: appear (grows from its tail), exit, pulse."
     }
   ],
   "beats": [
@@ -109,7 +109,7 @@
             "rotation": "fixed",
             "heading": 90
           },
-          "where": "the Moon that doesn't rotate: starts at 6 o'clock, center (540, 1095), x 455–625, y 1010–1180, yellow half up (toward Earth), teal half down. Its sweep in B1–B2 with the RimTrace ring and pointer stays inside x 167–913, y 399–1193"
+          "where": "the Moon that doesn't rotate: starts at 6 o'clock, center (540, 1095), x 455–625, y 1010–1180, yellow half up (toward Earth), teal half down. Its sweep in B1–B2 with the RimTrace ring and pointer stays inside x 167–913, y 386–1193"
         },
         {
           "id": "tether1",
@@ -122,7 +122,7 @@
           "id": "title1",
           "component": "Note",
           "props": {"text": "자전 안 하면", "at": [540, 330], "color": "text"},
-          "where": "top of the visual zone, centered: ink x 407–673, y 305–355; 44 px above the pointer's tip when moon1 is at 12 o'clock (B2's end), 29 px below B2's star"
+          "where": "top of the visual zone, centered: ink x 407–673, y 305–355; 31 px above the pointer's tip when moon1 is at 12 o'clock (B2's end), 17 px below B2's star"
         }
       ],
       "cues": [
@@ -130,7 +130,7 @@
           "at": {"word": "달은"},
           "target": "moon1",
           "action": "orbit",
-          "params": {"by": 180, "ease": "linear"},
+          "params": {"by": 180, "ease": "cruise"},
           "until": {"word": "뒷면도"},
           "note": "the hook moves on the first word: 6 → 3 → 12 o'clock at constant speed (about 73°/s). The yellow half stays up, so the side facing Earth slides from yellow across the boundary (3 o'clock) into teal"
         },
@@ -179,8 +179,8 @@
         {
           "id": "star1",
           "component": "StarField",
-          "props": {"stars": [[540, 262]], "bright": true},
-          "where": "the one named star, top center (540, 262), 28 px across (y 248–276): far away 'up', so every up arrow points at it. Stays through B4"
+          "props": {"stars": [[540, 268]], "bright": true},
+          "where": "the one named star, top center (540, 268), 40 px across (y 248–288; 242–294 at its B4 pulse): far away 'up', so every up arrow points at it. Stays through B4"
         },
         {
           "id": "trace1",
@@ -194,7 +194,7 @@
           "at": {"word": "자전을"},
           "target": "moon1",
           "action": "orbit",
-          "params": {"by": 360, "ease": "linear"},
+          "params": {"by": 360, "ease": "cruise"},
           "until": {"word": "향하죠"},
           "note": "one full orbit, 12 → 9 → 6 → 3 → 12 o'clock (about 57°/s): the point facing Earth goes teal → boundary → yellow → boundary → teal around the whole rim"
         },
@@ -235,7 +235,7 @@
           "note": "the ring has just closed: every side has faced Earth once"
         }
       ],
-      "endFrame": "Visual zone: as B1's end (moon1 back at 12 o'clock, center (540, 545), teal toward Earth, tags, title) plus the star at (540, 262), a closed white ring around moon1 at radius 95, and the white pointer straight up from the ring, tip at about y 399 (44 px below the title's ink). Caption: '지구를 향하죠.'",
+      "endFrame": "Visual zone: as B1's end (moon1 back at 12 o'clock, center (540, 545), teal toward Earth, tags, title) plus the star at (540, 268), a closed white ring around moon1 at radius 95, and the white pointer straight up from the ring, 64 px long, tip at about y 386 (31 px below the title's ink). Caption: '지구를 향하죠.'",
       "claims": ["C4"]
     },
     {
@@ -450,7 +450,7 @@
           "at": {"word": "한", "nth": 1},
           "target": "moon1",
           "action": "orbit",
-          "params": {"by": 360, "ease": "linear"},
+          "params": {"by": 360, "ease": "cruise"},
           "until": {"word": "향하죠"},
           "note": "both Moons leave 12 o'clock together at the same speed (about 88°/s) and make exactly one orbit"
         },
@@ -458,7 +458,7 @@
           "at": {"word": "한", "nth": 1},
           "target": "moon2",
           "action": "orbit",
-          "params": {"by": 360, "ease": "linear"},
+          "params": {"by": 360, "ease": "cruise"},
           "until": {"word": "향하죠"},
           "note": "locked: it turns once, counterclockwise, keeping yellow toward earth2"
         },
@@ -548,7 +548,7 @@
         {"text": "별을 기준으로 보면", "at": {"word": "별을"}},
         {"text": "한 바퀴 돌았어요.", "at": {"word": "한"}}
       ],
-      "pauseAfter": 1.0,
+      "pauseAfter": 1.5,
       "elements": [
         {
           "id": "stars",
@@ -557,36 +557,38 @@
             "region": [150, 250, 930, 1240],
             "seed": 2,
             "avoid": [
-              {"circle": [540, 262, 18]},
+              {"circle": [540, 268, 26]},
               {"box": [221, 380, 439, 430]},
               {"box": [634, 380, 866, 430]},
-              {"circle": [330, 690, 220]},
-              {"circle": [750, 690, 220]},
-              {"circle": [330, 990, 64]},
-              {"circle": [750, 990, 88]}
+              {"circle": [330, 690, 228]},
+              {"circle": [750, 690, 228]},
+              {"circle": [330, 1060, 106]},
+              {"circle": [750, 1060, 128]}
             ]
           },
-          "where": "faint stars behind both panels, in the free space: mostly the band above the titles (y 250–370) beside star1, the band below the compasses (y 1080–1240), and the gaps beside them. avoid is every element visible at B4's end: star1 at its pulse's peak, the titles' ink, each panel (Earth, orbit, ghosts and their pointers: 220 px from its Earth), and both compasses with the sweep arc and its head"
+          "where": "faint stars behind both panels, in the free space: mostly the band above the titles (y 250–370) beside star1, the band below the compasses (y 1080–1240), and the gaps beside them. avoid is every element visible at B4's end: star1 at its pulse's peak, the titles' ink, each panel (Earth, orbit, ghosts and their pointers: 228 px from its Earth), and both compasses with the sweep arc and its head"
         },
         {
           "id": "compass1",
           "component": "Compass",
           "props": {
             "of": ["ghost1Top", "ghost1Left", "ghost1Bottom", "ghost1Right"],
-            "center": [330, 990],
-            "hub": 24
+            "center": [330, 1060],
+            "hub": 36,
+            "length": 56
           },
-          "where": "below the left orbit: hub (330, 990) r 24; the gathered arrow reaches up to y 928"
+          "where": "below the left orbit: hub (330, 1060) r 36; the gathered arrow (56 px) reaches up to y 958, 86 px below the 6 o'clock ghost"
         },
         {
           "id": "compass2",
           "component": "Compass",
           "props": {
             "of": ["ghost2Top", "ghost2Left", "ghost2Bottom", "ghost2Right"],
-            "center": [750, 990],
-            "hub": 24
+            "center": [750, 1060],
+            "hub": 36,
+            "length": 56
           },
-          "where": "below the right orbit: hub (750, 990) r 24, arrows to 62 px out, sweep arc radius 76: x 671–829, y 911–1069 (about 40 px below the 6 o'clock ghost)"
+          "where": "below the right orbit: hub (750, 1060) r 36, arrows (56 px) to 102 px out, sweep arc radius 116: x 622–878, y 932–1188 (60 px below the 6 o'clock ghost)"
         }
       ],
       "cues": [
@@ -679,14 +681,14 @@
           "target": "compass1",
           "action": "appear",
           "until": {"word": "한"},
-          "note": "the four up pointers slide down to (330, 990) without turning and land on one another: one arrow, no turn"
+          "note": "the four up pointers slide down to (330, 1060) one after another without turning, growing to 56 px, and land on one another: one arrow, no turn"
         },
         {
           "at": {"word": "기준으로"},
           "target": "compass2",
           "action": "appear",
           "until": {"word": "한"},
-          "note": "the four right pointers slide down to (750, 990) without turning: down, right, up, left"
+          "note": "the four right pointers slide down to (750, 1060) one after another without turning, growing to 56 px: down, right, up, left"
         },
         {
           "at": {"word": "한"},
@@ -696,7 +698,7 @@
           "note": "'한 바퀴': a purple counterclockwise arc passes all four in orbit order"
         }
       ],
-      "endFrame": "Visual zone, still: star1 at the top center and faint stars; both panels as at B3's end but without the live Moons and dashed lines, each ghost with its white pointer (left: all up; right: all toward earth2). Compasses at y 990: left, one up arrow (four stacked); right, arrows down, right, up and left with a purple counterclockwise arc around them, head 20° short of closing. Caption: '한 바퀴 돌았어요.'",
+      "endFrame": "Visual zone, still: star1 at the top center and faint stars; both panels as at B3's end but without the live Moons and dashed lines, each ghost with its white pointer (left: all up; right: all toward earth2). Compasses at y 1060: left, one up arrow (four stacked); right, arrows down, right, up and left with a purple counterclockwise arc around them, head 20° short of closing. Caption: '한 바퀴 돌았어요.'",
       "claims": ["C1", "C2"]
     },
     {
@@ -797,9 +799,9 @@
           "at": {"word": "지구가"},
           "target": "ghost2Right",
           "action": "setStyle",
-          "params": {"markingOpacity": 0.25},
+          "params": {"markingOpacity": 0.7},
           "speed": "base",
-          "note": "the halves sink to faint and the white outline comes up: from here the eye follows the shape"
+          "note": "the halves step back to 70% and a faint white outline comes up: from here the eye follows the shape, and the halves stay readable"
         },
         {
           "at": {"word": "당겨서"},
@@ -854,12 +856,12 @@
           "component": "Arrow",
           "props": {
             "from": {"of": "ghost2Right", "at": "nearTip"},
-            "aim": {"of": "tether3", "t": 0.85},
-            "length": 70,
+            "aim": {"of": "tether3", "t": 0.6},
+            "length": 100,
             "color": "red",
-            "scaleByTilt": {"of": "ghost2Right", "deg": 20}
+            "scaleByTilt": {"of": "ghost2Right", "deg": 25}
           },
-          "where": "from the Earth-side end of the long axis (about (686, 783) at tilt 20°), up and left toward the dashed line near the Moon; 70 px at tilt 20°, shrinking with the tilt; always below the line, clear of '지구 방향'"
+          "where": "from the Earth-side end of the long axis (about (690, 792) at tilt 25°), left and a little up toward the dashed line, tip about (595, 760); 100 px at tilt 25°, shrinking with the tilt; always below the line, 35 px below '지구 방향'"
         }
       ],
       "cues": [
@@ -884,9 +886,17 @@
           "at": {"word": "못"},
           "target": "ghost2Right",
           "action": "tiltTo",
-          "params": {"deg": 20},
+          "params": {"deg": 25},
           "until": {"word": "비껴"},
-          "note": "'못 보고 살짝 비껴': the long axis turns 20° off the line, counterclockwise, in the spin direction: the Earth-side end dips below the line, the far end rises above it. Never the other way"
+          "note": "'못 보고 살짝 비껴': the long axis turns 25° off the line and holds there until '브레이크가', counterclockwise, in the spin direction: the Earth-side end dips below the line, the far end rises above it. Never the other way"
+        },
+        {
+          "at": {"word": "비껴"},
+          "target": "spinArrow",
+          "action": "setStyle",
+          "params": {"opacity": 0.35},
+          "speed": "base",
+          "note": "the spin arrow steps back while the tilted pose and then the pull have the stage (it would sweep across the red arrow)"
         },
         {
           "at": {"word": "자기"},
@@ -909,6 +919,14 @@
           "params": {"deg": 0},
           "until": {"word": "맞을"},
           "note": "the offset shrinks with the spin; the pull arrow shrinks with it"
+        },
+        {
+          "at": {"word": "브레이크가"},
+          "target": "spinArrow",
+          "action": "setStyle",
+          "params": {"opacity": 1},
+          "speed": "fast",
+          "note": "back to full: the slowing arc is the point now"
         },
         {"at": {"word": "맞을"}, "target": "pull", "action": "exit", "speed": "fast"},
         {
@@ -1007,7 +1025,7 @@
           "at": {"word": "얼굴을"},
           "target": "ghost2Right",
           "action": "orbit",
-          "params": {"by": 270, "ease": "linear"},
+          "params": {"by": 270, "ease": "cruise"},
           "until": {"pause": true},
           "note": "3 → 12 → 9 → 6 o'clock (about 71°/s): yellow always toward Earth, while the Moon and its purple arrow turn three quarters against the stars"
         },

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ease } from "../style/theme";
+import { cruise, ease } from "../style/theme";
 import { Cues, phase, resolveTimeline, Storyboard } from "./timeline";
 
 const el = (id: string) => ({ id, component: "Note", props: {} });
@@ -66,5 +66,19 @@ describe("phase", () => {
     expect(phase(a, 10, 0, 0)).toBe(1);
     expect(phase(a, 10, 0.5, 0.5)).toBe(0);
     expect(phase(a, 11, 0.5, 0.5)).toBe(1);
+  });
+});
+
+describe("cruise", () => {
+  it("covers the span at constant speed, easing out of and into rest", () => {
+    const f = cruise(0.1);
+    expect(f(0)).toBe(0);
+    expect(f(1)).toBe(1);
+    const speed = (t: number) => (f(t + 1e-4) - f(t)) / 1e-4;
+    expect(speed(0.3)).toBeCloseTo(1 / 0.9, 3);
+    expect(speed(0.7)).toBeCloseTo(1 / 0.9, 3);
+    expect(speed(0)).toBeLessThan(0.01);
+    expect(speed(1 - 1e-4)).toBeLessThan(0.01);
+    for (let t = 0; t < 1; t += 0.01) expect(f(t + 0.01)).toBeGreaterThan(f(t));
   });
 });
