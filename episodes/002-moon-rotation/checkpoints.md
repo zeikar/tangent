@@ -17,3 +17,5 @@
   on the storyboard page ("그림 보면 더 이해가 쉬울지도").
 - 2026-09-28 · storyboard · approved with take4 ("ㅇㅋ 일단 승인"); about
   48.6 s with pauses.
+- 2026-09-28 · first look · "괜찮아 보이는데? ㅋㅋ" (48.4 s, no length
+  question); the round-1 fixes are QA's and the critics' legibility points.
