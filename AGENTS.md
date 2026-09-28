@@ -29,4 +29,4 @@ Directories get created when they first have content.
   decisions.md → Agents).
 - `.claude/skills/episode/`: the orchestrator's runbook.
 - `docs/korean.md`: the channel's Korean wording rules, on top of the
-  global `korean-polish` skill (which polishes what the human posts).
+  global `korean-polish` skill (which writes and polishes what the human posts).
