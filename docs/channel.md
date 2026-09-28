@@ -91,7 +91,9 @@ fill the metadata with `videos.update`, which the lock doesn't affect.
   컴팩트하게", 2026-09-28): the one best source per claim the video relies
   on, primary over secondary, a few in all; only sources that were actually
   read (a standard we couldn't open is named in the body, not cited; a
-  standard read through a preview is cited with that note). Then three hashtags. The first three show above the title, so they
+  standard read through a preview is cited with that note), each source a
+  "- " line (no middle dot; wording per `docs/korean.md`, since 2026-09-28,
+  so 001 and 002 as uploaded still use ·). Then three hashtags. The first three show above the title, so they
   follow the title's rule too: no answer (001 uses #용지규격, not #루트2).
 - **Tags:** the topic's search terms in Korean and English, spaced and
   unspaced (A4 용지, A4용지); nothing the video doesn't show and never other

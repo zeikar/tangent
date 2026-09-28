@@ -51,7 +51,8 @@ able to copy each block without editing it. Leave the `Published:` line out;
 it is added after upload.
 
 - **Title, description, tags, playlist** per `docs/channel.md`. Korean, the
-  same "~요" register as the script. Tags leave out what the upload defaults
+  same "~요" register as the script, worded per `docs/korean.md` and the
+  general rules it points to. Tags leave out what the upload defaults
   already add.
 - **Facts:** every factual statement in the description comes from a
   research.md claim, and the description's 출처 (sources) lines are the sources

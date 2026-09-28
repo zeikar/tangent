@@ -35,7 +35,8 @@ If the slug isn't an existing episode folder with `topic.md` and
 
 Write one YouTube Shorts episode's script: Korean-language math / science /
 engineering explainers in the 3Blue1Brown style, code-rendered animation.
-Read `docs/decisions.md` (Format, Style) and `docs/narration.md` first.
+Read `docs/decisions.md` (Format, Style), `docs/korean.md` (with the general rules
+it points to), and `docs/narration.md` first.
 `episodes/001-a4-paper-ratio/script.md` is a shipped example of the layout.
 
 Inputs: `topic.md` and `research.md` in the episode folder. Write only the

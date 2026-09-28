@@ -28,3 +28,5 @@ Directories get created when they first have content.
 - `.claude/agents/`: one agent per stage, `tangent-<stage>` (see
   decisions.md → Agents).
 - `.claude/skills/episode/`: the orchestrator's runbook.
+- `docs/korean.md`: the channel's Korean wording rules, on top of the
+  global `korean-polish` skill (which polishes what the human posts).
