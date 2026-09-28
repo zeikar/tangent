@@ -6,7 +6,8 @@ picks one; a picked idea becomes `episodes/<slug>/topic.md`. Earlier rounds
 of candidates are in git history (up to d4a76eb).
 
 Made so far: 001 A4 paper ([episodes/001-a4-paper-ratio](../episodes/001-a4-paper-ratio/topic.md)),
-002 the Moon's rotation ([episodes/002-moon-rotation](../episodes/002-moon-rotation/topic.md)).
+002 the Moon's rotation ([episodes/002-moon-rotation](../episodes/002-moon-rotation/topic.md)),
+003 the mirror's left and right ([episodes/003-mirror-left-right](../episodes/003-mirror-left-right/topic.md)).
 
 ## The human's taste
 
@@ -69,6 +70,10 @@ the notes are in `git show d4a76eb:docs/topics.md`.
   reactor, always twelve pentagons, Janus and Epimetheus swapping orbits,
   the bomb tester, Riemann rearrangement. The human picked their own idea
   instead, the Moon's rotation.
+- 2026-09-28, the human's own list; 003 took the mirror, and the rest are
+  still open (one-line notes in 003's topic.md): magenta missing from the
+  rainbow, why eclipses don't happen every month, Hilbert's hotel,
+  graphite vs. diamond colors, touch and Pauli exclusion.
 - Set aside earlier as already told in Korean, which no longer counts
   against an idea (2026-09-27): the lunar birthday cycle, 11,172 Hangul
   syllables, curved platform gaps, the West Sea's tides, bus bunching,
