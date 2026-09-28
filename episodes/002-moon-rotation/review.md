@@ -1,5 +1,158 @@
 # Review · 002-moon-rotation
 
+## Round 2 · 2026-09-28
+
+**Verdict: ship.**
+
+This round reviewed the render from 520d5a5: 48.90 s, 1467 frames. B4's hold
+is 0.5 s longer than in round 1. The fix round changed shared theme tokens and
+the timeline's easing, so this is a full pass, not a diff review.
+
+- **Round 1's three minor issues are fixed.** So are r1#4 (in check-render)
+  and r1#5.
+- **r1#8 stays as it is,** and I agree (see below).
+- **check-render passes:** 0 fail, 15 pass, 1 skip.
+- **What's left:** three new nits and round 1's two carried nits. None
+  misleads or hides anything.
+
+Evidence is in `review/r2/`:
+
+- `sheet-ends.png`: f0 and every beat's last frame;
+- `sheet-b4-f620-647.png` and `sheet-b6-f1150-1200.png`: motion strips;
+- `f0369.png` and `f0733.png`.
+
+### Round 1, re-checked
+
+| Round 1 | Now |
+|---------|-----|
+| r1#1 orbits start and stop at full speed | **Fixed.** Every orbit ramps over about 5 frames. B1: 0 → 0.5 → 3.2 → 7.1 → 10.6 → 12.5 px/frame (f3–f8), and back down 12.3 → 10.7 → 7.5 → 3.1 → 0.7 → 0 (f73–f78). B2, B3 and B7 ramp the same way. B7's stall-then-jolt is gone: the pull-back slows to under 1 px/frame for 4 frames (f1328–f1331), then the orbit ramps 3.3 → 7.3 → 11.1 → 12.6. The end angles and frames are unchanged. |
+| r1#2 the spin arc crosses the red pull arrow | **Mostly fixed.** The arc dims to 0.35 from "비껴" (f1055), so its pass over the red arrow at about f1150 is faint. The arrow is bigger: 100 px, 8 px stroke, 5.8:1 on the ground. It holds full length through the 25° lean until "브레이크가". One full-strength crossing remains: r2#1. |
+| r1#3 B4's arrows are at the glyph floor | **Fixed.** Ghost pointers are now 35 px (ghost1Top's runs y 465–499), and the compass copies 56 px on a 36 px hub. The right compass with its sweep spans x 631–868 and y 941–1188, about 1.5× round 1's (`review/r2/f0733.png`). |
+| r1#4 words detector miss | **Fixed** in check-render (12dc309), using the rule I proposed. It now passes 23 of 23, widest "앞면이" at −50 ms. |
+| r1#5 compass copies clump | **Fixed.** The copies leave one at a time, and no two meet (`review/r2/sheet-b4-f620-647.png`). Each still crosses Earth or a ghost for a few frames on its way, which reads as a slide. The last copy lands at f644, as the sweep starts. |
+| r1#6 B3's panels sit high | Carried, unchanged, and fine to leave. B4 now uses the bottom of the zone down to y 1188. |
+| r1#7 the ghosts' halves are faint | Carried, unchanged (opacity 0.35). |
+| r1#8 the "도는 / 것" caption split | **Not done, and I agree.** The storyboard's 2–4 eojeol rule, which `validate-storyboard.py` enforces, leaves this split as the only choice. "지구에선 / 안 도는 것 같지만" needs a 1-eojeol caption, and the whole clause is 5 eojeol. The rule guards against one-word flashes and long lines, and it's worth more than this 0.77 s fragment. Closed. |
+
+**Frame 0 (the Claude cut critic's point 5).** Production is right: the Moon
+isn't fading in at f0. Its fills there are (155, 111, 55) yellow and
+(8, 117, 117) teal, the same as at B1's end (f131) and at B7's 6 o'clock
+(f1437). Frames 0–3 differ from f0 in at most 4 pixels. The see-through look
+is the approved 0.6 body fill: #FEB251 at 0.6 over the ground comes out at
+about 155.
+
+### Issues
+
+#### 1. Nit: the spin arc still crosses the full-length red arrow once, on "브레이크가" (f1181–f1199)
+
+- The arc returns to full strength on "브레이크가" (f1177, a 0.35 s fade).
+  The lean holds until then, so the red arrow is still about 95 px long.
+- The arc's next pass over the Earth side overlaps the red arrow's box from
+  f1181 to f1199, at full strength by f1183 (`review/r2/sheet-b6-f1150-1200.png`).
+- It's one pass of 0.6 s, and on "브레이크가" both arrows matter, so it's
+  much milder than round 1's.
+- **Fix (optional):** bring the arc back on "걸렸죠" (f1192) instead. It would
+  reach full strength around f1202, after the crossing, and the slowdown
+  still shows from there to "맞을".
+
+#### 2. Nit, for the human: B4's hold is now 2.2 s of silence over a still picture (f670–f734, 22.3–24.5 s)
+
+- The Codex critic asked for more time on the finished compass, so the pause
+  after "돌았어요" went from 1.0 to 1.5 s.
+- The narration is silent from 22.28 to 24.46 s, and nothing on screen moves
+  from f670 to f734.
+- It's now the longest still and the longest silence in the video. The next
+  longest still is B5's 1.4 s (f761–803), under narration. The next longest
+  silence is 1.3 s before B3 (11.0–12.3 s), and the ring's pulse covers its
+  first 0.4 s.
+- Whether 2.2 s reads as time to take in the conclusion or as a dead spot is
+  a feel call.
+- **If it feels long:** a single pulse of compass2's arrows about halfway in
+  (around f700) would keep it alive without giving the time back.
+
+#### 3. Nit: B2's bigger star crowds the title, and at B2's end the pointer aims into the title (f199–f369)
+
+- star1 is now 40 px across (y 249–286). The title "자전 안 하면" starts
+  18 px below it (ink y 305–355), so the star reads a little like the
+  title's ornament.
+- At B2's end the Moon's pointer tip is at y 387, 32 px below the title. So
+  the arrow meant for the star points into the title text, with the star
+  behind it (`review/r2/f0369.png`).
+- In mid-orbit the pointer is far from the title, so this only shows around
+  12 o'clock: from about f300 to B2's end.
+- **Fix (optional):** exit title1 on "같은" (f189), when the star appears. The
+  question it names has been asked, and the caption carries "자전을 안
+  하면". The star then has the top center to itself, and B3's exit list
+  shrinks by one.
+
+### check-render
+
+My `--out` run matched the tracked `check.md` and `check.json` byte for byte:
+**0 fail, 0 warn, 15 pass, 1 skip** (labels: no edge labels).
+
+- **Passes at or near a limit:**
+  - bounds: the top ink is y 241 against the y ≥ 240 bound. It's star1 at the
+    peak of its "별을" pulse (f615), 1 px inside. The storyboard gives
+    242–294, so it's the 40 px star at 1.3×. It passes, but there's no room
+    left if the star grows again.
+  - bounds: the rightmost ink is x 933, a star-field edge dot.
+  - words: the widest is "앞면이" at −50 ms.
+  - centering: B5 is −9 px for all ink and −10 px for the picture.
+- **Everything else passes:**
+  - freshness;
+  - technical: BT.709 TV range, 30 fps, 48 kHz, silent tail;
+  - legibility: 39.6 px;
+  - overlaps;
+  - captions: 35 on their cue, one line each;
+  - readable;
+  - reaction: +1 at every beat, B1 included with the ramped orbit;
+  - cues and blank runs;
+  - loudness: −14 LUFS, −3.2 dBTP;
+  - A/V sync: 0 ms;
+  - loop: 4 px differ.
+
+### Checked and fine
+
+- **End frames** (`review/r2/sheet-ends.png`). Every beat's last frame matches
+  its `endFrame`:
+  - B2: the 40 px star at (540, 268) and the 64 px pointer, tip at y 387;
+  - B4: the compasses at y 1060, the left one a single 56 px up arrow, the
+    right one down, right, up and left with the counterclockwise sweep 20°
+    short;
+  - B5 and B6: the halves at 70%;
+  - B1, B3 and B7 as in round 1, with B7 matching f0.
+- **Motion,** re-sampled every 2–10 frames through every beat and every 2–3
+  frames at the boundaries and changed moves. Beyond what's in the table:
+  - B6: the lean reaches 25° counterclockwise (Earth-side end below the line)
+    on "비껴" and holds, with the halves still spinning inside the leaning
+    outline, until "브레이크가". It then closes with the settle, and the red
+    arrow shrinks with it, gone by f1240. The spin never reverses.
+  - B5: the halves step back to 70% (2.8:1 and 2.3:1 on the ground) under a
+    faint outline. The rugby shape and the yellow-toward-Earth marking both
+    read, which answers the Claude critic's point 4.
+  - B2: the pointer, now 64 px, still clears Earth at 6 o'clock by about
+    21 px.
+- **Still stretches** (under 100 changed pixels per frame, 0.8 s or longer):
+  f99–132, f343–370, f524–555, f670–734 (r2#2), f761–803, f887–918,
+  f1273–1307 and f1444–1466. None spans a new sentence without a cue.
+- **Captions.** All 35 match the storyboard, unchanged from round 1.
+- **Narration.** A fresh Whisper transcript of this render matches all 13
+  sentences of the Read-aloud text. Only the pause after B4 changed.
+- **Facts.** `verify.py` passes. The picture's claims are as in round 1. The
+  larger lean (25°) still leads in the spin direction, as C11 and research's
+  "Easy to misstate" require.
+- **The shared changes.** Episode 001 uses none of the changed components or
+  tokens (force strokes, sky tokens, sparkle, cruise). I re-rendered the same
+  12 stills of 001 with today's studio, and they're byte-identical to round
+  1's.
+
+### What the brief should have told me
+
+- **Where the caption rule lives.** The brief asks QA to judge line breaks,
+  but the 2–4 eojeol limit sits in the storyboard agent's instructions and
+  `validate-storyboard.py`. Had I known it, r1#8 would have come with its
+  constraint.
+
 ## Round 1 · 2026-09-28
 
 **Verdict: fix then ship.**
