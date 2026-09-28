@@ -85,21 +85,25 @@ fill the metadata with `videos.update`, which the lock doesn't affect.
   반으로 접어도 모양이 똑같을까?" (assumes a property few know), or "A4 용지
   비율의 비밀" (clumsy).
 - **Description:** first two lines show the phenomenon, not the answer; then
-  the key math in plain text with its variables defined; decimals written so
-  they don't read as exact (297 ÷ 210 ≈ 1.41429 next to √2 ≈ 1.41421, not
-  "1.414…"). Then 출처 (sources): only research.md sources the video relies
-  on and that were actually read (a standard we couldn't open is named in
-  the body, not cited; a standard read through a preview is cited with that
-  note). Then three hashtags. The first three show above the title, so they
+  the key math or reasoning in plain text, variables defined; decimals
+  written so they don't read as exact (297 ÷ 210 ≈ 1.41429 next to √2 ≈
+  1.41421, not "1.414…"). Then 출처 (sources), kept compact ("출처는
+  컴팩트하게", 2026-09-28): the one best source per claim the video relies
+  on, primary over secondary, a few in all; only sources that were actually
+  read (a standard we couldn't open is named in the body, not cited; a
+  standard read through a preview is cited with that note). Then three hashtags. The first three show above the title, so they
   follow the title's rule too: no answer (001 uses #용지규격, not #루트2).
 - **Tags:** the topic's search terms in Korean and English, spaced and
   unspaced (A4 용지, A4용지); nothing the video doesn't show and never other
   channels' names. The channel-wide tags come from the upload defaults. Tags
   matter little for discovery.
-- **Playlists:** by theme. Current: `일상 속 수학` (math in everyday objects).
-  Add a theme playlist when a second episode shares a theme; until then, an
-  episode whose theme has no playlist goes in none, and publish.md names
-  its theme in the notes.
+- **Playlists:** by theme. Current: `일상 속 수학` (math in everyday
+  objects), `우주 이야기` (space and astronomy, opened with 002 since the
+  next space topic was already shelved; the human's pick, 2026-09-28). Add
+  a theme playlist when a second episode shares a theme, or with the first
+  when another in that theme is already lined up; otherwise an episode
+  whose theme has no playlist goes in none, and publish.md names its theme
+  in the notes.
 - **Thumbnail:** a frame that shows the subject and the title's question, not
   the answer, holding for at least ~1 s. Until custom Shorts thumbnails are
   available to the channel, pick that frame in the mobile app's frame

@@ -107,3 +107,44 @@ and a reviewer found the top two player bugs independently.
 - **Left for episode 002's build:** one schema for storyboard and cues
   (defined in four places today), and a player core that doesn't import
   PaperRect. 002's new components should shape both.
+
+### Episode 002, the Moon's rotation (2026-09-27 → 28)
+
+Published 2026-09-28 (https://youtube.com/shorts/WDywGPVblfU), 48.9 s, the
+first episode through the stage agents. Times are wall clock.
+
+- **Topic (~20 min agent):** the freer brief brought nine ideas; the human
+  picked their own instead (the Moon turns once per orbit) and set the
+  criteria: the picture first, and Korean coverage no longer counts.
+- **Research (~30 min):** 16 claims, verify.py passes. It caught a premise
+  the topic overstated (a month wouldn't show the far side in sunlight) and
+  "dark side" as misleading rather than wrong.
+- **Scripts (~10 min each, one revision):** both writers independently
+  cut the Earth coda to stay under 50 s, and both critiques converged
+  (open on the non-rotating Moon, lighten the mechanism, flip the myth at
+  the end). Parallel takes claimed take1 and take2 cleanly (the new `wx`
+  reservation's first real use).
+- **Wording (two retakes):** the human picked by ear, then the new Claude
+  critic and the human found words a listener can't follow once ("위쪽",
+  "앞서", "부푼 쪽", "도로 당겨", "지구 방향을 지나쳤어요"). A survey of
+  Korean 윤문 tools found none that caught these; the rules went into
+  narration.md instead. The last wording was judged on the storyboard page,
+  with the picture.
+- **Storyboard (~30 min, re-synced twice):** eight new general components
+  and a seamless loop (start and end at 6 o'clock). Re-syncing to a retake
+  only moved anchors, since every cue binds to a word.
+- **Production (~30 min):** generalized the player (Scene.state, a registry,
+  draw order from data) with 001 frame-identical, and found a words-check
+  detector miss that QA diagnosed and the orchestrator fixed (12dc309).
+- **First look, one fix round (~15 min), QA ship:** the human liked the
+  first render; the round was legibility only (sizes, holds, easing), taken
+  from where QA and both critics converged.
+- **Publish:** sources compacted to four and a 우주 이야기 playlist opened,
+  both the human's calls; channel.md updated.
+- **Human wait:** overnight between the storyboard page and approval; every
+  other checkpoint came back within minutes.
+- **Silent failures:** none reached the render. The checks that fired were
+  the ones added in the review (take stamp, aligner, validator).
+- **Side exploration:** a mascot, drawn as SVG by two agents (~6/10) and as
+  six Codex image concepts (better), is on hold; the SVG drafts are in
+  `git stash`.

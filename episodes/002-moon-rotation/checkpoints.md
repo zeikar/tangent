@@ -19,3 +19,7 @@
   48.6 s with pauses.
 - 2026-09-28 · first look · "괜찮아 보이는데? ㅋㅋ" (48.4 s, no length
   question); the round-1 fixes are QA's and the critics' legibility points.
+- 2026-09-28 · final · approved with metadata ("ㅇㅋ 승인"): sources cut to
+  four ("출처는 컴팩트하게 하는게 좋을듯?"), a new playlist 우주 이야기
+  ("2번으로 가자, 이름은 우주 이야기"). Uploaded by the human:
+  https://youtube.com/shorts/WDywGPVblfU
