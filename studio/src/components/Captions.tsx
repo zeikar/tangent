@@ -1,17 +1,17 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
 import { Caption } from "../storyboard/timeline";
-import { color, content, duration, ease, font, type, zone } from "../style/theme";
+import { color, content, font, type, zone } from "../style/theme";
 import { Tex } from "./Tex";
 
 // Phrase captions in the caption band: plain text with $...$ math, each shown
-// from its anchor until the next one. The first fades in; the rest cut.
+// from its anchor until the next one, cutting in. The first is on screen from
+// frame 0 (resolveCaptions), so the feed's first frame shows it whole.
 
-export const Captions: React.FC<{ captions: Caption[]; frame: number; fps: number }> = ({ captions, frame, fps }) => {
+export const Captions: React.FC<{ captions: Caption[]; frame: number }> = ({ captions, frame }) => {
   const i = captions.findIndex((c) => frame >= c.from && frame < c.to);
   if (i < 0) return null;
   const cur = captions[i];
-  const opacity = i > 0 ? 1 : ease.out(Math.min((frame - cur.from + 1) / (duration.fast * fps), 1));
   return (
     <AbsoluteFill>
       <div
@@ -29,7 +29,6 @@ export const Captions: React.FC<{ captions: Caption[]; frame: number; fps: numbe
           ...type.caption,
           fontFamily: font.sans,
           color: color.text,
-          opacity,
         }}
       >
         <div data-text="caption">

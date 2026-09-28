@@ -148,3 +148,28 @@ first episode through the stage agents. Times are wall clock.
 - **Side exploration:** a mascot, drawn as SVG by two agents (~6/10) and as
   six Codex image concepts (better), is on hold; the SVG drafts are in
   `git stash`.
+
+### First audience numbers, a hook on frame 0 (2026-09-28)
+
+YouTube Studio's automated review of the channel, hours after 002 went up
+and two days after 001: average view rate 135% on 002 (66 s on a 49 s
+video), about 68% of viewers still there at 47 s of 001's 47.5 s, but only
+about 42% of feed viewers staying to watch on both (the same figure for
+each; possibly a channel total). 10 likes, 1 comment, 3 subscribers. Too
+early and too few views to read closely.
+
+- **The view rate is mostly the loop.** Shorts replay on their own, and
+  both episodes end on their first frame, so viewers slide into a second
+  pass. The review's advice to build loops describes what we already do.
+- **An end-of-video ask for comments** (the review's other tip) wasn't
+  taken: it breaks the loop and the script brief's no-"구독과 좋아요" rule.
+  A pinned comment can ask a follow-up question at no cost to the video.
+- **The hook was the real finding.** Frame 0 of both had no text (the first
+  caption faded in at its word, ~0.4 s) and a drawing about half the frame
+  wide at the top of an otherwise empty frame. 002's first line, "달은
+  자전을 안 한다고요?", also presumed a belief most viewers don't hold.
+  Now the player draws the first caption from frame 0 with no fade (check-render's
+  caption check accepts a caption cued at frame 0), the script and
+  storyboard agents write for that first frame, and the cut critic judges
+  it. A question header held for the whole video was the other option; the
+  human found it too much. First used in 003.

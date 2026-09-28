@@ -183,7 +183,9 @@ export const resolveTimeline = (sb: Storyboard, cues: Cues): ElementTimeline[] =
   return list;
 };
 
-// Each caption shows from its anchor until the next caption starts.
+// Each caption shows from its anchor until the next caption starts. The first
+// shows from frame 0: the feed's first frame carries the hook, before the
+// first word is heard.
 export const resolveCaptions = (sb: Storyboard, cues: Cues): Caption[] => {
   const list = sb.beats.flatMap((beat, k) => {
     if (cues.beats[k].captions.length !== beat.captions.length) {
@@ -191,5 +193,6 @@ export const resolveCaptions = (sb: Storyboard, cues: Cues): Caption[] => {
     }
     return beat.captions.map((c, i) => ({ text: c.text, from: cues.beats[k].captions[i].frame }));
   });
+  if (list.length) list[0].from = 0;
   return list.map((c, i) => ({ ...c, to: list[i + 1]?.from ?? cues.durationInFrames }));
 };

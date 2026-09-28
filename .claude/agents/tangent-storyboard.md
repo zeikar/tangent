@@ -88,7 +88,10 @@ report instead of silently redesigning it.
 ## Captions
 
 Captions are phrase chunks of the Display text, 2–4 eojeol each, shown from the
-anchor of the chunk's first spoken word until the next chunk. Keep the
+anchor of the chunk's first spoken word until the next chunk. The player
+draws the episode's first chunk from frame 0 instead, before its word is
+heard, so the feed's first frame carries the hook: make that chunk read as
+the question on its own. Keep the
 dollar-sign math. Chunks together must cover the beat's Display text in order.
 
 ## Screen
@@ -98,6 +101,11 @@ dollar-sign math. Chunks together must cover the beat's Display text in order.
   Center compositions on the frame (x 540) and keep everything, labels
   included, within x 140–940 at every frame: a rotating or moving shape's
   whole sweep counts, not just its end position.
+- Frame 0 is the hook as the feed shows it, before any sound or motion: the
+  first caption over B1's `visibleAtStart` elements. Make that picture big
+  and recognizable by itself. 001 and 002 opened with a drawing about half
+  the frame wide at the top of the visual zone, over an empty middle, and
+  only about 42% of feed viewers stayed.
 - Legibility floor: the smallest glyph (lowercase x-height, a fraction's
   numerator) is at least 30 px tall at 1080 wide. Measure math with
   `node scripts/measure-tex.mts` instead of estimating; a display fraction

@@ -221,5 +221,11 @@ Stage numbers follow the `episode` runbook.
 ## Format
 
 9:16 (1080×1920), one visual insight per short, hook within the first 1–2 s.
+Since 2026-09-28 the hook starts on frame 0: the first caption shows from
+the first frame, before its word is heard, over a picture big enough to read
+at a glance. YouTube Studio's first numbers had only about 42% of feed viewers
+staying on 001 and 002, both of which opened with no text and a small drawing.
+A header held for the whole video was considered and not taken.
+
 Volume is not the strategy: YouTube's July 2025 monetization update names
 mass-produced, repetitive uploads "inauthentic content".

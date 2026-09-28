@@ -70,6 +70,14 @@ judgment, not a template:
 - Open with something surprising about a thing the viewer knows, within the
   first 1–2 s. A question can do it; so can a plain statement over a picture
   that makes the viewer ask "why?".
+- The feed decides on the first frame. The first caption chunk is on screen
+  from frame 0, before its word is heard, so those few words over the first
+  picture should pose the question by themselves. Start from what anyone has
+  seen, not from a belief the viewer may not hold: 002 opened with "달은
+  자전을 안 한다고요?", which stops only someone who thinks so, while its
+  title's question, "달은 왜 늘 같은 면만 보일까?", stops anyone who has
+  looked at the Moon. Only about 42% of feed viewers stayed on 001 and 002,
+  though most who stayed watched to the end.
 - Follow one line of thought in the order that's easiest to follow. Prefer
   the shortest familiar explanation over a clever one with more steps.
 - Fewer, bigger pictures beat many small moves; let a result sit still for a

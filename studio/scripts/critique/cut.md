@@ -24,6 +24,10 @@ it was liked less.
 You see frames at 2 per second and no audio, so be careful with claims about
 pacing and motion; say when a point depends on something you couldn't see.
 
+The first tile is frame 0, what the feed shows while a viewer decides whether
+to stay: say whether it poses the question by itself (the first caption over
+the first picture, big enough to read at a glance).
+
 Answer in Korean. Start with a verdict: **ship**, **ship with notes**, or
 **rework**. Then what works (so it's kept), and at most five suggestions,
 ranked, each with a time range and a concrete change, marking anything you'd

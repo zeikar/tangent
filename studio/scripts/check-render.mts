@@ -536,16 +536,15 @@ const visibleOpacity = (snap: FrameSnap, id: string) => {
 // ---- Captions: on time, one line, inside the zone ------------------------------------------------
 {
   const rows = timeline.captions.map((c) => {
-    // The first frame the caption band changes around the caption's cue frame.
-    let shown: number | null = null;
-    for (let f = Math.max(1, c.from - 3); f <= Math.min(px.frames - 1, c.from + 12); f++) {
-      if (px.captionChange[f] > checks.changePixels) {
-        shown = f;
-        break;
-      }
-    }
     const mid = Math.min(c.to - 1, c.from + 6);
     const item = snaps[mid].els.find((e) => e.id === "captions")?.texts[0];
+    // The first frame the caption band changes around the caption's cue frame.
+    // Frame 0 has no frame before it to change from: a caption cued there shows
+    // if it is drawn.
+    let shown: number | null = c.from === 0 && item ? 0 : null;
+    for (let f = Math.max(1, c.from - 3); shown === null && f <= Math.min(px.frames - 1, c.from + 12); f++) {
+      if (px.captionChange[f] > checks.changePixels) shown = f;
+    }
     const inside = !item || (item.box[0] >= content.left && item.box[2] <= content.right && item.box[1] >= zone.caption.top && item.box[3] <= zone.caption.bottom);
     const late = shown === null ? null : shown - c.from;
     const problems = [

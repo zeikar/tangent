@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { cruise, ease } from "../style/theme";
-import { Cues, phase, resolveTimeline, Storyboard } from "./timeline";
+import { Cues, phase, resolveCaptions, resolveTimeline, Storyboard } from "./timeline";
 
 const el = (id: string) => ({ id, component: "Note", props: {} });
 
@@ -80,5 +80,29 @@ describe("cruise", () => {
     expect(speed(0)).toBeLessThan(0.01);
     expect(speed(1 - 1e-4)).toBeLessThan(0.01);
     for (let t = 0; t < 1; t += 0.01) expect(f(t + 0.01)).toBeGreaterThan(f(t));
+  });
+});
+
+describe("resolveCaptions", () => {
+  it("shows the first caption from frame 0 and the rest from their anchors", () => {
+    const sb: Storyboard = {
+      beats: [
+        { id: "B1", captions: [{ text: "one" }, { text: "two" }], elements: [], cues: [] },
+        { id: "B2", captions: [{ text: "three" }], elements: [], cues: [] },
+      ],
+    };
+    const cues: Cues = {
+      fps: 30,
+      durationInFrames: 200,
+      beats: [
+        { id: "B1", startFrame: 0, endFrame: 99, captions: [{ frame: 9 }, { frame: 40 }], cues: [] },
+        { id: "B2", startFrame: 100, endFrame: 199, captions: [{ frame: 110 }], cues: [] },
+      ],
+    };
+    expect(resolveCaptions(sb, cues)).toEqual([
+      { text: "one", from: 0, to: 40 },
+      { text: "two", from: 40, to: 110 },
+      { text: "three", from: 110, to: 200 },
+    ]);
   });
 });

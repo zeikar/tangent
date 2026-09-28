@@ -116,7 +116,7 @@ export const StoryboardPlayer: React.FC<{ storyboard: Storyboard; cues: Cues }> 
           );
         })}
       <div data-el="captions" style={{ position: "absolute", inset: 0 }}>
-        <Captions captions={captions} frame={frame} fps={cues.fps} />
+        <Captions captions={captions} frame={frame} />
       </div>
     </AbsoluteFill>
   );
