@@ -45,7 +45,7 @@ description, tags, thumbnail, and playlist.
 
 Two per-video answers the defaults don't cover: Audience, "No, it's not made
 for kids" (시청자층, "아니요, 아동용이 아닙니다"), and Altered or synthetic
-content, "No" (변경되거나 합성된 콘텐츠, "아니요"; below).
+content, "Yes" (변경되거나 합성된 콘텐츠, "예"; below).
 
 ## AI disclosure
 
@@ -59,10 +59,19 @@ requiring it
 checked 2026-09-25).
 
 Our episodes use a stock synthetic voice (not a real person's) over
-code-rendered animation, so the answer is No (아니요). It becomes Yes (예) if
-an episode adds AI-generated music or realistic AI-generated imagery. The
-description doesn't mention the TTS voice; it isn't required and most
-channels don't.
+code-rendered animation, which by those rules alone would be No. The answer
+is Yes (예) since 003 (2026-09-29): Gemini TTS embeds a SynthID watermark in
+every clip ([Google DeepMind](https://deepmind.google/models/gemini-audio/)),
+and since 2026-05-27 YouTube labels content its systems detect as AI even
+when the creator answered No
+([YouTube Blog](https://blog.youtube/news-and-events/improving-ai-labels-viewers-creators/)).
+001 and 002 were uploaded with No and got the label anyway. Answering No
+every time while YouTube detects AI every time reads as not disclosing,
+which the help page warns can bring penalties; the label alone doesn't
+change recommendation or monetization, and for animated content it sits in
+the expanded description rather than over the video. Switching TTS engines
+to avoid the label isn't a reason to switch: the voice would still be AI.
+The description doesn't mention the TTS voice; the label covers it.
 
 ## Uploading by API
 
@@ -143,7 +152,7 @@ Video: `publish/<slug>.mp4` · Thumbnail: `publish/<slug>.thumb.png`
 - Thumbnail: <m:ss.s> (anywhere in <start>–<end> s), <what it shows>
 - Playlist: <playlist>
 - Audience: No, it's not made for kids (아니요, 아동용이 아닙니다)
-- Altered or synthetic content: No (아니요)
+- Altered or synthetic content: Yes (예)
 - Everything else: the upload defaults
 
 ---
