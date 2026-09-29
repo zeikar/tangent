@@ -12,3 +12,7 @@
   geometry (C4); the floor mirror is shown with scenery, not a person
   (C8, C9); the twist is that flipping front-back alone turns a right hand
   into a left hand's shape (C3). "그렇게 하자".
+- 2026-09-29 · script + take · script a, take3 at 1.08×: "A가 나은거
+  같은데". Both variants were revised once after the Codex and Claude
+  critiques, then B5's 견주다 became 비교하다 in both before this take,
+  after the human asked "견주면 무슨뜻이지 ㅋㅋ 더 쉬운 단어로 바꿀까?".
