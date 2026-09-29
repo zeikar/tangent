@@ -29,16 +29,11 @@ export const Svg: React.FC<{ opacity?: number; children: React.ReactNode }> = ({
 
 type Stroke = { color: string; width: number; opacity?: number };
 
-// `closed`: a ring, drawn one segment past its start so the ends join
-// without a seam.
-export const Polyline: React.FC<Stroke & { pts: Pt[]; cap?: "butt" | "round"; closed?: boolean }> = ({
-  pts,
-  color,
-  width,
-  opacity,
-  cap = "butt",
-  closed,
-}) =>
+// `closed`: a ring whose points end where they start (figure.ts's ring()
+// makes one), drawn one segment past its start so the ends join without a seam.
+export const Polyline: React.FC<
+  Stroke & { pts: Pt[]; cap?: "butt" | "round"; closed?: boolean; dash?: readonly number[] }
+> = ({ pts, color, width, opacity, cap = "butt", closed, dash }) =>
   pts.length > 1 ? (
     <polyline
       points={pointsAttr(closed ? [...pts, pts[1]] : pts)}
@@ -47,6 +42,7 @@ export const Polyline: React.FC<Stroke & { pts: Pt[]; cap?: "butt" | "round"; cl
       strokeWidth={width}
       strokeLinecap={cap}
       strokeLinejoin="round"
+      strokeDasharray={dash?.join(" ")}
       opacity={opacity}
     />
   ) : null;

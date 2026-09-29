@@ -80,8 +80,9 @@ export const stroke = {
   line: 4, // number lines, dimension lines, equation boxes, body rims, tethers
   dash: [18, 12], // dashed outlines and fold lines: dash, gap
   thin: 3, // orbits, compass hubs
-  arrow: 5, // pointers, rim traces, spin and sweep arcs
+  arrow: 5, // pointers, rim traces, spin and sweep arcs, direction arrows, rings
   force: 8, // force arrows
+  hand: 5, // a hand drawn large on its own (Hand)
 } as const;
 
 export const fill = {
@@ -127,6 +128,39 @@ export const sky = {
   dots: 24, // faint stars in a field, about
   dotClear: 24, // a faint star to any other ink
   dotSpacing: 56, // faint stars to each other, at least
+} as const;
+
+// People and hands drawn in code (Person, Hand). A solid person is opaque:
+// its fills are these shares of a color over the background. A ghost's are
+// opacities, so what it stands over shows through.
+export const figure = {
+  body: 0.5, // a solid person's body, in muted
+  hair: 0.15, // its hair, in muted: darker than the body
+  ghost: 0.15, // a ghost's body, in muted
+  ghostHair: 0.4, // a ghost's hair, in muted
+  hand: 0.6, // a hand's face, in its color
+  ghostHand: 0.8,
+  pulse: 0.85, // a pulsed part's fill at its peak
+  palmLines: 0.6, // in text
+  profile: 0.5, // a turning person's body seen side on, as a share of its width
+} as const;
+
+// A standing mirror (Mirror) and the landscape on a lake (Scenery).
+export const mirror = {
+  radius: 20, // the frame's corners
+  sheen: [90, 55], // its two streaks' lengths, running lower left to upper right
+  sheenGap: 22, // between the streaks
+  sheenAt: [75, 75], // the long streak's center, in from the frame's top-right corner
+  sheenOpacity: 0.5, // in text
+  tiltTaper: 0.06, // a tipping mirror's top edge is this much shorter than its bottom at 45°
+} as const;
+
+export const scenery = {
+  fill: 0.35, // mountains and trees, in muted over the background
+  fillPulse: 0.6,
+  snow: 0.8, // a snowcap, in text
+  snowcap: 0.2, // of a mountain's height, from its peak
+  trunk: 10, // a tree's trunk width
 } as const;
 
 // Default animation lengths. These are durations, not start times; start times

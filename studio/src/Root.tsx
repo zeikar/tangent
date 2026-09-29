@@ -7,6 +7,7 @@ import { WATERMARK, Watermark } from "./brand/Watermark";
 import { StyleSheet, styleSheetSchema } from "./compositions/StyleSheet";
 import { a4Cues, a4PaperRatio } from "./episodes/001-a4-paper-ratio";
 import { moonCues, moonRotation } from "./episodes/002-moon-rotation";
+import { mirrorCues, mirrorLeftRight } from "./episodes/003-mirror-left-right";
 import { MeasureTex, measureTexSchema } from "./probe/MeasureTex";
 import { episodeSchema } from "./storyboard/Episode";
 import { VIDEO } from "./style/theme";
@@ -38,6 +39,15 @@ export const RemotionRoot: React.FC = () => {
         calculateMetadata={moonRotation.calculateMetadata}
         defaultProps={{ showSafeArea: false }}
         durationInFrames={moonCues.durationInFrames}
+        {...VIDEO}
+      />
+      <Composition
+        id="003-mirror-left-right"
+        component={mirrorLeftRight.Component}
+        schema={episodeSchema}
+        calculateMetadata={mirrorLeftRight.calculateMetadata}
+        defaultProps={{ showSafeArea: false }}
+        durationInFrames={mirrorCues.durationInFrames}
         {...VIDEO}
       />
       <Folder name="tools">

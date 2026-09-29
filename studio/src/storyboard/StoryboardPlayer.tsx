@@ -6,14 +6,20 @@ import { bodyState } from "../components/bodies";
 import { Captions } from "../components/Captions";
 import { Compass } from "../components/Compass";
 import { Dimension } from "../components/Dimension";
+import { DirArrow } from "../components/DirArrow";
 import { Equation } from "../components/Equation";
 import { HalvingNest } from "../components/HalvingNest";
+import { Hand } from "../components/Hand";
+import { Mirror } from "../components/Mirror";
 import { Mismatch } from "../components/Mismatch";
 import { Note } from "../components/Note";
 import { NumberLine } from "../components/NumberLine";
 import { OrbitPath } from "../components/OrbitPath";
 import { PaperRect, paperState } from "../components/PaperRect";
+import { Person, personState } from "../components/Person";
 import { RimTrace } from "../components/RimTrace";
+import { Ring } from "../components/Ring";
+import { Scenery } from "../components/Scenery";
 import { SpinArrow } from "../components/SpinArrow";
 import { StarField } from "../components/StarField";
 import { Tether, tetherState } from "../components/Tether";
@@ -44,6 +50,12 @@ const components: Record<string, Component> = {
   StarField: { draw: StarField },
   SpinArrow: { draw: SpinArrow },
   Arrow: { draw: Arrow },
+  Mirror: { draw: Mirror },
+  Person: { draw: Person, state: personState },
+  Hand: { draw: Hand },
+  DirArrow: { draw: DirArrow },
+  Ring: { draw: Ring },
+  Scenery: { draw: Scenery },
 };
 
 // Draw order is declaration order, except that an element drawn beneath

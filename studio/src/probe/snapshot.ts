@@ -135,6 +135,8 @@ export const snapshot = (): ElementSnap[] =>
       if (!g.getScreenCTM() || g.closest(".katex")) return;
       // A filtered shape draws what its filter makes of it (Mismatch's glow), not itself.
       if (g.closest("[filter]")) return;
+      // A mask's shapes draw nothing (Person's outline mask).
+      if (g.closest("mask")) return;
       const cs = getComputedStyle(g);
       if (cs.visibility !== "visible") return;
       const o = opacityOf(g);
