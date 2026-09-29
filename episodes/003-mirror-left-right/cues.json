@@ -1,9 +1,9 @@
 {
- "storyboardSha256": "220fdb953fbc7ca3c2180e54a53785c89f13ab7fcf1df515be7b51ad3a2b7036",
+ "storyboardSha256": "54b5e90617a0a23d1443abb6fddc3dfa5670775c21cc580e9bf5e07dcff3af6b",
  "narrationSource": "take5@1.08.wav",
  "takeWordsSha256": "c76dba1a05ec03c4d01428158a636a6fc5f736759cf345f0462831a1740e0321",
  "fps": 30,
- "durationInFrames": 1261,
+ "durationInFrames": 1246,
  "beats": [
   {
    "id": "B1",
@@ -161,25 +161,25 @@
    "cues": [
     {
      "target": "upRefl",
-     "action": "setStyle",
+     "action": "exit",
      "word": "뒤집히는",
      "frame": 421
     },
     {
      "target": "upMe",
-     "action": "setStyle",
+     "action": "exit",
      "word": "뒤집히는",
      "frame": 421
     },
     {
      "target": "rightRefl",
-     "action": "setStyle",
+     "action": "exit",
      "word": "뒤집히는",
      "frame": 421
     },
     {
      "target": "rightMe",
-     "action": "setStyle",
+     "action": "exit",
      "word": "뒤집히는",
      "frame": 421
     },
@@ -220,7 +220,7 @@
   {
    "id": "B5",
    "startFrame": 646,
-   "endFrame": 963,
+   "endFrame": 948,
    "pauseFrame": 897,
    "captions": [
     {
@@ -249,30 +249,6 @@
     }
    ],
    "cues": [
-    {
-     "target": "upRefl",
-     "action": "exit",
-     "word": "그런데",
-     "frame": 646
-    },
-    {
-     "target": "upMe",
-     "action": "exit",
-     "word": "그런데",
-     "frame": 646
-    },
-    {
-     "target": "rightRefl",
-     "action": "exit",
-     "word": "그런데",
-     "frame": 646
-    },
-    {
-     "target": "rightMe",
-     "action": "exit",
-     "word": "그런데",
-     "frame": 646
-    },
     {
      "target": "frontMe",
      "action": "setStyle",
@@ -310,6 +286,19 @@
      "word": "거울",
      "frame": 698,
      "untilFrame": 737
+    },
+    {
+     "target": "me",
+     "action": "setStyle",
+     "word": "보면",
+     "frame": 742
+    },
+    {
+     "target": "camera",
+     "action": "moveTo",
+     "word": "보면",
+     "frame": 742,
+     "untilFrame": 897
     },
     {
      "target": "ringRefl",
@@ -351,33 +340,34 @@
   },
   {
    "id": "B6",
-   "startFrame": 964,
-   "endFrame": 1260,
-   "pauseFrame": 1216,
+   "startFrame": 949,
+   "endFrame": 1245,
+   "pauseFrame": 1201,
    "captions": [
     {
      "word": "거울이",
-     "frame": 964
+     "frame": 949
     },
     {
      "word": "늘",
-     "frame": 1004
+     "frame": 989
     },
     {
      "word": "방향",
-     "frame": 1049
+     "frame": 1034
     },
     {
      "word": "그래서",
-     "frame": 1089
+     "frame": 1074
     },
     {
      "word": "위아래가",
-     "frame": 1134
+     "frame": 1119
     },
     {
      "word": "호수에",
-     "frame": 1177
+     "frame": 1162,
+     "untilFrame": 1201
     }
    ],
    "cues": [
@@ -385,176 +375,182 @@
      "target": "ghost",
      "action": "exit",
      "word": "거울이",
-     "frame": 964
+     "frame": 949
     },
     {
      "target": "ringRefl",
      "action": "exit",
      "word": "거울이",
-     "frame": 964
+     "frame": 949
     },
     {
      "target": "ringGhost",
      "action": "exit",
      "word": "거울이",
-     "frame": 964
+     "frame": 949
+    },
+    {
+     "target": "camera",
+     "action": "moveTo",
+     "word": "거울이",
+     "frame": 949
     },
     {
      "target": "me",
      "action": "setStyle",
      "word": "거울이",
-     "frame": 964
+     "frame": 949
     },
     {
      "target": "frontMe",
      "action": "setStyle",
      "word": "거울로",
-     "frame": 1018
+     "frame": 1003
     },
     {
      "target": "frontRefl",
      "action": "setStyle",
      "word": "거울로",
-     "frame": 1018
+     "frame": 1003
     },
     {
      "target": "frontMe",
      "action": "pulse",
      "word": "하나예요",
-     "frame": 1059
+     "frame": 1044
     },
     {
      "target": "frontRefl",
      "action": "pulse",
      "word": "하나예요",
-     "frame": 1059
+     "frame": 1044
     },
     {
      "target": "me",
      "action": "setStyle",
      "word": "그래서",
-     "frame": 1089
+     "frame": 1074
     },
     {
      "target": "reflection",
      "action": "setStyle",
      "word": "그래서",
-     "frame": 1089
+     "frame": 1074
     },
     {
      "target": "frontMe",
      "action": "setStyle",
      "word": "그래서",
-     "frame": 1089
+     "frame": 1074
     },
     {
      "target": "frontRefl",
      "action": "setStyle",
      "word": "그래서",
-     "frame": 1089
+     "frame": 1074
     },
     {
      "target": "mirror",
      "action": "tiltTo",
      "word": "그래서",
-     "frame": 1089,
-     "untilFrame": 1112
+     "frame": 1074,
+     "untilFrame": 1097
     },
     {
      "target": "shore",
      "action": "appear",
      "word": "눕히면",
-     "frame": 1112
+     "frame": 1097
     },
     {
      "target": "upShore",
      "action": "appear",
      "word": "위아래가",
-     "frame": 1134
+     "frame": 1119
     },
     {
      "target": "rightShore",
      "action": "appear",
      "word": "위아래가",
-     "frame": 1134
+     "frame": 1119
     },
     {
      "target": "shoreFlip",
      "action": "appear",
      "word": "뒤집혀요",
-     "frame": 1151
+     "frame": 1136
     },
     {
      "target": "downFlip",
      "action": "appear",
      "word": "뒤집혀요",
-     "frame": 1151
+     "frame": 1136
     },
     {
      "target": "rightFlip",
      "action": "appear",
      "word": "뒤집혀요",
-     "frame": 1151
+     "frame": 1136
     },
     {
      "target": "shoreFlip",
      "action": "pulse",
      "word": "비친",
-     "frame": 1188
+     "frame": 1173
     },
     {
      "target": "shore",
      "action": "exit",
      "pause": true,
-     "frame": 1216
+     "frame": 1201
     },
     {
      "target": "shoreFlip",
      "action": "exit",
      "pause": true,
-     "frame": 1216
+     "frame": 1201
     },
     {
      "target": "upShore",
      "action": "exit",
      "pause": true,
-     "frame": 1216
+     "frame": 1201
     },
     {
      "target": "rightShore",
      "action": "exit",
      "pause": true,
-     "frame": 1216
+     "frame": 1201
     },
     {
      "target": "downFlip",
      "action": "exit",
      "pause": true,
-     "frame": 1216
+     "frame": 1201
     },
     {
      "target": "rightFlip",
      "action": "exit",
      "pause": true,
-     "frame": 1216
+     "frame": 1201
     },
     {
      "target": "mirror",
      "action": "tiltTo",
      "pause": true,
-     "frame": 1216
+     "frame": 1201
     },
     {
      "target": "reflection",
      "action": "setStyle",
      "pause": true,
-     "frame": 1216
+     "frame": 1201
     },
     {
      "target": "me",
      "action": "setStyle",
      "pause": true,
-     "frame": 1216
+     "frame": 1201
     }
    ]
   }

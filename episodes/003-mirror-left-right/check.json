@@ -1,9 +1,9 @@
 {
  "episode": "003-mirror-left-right",
  "render": "render.mp4",
- "renderSha256": "f2d2f2f92de1887757cb96b3ea634b7b879779027d12ec33014d9aa9cd9aa9fa",
- "storyboardSha256": "220fdb953fbc7ca3c2180e54a53785c89f13ab7fcf1df515be7b51ad3a2b7036",
- "studioSha256": "d2efd1ed8763ffa8facec32d648fb77069502eef82bc1ee7023dacf5e965bd15",
+ "renderSha256": "4eb04c3dda4594dfaa97d29b5d9f4907dd4da9d4d5d129196026cd8b06a3f15b",
+ "storyboardSha256": "54b5e90617a0a23d1443abb6fddc3dfa5670775c21cc580e9bf5e07dcff3af6b",
+ "studioSha256": "c7eb61a4d9a2a3a64e08cf01bf2dc40ffcaeed625d0c09ba686ce212455dfb62",
  "verdict": "pass",
  "counts": {
   "fail": 0,
@@ -22,19 +22,19 @@
   {
    "id": "technical",
    "status": "pass",
-   "summary": "1080×1920 yuv420p bt709 tv, 30 fps, 1261 frames (42.03 s); audio 48000 Hz, last 100 ms at -120 dBFS",
+   "summary": "1080×1920 yuv420p bt709 tv, 30 fps, 1246 frames (41.53 s); audio 48000 Hz, last 100 ms at -120 dBFS",
    "cites": []
   },
   {
    "id": "bounds",
    "status": "pass",
-   "summary": "all 1261 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 151–927, y 264–1255",
+   "summary": "all 1246 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 144–935, y 244–1247",
    "cites": []
   },
   {
    "id": "centering",
    "status": "pass",
-   "summary": "B1 +2/0, B2 +2/0, B3 0/0, B5 +2/0, B6 0/0 (px off x 540: all ink / picture without edge labels; tolerance ±25)",
+   "summary": "B1 +2/0, B2 +2/0, B3 +2/0, B5 0/0, B6 0/0 (px off x 540: all ink / picture without edge labels; tolerance ±25)",
    "details": [
     {
      "beat": "B1",
@@ -53,21 +53,21 @@
     {
      "beat": "B3",
      "frame": 645,
-     "off": 0,
-     "pictureOff": 0,
-     "status": "pass"
-    },
-    {
-     "beat": "B5",
-     "frame": 963,
      "off": 1.5,
      "pictureOff": 0,
      "status": "pass"
     },
     {
+     "beat": "B5",
+     "frame": 948,
+     "off": 0,
+     "pictureOff": 0,
+     "status": "pass"
+    },
+    {
      "beat": "B6",
-     "frame": 1260,
-     "off": -0.5,
+     "frame": 1245,
+     "off": 0,
      "pictureOff": 0,
      "status": "pass"
     }
@@ -93,7 +93,7 @@
      "text": "그래서 바닥에 눕히면",
      "char": "그",
      "height": 41.4,
-     "frame": 1089
+     "frame": 1074
     },
     {
      "id": "captions",
@@ -173,7 +173,7 @@
      "text": "늘 거울로 들어가는",
      "char": "로",
      "height": 43.9,
-     "frame": 1004
+     "frame": 989
     },
     {
      "id": "captions",
@@ -213,7 +213,7 @@
      "text": "방향 하나예요.",
      "char": "요",
      "height": 44.5,
-     "frame": 1049
+     "frame": 1034
     },
     {
      "id": "captions",
@@ -221,7 +221,7 @@
      "text": "위아래가 뒤집혀요.",
      "char": "요",
      "height": 44.5,
-     "frame": 1134
+     "frame": 1119
     },
     {
      "id": "captions",
@@ -229,7 +229,7 @@
      "text": "호수에 비친 산처럼요.",
      "char": "요",
      "height": 44.5,
-     "frame": 1177
+     "frame": 1162
     },
     {
      "id": "captions",
@@ -425,8 +425,8 @@
     },
     {
      "text": "거울이 뒤집는 건",
-     "from": 964,
-     "shown": 964,
+     "from": 949,
+     "shown": 949,
      "late": 0,
      "lines": 1,
      "inside": true,
@@ -434,8 +434,8 @@
     },
     {
      "text": "늘 거울로 들어가는",
-     "from": 1004,
-     "shown": 1004,
+     "from": 989,
+     "shown": 989,
      "late": 0,
      "lines": 1,
      "inside": true,
@@ -443,8 +443,8 @@
     },
     {
      "text": "방향 하나예요.",
-     "from": 1049,
-     "shown": 1049,
+     "from": 1034,
+     "shown": 1034,
      "late": 0,
      "lines": 1,
      "inside": true,
@@ -452,8 +452,8 @@
     },
     {
      "text": "그래서 바닥에 눕히면",
-     "from": 1089,
-     "shown": 1089,
+     "from": 1074,
+     "shown": 1074,
      "late": 0,
      "lines": 1,
      "inside": true,
@@ -461,8 +461,8 @@
     },
     {
      "text": "위아래가 뒤집혀요.",
-     "from": 1134,
-     "shown": 1134,
+     "from": 1119,
+     "shown": 1119,
      "late": 0,
      "lines": 1,
      "inside": true,
@@ -470,8 +470,8 @@
     },
     {
      "text": "호수에 비친 산처럼요.",
-     "from": 1177,
-     "shown": 1177,
+     "from": 1162,
+     "shown": 1162,
      "late": 0,
      "lines": 1,
      "inside": true,
@@ -490,7 +490,7 @@
   {
    "id": "reaction",
    "status": "pass",
-   "summary": "B1 +1, B2 +1, B3 +3, B5 +2, B6 +1 (frames from each beat's first word to the first visible change; — = no cue on that word; limit 3)",
+   "summary": "B1 +1, B2 +1, B3 +1, B5 +1, B6 +1 (frames from each beat's first word to the first visible change; — = no cue on that word; limit 3)",
    "details": [
     {
      "beat": "B1",
@@ -510,19 +510,19 @@
      "beat": "B3",
      "frame": 421,
      "hasCue": true,
-     "latency": 3,
+     "latency": 1,
      "status": "pass"
     },
     {
      "beat": "B5",
      "frame": 646,
      "hasCue": true,
-     "latency": 2,
+     "latency": 1,
      "status": "pass"
     },
     {
      "beat": "B6",
-     "frame": 964,
+     "frame": 949,
      "hasCue": true,
      "latency": 1,
      "status": "pass"
@@ -546,7 +546,7 @@
   {
    "id": "loudness",
    "status": "pass",
-   "summary": "-14.1 LUFS integrated (target -14 ±1), true peak -3.6 dBTP (max -1), range 4.7 LU",
+   "summary": "-14.1 LUFS integrated (target -14 ±1), true peak -3.6 dBTP (max -1), range 4.3 LU",
    "cites": []
   },
   {
@@ -558,7 +558,7 @@
   {
    "id": "words",
    "status": "pass",
-   "summary": "23 of 23 words after a pause start within 50 ms of an audible onset (widest \"늘,\" at 33.46 s, -50 ms); limit ±200 ms",
+   "summary": "23 of 23 words after a pause start within 50 ms of an audible onset (widest \"늘,\" at 32.96 s, -50 ms); limit ±200 ms",
    "details": [
     {
      "word": "거울은",
@@ -647,32 +647,32 @@
     },
     {
      "word": "거울이",
-     "start": 32.14,
+     "start": 31.64,
      "dev": 0
     },
     {
      "word": "늘,",
-     "start": 33.46,
+     "start": 32.96,
      "dev": -50
     },
     {
      "word": "거울로",
-     "start": 33.94,
+     "start": 33.44,
      "dev": 10
     },
     {
      "word": "그래서",
-     "start": 36.3,
+     "start": 35.8,
      "dev": 20
     },
     {
      "word": "위아래가",
-     "start": 37.8,
+     "start": 37.3,
      "dev": -30
     },
     {
      "word": "호수에",
-     "start": 39.24,
+     "start": 38.74,
      "dev": 0
     }
    ],
@@ -681,7 +681,7 @@
   {
    "id": "loop",
    "status": "pass",
-   "summary": "29 visual-zone pixels differ by more than 16 levels between the last and first frame (limit 500)",
+   "summary": "28 visual-zone pixels differ by more than 16 levels between the last and first frame (limit 500)",
    "cites": []
   }
  ]

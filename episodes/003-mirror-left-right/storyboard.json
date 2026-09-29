@@ -10,15 +10,17 @@
     "Drawing rules from research.md (Easy to misstate): the person in the mirror is never drawn as me turned around. Its raised hand is on the same screen side as mine (to the right of its body), it shows a palm where mine shows a back, and each hand's thumb points toward its own body's midline, so both thumbs are on the screen left of their hands: the same outline. It is never labeled 오른손. B5's turned-around ghost is the figure that differs (raised hand on the screen left). The lake (B6) is scenery only: a mountain and a tree, no person.",
     "Hand faces are colored from frame 0 (B1's 'both raised hands in accent colors'): the back of a hand blue, a palm yellow with palm lines. B3 pulses them instead of repainting, so no color changes its meaning mid-episode.",
     "Arrow colors follow one rule: teal is a direction along the mirror's surface (unchanged in the mirror: up and right while it stands), purple is the direction into the mirror (the one it flips). Laid flat as a lake, the direction into the surface is vertical, so the lake's vertical arrows are purple and its horizontal ones teal.",
-    "Hidden, not exited: me, reflection, frontMe and frontRefl leave the screen (or dim) with setStyle {opacity} and come back with opacity 1 (the purple pair from B5 to B6's '거울로'; me dimmed through B5; the people from B6's lake to the loop), because an exited id can't come back. Everything else exits. The mirror scene itself stays from B1 through B5.",
+    "Hidden, not exited: me, reflection, frontMe and frontRefl leave the screen (or dim) with setStyle {opacity} and come back with opacity 1 (the purple pair from B5 to B6's '거울로'; me dimmed from B5's '내가', gone from '보면', back on B6's '거울이'; the people from B6's lake to the loop), because an exited id can't come back. Everything else exits. The mirror scene itself stays from B1 through B5.",
     "Loop: the last frame is the first. Both show the mirror standing (tilt 0) with its sheen at rest, the person in the mirror and me at full opacity, and nothing else: no arrows, rings, ghost, big hands, label or scenery. frontMe and frontRefl are still alive at the end but at opacity 0.",
     "Draw order is declaration order: mirror < me < reflection (I stand in front of the glass and cover its bottom edge; me and the person in the mirror never overlap), then everything declared later on top, except the ghost, drawn beneath the person in the mirror (props.beneath): over me as it turns, behind the mirror person's legs as it walks in. The person in the mirror is drawn only on the glass (props.inside), so it never shows outside the mirror while the mirror stands back up in the loop.",
     "An element is invisible until its appear cue, unless it has visibleAtStart. Cues sharing an anchor run in parallel, except that an appear waits for the exits on its anchor to finish. Every exit is a 0.2 s even fade. setStyle is not an entrance: a restore on the same word as an exit cross-fades with it (B6's '거울이' and its pause). Any cue with neither speed nor until uses base.",
-    "Easing from theme.ts: ease.out for appear, ease.exit for exit, ease.smooth for everything else, unless params say ease: linear. The two first-word cues that aren't entrances (B1's mirror glint, B3's dimming) are linear so they show within the 3-frame reaction window; smooth barely moves in 3 frames.",
+    "Easing from theme.ts: ease.out for appear, ease.exit for exit, ease.smooth for everything else, unless params say ease: linear. The first-word cues that aren't entrances or exits (B1's mirror glint, B5's hiding of the purple pair) are linear so they show within the 3-frame reaction window; smooth barely moves in 3 frames.",
     "Stroke widths never scale with a figure's r: outlines 4 px, arrows 5 px with an 18 px head (theme stroke.arrow, mark.head) unless a taper scales them, the mirror frame 6 px (stroke.sheet).",
     "Text: there is no text in the visual zone. Captions measured in Pretendard Bold 60 (static OTF advance widths, within 2 px of 002's browser measurement): widest '왜 위아래는 안 뒤집을까요?' 644 px, then '좌우가 바뀐 것처럼 보이죠.' 629 px; all fit one 800 px line.",
     "Measured in the first render: B5's ghost ends 22 px left of my raised hand, the rings 29 px apart; bounds, centering and loop pass (check.md).",
-    "B5 dims me (0.3) from '내가' to B6's '거울이': the dashed copy turns over a faint me, so its outline and face read as its own (QA r1#1), and while the two stand side by side the eye goes up to their raised hands (cut critique)."
+    "B5 dims me (0.3) from '내가': the dashed copy turns over a faint me, so its outline and face read as its own (QA r1#1). Once the ghost stands beside the person in the mirror ('보면'), I fade out fully and the camera pushes in slowly on the two of them until B5's speech ends, so the raised hands and their rings read at a glance on a phone; then the frame holds still. B6's '거울이' pulls the camera back to rest and brings me back, so B6 tilts the whole mirror.",
+    "Camera: the picture is seen through a camera and clipped 4 px inside the visual zone (x 144–936, y 244–1246; theme cameraInset, as the encoder rings a few pixels past a hard cut); captions and the channel mark stay put. At rest it shows the picture as drawn, so every frame but B5's push-in is the layout as written. B5's push-in frames the pair and its rings (x 260–730, y 299–842, center (495, 570)) at zoom 1.6: x 164–916, y 310–1180 on screen, the mirror's top edge still in view at y 260 and its other edges and sheen outside.",
+    "B6's last caption '호수에 비친 산처럼요.' ends at the pause (until), when the mirror starts to stand back up, so the loop's last frames carry no caption and frame 0's question follows."
   ],
   "colors": {
     "teal": "거울면을 따라가는 방향 (위·오른쪽): 거울 속에서도 그대로",
@@ -30,6 +32,11 @@
     "muted": "거울 유리, 사람과 산·나무의 몸"
   },
   "components": [
+    {
+      "name": "Camera",
+      "status": "new",
+      "spec": "How the picture is framed; it draws nothing. With a Camera in the storyboard, the player shows every other element through it, clipped just inside the visual zone; captions and the channel mark stay put, and check-render's probe clips geometry the same way. Actions: moveTo {center: [x, y], zoom} puts the picture's point center at the visual zone's center (540, 745), scaled by zoom (strokes scale too); at rest, center (540, 745) and zoom 1, the picture is as drawn."
+    },
     {
       "name": "Mirror",
       "status": "new",
@@ -67,6 +74,13 @@
       ],
       "pauseAfter": 0.3,
       "elements": [
+        {
+          "id": "camera",
+          "component": "Camera",
+          "visibleAtStart": true,
+          "props": {},
+          "where": "frames the whole video; at rest except for B5's push-in (notes: Camera)"
+        },
         {
           "id": "mirror",
           "component": "Mirror",
@@ -240,14 +254,13 @@
         {
           "at": {"word": "뒤집히는"},
           "target": "upRefl",
-          "action": "setStyle",
-          "params": {"opacity": 0.35, "ease": "linear"},
+          "action": "exit",
           "speed": "fast",
-          "note": "up and right step back but stay ('흐리게 그대로'). Linear so the first word shows within 3 frames"
+          "note": "up and right clear, so only the purple pair shows the direction that flips (the purple arrows run up-left, which a faint up arrow beside them could blur)"
         },
-        {"at": {"word": "뒤집히는"}, "target": "upMe", "action": "setStyle", "params": {"opacity": 0.35, "ease": "linear"}, "speed": "fast"},
-        {"at": {"word": "뒤집히는"}, "target": "rightRefl", "action": "setStyle", "params": {"opacity": 0.35, "ease": "linear"}, "speed": "fast"},
-        {"at": {"word": "뒤집히는"}, "target": "rightMe", "action": "setStyle", "params": {"opacity": 0.35, "ease": "linear"}, "speed": "fast"},
+        {"at": {"word": "뒤집히는"}, "target": "upMe", "action": "exit", "speed": "fast"},
+        {"at": {"word": "뒤집히는"}, "target": "rightRefl", "action": "exit", "speed": "fast"},
+        {"at": {"word": "뒤집히는"}, "target": "rightMe", "action": "exit", "speed": "fast"},
         {
           "at": {"word": "앞뒤예요"},
           "target": "me",
@@ -280,7 +293,7 @@
           "note": "the mirrored palm, with its palm lines"
         }
       ],
-      "endFrame": "Visual zone: B2's scene with the four teal arrows at 0.35, plus two purple arrows on one line: from my raised hand up and left into the mirror, narrowing, and from the mirrored palm down and right toward me, widening; their tips face each other across the glass. Held still through the 1 s pause. Caption: '나를 향하죠.'",
+      "endFrame": "Visual zone: B2's scene without the teal arrows, plus two purple arrows on one line: from my raised hand up and left into the mirror, narrowing, and from the mirrored palm down and right toward me, widening; their tips face each other across the glass. Held still through the 1 s pause. Caption: '나를 향하죠.'",
       "claims": ["C1"]
     },
     {
@@ -295,7 +308,7 @@
         {"text": "이렇게 비교하면", "at": {"word": "이렇게"}},
         {"text": "좌우가 바뀐 것처럼 보이죠.", "at": {"word": "좌우가"}}
       ],
-      "pauseAfter": 1.5,
+      "pauseAfter": 1.0,
       "elements": [
         {
           "id": "ghost",
@@ -319,23 +332,13 @@
       "cues": [
         {
           "at": {"word": "그런데"},
-          "target": "upRefl",
-          "action": "exit",
-          "speed": "fast",
-          "note": "'그런데': the arrows clear and B1's scene is left; the scene itself stays from B3"
-        },
-        {"at": {"word": "그런데"}, "target": "upMe", "action": "exit", "speed": "fast"},
-        {"at": {"word": "그런데"}, "target": "rightRefl", "action": "exit", "speed": "fast"},
-        {"at": {"word": "그런데"}, "target": "rightMe", "action": "exit", "speed": "fast"},
-        {
-          "at": {"word": "그런데"},
           "target": "frontMe",
           "action": "setStyle",
-          "params": {"opacity": 0},
+          "params": {"opacity": 0, "ease": "linear"},
           "speed": "fast",
-          "note": "hidden, not exited: the purple pair comes back in B6"
+          "note": "'그런데': the purple pair hides (not exited: it comes back in B6); linear so the first word shows within 3 frames"
         },
-        {"at": {"word": "그런데"}, "target": "frontRefl", "action": "setStyle", "params": {"opacity": 0}, "speed": "fast"},
+        {"at": {"word": "그런데"}, "target": "frontRefl", "action": "setStyle", "params": {"opacity": 0, "ease": "linear"}, "speed": "fast"},
         {
           "at": {"word": "내가"},
           "target": "me",
@@ -367,6 +370,22 @@
           "note": "'거울 속 사람과 나란히 서': up into the mirror and down to the same size, standing to the right of the person there, heads level"
         },
         {
+          "at": {"word": "보면"},
+          "target": "me",
+          "action": "setStyle",
+          "params": {"opacity": 0},
+          "speed": "base",
+          "note": "the ghost has landed: I fade out fully, leaving the two in the mirror"
+        },
+        {
+          "at": {"word": "보면"},
+          "target": "camera",
+          "action": "moveTo",
+          "params": {"center": [495, 570], "zoom": 1.6},
+          "until": {"pause": true},
+          "note": "a slow push-in on the pair over the rest of B5's words, so the raised hands and their rings read at a glance; the 1 s pause then holds still"
+        },
+        {
           "at": {"word": "든"},
           "target": "ringRefl",
           "action": "appear",
@@ -385,7 +404,7 @@
         },
         {"at": {"word": "좌우가"}, "target": "ringGhost", "action": "pulse", "speed": "base"}
       ],
-      "endFrame": "Visual zone: B1's scene (mirror, the person in it, me from behind dimmed to 0.3), plus the dashed ghost standing to the right of the person in the mirror, the same size, heads level, both facing out: the person's raised hand on the right of its body, the ghost's on the left, both yellow palms, a red ring around each. The person in the mirror hasn't moved. Held still through the 1.5 s pause. Caption: '좌우가 바뀐 것처럼 보이죠.'",
+      "endFrame": "Visual zone, pushed in (zoom 1.6 on (495, 570)): the person in the mirror and the dashed ghost side by side filling the zone, the same size, heads level, both facing out: the person's raised hand on the right of its body, the ghost's on the left, both yellow palms, a red ring around each; the mirror's top edge near the top of the zone, its other edges out of view; me gone. The person in the mirror hasn't moved. Held still through the 1 s pause. Caption: '좌우가 바뀐 것처럼 보이죠.'",
       "claims": ["C4", "C3"]
     },
     {
@@ -398,7 +417,7 @@
         {"text": "방향 하나예요.", "at": {"word": "방향"}},
         {"text": "그래서 바닥에 눕히면", "at": {"word": "그래서"}},
         {"text": "위아래가 뒤집혀요.", "at": {"word": "위아래가"}},
-        {"text": "호수에 비친 산처럼요.", "at": {"word": "호수에"}}
+        {"text": "호수에 비친 산처럼요.", "at": {"word": "호수에"}, "until": {"pause": true}}
       ],
       "pauseAfter": 1.5,
       "elements": [
@@ -463,11 +482,19 @@
         {"at": {"word": "거울이"}, "target": "ringGhost", "action": "exit", "speed": "fast"},
         {
           "at": {"word": "거울이"},
+          "target": "camera",
+          "action": "moveTo",
+          "params": {"center": [540, 745], "zoom": 1},
+          "speed": "base",
+          "note": "back to rest, so B6 tilts the whole mirror"
+        },
+        {
+          "at": {"word": "거울이"},
           "target": "me",
           "action": "setStyle",
           "params": {"opacity": 1},
-          "speed": "fast",
-          "note": "the comparison clears and I come back to full"
+          "speed": "base",
+          "note": "the comparison clears and I come back to full as the camera pulls back"
         },
         {
           "at": {"word": "거울로"},
@@ -561,7 +588,7 @@
           "action": "tiltTo",
           "params": {"deg": 0},
           "speed": "base",
-          "note": "the water stands back up into B1's mirror (0.7 s of the 1.2 s pause)"
+          "note": "the water stands back up into B1's mirror (0.7 s of the 1.5 s pause; the last 0.8 s is B1's first frame, still, with no caption)"
         },
         {
           "at": {"pause": true},
@@ -573,7 +600,7 @@
         },
         {"at": {"pause": true}, "target": "me", "action": "setStyle", "params": {"opacity": 1}, "speed": "base"}
       ],
-      "endFrame": "Visual zone identical to B1's first frame: the mirror standing, frame x 160–920, y 270–1220, sheen at rest; the person in it at the upper left, hand raised on the right of its body, yellow palm; me from behind at the bottom, right hand raised, blue back of the hand; nothing else. Before the pause (from '뒤집혀요' to the end of '산처럼요', the shore from '눕히면'): the lake line at y 745, the mountain and tree above it with a purple up arrow and a teal right arrow, their reflection hanging below at half opacity with a purple down arrow and a teal right arrow. Caption: '호수에 비친 산처럼요.'",
+      "endFrame": "Visual zone identical to B1's first frame: the mirror standing, frame x 160–920, y 270–1220, sheen at rest; the person in it at the upper left, hand raised on the right of its body, yellow palm; me from behind at the bottom, right hand raised, blue back of the hand; nothing else. Before the pause (from '뒤집혀요' to the end of '산처럼요', the shore from '눕히면'): the lake line at y 745, the mountain and tree above it with a purple up arrow and a teal right arrow, their reflection hanging below at half opacity with a purple down arrow and a teal right arrow. Caption: '호수에 비친 산처럼요.' until the pause; none after it",
       "claims": ["C2", "C8"]
     }
   ]
