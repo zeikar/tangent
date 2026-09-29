@@ -31,3 +31,7 @@
   left the hook's "오른손은 왼손이 되는데요" at odds with B2 for 13 s: "빼볼까?".
   A retake follows, which also replaces take3's "바닥에 눕히면" that
   Whisper hears as "바닥이 높이면" (QA r1#3).
+- 2026-09-29 · retake · take5 of the B4-cut script (about 42 s with
+  holds): "유튜브 ai 설명이 명쾌하긴 한데... ㅋㅋㅋ 너가 한것도 괜찮은거
+  같고... 암튼 이걸로 그럼 다시 쭉 사이클 돌려줘". Whisper transcribes it
+  word for word, 바닥에 눕히면 included.
