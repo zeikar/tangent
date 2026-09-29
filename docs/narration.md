@@ -31,6 +31,9 @@ these are the ones for the ear.
   sentence ("같은 별 쪽", "지구 방향을 지나쳐").
 - **Spoken connectives:** 그래서, 그러니까, or none, instead of 따라서, 즉,
   결론적으로, 이처럼.
+- **Everyday words over written ones.** A word that mostly lives in writing
+  stops a listener even when it's correct: 견주다 → 비교하다 (003, where
+  the human asked what 견주면 meant).
 - **Keep what polishing tools strip:** breathing commas, a question hook,
   one "A가 아니라 B" turn, and a key verb repeated on purpose to carry a
   contrast.
