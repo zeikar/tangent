@@ -19,8 +19,9 @@ the build reruns without re-aligning.
   studio/public/episodes/<slug>/, where the composition loads it.
 - Writes words.json (align.py format, shifted into narration.mp3's timeline)
   and cues.json: per beat startFrame / endFrame (inclusive) / pauseFrame, and
-  the frame of every caption and cue anchor (plus untilFrame), in storyboard
-  order. Frames at the fps in studio/src/style/theme.ts. cues.json also
+  the frame of every caption and cue anchor (plus untilFrame, for a cue or a
+  caption with `until`), in storyboard order. Frames at the fps in
+  studio/src/style/theme.ts. cues.json also
   records storyboard.json's SHA-256, the take, and its word timings' SHA-256;
   render.mts, beat-stills.mts and check-render.mts refuse a cues.json built
   from another storyboard or take (scripts/cues-fresh.mts).
@@ -182,7 +183,10 @@ for k, b in enumerate(sb["beats"]):
         "id": b["id"],
         "startFrame": start,
         "pauseFrame": frame(ends[k]),
-        "captions": [resolve(c["at"], k) for c in b["captions"]],
+        "captions": [
+            {**resolve(c["at"], k), **({"untilFrame": resolve(c["until"], k)["frame"]} if "until" in c else {})}
+            for c in b["captions"]
+        ],
         "cues": cues,
     })
 for k, b in enumerate(beats):

@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import { AbsoluteFill, useCurrentFrame } from "remotion";
 import { Arrow } from "../components/Arrow";
 import { Body } from "../components/Body";
+import { Camera, CameraState, cameraState, cameraTransform } from "../components/Camera";
 import { bodyState } from "../components/bodies";
 import { Captions } from "../components/Captions";
 import { Compass } from "../components/Compass";
@@ -23,7 +24,7 @@ import { Scenery } from "../components/Scenery";
 import { SpinArrow } from "../components/SpinArrow";
 import { StarField } from "../components/StarField";
 import { Tether, tetherState } from "../components/Tether";
-import { color } from "../style/theme";
+import { cameraInset, color, content, VIDEO, zone } from "../style/theme";
 import { Cues, ElementTimeline, Params, resolveCaptions, resolveTimeline, Scene, Storyboard } from "./timeline";
 
 type Component = {
@@ -56,6 +57,7 @@ const components: Record<string, Component> = {
   DirArrow: { draw: DirArrow },
   Ring: { draw: Ring },
   Scenery: { draw: Scenery },
+  Camera: { draw: Camera, state: cameraState },
 };
 
 // Draw order is declaration order, except that an element drawn beneath
@@ -114,19 +116,47 @@ export const StoryboardPlayer: React.FC<{ storyboard: Storyboard; cues: Cues }> 
   };
   const scene = sceneAt(frame);
 
+  const drawn = order
+    .filter((e) => frame >= e.start && frame < e.end)
+    .map((e) => {
+      const C = components[e.spec.component].draw;
+      // data-el: the element a frame's pixels belong to, for the probe.
+      return (
+        <div key={e.spec.id} data-el={e.spec.id} style={{ position: "absolute", inset: 0 }}>
+          <C el={e} scene={scene} />
+        </div>
+      );
+    });
+  // With a camera, the picture is seen through it and clipped just inside the
+  // visual zone; data-clip tells the probe what is cut away.
+  const camera = elements.find((e) => e.spec.component === "Camera");
+  const clip = [content.left + cameraInset, zone.visual.top + cameraInset, content.right - cameraInset, zone.visual.bottom - cameraInset];
+
   return (
     <AbsoluteFill style={{ background: color.bg }}>
-      {order
-        .filter((e) => frame >= e.start && frame < e.end)
-        .map((e) => {
-          const C = components[e.spec.component].draw;
-          // data-el: the element a frame's pixels belong to, for the probe.
-          return (
-            <div key={e.spec.id} data-el={e.spec.id} style={{ position: "absolute", inset: 0 }}>
-              <C el={e} scene={scene} />
-            </div>
-          );
-        })}
+      {camera ? (
+        <div
+          data-clip={clip.join(" ")}
+          style={{
+            position: "absolute",
+            inset: 0,
+            clipPath: `inset(${clip[1]}px ${VIDEO.width - clip[2]}px ${VIDEO.height - clip[3]}px ${clip[0]}px)`,
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              transformOrigin: "0 0",
+              transform: cameraTransform(scene.state(camera.spec.id, "Camera") as CameraState),
+            }}
+          >
+            {drawn}
+          </div>
+        </div>
+      ) : (
+        drawn
+      )}
       <div data-el="captions" style={{ position: "absolute", inset: 0 }}>
         <Captions captions={captions} frame={frame} />
       </div>

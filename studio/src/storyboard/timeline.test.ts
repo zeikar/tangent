@@ -105,4 +105,21 @@ describe("resolveCaptions", () => {
       { text: "three", from: 110, to: 200 },
     ]);
   });
+
+  it("ends a caption at its until anchor, and refuses cues.json without it", () => {
+    const sb: Storyboard = {
+      beats: [{ id: "B1", captions: [{ text: "one" }, { text: "two", until: { pause: true } }], elements: [], cues: [] }],
+    };
+    const cues: Cues = {
+      fps: 30,
+      durationInFrames: 200,
+      beats: [{ id: "B1", startFrame: 0, endFrame: 199, captions: [{ frame: 9 }, { frame: 40, untilFrame: 150 }], cues: [] }],
+    };
+    expect(resolveCaptions(sb, cues)).toEqual([
+      { text: "one", from: 0, to: 40 },
+      { text: "two", from: 40, to: 150 },
+    ]);
+    const stale = { ...cues, beats: [{ ...cues.beats[0], captions: [{ frame: 9 }, { frame: 40 }] }] };
+    expect(() => resolveCaptions(sb, stale)).toThrow(/rebuild it/);
+  });
 });

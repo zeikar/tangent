@@ -125,6 +125,50 @@ const point = (svg: SVGGraphicsElement, x: number, y: number) => {
   return [p.x, p.y];
 };
 
+// The part of segment (x1, y1)–(x2, y2) inside box, or null (Liang–Barsky).
+const clipSegment = ([x1, y1, x2, y2]: number[], [l, t, r, b]: Box) => {
+  let [u0, u1] = [0, 1];
+  const [dx, dy] = [x2 - x1, y2 - y1];
+  for (const [p, q] of [
+    [-dx, x1 - l],
+    [dx, r - x1],
+    [-dy, y1 - t],
+    [dy, b - y1],
+  ]) {
+    if (p === 0) {
+      if (q < 0) return null;
+    } else if (p < 0) u0 = Math.max(u0, q / p);
+    else u1 = Math.min(u1, q / p);
+    if (u0 > u1) return null;
+  }
+  return [x1 + u0 * dx, y1 + u0 * dy, x1 + u1 * dx, y1 + u1 * dy];
+};
+
+const clipBox = ([l, t, r, b]: Box, c: Box): Box | null => {
+  const box: Box = [Math.max(l, c[0]), Math.max(t, c[1]), Math.min(r, c[2]), Math.min(b, c[3])];
+  return box[0] < box[2] && box[1] < box[3] ? box : null;
+};
+
+// What a camera's clip (StoryboardPlayer's data-clip) leaves of an element:
+// strokes cut at the clip, fills and text boxes cut to it.
+const clipped = (snap: ElementSnap, c: Box): ElementSnap => ({
+  ...snap,
+  lines: snap.lines.flatMap((l) => {
+    const s = clipSegment(l.slice(0, 4), c);
+    return s ? [[...s.map(r1), l[4], l[5]] as Line] : [];
+  }),
+  fills: snap.fills.flatMap((f) => {
+    const box = clipBox([f[0], f[1], f[2], f[3]], c);
+    if (!box) return [];
+    const whole = box.every((v, i) => v === f[i]);
+    return [(whole ? f : [...box, f[4]]) as Fill];
+  }),
+  texts: snap.texts.flatMap((t) => {
+    const box = clipBox(t.box, c);
+    return box ? [{ ...t, box }] : [];
+  }),
+});
+
 export const snapshot = (): ElementSnap[] =>
   [...document.querySelectorAll<HTMLElement>("[data-el]")].map((el) => {
     const lines: Line[] = [];
@@ -168,5 +212,7 @@ export const snapshot = (): ElementSnap[] =>
     const texts = [...el.querySelectorAll<HTMLElement>("[data-text]")]
       .map(textItem)
       .filter((t): t is TextItem => t !== null);
-    return { id: el.dataset.el!, lines, fills, texts };
+    const snap = { id: el.dataset.el!, lines, fills, texts };
+    const clip = el.closest<HTMLElement>("[data-clip]")?.dataset.clip;
+    return clip ? clipped(snap, clip.split(" ").map(Number) as Box) : snap;
   });

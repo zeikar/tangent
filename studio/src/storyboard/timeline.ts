@@ -28,7 +28,7 @@ export type StoryboardElement = {
 export type Storyboard = {
   beats: {
     id: string;
-    captions: { text: string }[];
+    captions: { text: string; until?: Anchor }[];
     elements: StoryboardElement[];
     cues: StoryboardCue[];
   }[];
@@ -41,7 +41,7 @@ export type Cues = {
     id: string;
     startFrame: number;
     endFrame: number;
-    captions: { frame: number }[];
+    captions: { frame: number; untilFrame?: number }[];
     cues: { target: string; action: string; word?: string; frame: number; untilFrame?: number }[];
   }[];
 };
@@ -183,16 +183,24 @@ export const resolveTimeline = (sb: Storyboard, cues: Cues): ElementTimeline[] =
   return list;
 };
 
-// Each caption shows from its anchor until the next caption starts. The first
-// shows from frame 0: the feed's first frame carries the hook, before the
-// first word is heard.
+// Each caption shows from its anchor until the next caption starts, or until
+// its own `until` anchor if that comes first (a last caption that clears
+// before a looping short's silent return to frame 0). The first shows from
+// frame 0: the feed's first frame carries the hook, before the first word is
+// heard.
 export const resolveCaptions = (sb: Storyboard, cues: Cues): Caption[] => {
   const list = sb.beats.flatMap((beat, k) => {
     if (cues.beats[k].captions.length !== beat.captions.length) {
       throw new Error(`cues.json ${beat.id} captions differ from storyboard; rebuild it`);
     }
-    return beat.captions.map((c, i) => ({ text: c.text, from: cues.beats[k].captions[i].frame }));
+    return beat.captions.map((c, i) => {
+      const t = cues.beats[k].captions[i];
+      if ((t.untilFrame === undefined) !== (c.until === undefined)) {
+        throw new Error(`cues.json ${beat.id} caption ${i} is from another storyboard; rebuild it`);
+      }
+      return { text: c.text, from: t.frame, until: t.untilFrame ?? Infinity };
+    });
   });
   if (list.length) list[0].from = 0;
-  return list.map((c, i) => ({ ...c, to: list[i + 1]?.from ?? cues.durationInFrames }));
+  return list.map(({ until, ...c }, i) => ({ ...c, to: Math.min(until, list[i + 1]?.from ?? cues.durationInFrames) }));
 };

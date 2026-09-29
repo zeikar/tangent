@@ -192,6 +192,11 @@ export const zone = {
   caption: { top: 1280, bottom: VIDEO.height - safe.bottom },
 } as const;
 
+// A camera (components/Camera) clips the picture this far inside the content
+// bounds and the visual zone: the edges it cuts are hard, and the encoder
+// rings a few pixels past them.
+export const cameraInset = 4;
+
 // The channel mark (brand/Logo) on every frame of every episode, in one place
 // so a looping short's last frame still matches its first: the caption band's
 // bottom-left corner, below any one-line caption and outside the picture.

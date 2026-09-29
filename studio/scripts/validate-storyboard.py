@@ -99,7 +99,7 @@ for b in sb["beats"]:
     if joined != disp:
         err(f"{bid}: captions don't cover Display\n  {joined}\n  {disp}")
     last = -1
-    for c in b["captions"]:
+    for i, c in enumerate(b["captions"]):
         n = units(c["text"])
         if not 2 <= n <= 4:
             err(f"{bid}: caption {c['text']!r} has {n} eojeol")
@@ -107,6 +107,13 @@ for b in sb["beats"]:
         if p is not None and p <= last:
             err(f"{bid}: caption anchors not increasing at {c['text']!r}")
         last = p if p is not None else last
+        if "until" in c:
+            u = anchor_pos(c["until"], ws, f"{bid} caption until")
+            nxt = b["captions"][i + 1] if i + 1 < len(b["captions"]) else None
+            if u is not None and p is not None and u <= p:
+                err(f"{bid}: caption {c['text']!r} until is not after its anchor")
+            if nxt is not None:
+                err(f"{bid}: caption {c['text']!r} has until but isn't its beat's last caption")
     # elements
     for e in b["elements"]:
         if e["component"] not in comp_names:

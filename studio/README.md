@@ -17,7 +17,10 @@ Remotion project: style guide and reusable scene components. 1080×1920, 30 fps.
   in its `cues.json`. `src/episodes/<slug>/` wires one episode to it with
   `makeEpisode` (`Episode.tsx`) and registers it in `Root.tsx`; the composition
   id is the slug. Scripts pass an episode folder's own `storyboard` and `cues`
-  as props, so scratch copies render too.
+  as props, so scratch copies render too. A storyboard with a `Camera`
+  (`components/Camera.tsx`) is shown through it, clipped just inside the
+  visual zone, and the probe clips its geometry the same way; a caption with
+  `until` ends there instead of at the next caption.
 - `src/probe/`: with the `probe` prop, a composition logs what every frame
   draws (lines, fills, text ink, glyph heights) for `check-render` and
   `measure-tex`; the player marks elements `data-el`, text items `data-text`.

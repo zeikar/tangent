@@ -239,7 +239,7 @@ beats.forEach(b => {
     const d = document.createElement('div'); d.className = 'c';
     d.append(rich(c.text));
     const idx = anchorIndex(b, c.at);
-    const sm = document.createElement('small'); sm.textContent = `@ ${c.at?.word ?? '…'}${idx === null ? ' not in readAloud' : ''}`;
+    const sm = document.createElement('small'); sm.textContent = `@ ${c.at?.word ?? '…'}${c.until ? ` → ${c.until.word ?? 'pause'}` : ''}${idx === null ? ' not in readAloud' : ''}`;
     if (idx === null) sm.className = 'unmatched';
     d.append(sm);
     caps.append(d);
