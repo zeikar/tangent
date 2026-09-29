@@ -135,7 +135,7 @@ export const sky = {
 // opacities, so what it stands over shows through.
 export const figure = {
   body: 0.5, // a solid person's body, in muted
-  hair: 0.15, // its hair, in muted: darker than the body
+  hair: 0.3, // its hair, in muted: darker than the body, lighter than the glass
   ghost: 0.15, // a ghost's body, in muted
   ghostHair: 0.4, // a ghost's hair, in muted
   hand: 0.6, // a hand's face, in its color

@@ -4,6 +4,7 @@ import { bump, ElementTimeline, lerp, mix, phase, Scene, themeColor } from "../s
 import { color, figure, stroke, VIDEO, zone } from "../style/theme";
 import { capsule, clipAbove, hand, outlineRuns } from "./figure";
 import { arcPoints, lerpPt, Pt, pointsAttr } from "./geometry";
+import { mirrorOf } from "./Mirror";
 import { Polyline, Svg } from "./shapes";
 
 // A simple standing person drawn in code, one arm raised, seen from behind
@@ -11,7 +12,8 @@ import { Polyline, Svg } from "./shapes";
 // arms) outlined only on the outside; the raised hand shows its back or its
 // palm in its own color. It can turn half round about its vertical axis and
 // move. Nothing is drawn below the visual zone, so a big figure low in the
-// frame is a bust. Spec: storyboard.json → components → Person.
+// frame is a bust; a person in a mirror (`inside`) is drawn only on its
+// glass. Spec: storyboard.json → components → Person.
 
 type Side = "screenRight" | "screenLeft";
 type View = "back" | "front";
@@ -25,6 +27,8 @@ type Props = {
   backColor: string;
   palmColor: string;
   style: "solid" | "ghost";
+  beneath?: string[]; // elements it is drawn beneath (StoryboardPlayer's registry)
+  inside?: string; // a Mirror: drawn only on its live glass
 };
 
 export type PersonState = {
@@ -174,6 +178,7 @@ export const Person: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, sc
     .filter((pts) => pts.length > 2);
   const outlineWidth = (i: number) => stroke.line * (i === 0 ? 1 + s.pulse.head : 1);
   const mask = `person-${el.spec.id}`;
+  const clip = p.inside ? { id: `person-in-${el.spec.id}`, glass: mirrorOf(scene, p.inside).glass } : null;
   const bodyFill = ghost ? color.muted : mix(color.bg, color.muted, figure.body);
   const hairFill = ghost ? color.muted : mix(color.bg, color.muted, figure.hair);
 
@@ -202,65 +207,72 @@ export const Person: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, sc
               <polygon key={i} points={pointsAttr(pts)} fill="black" />
             ))}
           </mask>
+          {clip ? (
+            <clipPath id={clip.id}>
+              <polygon points={pointsAttr(clip.glass)} />
+            </clipPath>
+          ) : null}
         </defs>
-        <g mask={`url(#${mask})`}>
-          {pieces.flatMap((pts, i) =>
-            outlineRuns(pts, cut).map((run, k) => (
-              <Polyline
-                key={`${i}-${k}`}
-                pts={run.pts}
-                closed={run.closed}
-                color={color.text}
-                width={2 * outlineWidth(i)}
-                dash={ghost ? stroke.dash : undefined}
+        <g clipPath={clip ? `url(#${clip.id})` : undefined}>
+          <g mask={`url(#${mask})`}>
+            {pieces.flatMap((pts, i) =>
+              outlineRuns(pts, cut).map((run, k) => (
+                <Polyline
+                  key={`${i}-${k}`}
+                  pts={run.pts}
+                  closed={run.closed}
+                  color={color.text}
+                  width={2 * outlineWidth(i)}
+                  dash={ghost ? stroke.dash : undefined}
+                />
+              )),
+            )}
+          </g>
+          <g opacity={ghost ? figure.ghost : 1}>
+            {pieces.map((pts, i) => (
+              <polygon key={i} points={pointsAttr(pts)} fill={bodyFill} />
+            ))}
+          </g>
+          {s.pulse.head > 0 ? (
+            <polygon points={pointsAttr(head)} fill={color.muted} fillOpacity={boost(ghost ? figure.ghost : figure.body, s.pulse.head)} />
+          ) : null}
+          <polygon points={pointsAttr(hair)} fill={hairFill} fillOpacity={ghost ? figure.ghostHair : 1} />
+          {s.view === "front" ? (
+            <g opacity={s.features}>
+              {eyes.map((pts, i) => (
+                <polygon key={i} points={pointsAttr(pts)} fill={color.text} />
+              ))}
+              <line x1={mouth[0][0]} y1={mouth[0][1]} x2={mouth[1][0]} y2={mouth[1][1]} stroke={color.text} strokeWidth={stroke.line} strokeLinecap="round" />
+            </g>
+          ) : null}
+          {handPts.length > 2 ? (
+            <g>
+              <polygon
+                points={pointsAttr(handPts)}
+                fill={ghost ? handColor : mix(color.bg, handColor, handShare)}
+                fillOpacity={ghost ? handShare : 1}
               />
-            )),
-          )}
+              {s.pulse.hand > 0 ? (
+                <polygon points={pointsAttr(handPts)} fill={handColor} fillOpacity={boost(handShare, s.pulse.hand)} />
+              ) : null}
+              {s.face === "palm"
+                ? hand.palmLines.map((line, i) => (
+                    <Polyline
+                      key={i}
+                      pts={line.map(handPt).filter(([, y]) => y <= cut)}
+                      color={color.text}
+                      width={stroke.thin}
+                      opacity={figure.palmLines}
+                      cap="round"
+                    />
+                  ))
+                : null}
+              {outlineRuns(handPts, cut).map((run, k) => (
+                <Polyline key={k} pts={run.pts} closed={run.closed} color={handColor} width={stroke.line * (1 + s.pulse.hand)} />
+              ))}
+            </g>
+          ) : null}
         </g>
-        <g opacity={ghost ? figure.ghost : 1}>
-          {pieces.map((pts, i) => (
-            <polygon key={i} points={pointsAttr(pts)} fill={bodyFill} />
-          ))}
-        </g>
-        {s.pulse.head > 0 ? (
-          <polygon points={pointsAttr(head)} fill={color.muted} fillOpacity={boost(ghost ? figure.ghost : figure.body, s.pulse.head)} />
-        ) : null}
-        <polygon points={pointsAttr(hair)} fill={hairFill} fillOpacity={ghost ? figure.ghostHair : 1} />
-        {s.view === "front" ? (
-          <g opacity={s.features}>
-            {eyes.map((pts, i) => (
-              <polygon key={i} points={pointsAttr(pts)} fill={color.text} />
-            ))}
-            <line x1={mouth[0][0]} y1={mouth[0][1]} x2={mouth[1][0]} y2={mouth[1][1]} stroke={color.text} strokeWidth={stroke.line} strokeLinecap="round" />
-          </g>
-        ) : null}
-        {handPts.length > 2 ? (
-          <g>
-            <polygon
-              points={pointsAttr(handPts)}
-              fill={ghost ? handColor : mix(color.bg, handColor, handShare)}
-              fillOpacity={ghost ? handShare : 1}
-            />
-            {s.pulse.hand > 0 ? (
-              <polygon points={pointsAttr(handPts)} fill={handColor} fillOpacity={boost(handShare, s.pulse.hand)} />
-            ) : null}
-            {s.face === "palm"
-              ? hand.palmLines.map((line, i) => (
-                  <Polyline
-                    key={i}
-                    pts={line.map(handPt).filter(([, y]) => y <= cut)}
-                    color={color.text}
-                    width={stroke.thin}
-                    opacity={figure.palmLines}
-                    cap="round"
-                  />
-                ))
-              : null}
-            {outlineRuns(handPts, cut).map((run, k) => (
-              <Polyline key={k} pts={run.pts} closed={run.closed} color={handColor} width={stroke.line * (1 + s.pulse.hand)} />
-            ))}
-          </g>
-        ) : null}
       </Svg>
     </AbsoluteFill>
   );

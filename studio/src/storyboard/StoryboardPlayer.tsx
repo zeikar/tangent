@@ -10,7 +10,7 @@ import { DirArrow } from "../components/DirArrow";
 import { Equation } from "../components/Equation";
 import { HalvingNest } from "../components/HalvingNest";
 import { Hand } from "../components/Hand";
-import { Mirror } from "../components/Mirror";
+import { Mirror, mirrorState } from "../components/Mirror";
 import { Mismatch } from "../components/Mismatch";
 import { Note } from "../components/Note";
 import { NumberLine } from "../components/NumberLine";
@@ -50,8 +50,8 @@ const components: Record<string, Component> = {
   StarField: { draw: StarField },
   SpinArrow: { draw: SpinArrow },
   Arrow: { draw: Arrow },
-  Mirror: { draw: Mirror },
-  Person: { draw: Person, state: personState },
+  Mirror: { draw: Mirror, state: mirrorState },
+  Person: { draw: Person, state: personState, beneath: (p) => p.beneath },
   Hand: { draw: Hand },
   DirArrow: { draw: DirArrow },
   Ring: { draw: Ring },
