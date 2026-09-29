@@ -7,3 +7,8 @@
   뽑아보자". The first episode under the frame-0 hook rule, set the same
   day after YouTube Studio's first numbers ("계속 띄우는것도 좀 그런데...
   후크 강화만 넣어볼까").
+- 2026-09-29 · topic · reshaped after research: why we feel a left-right
+  swap is contested (C5, C6), so the script states only the comparison's
+  geometry (C4); the floor mirror is shown with scenery, not a person
+  (C8, C9); the twist is that flipping front-back alone turns a right hand
+  into a left hand's shape (C3). "그렇게 하자".
