@@ -1,9 +1,9 @@
 {
  "episode": "003-mirror-left-right",
  "render": "render.mp4",
- "renderSha256": "4eb04c3dda4594dfaa97d29b5d9f4907dd4da9d4d5d129196026cd8b06a3f15b",
+ "renderSha256": "41ca101a6558fe40fb354baf391138d6a0f13ab7820302e0f465aee093916daf",
  "storyboardSha256": "54b5e90617a0a23d1443abb6fddc3dfa5670775c21cc580e9bf5e07dcff3af6b",
- "studioSha256": "c7eb61a4d9a2a3a64e08cf01bf2dc40ffcaeed625d0c09ba686ce212455dfb62",
+ "studioSha256": "ad46b46f5f10066a28006d0623c600f2198dc97e9729d684da27872e01bf502c",
  "verdict": "pass",
  "counts": {
   "fail": 0,
@@ -28,7 +28,7 @@
   {
    "id": "bounds",
    "status": "pass",
-   "summary": "all 1246 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 144–935, y 244–1247",
+   "summary": "all 1246 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 144–936, y 260–1247",
    "cites": []
   },
   {

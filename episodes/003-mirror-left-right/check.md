@@ -6,7 +6,7 @@
 |---|---|---|
 | freshness | pass | render.mp4, cues.json and the studio code all match this storyboard.json |
 | technical | pass | 1080×1920 yuv420p bt709 tv, 30 fps, 1246 frames (41.53 s); audio 48000 Hz, last 100 ms at -120 dBFS |
-| bounds | pass | all 1246 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 144–935, y 244–1247 |
+| bounds | pass | all 1246 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 144–936, y 260–1247 |
 | centering | pass | B1 +2/0, B2 +2/0, B3 +2/0, B5 0/0, B6 0/0 (px off x 540: all ink / picture without edge labels; tolerance ±25) |
 | legibility | pass | smallest glyph "그" 41.4 px in captions "그런데 내가 돌아서서" (floor 30 px, 24 text items) |
 | overlaps | pass | no text meets other text, lines, or a fill drawn over it (in or across elements); no entrance draws while an exit is still visible |
