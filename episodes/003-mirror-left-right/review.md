@@ -1,5 +1,64 @@
 # Review · 003-mirror-left-right
 
+## Round 4 · 2026-09-29
+
+**Verdict: ship.**
+
+This round reviewed the render from 438931b (studio at 86e048b). Only
+`Camera.tsx` changed (plus its new test), and no storyboard or cues changed.
+Camera is shared code, but only this episode uses it, and it acts only during
+B5's push-in and B6's pull-back. So instead of a focused look, I compared
+every frame against round 3's to prove nothing else moved. Then I re-judged
+the two moves.
+
+- **r3#1 is fixed.** Both camera moves now go straight in and straight out.
+- **Nothing else moved.** Every frame outside the two moves matches round 3.
+- **r3#2 is fixed.** script.md's B3 and B5 Visual lines now describe the
+  render. Only those lines changed: no Read-aloud or Display text.
+- **check-render passes:** 0 fail, 0 warn, 15 pass, 1 skip.
+- **No issues are left.**
+
+Evidence is in `review/r4/`:
+
+- `sheet-b5-f742-969.png`: the push-in and the pull-back;
+- `f0820.png`: the frame where round 3's top edge was gone.
+
+### Round 3, re-checked
+
+| Round 3 | Now |
+|---------|-----|
+| r3#1 the push-in bobs | **Fixed** (`review/r4/sheet-b5-f742-969.png`, `review/r4/f0820.png`). Every point now moves one way. The mirror's top edge stays in view the whole time: y 267–272 at f742, easing to 261–268 by f897, where round 3 hid it at f812–f832. The rings' top goes 300 → 312 without a rise (round 3: 297 → 280 → 312). The pair's feet go 1222 → 1179 and the rings' x extents widen steadily. The rings' left edge and top move in a fixed ratio (−7/+4 by f810, −21/+12 by f897), so the path is straight. The pull-back mirrors it: the top edge goes 261 → 272 over f949–f969 without leaving the frame, and the frame is back at rest (sides at x 157 and 922) by f971. The new `Camera.test.ts` passes (2 tests). |
+| r3#2 script.md's Visual lines | **Fixed.** B3's line now says the up and right arrows go and only the purple pair stays. B5's describes me fading, the push-in on the pair, and a 1 s hold. The Read-aloud and Display lines are unchanged. |
+
+### Nothing else moved
+
+I extracted every frame of both renders the same way (`ffmpeg -q:v 3`) and
+compared them:
+
+- **f0–f711 and f1207–f1245 are byte-identical** (751 frames).
+- **f712–f1206 differ, as they should.** The encoder re-encoded that stretch
+  because the moves changed inside it.
+- **Outside the moves (f712–f741 and f971–f1206)** the largest difference is
+  1,476 pixels over 16 levels (f1095), and at most 0.18 levels on average.
+  Every such frame is in motion (the ghost's walk, the purple pulse, the
+  people fading at "그래서"), and the differences sit along the moving edges.
+  That's encoder noise, not a drawing change. Still frames in that stretch
+  differ by fewer than 100 pixels.
+- **The moves' end states match round 3.** f897 and f948 (the pushed-in hold)
+  differ from round 3 at under 30 pixels, and f971 on is back to encoder
+  noise. Only the
+  path between the ends changed.
+
+check-render agrees:
+
+- **Same as round 3:** reaction +1 everywhere, centering, loudness
+  (−14.1 LUFS, −3.6 dBTP), words, and the loop (28 px).
+- **One change, and it's the fix showing:** the ink's top is now y 260
+  instead of 244, because the mirror's top edge no longer rises into the
+  clip.
+
+My `--out` run matched the tracked `check.md` and `check.json` byte for byte.
+
 ## Round 3 · 2026-09-29
 
 **Verdict: ship.**
