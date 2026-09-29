@@ -1,0 +1,676 @@
+{
+ "storyboardSha256": "66c0f7146af34368801fcdeadcbc84ec32e7b22c11bc803b80b26e88ed949d23",
+ "narrationSource": "take3@1.08.wav",
+ "takeWordsSha256": "fbe34e8f5521f9c7da3c76a5676d509c23837eaaa1ce1771025f69c59be6fe7e",
+ "fps": 30,
+ "durationInFrames": 1358,
+ "beats": [
+  {
+   "id": "B1",
+   "startFrame": 0,
+   "endFrame": 152,
+   "pauseFrame": 125,
+   "captions": [
+    {
+     "word": "거울은",
+     "frame": 3
+    },
+    {
+     "word": "오른손은",
+     "frame": 83
+    }
+   ],
+   "cues": [
+    {
+     "target": "mirror",
+     "action": "pulse",
+     "word": "거울은",
+     "frame": 3
+    },
+    {
+     "target": "reflection",
+     "action": "pulse",
+     "word": "위아래는",
+     "frame": 31
+    },
+    {
+     "target": "me",
+     "action": "pulse",
+     "word": "위아래는",
+     "frame": 31
+    },
+    {
+     "target": "me",
+     "action": "pulse",
+     "word": "오른손은",
+     "frame": 83
+    },
+    {
+     "target": "reflection",
+     "action": "pulse",
+     "word": "왼손이",
+     "frame": 99
+    }
+   ]
+  },
+  {
+   "id": "B2",
+   "startFrame": 153,
+   "endFrame": 390,
+   "pauseFrame": 366,
+   "captions": [
+    {
+     "word": "사실",
+     "frame": 153
+    },
+    {
+     "word": "좌우도",
+     "frame": 208
+    },
+    {
+     "word": "내가",
+     "frame": 263
+    },
+    {
+     "word": "거울",
+     "frame": 306
+    },
+    {
+     "word": "내",
+     "frame": 332
+    }
+   ],
+   "cues": [
+    {
+     "target": "upRefl",
+     "action": "appear",
+     "word": "사실",
+     "frame": 153
+    },
+    {
+     "target": "upMe",
+     "action": "appear",
+     "word": "사실",
+     "frame": 153
+    },
+    {
+     "target": "rightRefl",
+     "action": "appear",
+     "word": "좌우도",
+     "frame": 208
+    },
+    {
+     "target": "rightMe",
+     "action": "appear",
+     "word": "좌우도",
+     "frame": 208
+    },
+    {
+     "target": "me",
+     "action": "pulse",
+     "word": "오른쪽으로",
+     "frame": 272
+    },
+    {
+     "target": "rightMe",
+     "action": "pulse",
+     "word": "오른쪽으로",
+     "frame": 272
+    },
+    {
+     "target": "reflection",
+     "action": "pulse",
+     "word": "속에서도",
+     "frame": 314
+    },
+    {
+     "target": "rightRefl",
+     "action": "pulse",
+     "word": "오른쪽에",
+     "frame": 339
+    }
+   ]
+  },
+  {
+   "id": "B3",
+   "startFrame": 391,
+   "endFrame": 592,
+   "pauseFrame": 561,
+   "captions": [
+    {
+     "word": "뒤집히는",
+     "frame": 391
+    },
+    {
+     "word": "내",
+     "frame": 452
+    },
+    {
+     "word": "거울을",
+     "frame": 476
+    },
+    {
+     "word": "거울",
+     "frame": 510
+    },
+    {
+     "word": "나를",
+     "frame": 540
+    }
+   ],
+   "cues": [
+    {
+     "target": "upRefl",
+     "action": "setStyle",
+     "word": "뒤집히는",
+     "frame": 391
+    },
+    {
+     "target": "upMe",
+     "action": "setStyle",
+     "word": "뒤집히는",
+     "frame": 391
+    },
+    {
+     "target": "rightRefl",
+     "action": "setStyle",
+     "word": "뒤집히는",
+     "frame": 391
+    },
+    {
+     "target": "rightMe",
+     "action": "setStyle",
+     "word": "뒤집히는",
+     "frame": 391
+    },
+    {
+     "target": "me",
+     "action": "pulse",
+     "word": "앞뒤예요",
+     "frame": 420
+    },
+    {
+     "target": "reflection",
+     "action": "pulse",
+     "word": "앞뒤예요",
+     "frame": 420
+    },
+    {
+     "target": "frontMe",
+     "action": "appear",
+     "word": "손바닥은",
+     "frame": 457,
+     "untilFrame": 487
+    },
+    {
+     "target": "frontRefl",
+     "action": "appear",
+     "word": "거울",
+     "frame": 510,
+     "untilFrame": 540
+    },
+    {
+     "target": "reflection",
+     "action": "pulse",
+     "word": "손바닥은",
+     "frame": 521
+    }
+   ]
+  },
+  {
+   "id": "B4",
+   "startFrame": 593,
+   "endFrame": 799,
+   "pauseFrame": 766,
+   "captions": [
+    {
+     "word": "자리는",
+     "frame": 593
+    },
+    {
+     "word": "모양은",
+     "frame": 626
+    },
+    {
+     "word": "앞뒤만",
+     "frame": 668
+    },
+    {
+     "word": "거울",
+     "frame": 704
+    },
+    {
+     "word": "왼손",
+     "frame": 730
+    }
+   ],
+   "cues": [
+    {
+     "target": "upRefl",
+     "action": "exit",
+     "word": "자리는",
+     "frame": 593
+    },
+    {
+     "target": "upMe",
+     "action": "exit",
+     "word": "자리는",
+     "frame": 593
+    },
+    {
+     "target": "rightRefl",
+     "action": "exit",
+     "word": "자리는",
+     "frame": 593
+    },
+    {
+     "target": "rightMe",
+     "action": "exit",
+     "word": "자리는",
+     "frame": 593
+    },
+    {
+     "target": "mirror",
+     "action": "setStyle",
+     "word": "자리는",
+     "frame": 593
+    },
+    {
+     "target": "reflection",
+     "action": "setStyle",
+     "word": "자리는",
+     "frame": 593
+    },
+    {
+     "target": "me",
+     "action": "setStyle",
+     "word": "자리는",
+     "frame": 593
+    },
+    {
+     "target": "frontMe",
+     "action": "setStyle",
+     "word": "자리는",
+     "frame": 593
+    },
+    {
+     "target": "frontRefl",
+     "action": "setStyle",
+     "word": "자리는",
+     "frame": 593
+    },
+    {
+     "target": "bigHandRefl",
+     "action": "appear",
+     "word": "자리는",
+     "frame": 593
+    },
+    {
+     "target": "bigHandMe",
+     "action": "appear",
+     "word": "자리는",
+     "frame": 593
+    },
+    {
+     "target": "bigHandRefl",
+     "action": "pulse",
+     "word": "그대로지만",
+     "frame": 604
+    },
+    {
+     "target": "bigHandMe",
+     "action": "pulse",
+     "word": "그대로지만",
+     "frame": 604
+    },
+    {
+     "target": "bigHandRefl",
+     "action": "pulse",
+     "word": "모양은",
+     "frame": 626
+    },
+    {
+     "target": "bigHandMe",
+     "action": "pulse",
+     "word": "모양은",
+     "frame": 626
+    },
+    {
+     "target": "leftTag",
+     "action": "appear",
+     "word": "왼손",
+     "frame": 730
+    }
+   ]
+  },
+  {
+   "id": "B5",
+   "startFrame": 800,
+   "endFrame": 1080,
+   "pauseFrame": 1031,
+   "captions": [
+    {
+     "word": "내가",
+     "frame": 800
+    },
+    {
+     "word": "거울",
+     "frame": 829
+    },
+    {
+     "word": "나란히",
+     "frame": 857
+    },
+    {
+     "word": "든",
+     "frame": 891
+    },
+    {
+     "word": "이렇게",
+     "frame": 954
+    },
+    {
+     "word": "좌우가",
+     "frame": 988
+    }
+   ],
+   "cues": [
+    {
+     "target": "bigHandRefl",
+     "action": "exit",
+     "word": "내가",
+     "frame": 800
+    },
+    {
+     "target": "bigHandMe",
+     "action": "exit",
+     "word": "내가",
+     "frame": 800
+    },
+    {
+     "target": "leftTag",
+     "action": "exit",
+     "word": "내가",
+     "frame": 800
+    },
+    {
+     "target": "mirror",
+     "action": "setStyle",
+     "word": "내가",
+     "frame": 800
+    },
+    {
+     "target": "reflection",
+     "action": "setStyle",
+     "word": "내가",
+     "frame": 800
+    },
+    {
+     "target": "me",
+     "action": "setStyle",
+     "word": "내가",
+     "frame": 800
+    },
+    {
+     "target": "ghost",
+     "action": "appear",
+     "word": "내가",
+     "frame": 800
+    },
+    {
+     "target": "ghost",
+     "action": "turn",
+     "word": "돌아서서",
+     "frame": 806,
+     "untilFrame": 829
+    },
+    {
+     "target": "ghost",
+     "action": "moveTo",
+     "word": "거울",
+     "frame": 829,
+     "untilFrame": 868
+    },
+    {
+     "target": "ringRefl",
+     "action": "appear",
+     "word": "든",
+     "frame": 891
+    },
+    {
+     "target": "ringGhost",
+     "action": "appear",
+     "word": "든",
+     "frame": 891
+    },
+    {
+     "target": "ringRefl",
+     "action": "pulse",
+     "word": "반대쪽이에요",
+     "frame": 913
+    },
+    {
+     "target": "ringGhost",
+     "action": "pulse",
+     "word": "반대쪽이에요",
+     "frame": 913
+    },
+    {
+     "target": "ringRefl",
+     "action": "pulse",
+     "word": "좌우가",
+     "frame": 988
+    },
+    {
+     "target": "ringGhost",
+     "action": "pulse",
+     "word": "좌우가",
+     "frame": 988
+    }
+   ]
+  },
+  {
+   "id": "B6",
+   "startFrame": 1081,
+   "endFrame": 1357,
+   "pauseFrame": 1322,
+   "captions": [
+    {
+     "word": "거울이",
+     "frame": 1081
+    },
+    {
+     "word": "거울로",
+     "frame": 1129
+    },
+    {
+     "word": "방향",
+     "frame": 1159
+    },
+    {
+     "word": "그래서",
+     "frame": 1196
+    },
+    {
+     "word": "위아래가",
+     "frame": 1237
+    },
+    {
+     "word": "호수에",
+     "frame": 1278
+    }
+   ],
+   "cues": [
+    {
+     "target": "ghost",
+     "action": "exit",
+     "word": "거울이",
+     "frame": 1081
+    },
+    {
+     "target": "ringRefl",
+     "action": "exit",
+     "word": "거울이",
+     "frame": 1081
+    },
+    {
+     "target": "ringGhost",
+     "action": "exit",
+     "word": "거울이",
+     "frame": 1081
+    },
+    {
+     "target": "frontMe",
+     "action": "setStyle",
+     "word": "거울로",
+     "frame": 1129
+    },
+    {
+     "target": "frontRefl",
+     "action": "setStyle",
+     "word": "거울로",
+     "frame": 1129
+    },
+    {
+     "target": "frontMe",
+     "action": "pulse",
+     "word": "하나예요",
+     "frame": 1170
+    },
+    {
+     "target": "frontRefl",
+     "action": "pulse",
+     "word": "하나예요",
+     "frame": 1170
+    },
+    {
+     "target": "me",
+     "action": "setStyle",
+     "word": "그래서",
+     "frame": 1196
+    },
+    {
+     "target": "reflection",
+     "action": "setStyle",
+     "word": "그래서",
+     "frame": 1196
+    },
+    {
+     "target": "frontMe",
+     "action": "setStyle",
+     "word": "그래서",
+     "frame": 1196
+    },
+    {
+     "target": "frontRefl",
+     "action": "setStyle",
+     "word": "그래서",
+     "frame": 1196
+    },
+    {
+     "target": "mirror",
+     "action": "tiltTo",
+     "word": "바닥에",
+     "frame": 1207,
+     "untilFrame": 1237
+    },
+    {
+     "target": "shore",
+     "action": "appear",
+     "word": "위아래가",
+     "frame": 1237
+    },
+    {
+     "target": "upShore",
+     "action": "appear",
+     "word": "위아래가",
+     "frame": 1237
+    },
+    {
+     "target": "rightShore",
+     "action": "appear",
+     "word": "위아래가",
+     "frame": 1237
+    },
+    {
+     "target": "shoreFlip",
+     "action": "appear",
+     "word": "뒤집혀요",
+     "frame": 1249
+    },
+    {
+     "target": "downFlip",
+     "action": "appear",
+     "word": "뒤집혀요",
+     "frame": 1249
+    },
+    {
+     "target": "rightFlip",
+     "action": "appear",
+     "word": "뒤집혀요",
+     "frame": 1249
+    },
+    {
+     "target": "shoreFlip",
+     "action": "pulse",
+     "word": "비친",
+     "frame": 1289
+    },
+    {
+     "target": "shore",
+     "action": "exit",
+     "pause": true,
+     "frame": 1322
+    },
+    {
+     "target": "shoreFlip",
+     "action": "exit",
+     "pause": true,
+     "frame": 1322
+    },
+    {
+     "target": "upShore",
+     "action": "exit",
+     "pause": true,
+     "frame": 1322
+    },
+    {
+     "target": "rightShore",
+     "action": "exit",
+     "pause": true,
+     "frame": 1322
+    },
+    {
+     "target": "downFlip",
+     "action": "exit",
+     "pause": true,
+     "frame": 1322
+    },
+    {
+     "target": "rightFlip",
+     "action": "exit",
+     "pause": true,
+     "frame": 1322
+    },
+    {
+     "target": "mirror",
+     "action": "tiltTo",
+     "pause": true,
+     "frame": 1322
+    },
+    {
+     "target": "reflection",
+     "action": "setStyle",
+     "pause": true,
+     "frame": 1322
+    },
+    {
+     "target": "me",
+     "action": "setStyle",
+     "pause": true,
+     "frame": 1322
+    }
+   ]
+  }
+ ]
+}

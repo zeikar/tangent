@@ -1,0 +1,737 @@
+{
+ "episode": "003-mirror-left-right",
+ "render": "render.mp4",
+ "renderSha256": "aab29ce291bf6d8f129c1161efab7750e80d6f58483ab24bb534103055481da4",
+ "storyboardSha256": "66c0f7146af34368801fcdeadcbc84ec32e7b22c11bc803b80b26e88ed949d23",
+ "studioSha256": "7b1ca994afe2fa328b9b1818d754cf44e93e9c7d01b8fd6d786a01d82ac4eddb",
+ "verdict": "pass",
+ "counts": {
+  "fail": 0,
+  "warn": 0,
+  "pass": 15,
+  "skip": 1
+ },
+ "contactSheet": "check/sheet.png",
+ "checks": [
+  {
+   "id": "freshness",
+   "status": "pass",
+   "summary": "render.mp4, cues.json and the studio code all match this storyboard.json",
+   "cites": []
+  },
+  {
+   "id": "technical",
+   "status": "pass",
+   "summary": "1080×1920 yuv420p bt709 tv, 30 fps, 1358 frames (45.27 s); audio 48000 Hz, last 100 ms at -120 dBFS",
+   "cites": []
+  },
+  {
+   "id": "bounds",
+   "status": "pass",
+   "summary": "all 1358 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 152–927, y 264–1255",
+   "cites": []
+  },
+  {
+   "id": "centering",
+   "status": "pass",
+   "summary": "B1 +2/0, B2 +2/0, B3 0/0, B4 +1/0, B5 0/0, B6 -1/0 (px off x 540: all ink / picture without edge labels; tolerance ±25)",
+   "details": [
+    {
+     "beat": "B1",
+     "frame": 152,
+     "off": 1.5,
+     "pictureOff": 0,
+     "status": "pass"
+    },
+    {
+     "beat": "B2",
+     "frame": 390,
+     "off": 1.5,
+     "pictureOff": 0,
+     "status": "pass"
+    },
+    {
+     "beat": "B3",
+     "frame": 592,
+     "off": 0,
+     "pictureOff": 0,
+     "status": "pass"
+    },
+    {
+     "beat": "B4",
+     "frame": 799,
+     "off": 0.5,
+     "pictureOff": 0,
+     "status": "pass"
+    },
+    {
+     "beat": "B5",
+     "frame": 1080,
+     "off": 0,
+     "pictureOff": 0,
+     "status": "pass"
+    },
+    {
+     "beat": "B6",
+     "frame": 1357,
+     "off": -1,
+     "pictureOff": 0,
+     "status": "pass"
+    }
+   ],
+   "cites": []
+  },
+  {
+   "id": "legibility",
+   "status": "pass",
+   "summary": "smallest glyph \"그\" 41.4 px in captions \"자리는 그대로지만\" (floor 30 px, 30 text items)",
+   "details": [
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "자리는 그대로지만",
+     "char": "그",
+     "height": 41.4,
+     "frame": 593
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "그래서 바닥에 눕히면",
+     "char": "그",
+     "height": 41.4,
+     "frame": 1196
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "이렇게 비교하면",
+     "char": "교",
+     "height": 42.2,
+     "frame": 954
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "모양은 달라요.",
+     "char": "모",
+     "height": 43.1,
+     "frame": 626
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "왼손 모양이 되거든요.",
+     "char": "모",
+     "height": 43.1,
+     "frame": 730
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "나를 향하죠.",
+     "char": "죠",
+     "height": 43.4,
+     "frame": 540
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "좌우가 바뀐 것처럼 보이죠.",
+     "char": "죠",
+     "height": 43.4,
+     "frame": 988
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "좌우도 안 뒤집혀요.",
+     "char": "도",
+     "height": 43.5,
+     "frame": 208
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "거울 속에서도",
+     "char": "도",
+     "height": 43.5,
+     "frame": 306
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "앞뒤만 뒤집혀도",
+     "char": "도",
+     "height": 43.5,
+     "frame": 668
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "사실 거울을 마주 보면",
+     "char": "보",
+     "height": 43.7,
+     "frame": 153
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "나란히 서 보면",
+     "char": "보",
+     "height": 43.7,
+     "frame": 857
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "내가 오른쪽으로 든 손은",
+     "char": "로",
+     "height": 43.9,
+     "frame": 263
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "거울로 들어가는",
+     "char": "로",
+     "height": 43.9,
+     "frame": 1129
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "오른손은 왼손이 되는데요.",
+     "char": "오",
+     "height": 44.4,
+     "frame": 83
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "내 오른쪽에 있어요.",
+     "char": "오",
+     "height": 44.4,
+     "frame": 332
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "왜 위아래는 안 뒤집을까요?",
+     "char": "요",
+     "height": 44.5,
+     "frame": 0
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "뒤집히는 건 앞뒤예요.",
+     "char": "요",
+     "height": 44.5,
+     "frame": 391
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "든 손만 반대쪽이에요.",
+     "char": "요",
+     "height": 44.5,
+     "frame": 891
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "방향 하나예요.",
+     "char": "요",
+     "height": 44.5,
+     "frame": 1159
+    }
+   ],
+   "cites": []
+  },
+  {
+   "id": "overlaps",
+   "status": "pass",
+   "summary": "no text meets other text, lines, or a fill drawn over it (in or across elements); no entrance draws while an exit is still visible",
+   "details": [],
+   "cites": []
+  },
+  {
+   "id": "labels",
+   "status": "skip",
+   "summary": "no edge label has another element's line nearby",
+   "details": [],
+   "cites": []
+  },
+  {
+   "id": "captions",
+   "status": "pass",
+   "summary": "all 29 captions appear 0–0 frames after their cue (limit 3), on one line, inside the caption zone",
+   "details": [
+    {
+     "text": "왜 위아래는 안 뒤집을까요?",
+     "from": 0,
+     "shown": 0,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "오른손은 왼손이 되는데요.",
+     "from": 83,
+     "shown": 83,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "사실 거울을 마주 보면",
+     "from": 153,
+     "shown": 153,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "좌우도 안 뒤집혀요.",
+     "from": 208,
+     "shown": 208,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "내가 오른쪽으로 든 손은",
+     "from": 263,
+     "shown": 263,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "거울 속에서도",
+     "from": 306,
+     "shown": 306,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "내 오른쪽에 있어요.",
+     "from": 332,
+     "shown": 332,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "뒤집히는 건 앞뒤예요.",
+     "from": 391,
+     "shown": 391,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "내 손바닥은",
+     "from": 452,
+     "shown": 452,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "거울을 향하는데,",
+     "from": 476,
+     "shown": 476,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "거울 속 손바닥은",
+     "from": 510,
+     "shown": 510,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "나를 향하죠.",
+     "from": 540,
+     "shown": 540,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "자리는 그대로지만",
+     "from": 593,
+     "shown": 593,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "모양은 달라요.",
+     "from": 626,
+     "shown": 626,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "앞뒤만 뒤집혀도",
+     "from": 668,
+     "shown": 668,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "거울 속 손은",
+     "from": 704,
+     "shown": 704,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "왼손 모양이 되거든요.",
+     "from": 730,
+     "shown": 730,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "내가 돌아서서",
+     "from": 800,
+     "shown": 800,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "거울 속 사람과",
+     "from": 829,
+     "shown": 829,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "나란히 서 보면",
+     "from": 857,
+     "shown": 857,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "든 손만 반대쪽이에요.",
+     "from": 891,
+     "shown": 891,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "이렇게 비교하면",
+     "from": 954,
+     "shown": 954,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "좌우가 바뀐 것처럼 보이죠.",
+     "from": 988,
+     "shown": 988,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "거울이 뒤집는 건 늘",
+     "from": 1081,
+     "shown": 1081,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "거울로 들어가는",
+     "from": 1129,
+     "shown": 1129,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "방향 하나예요.",
+     "from": 1159,
+     "shown": 1159,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "그래서 바닥에 눕히면",
+     "from": 1196,
+     "shown": 1196,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "위아래가 뒤집혀요.",
+     "from": 1237,
+     "shown": 1237,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "호수에 비친 산처럼요.",
+     "from": 1278,
+     "shown": 1278,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    }
+   ],
+   "cites": []
+  },
+  {
+   "id": "readable",
+   "status": "pass",
+   "summary": "every name and label stays fully visible at least 30 frames",
+   "details": [],
+   "cites": []
+  },
+  {
+   "id": "reaction",
+   "status": "pass",
+   "summary": "B1 +1, B2 +1, B3 +2, B4 +2, B5 +1, B6 +1 (frames from each beat's first word to the first visible change; — = no cue on that word; limit 3)",
+   "details": [
+    {
+     "beat": "B1",
+     "frame": 3,
+     "hasCue": true,
+     "latency": 1,
+     "status": "pass"
+    },
+    {
+     "beat": "B2",
+     "frame": 153,
+     "hasCue": true,
+     "latency": 1,
+     "status": "pass"
+    },
+    {
+     "beat": "B3",
+     "frame": 391,
+     "hasCue": true,
+     "latency": 2,
+     "status": "pass"
+    },
+    {
+     "beat": "B4",
+     "frame": 593,
+     "hasCue": true,
+     "latency": 2,
+     "status": "pass"
+    },
+    {
+     "beat": "B5",
+     "frame": 800,
+     "hasCue": true,
+     "latency": 1,
+     "status": "pass"
+    },
+    {
+     "beat": "B6",
+     "frame": 1081,
+     "hasCue": true,
+     "latency": 1,
+     "status": "pass"
+    }
+   ],
+   "cites": []
+  },
+  {
+   "id": "cues",
+   "status": "pass",
+   "summary": "every cue after a beat's first word shows a change within 5 frames",
+   "details": [],
+   "cites": []
+  },
+  {
+   "id": "blank",
+   "status": "pass",
+   "summary": "the visual zone is never empty for more than 3 frames in a row",
+   "cites": []
+  },
+  {
+   "id": "loudness",
+   "status": "pass",
+   "summary": "-14.1 LUFS integrated (target -14 ±1), true peak -2.6 dBTP (max -1), range 3.4 LU",
+   "cites": []
+  },
+  {
+   "id": "av-sync",
+   "status": "pass",
+   "summary": "render audio is 0 ms off against narration.mp3 (limit ±20 ms)",
+   "cites": []
+  },
+  {
+   "id": "words",
+   "status": "pass",
+   "summary": "21 of 21 words after a pause start within 50 ms of an audible onset (widest \"앞뒤예요.\" at 14 s, -50 ms); limit ±200 ms",
+   "details": [
+    {
+     "word": "거울은",
+     "start": 0.1,
+     "dev": 0
+    },
+    {
+     "word": "오른손은",
+     "start": 2.76,
+     "dev": -30
+    },
+    {
+     "word": "사실",
+     "start": 5.1,
+     "dev": -40
+    },
+    {
+     "word": "좌우도",
+     "start": 6.94,
+     "dev": 10
+    },
+    {
+     "word": "내가",
+     "start": 8.78,
+     "dev": 0
+    },
+    {
+     "word": "뒤집히는",
+     "start": 13.02,
+     "dev": 10
+    },
+    {
+     "word": "앞뒤예요.",
+     "start": 14,
+     "dev": -50
+    },
+    {
+     "word": "내",
+     "start": 15.08,
+     "dev": -40
+    },
+    {
+     "word": "거울",
+     "start": 17,
+     "dev": 20
+    },
+    {
+     "word": "자리는",
+     "start": 19.76,
+     "dev": 20
+    },
+    {
+     "word": "앞뒤만",
+     "start": 22.28,
+     "dev": -20
+    },
+    {
+     "word": "거울",
+     "start": 23.48,
+     "dev": 10
+    },
+    {
+     "word": "내가",
+     "start": 26.68,
+     "dev": -30
+    },
+    {
+     "word": "거울",
+     "start": 27.64,
+     "dev": 20
+    },
+    {
+     "word": "든",
+     "start": 29.7,
+     "dev": 10
+    },
+    {
+     "word": "이렇게",
+     "start": 31.8,
+     "dev": -50
+    },
+    {
+     "word": "거울이",
+     "start": 36.04,
+     "dev": 0
+    },
+    {
+     "word": "거울로",
+     "start": 37.64,
+     "dev": 0
+    },
+    {
+     "word": "그래서",
+     "start": 39.88,
+     "dev": 20
+    },
+    {
+     "word": "위아래가",
+     "start": 41.22,
+     "dev": -40
+    },
+    {
+     "word": "호수에",
+     "start": 42.6,
+     "dev": 0
+    }
+   ],
+   "cites": []
+  },
+  {
+   "id": "loop",
+   "status": "pass",
+   "summary": "20 visual-zone pixels differ by more than 16 levels between the last and first frame (limit 500)",
+   "cites": []
+  }
+ ]
+}

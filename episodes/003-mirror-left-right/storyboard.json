@@ -502,24 +502,24 @@
           "component": "Scenery",
           "props": {
             "items": [
-              {"kind": "mountain", "points": [[200, 745], [300, 600], [340, 625], [420, 430], [520, 590], [640, 745]]},
-              {"kind": "tree", "x": 770, "base": 745, "height": 225, "width": 140}
+              {"kind": "mountain", "points": [[200, 742], [300, 600], [340, 625], [420, 430], [520, 590], [640, 742]]},
+              {"kind": "tree", "x": 770, "base": 742, "height": 222, "width": 140}
             ]
           },
-          "where": "the far shore on the waterline y 745 (the flattened mirror): a mountain x 200–640, peak (420, 430), and a tree to its right, x 700–840, top at y 520"
+          "where": "the far shore on the waterline y 745 (the flattened mirror), standing on the line's top edge (y 742) so its opaque fill leaves the 6 px line whole: a mountain x 200–640, peak (420, 430), and a tree to its right, x 700–840, top at y 520"
         },
         {
           "id": "shoreFlip",
           "component": "Scenery",
           "props": {
             "items": [
-              {"kind": "mountain", "points": [[200, 745], [300, 600], [340, 625], [420, 430], [520, 590], [640, 745]]},
-              {"kind": "tree", "x": 770, "base": 745, "height": 225, "width": 140}
+              {"kind": "mountain", "points": [[200, 742], [300, 600], [340, 625], [420, 430], [520, 590], [640, 742]]},
+              {"kind": "tree", "x": 770, "base": 742, "height": 222, "width": 140}
             ],
             "flipAbout": 745,
             "opacity": 0.5
           },
-          "where": "the reflection, hanging upside down below the waterline at half opacity: mountain peak (420, 1060), tree x 700–840 down to y 970, still on the right"
+          "where": "the reflection, hanging upside down from the line's bottom edge (y 748) at half opacity: mountain peak (420, 1060), tree x 700–840 down to y 970, still on the right"
         },
         {
           "id": "upShore",
