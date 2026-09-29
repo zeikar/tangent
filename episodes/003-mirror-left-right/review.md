@@ -1,5 +1,161 @@
 # Review · 003-mirror-left-right
 
+## Round 2 · 2026-09-29
+
+**Verdict: ship.**
+
+This round reviewed the render from dff1c3f (studio at d0366a8): 42.03 s,
+1261 frames, inside topic.md's 40–50 s target. The script dropped B4 and the
+take is now take5. The fix round also changed shared code (Person's `inside`
+and `beneath`, Mirror's glass state, the probe skipping clipPath shapes) and
+the global `figure.hair` token. So this is a full pass, not a diff review.
+
+- **Round 1's fixes hold.** r1#1, r1#4 and r1#6 are fixed. r1#2, r1#3 and
+  r1#5 went away with B4 and take3.
+- **The new narration and captions are clean.** Whisper hears take5 word for
+  word against script.md, and all 24 captions match the storyboard.
+- **check-render passes:** 0 fail, 0 warn, 15 pass, 1 skip.
+- **What's left:** two nits, neither of which misleads or hides anything.
+
+Evidence is in `review/r2/`:
+
+- `sheet-ends.png`: f0 and every beat's last frame;
+- `sheet-b5-f665-714.png`: the turn, cropped to the lower half of the mirror;
+- `f0694.png`, `f0706.png` and `f1227.png`.
+
+### Round 1, re-checked
+
+| Round 1 | Now |
+|---------|-----|
+| r1#1 B5's turn reads as one solid person | **Fixed** (`review/r2/sheet-b5-f665-714.png`, `review/r2/f0694.png`). I dim on "내가" (f667, faint by f673). The ghost turns over me (f674–f698) with its dashed outline visible all the way round: head, shoulders, arms, body. It reads as its own figure, with a faint me and a navy hand behind it. The band across its eyes is gone. Down the head's center the ghost's hair measures (83, 86, 93), the eye row (46, 49, 54) and the lower face (53, 58, 61). The 7-level step is invisible, so the head reads as a light cap over a dark face. The ghost's hand now passes behind the reflection's leg rather than over it (`review/r2/f0706.png`), with at most about a fifth of it hidden (f692–f712). That reads as walking past behind, and I'd leave it. The move (f698–f737) glides cleanly over the faint me. |
+| r1#2 B4's hands pop in | **Gone** with B4. |
+| r1#3 "바닥에 눕히면" heard as "높이면" | **Gone.** Whisper hears take5 in the render as "그래서 바닥에 눕히면 위아래가 뒤집혀요", every word at 0.9 confidence or more. |
+| r1#4 the mirror person outside the glass in the loop's rise | **Fixed** (`review/r2/f1227.png`). The person is clipped to the live glass, so the rising glass reveals it like a window. From f1222 (glass top at y 668) on, no ink shows above the glass's top edge. The only ink above it, at f1216–f1221, is the fading mountain. |
+| r1#5 B4 still for 5.2 s | **Gone** with B4. The longest still is now B5's end (r2#1). |
+| r1#6 hair nearly the glass's color | **Fixed.** The hair now measures (51, 56, 59) against glass at (23, 26, 31), 1.47:1, and 1.48:1 under the body gray. Both heads read as a filled cap. Between round 1's f0 and this one, only the two heads changed (16,644 px, all but 10 inside the two head boxes). |
+
+### Issues
+
+#### 1. Nit, for the human: B5's end is still for 3.1 s, including 2.3 s of silence (f870–f964, 29.0–32.1 s)
+
+- After the rings pulse on "좌우가" (f855, done by f870), nothing moves until
+  B6 starts at f964.
+- The narration is silent from 29.88 to 32.14 s (f896–f964). The storyboard
+  asks for a 1.5 s hold, and take5's own gap adds the rest.
+- It's the longest still and the longest silence in the video. The next are
+  B3's end: a 1.64 s silence (f596–f646) inside a 2.6 s still (f571–f648).
+- The hold is on purpose: the cut critique asked for time on the pair side by
+  side. Whether 2.3 s reads as room to see the two raised hands or as a dead
+  spot is a feel call.
+- **If it feels long:** shorten the hold to 1.0 s, or pulse both rings once
+  mid-hold (around f930).
+
+#### 2. Nit: a stale number in the storyboard's B6 note
+
+- The pause cue for the mirror's rise still says "(0.7 s of the 1.2 s
+  pause)". The pause is now 1.5 s.
+- The rise takes 0.7 s (f1216 to about f1237). B1's frame then holds still
+  for 0.77 s (f1238–f1260) before the loop.
+- It's text only, with nothing to fix on screen.
+
+### check-render
+
+My `--out` run matched the tracked `check.md` and `check.json` byte for byte:
+**0 fail, 0 warn, 15 pass, 1 skip** (labels: no edge label has another
+element's line nearby).
+
+- **Passes at or near a limit:**
+  - reaction: B3 is +3 frames, right at the limit. The linear dim on
+    "뒤집히는" (f421) first shows at f424; round 1 had +2. It passes, but
+    with no margin if the take's timing moves again;
+  - bounds: the leftmost ink is x 151, the rightmost x 927, and the bottom
+    y 1255 (my bust's cut);
+  - words: the widest is "늘," at −50 ms.
+- **Everything else passes:**
+  - freshness;
+  - technical: BT.709 TV range, 30 fps, 48 kHz, silent tail;
+  - centering: within 2 px at every beat end;
+  - legibility: 41.4 px;
+  - overlaps;
+  - captions: 24 on their cue, one line each;
+  - readable;
+  - cues and blank runs;
+  - loudness: −14.1 LUFS, −3.6 dBTP;
+  - A/V sync: 0 ms;
+  - loop: 29 px differ.
+
+### Checked and fine
+
+- **End frames** (`review/r2/sheet-ends.png`). Every beat's last frame matches
+  its `endFrame`:
+  - B1: the mirror scene, no arrows;
+  - B2: the four teal arrows;
+  - B3: the teal arrows at 0.35 and the purple pair, held through the 1 s
+    pause;
+  - B5: the ghost beside the person in the mirror with a red ring on each
+    raised hand, and me at 0.3. The mirror frame's bottom edge shows through
+    my faint bust, as it should at that opacity;
+  - B6: identical to f0.
+- **Motion,** sampled every 2–3 frames at every beat boundary and every move,
+  and frame by frame through B5's turn and the loop's rise:
+  - B1's glint and pulses on the new cue words ("좌우는" pulses my hand at f90,
+    "바뀌어" the mirror hand at f106);
+  - B2's arrows;
+  - B3's dimming and the purple pair's growth;
+  - B5's opening on "그런데" (the arrows exit and the purple pair hides by
+    f655);
+  - B6's return to full (f964–f970);
+  - B6's tilt, now starting on "그래서" (f1089) as the people fade. They're
+    faint by f1097–f1099, when the glass top is at y 285–333. The person
+    in the mirror is clipped to the glass, so nothing shows outside it;
+  - the shore on "눕히면" (f1112), 22 frames before its caption;
+  - the unfold and the rise.
+
+  A frame-by-frame scan found no single-frame glitches.
+- **Narration.** A fresh Whisper transcript of the render matches all 12
+  sentences of script.md's Read-aloud text. It differs only in "서보면" for
+  "서 보면" and in punctuation. After 40.5 s it repeats "호수에 비친 산처럼요"
+  several times. That's Whisper inventing text over the silent loop tail: the
+  audio after 40.6 s peaks at −60 dB, and the last word ends at 40.82 s.
+- **Captions.** All 24 match the storyboard on one line, with B6's re-chunked
+  three ("거울이 뒤집는 건" / "늘 거울로 들어가는" / "방향 하나예요.").
+  Frame 0 still shows the whole question, "왜 위아래는 안 뒤집을까요?".
+- **Facts.** `verify.py` passes. There are no numbers on screen.
+  - **The new hook line.** "좌우는 바뀌어 보이는데요" states how it looks,
+    not that the mirror swaps. B2 answers it ("사실 … 좌우도 안 뒤집혀요").
+    It doesn't say everyone sees it that way (research.md's C7 warning).
+  - **The handedness step is gone.** With it went the only shape claim (C3),
+    and nothing now implies the mirror changes nothing. B3 says front-back
+    flips, and B6 says it flips the one direction into the mirror.
+  - **The lake is still symmetric** about y 744.5. The purple arrows span
+    y 303–409 and 1080–1188, the teal ones 551–568 and 921–938, and the tree
+    stays on the right.
+- **research.md's Easy to misstate.**
+  - The mirror person's raised hand stays on the screen right, showing a palm,
+    in every mirror-scene frame. Clipping it to the glass cuts nothing at rest
+    (the hand's top is at y 316, the glass's inner edge at y 273).
+  - The ghost's hand is the mirror image of the reflection's.
+  - There's no text in the picture at all now, so nothing can label the
+    mirror hand 오른손.
+  - The lake shows scenery only.
+  - The only perception line is still "이렇게 비교하면, 좌우가 바뀐 것처럼
+    보이죠".
+- **Shared changes.**
+  - Only Person draws a `<mask>` or `<clipPath>` (grep of `studio/src`), so
+    the probe's clipPath skip can't change what 001 or 002 are checked
+    against.
+  - `figure.hair` is read only by Person.
+  - Mirror's state refactor draws the same frame and glass: f0's only changed
+    pixels are the heads.
+  - 001 and 002 use none of these. I didn't re-render them.
+
+### What these instructions should have said
+
+- **Whisper over a silent tail.** The brief warns that Whisper invents text
+  over silence. It could add the quick test: measure the level after the last
+  word in words.json (here −60 dB peak), so a repeated line at the end isn't
+  mistaken for a doubled take.
+
 ## Round 1 · 2026-09-29
 
 **Verdict: fix then ship.**
