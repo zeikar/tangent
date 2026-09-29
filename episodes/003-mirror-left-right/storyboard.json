@@ -2,7 +2,7 @@
   "slug": "003-mirror-left-right",
   "loop": true,
   "notes": [
-    "Written against script.md (script a, 2026-09-29) and take3@1.08.words.json, which narration.json names.",
+    "Written against script.md (script a, revised 2026-09-29 without the handedness beat, B4) and take5@1.08.words.json, which narration.json names. Beat ids keep their numbers: B1, B2, B3, B5, B6.",
     "Geometry is px in the 1080×1920 frame, origin top-left; points are [x, y].",
     "Frame 0 is the hook: the whole mirror scene is visibleAtStart (mirror, the person in it, me from behind) under the first caption. The mirror fills the visual zone (x 160–920, y 270–1220), so the picture is as big as the zone and every beat ending on the mirror scene is centered by its frame.",
     "B1's Display drops the spoken '거울은' (script.md, approved 2026-09-29) because the frame-0 picture is the mirror: the first chunk '왜 위아래는 안 뒤집을까요?' is the whole question in 4 eojeol and 644 px, anchored on '거울은' and drawn from frame 0. With '거울은' it was 5 eojeol and 814 px, over the chunk limit and the 800 px line.",
@@ -10,14 +10,15 @@
     "Drawing rules from research.md (Easy to misstate): the person in the mirror is never drawn as me turned around. Its raised hand is on the same screen side as mine (to the right of its body), it shows a palm where mine shows a back, and each hand's thumb points toward its own body's midline, so both thumbs are on the screen left of their hands: the same outline. It is never labeled 오른손. B5's turned-around ghost is the figure that differs (raised hand on the screen left). The lake (B6) is scenery only: a mountain and a tree, no person.",
     "Hand faces are colored from frame 0 (B1's 'both raised hands in accent colors'): the back of a hand blue, a palm yellow with palm lines. B3 pulses them instead of repainting, so no color changes its meaning mid-episode.",
     "Arrow colors follow one rule: teal is a direction along the mirror's surface (unchanged in the mirror: up and right while it stands), purple is the direction into the mirror (the one it flips). Laid flat as a lake, the direction into the surface is vertical, so the lake's vertical arrows are purple and its horizontal ones teal.",
-    "Hidden, not exited: mirror, me, reflection, frontMe and frontRefl leave the screen with setStyle {opacity: 0} and return with opacity 1 (B4 → B5, B6's lake → the loop), because an exited id can't come back. Everything else exits.",
+    "Hidden, not exited: me, reflection, frontMe and frontRefl leave the screen (or dim) with setStyle {opacity} and come back with opacity 1 (the purple pair from B5 to B6's '거울로'; me dimmed through B5; the people from B6's lake to the loop), because an exited id can't come back. Everything else exits. The mirror scene itself stays from B1 through B5.",
     "Loop: the last frame is the first. Both show the mirror standing (tilt 0) with its sheen at rest, the person in the mirror and me at full opacity, and nothing else: no arrows, rings, ghost, big hands, label or scenery. frontMe and frontRefl are still alive at the end but at opacity 0.",
-    "Draw order is declaration order: mirror < reflection < me (so I stand in front of the glass and cover its bottom edge), then everything declared later on top. The ghost is declared after me, so its dashed outline shows over me as it starts to turn.",
-    "An element is invisible until its appear cue, unless it has visibleAtStart. Cues sharing an anchor run in parallel, except that an appear waits for the exits on its anchor to finish. Every exit is a 0.2 s even fade. setStyle is not an entrance: a restore on the same word as an exit cross-fades with it (B5's '내가', B6's pause). Any cue with neither speed nor until uses base.",
+    "Draw order is declaration order: mirror < me < reflection (I stand in front of the glass and cover its bottom edge; me and the person in the mirror never overlap), then everything declared later on top, except the ghost, drawn beneath the person in the mirror (props.beneath): over me as it turns, behind the mirror person's legs as it walks in. The person in the mirror is drawn only on the glass (props.inside), so it never shows outside the mirror while the mirror stands back up in the loop.",
+    "An element is invisible until its appear cue, unless it has visibleAtStart. Cues sharing an anchor run in parallel, except that an appear waits for the exits on its anchor to finish. Every exit is a 0.2 s even fade. setStyle is not an entrance: a restore on the same word as an exit cross-fades with it (B6's '거울이' and its pause). Any cue with neither speed nor until uses base.",
     "Easing from theme.ts: ease.out for appear, ease.exit for exit, ease.smooth for everything else, unless params say ease: linear. The two first-word cues that aren't entrances (B1's mirror glint, B3's dimming) are linear so they show within the 3-frame reaction window; smooth barely moves in 3 frames.",
     "Stroke widths never scale with a figure's r: outlines 4 px, arrows 5 px with an 18 px head (theme stroke.arrow, mark.head) unless a taper scales them, the mirror frame 6 px (stroke.sheet).",
-    "Text: the only text in the visual zone is '왼손' (Note, type.label 56 px; measured in Pretendard SemiBold: ink 93 × 48 px). Captions measured in Pretendard Bold 60 (static OTF advance widths, within 2 px of 002's browser measurement): widest '왜 위아래는 안 뒤집을까요?' 644 px, then '좌우가 바뀐 것처럼 보이죠.' 629 px; all fit one 800 px line.",
-    "Extents still estimated (production's render check measures them): the figures' outlines (hair, arms, hands) from the proportions in Person's spec; the tapered arrows' heads; the mountain and tree polygons; the ghost's turn (its figure's horizontal extent shrinks by |cos| about x 580, so it stays inside x 365–795); B5's clearances (ghost's legs to my raised hand ≈ 22 px, each ring to its person's head ≈ 16 px, ring to ring ≈ 29 px); frontRefl to the raised arm of the person in the mirror ≈ 10 px."
+    "Text: there is no text in the visual zone. Captions measured in Pretendard Bold 60 (static OTF advance widths, within 2 px of 002's browser measurement): widest '왜 위아래는 안 뒤집을까요?' 644 px, then '좌우가 바뀐 것처럼 보이죠.' 629 px; all fit one 800 px line.",
+    "Measured in the first render: B5's ghost ends 22 px left of my raised hand, the rings 29 px apart; bounds, centering and loop pass (check.md).",
+    "B5 dims me (0.3) from '내가' to B6's '거울이': the dashed copy turns over a faint me, so its outline and face read as its own (QA r1#1), and while the two stand side by side the eye goes up to their raised hands (cut critique)."
   ],
   "colors": {
     "teal": "거울면을 따라가는 방향 (위·오른쪽): 거울 속에서도 그대로",
@@ -30,24 +31,14 @@
   },
   "components": [
     {
-      "name": "Note",
-      "status": "existing",
-      "spec": "One line of plain text with $...$ math (studio/src/components/Note.tsx): props text, at [x, y] (the ink center), color; type.label. Actions: appear, exit, setText. Used for B4's '왼손'."
-    },
-    {
       "name": "Mirror",
       "status": "new",
-      "spec": "A standing mirror seen from the front: a rectangle frame (6 px, in stroke, corner radius 20) around glass (filled in fill at 0.08), with two short parallel diagonal sheen streaks (5 px, text at 0.5, round caps, about 90 and 55 px long, 22 px apart, running from lower left to upper right) near its upper-right corner, inside x 790–900, y 290–420 for B1's mirror. Props: center, w, h (the frame's stroke centerline), stroke (default text), fill (default muted). Actions: appear (fade); exit; setStyle {opacity} (hides and restores it without ending it); pulse (a glint: the frame's stroke 2× and back and the sheen up to full opacity and back); tiltTo {deg} (tips back about its horizontal center line: the drawn height is h·cos(deg), centered on center's y; while tilting, the top edge is up to 6% shorter than the bottom (the most at 45°, none at 0° and 90°) so it reads as tipping back, not squashing; the glass fill and the sheen fade with cos(deg); at 90° it is a single horizontal line, w long, in the frame's stroke and color: B6's lake surface)."
+      "spec": "A standing mirror seen from the front: a rectangle frame (6 px, in stroke, corner radius 20) around glass (filled in fill at 0.08), with two short parallel diagonal sheen streaks (5 px, text at 0.5, round caps, about 90 and 55 px long, 22 px apart, running from lower left to upper right) near its upper-right corner, inside x 790–900, y 290–420 for B1's mirror. Props: center, w, h (the frame's stroke centerline), stroke (default text), fill (default muted). Actions: appear (fade); exit; setStyle {opacity} (hides and restores it without ending it); pulse (a glint: the frame's stroke 2× and back and the sheen up to full opacity and back); tiltTo {deg} (tips back about its horizontal center line: the drawn height is h·cos(deg), centered on center's y; while tilting, the top edge is up to 6% shorter than the bottom (the most at 45°, none at 0° and 90°) so it reads as tipping back, not squashing; the glass fill and the sheen fade with cos(deg); at 90° it is a single horizontal line, w long, in the frame's stroke and color: B6's lake surface). It exposes its live glass (the frame's inner edge) for Person's inside."
     },
     {
       "name": "Person",
       "status": "new",
-      "spec": "A simple standing person drawn in code with one arm raised, seen from behind (view back: no face, hair covering the upper two thirds of the head) or from the front (view front: two eye dots and a short mouth line in text; the same hair over the top third), so the two views read as one person. Proportions in head radii r from the head's center `at`: shoulders at +1.9r, ±2.0r; waist at +5r, ±1.5r; two legs down to the feet at +11r; arms 0.45r thick with round ends; the raised arm goes up from the shoulder on the `raise` side (screenRight or screenLeft) to a hand centered at (±1.9r, −1.9r); the other arm hangs to (∓2.3r, +5.5r). The raised hand is an open hand, fingers up, 1.25r wide and 1.6r tall, its thumb out toward the body's midline (so both B1 hands have the thumb on the screen left); it shows one face: back (filled backColor at 0.6, 4 px stroke in backColor) or palm (filled palmColor at 0.6, stroke palmColor, three short palm lines in text at 0.6), the same outline either way. Nothing is drawn below y 1250 (the visual zone's bottom): a large figure low in the frame is cut there into a bust, with no line along the cut. Styles: solid (the body opaque, so nothing behind it shows through: filled muted at 0.5 over the background, outlined in text 4 px) or ghost (a dashed text outline 4 px, dash 18 gap 12, filled muted at 0.15; its raised hand filled as above at 0.8). Props: at, r, view, raise, face, backColor, palmColor, style. It exposes its live raised-hand center and size (for Ring and Hand). Actions: appear (fade); exit; setStyle {opacity} (hides and restores it without ending it); pulse {part: head | hand} (that part's stroke 2× and back, its fill brightened); turn (a half turn about the vertical line through at: the figure's horizontal scale runs cos from 1 through 0 to −1 across the span; at the midpoint the view switches back ↔ front and the raised hand's face back ↔ palm; it ends mirrored, the raised hand on the other screen side with its thumb still toward the body's midline, and raise reads the new side from then on); moveTo {at, r} (moves and scales about the head's center over the span; the cut stays at y 1250, so a bust that rises and shrinks shows its legs)."
-    },
-    {
-      "name": "Hand",
-      "status": "new",
-      "spec": "Person's raised hand drawn large on its own: the same open-hand outline (fingers up, thumb out on the `thumb` side: screenLeft or screenRight), with a short wrist below it; `height` is fingertips to the wrist's end, the width 0.78 × height, centered on `at`. face back (filled backColor at 0.6, 5 px stroke in backColor) or palm (filled palmColor at 0.6, stroke palmColor, three palm lines in text at 0.6, 5 px). Two hands with the same thumb side have the same outline whatever their face. Props: at, height, thumb, face, backColor, palmColor. Actions: appear (fade; with params.from: a Person id, it grows out of that person's raised hand, moving from its live center and scaling from its size to at and height over the span); exit; pulse {part: thumb | all} (that part's stroke 2× and back, its fill brightened)."
+      "spec": "A simple standing person drawn in code with one arm raised, seen from behind (view back: no face, hair covering the upper two thirds of the head) or from the front (view front: two eye dots and a short mouth line in text; the same hair over the top third), so the two views read as one person. Proportions in head radii r from the head's center `at`: shoulders at +1.9r, ±2.0r; waist at +5r, ±1.5r; two legs down to the feet at +11r; arms 0.45r thick with round ends; the raised arm goes up from the shoulder on the `raise` side (screenRight or screenLeft) to a hand centered at (±1.9r, −1.9r); the other arm hangs to (∓2.3r, +5.5r). The raised hand is an open hand, fingers up, 1.25r wide and 1.6r tall, its thumb out toward the body's midline (so both B1 hands have the thumb on the screen left); it shows one face: back (filled backColor at 0.6, 4 px stroke in backColor) or palm (filled palmColor at 0.6, stroke palmColor, three short palm lines in text at 0.6), the same outline either way. Nothing is drawn below y 1250 (the visual zone's bottom): a large figure low in the frame is cut there into a bust, with no line along the cut. Styles: solid (the body opaque, so nothing behind it shows through: filled muted at 0.5 over the background, outlined in text 4 px) or ghost (a dashed text outline 4 px, dash 18 gap 12, filled muted at 0.15; its raised hand filled as above at 0.8). Props: at, r, view, raise, face, backColor, palmColor, style. It exposes its live raised-hand center and size (for Ring and Hand). Actions: appear (fade); exit; setStyle {opacity} (hides and restores it without ending it); pulse {part: head | hand} (that part's stroke 2× and back, its fill brightened); turn (a half turn about the vertical line through at: the figure's horizontal scale runs cos from 1 through 0 to −1 across the span; at the midpoint the view switches back ↔ front and the raised hand's face back ↔ palm; it ends mirrored, the raised hand on the other screen side with its thumb still toward the body's midline, and raise reads the new side from then on); moveTo {at, r} (moves and scales about the head's center over the span; the cut stays at y 1250, so a bust that rises and shrinks shows its legs). Production additions: the turn swings the arms and hand with cos (the hand edge-on at the midpoint), narrows the torso only to its depth (theme figure.profile), keeps the head round while the hairline slides and the face fades in past the midpoint; the body is one silhouette outlined only outside; beneath: [ids] draws it just below those elements; inside: a Mirror id draws it only on that mirror's live glass."
     },
     {
       "name": "DirArrow",
@@ -69,10 +60,10 @@
     {
       "id": "B1",
       "name": "훅",
-      "readAloud": "거울은 왜 위아래는 안 뒤집을까요? 오른손은 왼손이 되는데요.",
+      "readAloud": "거울은 왜 위아래는 안 뒤집을까요? 좌우는 바뀌어 보이는데요.",
       "captions": [
         {"text": "왜 위아래는 안 뒤집을까요?", "at": {"word": "거울은"}},
-        {"text": "오른손은 왼손이 되는데요.", "at": {"word": "오른손은"}}
+        {"text": "좌우는 바뀌어 보이는데요.", "at": {"word": "좌우는"}}
       ],
       "pauseAfter": 0.3,
       "elements": [
@@ -84,18 +75,18 @@
           "where": "fills the visual zone: frame x 160–920, y 270–1220 (ink 157–923, 267–1223), centered on (540, 745); sheen at its upper right, x 790–900, y 290–420, where nothing else ever goes. Its bottom edge runs behind me. In B6 it tips back into the lake's surface, the line y 745, x 160–920"
         },
         {
-          "id": "reflection",
-          "component": "Person",
-          "visibleAtStart": true,
-          "props": {"at": [360, 420], "r": 38, "view": "front", "raise": "screenRight", "face": "palm", "backColor": "blue", "palmColor": "yellow", "style": "solid"},
-          "where": "the person in the mirror, facing out: head (360, 420), x 322–398, y 382–458; raised hand (432, 348), x 408–456, y 317–379, yellow palm, thumb toward its head (screen left); shoulders y 492, x 284–436; the lowered arm hangs to (273, 629); feet at y 838. All inside the glass. Me scaled by 0.447 about the VP (notes)"
-        },
-        {
           "id": "me",
           "component": "Person",
           "visibleAtStart": true,
           "props": {"at": [580, 1000], "r": 85, "view": "back", "raise": "screenRight", "face": "back", "backColor": "blue", "palmColor": "yellow", "style": "solid"},
           "where": "me from behind, big in the foreground: head (580, 1000), x 495–665, y 915–1085, no face; shoulders y 1162, x 410–750; cut into a bust at y 1250; right hand raised on the screen right, centered (741, 838), x 688–794, y 770–906, blue back of the hand, thumb toward my head (screen left). Drawn over the mirror's bottom edge"
+        },
+        {
+          "id": "reflection",
+          "component": "Person",
+          "visibleAtStart": true,
+          "props": {"at": [360, 420], "r": 38, "view": "front", "raise": "screenRight", "face": "palm", "backColor": "blue", "palmColor": "yellow", "style": "solid", "inside": "mirror"},
+          "where": "the person in the mirror, facing out: head (360, 420), x 322–398, y 382–458; raised hand (432, 348), x 408–456, y 317–379, yellow palm, thumb toward its head (screen left); shoulders y 492, x 284–436; the lowered arm hangs to (273, 629); feet at y 838. All inside the glass. Me scaled by 0.447 about the VP (notes). Drawn only on the mirror's glass (inside)"
         }
       ],
       "cues": [
@@ -115,32 +106,26 @@
           "speed": "base",
           "note": "'위아래는': both heads are up, the mirrored one too"
         },
+        {"at": {"word": "위아래는"}, "target": "me", "action": "pulse", "params": {"part": "head"}, "speed": "base"},
         {
-          "at": {"word": "위아래는"},
-          "target": "me",
-          "action": "pulse",
-          "params": {"part": "head"},
-          "speed": "base"
-        },
-        {
-          "at": {"word": "오른손은"},
+          "at": {"word": "좌우는"},
           "target": "me",
           "action": "pulse",
           "params": {"part": "hand"},
           "speed": "base",
-          "note": "'오른손은': my raised right hand"
+          "note": "'좌우는 바뀌어': the raised hands, mine first"
         },
         {
-          "at": {"word": "왼손이"},
+          "at": {"word": "바뀌어"},
           "target": "reflection",
           "action": "pulse",
           "params": {"part": "hand"},
           "speed": "base",
-          "note": "'왼손이': the hand in the mirror, on the same screen side as mine"
+          "note": "then the one in the mirror, on the same screen side as mine"
         }
       ],
-      "endFrame": "Visual zone: the mirror filling the zone with its sheen at rest; in it, the person facing out at the upper left, hand raised to the right of its body with a yellow palm; me from behind at the bottom, center right, right hand raised to the right of my head with a blue back of the hand; both thumbs on the screen left of their hands; both heads up. No arrows. Caption: '오른손은 왼손이 되는데요.'",
-      "claims": ["C1", "C3", "C4"]
+      "endFrame": "Visual zone: the mirror filling the zone with its sheen at rest; in it, the person facing out at the upper left, hand raised to the right of its body with a yellow palm; me from behind at the bottom, center right, right hand raised to the right of my head with a blue back of the hand; both thumbs on the screen left of their hands; both heads up. No arrows. Caption: '좌우는 바뀌어 보이는데요.'",
+      "claims": ["C1", "C4"]
     },
     {
       "id": "B2",
@@ -153,7 +138,7 @@
         {"text": "거울 속에서도", "at": {"word": "거울"}},
         {"text": "내 오른쪽에 있어요.", "at": {"word": "내"}}
       ],
-      "pauseAfter": 0.3,
+      "pauseAfter": 0.5,
       "elements": [
         {
           "id": "upRefl",
@@ -236,7 +221,7 @@
         {"text": "거울 속 손바닥은", "at": {"word": "거울"}},
         {"text": "나를 향하죠.", "at": {"word": "나를"}}
       ],
-      "pauseAfter": 0.5,
+      "pauseAfter": 1.0,
       "elements": [
         {
           "id": "frontMe",
@@ -295,122 +280,28 @@
           "note": "the mirrored palm, with its palm lines"
         }
       ],
-      "endFrame": "Visual zone: B2's scene with the four teal arrows at 0.35, plus two purple arrows on one line: from my raised hand up and left into the mirror, narrowing, and from the mirrored palm down and right toward me, widening; their tips face each other across the glass. Caption: '나를 향하죠.'",
+      "endFrame": "Visual zone: B2's scene with the four teal arrows at 0.35, plus two purple arrows on one line: from my raised hand up and left into the mirror, narrowing, and from the mirrored palm down and right toward me, widening; their tips face each other across the glass. Held still through the 1 s pause. Caption: '나를 향하죠.'",
       "claims": ["C1"]
-    },
-    {
-      "id": "B4",
-      "name": "왼손 모양",
-      "readAloud": "자리는 그대로지만, 모양은 달라요. 앞뒤만 뒤집혀도, 거울 속 손은 왼손 모양이 되거든요.",
-      "captions": [
-        {"text": "자리는 그대로지만", "at": {"word": "자리는"}},
-        {"text": "모양은 달라요.", "at": {"word": "모양은"}},
-        {"text": "앞뒤만 뒤집혀도", "at": {"word": "앞뒤만"}},
-        {"text": "거울 속 손은", "at": {"word": "거울"}},
-        {"text": "왼손 모양이 되거든요.", "at": {"word": "왼손"}}
-      ],
-      "pauseAfter": 0.6,
-      "elements": [
-        {
-          "id": "bigHandRefl",
-          "component": "Hand",
-          "props": {"at": [330, 690], "height": 440, "thumb": "screenLeft", "face": "palm", "backColor": "blue", "palmColor": "yellow"},
-          "where": "the mirrored hand, big, left slot: x 159–501, y 470–910; yellow palm with palm lines, thumb on the screen left. Left because it comes from the upper left, so the two flights don't cross, and '왼손' then sits on the left"
-        },
-        {
-          "id": "bigHandMe",
-          "component": "Hand",
-          "props": {"at": [750, 690], "height": 440, "thumb": "screenLeft", "face": "back", "backColor": "blue", "palmColor": "yellow"},
-          "where": "my right hand, big, right slot: x 579–921, y 470–910; blue back of the hand, thumb on the screen left: the same outline as bigHandRefl. 78 px between the two"
-        },
-        {
-          "id": "leftTag",
-          "component": "Note",
-          "props": {"text": "왼손", "at": [330, 985], "color": "text"},
-          "where": "under the mirrored hand: ink x 283–377, y 961–1009, 51 px below its wrist"
-        }
-      ],
-      "cues": [
-        {"at": {"word": "자리는"}, "target": "upRefl", "action": "exit", "speed": "fast"},
-        {"at": {"word": "자리는"}, "target": "upMe", "action": "exit", "speed": "fast"},
-        {"at": {"word": "자리는"}, "target": "rightRefl", "action": "exit", "speed": "fast"},
-        {"at": {"word": "자리는"}, "target": "rightMe", "action": "exit", "speed": "fast"},
-        {
-          "at": {"word": "자리는"},
-          "target": "mirror",
-          "action": "setStyle",
-          "params": {"opacity": 0},
-          "speed": "fast",
-          "note": "the scene hides, not exits: it comes back in B5"
-        },
-        {"at": {"word": "자리는"}, "target": "reflection", "action": "setStyle", "params": {"opacity": 0}, "speed": "fast"},
-        {"at": {"word": "자리는"}, "target": "me", "action": "setStyle", "params": {"opacity": 0}, "speed": "fast"},
-        {"at": {"word": "자리는"}, "target": "frontMe", "action": "setStyle", "params": {"opacity": 0}, "speed": "fast"},
-        {"at": {"word": "자리는"}, "target": "frontRefl", "action": "setStyle", "params": {"opacity": 0}, "speed": "fast"},
-        {
-          "at": {"word": "자리는"},
-          "target": "bigHandRefl",
-          "action": "appear",
-          "params": {"from": "reflection"},
-          "speed": "fast",
-          "note": "'두 손만 떼어': grows out of the mirrored hand (432, 348) into the left slot as the scene fades, once the arrows' exits end"
-        },
-        {
-          "at": {"word": "자리는"},
-          "target": "bigHandMe",
-          "action": "appear",
-          "params": {"from": "me"},
-          "speed": "fast",
-          "note": "grows out of my raised hand (741, 838) into the right slot"
-        },
-        {
-          "at": {"word": "그대로지만"},
-          "target": "bigHandRefl",
-          "action": "pulse",
-          "params": {"part": "thumb"},
-          "speed": "base",
-          "note": "'자리는 그대로지만': both thumbs on the same side (screen left), pulsing together"
-        },
-        {"at": {"word": "그대로지만"}, "target": "bigHandMe", "action": "pulse", "params": {"part": "thumb"}, "speed": "base"},
-        {
-          "at": {"word": "모양은"},
-          "target": "bigHandRefl",
-          "action": "pulse",
-          "params": {"part": "all"},
-          "speed": "base",
-          "note": "'모양은 달라요': the whole hands, same outline, one a back and one a palm"
-        },
-        {"at": {"word": "모양은"}, "target": "bigHandMe", "action": "pulse", "params": {"part": "all"}, "speed": "base"},
-        {
-          "at": {"word": "왼손"},
-          "target": "leftTag",
-          "action": "appear",
-          "speed": "fast",
-          "note": "'왼손 모양이': the palm-up hand with its thumb on the left is a left hand's shape. Nothing labels either hand 오른손"
-        }
-      ],
-      "endFrame": "Visual zone: only the two big hands side by side, the same outline with both thumbs on the screen left: left, a yellow palm with palm lines and '왼손' under it; right, a blue back of the hand. No mirror, people or arrows. Caption: '왼손 모양이 되거든요.'",
-      "claims": ["C1", "C3"]
     },
     {
       "id": "B5",
       "name": "돌아서 비교하면",
-      "readAloud": "내가 돌아서서, 거울 속 사람과 나란히 서 보면, 든 손만 반대쪽이에요. 이렇게 비교하면, 좌우가 바뀐 것처럼 보이죠.",
+      "readAloud": "그런데 내가 돌아서서, 거울 속 사람과 나란히 서 보면, 든 손만 반대쪽이에요. 이렇게 비교하면, 좌우가 바뀐 것처럼 보이죠.",
       "captions": [
-        {"text": "내가 돌아서서", "at": {"word": "내가"}},
+        {"text": "그런데 내가 돌아서서", "at": {"word": "그런데"}},
         {"text": "거울 속 사람과", "at": {"word": "거울"}},
         {"text": "나란히 서 보면", "at": {"word": "나란히"}},
         {"text": "든 손만 반대쪽이에요.", "at": {"word": "든"}},
         {"text": "이렇게 비교하면", "at": {"word": "이렇게"}},
         {"text": "좌우가 바뀐 것처럼 보이죠.", "at": {"word": "좌우가"}}
       ],
-      "pauseAfter": 1.0,
+      "pauseAfter": 1.5,
       "elements": [
         {
           "id": "ghost",
           "component": "Person",
-          "props": {"at": [580, 1000], "r": 85, "view": "back", "raise": "screenRight", "face": "back", "backColor": "blue", "palmColor": "yellow", "style": "ghost"},
-          "where": "a dashed copy of me, starting exactly over me; it turns in place (its horizontal extent shrinks by |cos| about x 580, inside x 365–795) and then moves into the mirror beside the person there, ending at head (630, 420) r 38, front view: raised hand on the screen left at (558, 348), yellow palm, thumb toward its head (screen right); lowered arm to (717, 629); legs within x 594–666 near the feet (y 770–838), about 22 px left of my raised hand (x 688)"
+          "props": {"at": [580, 1000], "r": 85, "view": "back", "raise": "screenRight", "face": "back", "backColor": "blue", "palmColor": "yellow", "style": "ghost", "beneath": ["reflection"]},
+          "where": "a dashed copy of me, starting exactly over me; it turns in place (its horizontal extent shrinks by |cos| about x 580, inside x 365–795) and then moves into the mirror beside the person there, ending at head (630, 420) r 38, front view: raised hand on the screen left at (558, 348), yellow palm, thumb toward its head (screen right); lowered arm to (717, 629); legs within x 594–666 near the feet (y 770–838), about 22 px left of my raised hand (x 688). Drawn beneath the person in the mirror, so its hand passes behind that person's legs on the way up"
         },
         {
           "id": "ringRefl",
@@ -426,25 +317,39 @@
         }
       ],
       "cues": [
-        {"at": {"word": "내가"}, "target": "bigHandRefl", "action": "exit", "speed": "fast"},
-        {"at": {"word": "내가"}, "target": "bigHandMe", "action": "exit", "speed": "fast"},
-        {"at": {"word": "내가"}, "target": "leftTag", "action": "exit", "speed": "fast"},
+        {
+          "at": {"word": "그런데"},
+          "target": "upRefl",
+          "action": "exit",
+          "speed": "fast",
+          "note": "'그런데': the arrows clear and B1's scene is left; the scene itself stays from B3"
+        },
+        {"at": {"word": "그런데"}, "target": "upMe", "action": "exit", "speed": "fast"},
+        {"at": {"word": "그런데"}, "target": "rightRefl", "action": "exit", "speed": "fast"},
+        {"at": {"word": "그런데"}, "target": "rightMe", "action": "exit", "speed": "fast"},
+        {
+          "at": {"word": "그런데"},
+          "target": "frontMe",
+          "action": "setStyle",
+          "params": {"opacity": 0},
+          "speed": "fast",
+          "note": "hidden, not exited: the purple pair comes back in B6"
+        },
+        {"at": {"word": "그런데"}, "target": "frontRefl", "action": "setStyle", "params": {"opacity": 0}, "speed": "fast"},
         {
           "at": {"word": "내가"},
-          "target": "mirror",
+          "target": "me",
           "action": "setStyle",
-          "params": {"opacity": 1},
+          "params": {"opacity": 0.3},
           "speed": "fast",
-          "note": "'B1 장면으로 돌아와': the scene cross-fades back as the hands go; the arrows stay hidden"
+          "note": "I step back (dim) so the dashed copy reads as its own figure while it turns over me, and the eye goes up to the two in the mirror"
         },
-        {"at": {"word": "내가"}, "target": "reflection", "action": "setStyle", "params": {"opacity": 1}, "speed": "fast"},
-        {"at": {"word": "내가"}, "target": "me", "action": "setStyle", "params": {"opacity": 1}, "speed": "fast"},
         {
           "at": {"word": "내가"},
           "target": "ghost",
           "action": "appear",
           "speed": "fast",
-          "note": "the dashed copy appears over me once the hands' exits end"
+          "note": "the dashed copy appears over me as I dim"
         },
         {
           "at": {"word": "돌아서서"},
@@ -480,7 +385,7 @@
         },
         {"at": {"word": "좌우가"}, "target": "ringGhost", "action": "pulse", "speed": "base"}
       ],
-      "endFrame": "Visual zone: B1's scene (mirror, the person in it, me from behind), plus the dashed ghost standing to the right of the person in the mirror, the same size, heads level, both facing out: the person's raised hand on the right of its body, the ghost's on the left, both yellow palms, a red ring around each. The person in the mirror hasn't moved. Caption: '좌우가 바뀐 것처럼 보이죠.'",
+      "endFrame": "Visual zone: B1's scene (mirror, the person in it, me from behind dimmed to 0.3), plus the dashed ghost standing to the right of the person in the mirror, the same size, heads level, both facing out: the person's raised hand on the right of its body, the ghost's on the left, both yellow palms, a red ring around each. The person in the mirror hasn't moved. Held still through the 1.5 s pause. Caption: '좌우가 바뀐 것처럼 보이죠.'",
       "claims": ["C4", "C3"]
     },
     {
@@ -488,14 +393,14 @@
       "name": "눕힌 거울",
       "readAloud": "거울이 뒤집는 건 늘, 거울로 들어가는 방향 하나예요. 그래서 바닥에 눕히면, 위아래가 뒤집혀요. 호수에 비친 산처럼요.",
       "captions": [
-        {"text": "거울이 뒤집는 건 늘", "at": {"word": "거울이"}},
-        {"text": "거울로 들어가는", "at": {"word": "거울로"}},
+        {"text": "거울이 뒤집는 건", "at": {"word": "거울이"}},
+        {"text": "늘 거울로 들어가는", "at": {"word": "늘"}},
         {"text": "방향 하나예요.", "at": {"word": "방향"}},
         {"text": "그래서 바닥에 눕히면", "at": {"word": "그래서"}},
         {"text": "위아래가 뒤집혀요.", "at": {"word": "위아래가"}},
         {"text": "호수에 비친 산처럼요.", "at": {"word": "호수에"}}
       ],
-      "pauseAfter": 1.2,
+      "pauseAfter": 1.5,
       "elements": [
         {
           "id": "shore",
@@ -557,6 +462,14 @@
         {"at": {"word": "거울이"}, "target": "ringRefl", "action": "exit", "speed": "fast"},
         {"at": {"word": "거울이"}, "target": "ringGhost", "action": "exit", "speed": "fast"},
         {
+          "at": {"word": "거울이"},
+          "target": "me",
+          "action": "setStyle",
+          "params": {"opacity": 1},
+          "speed": "fast",
+          "note": "the comparison clears and I come back to full"
+        },
+        {
           "at": {"word": "거울로"},
           "target": "frontMe",
           "action": "setStyle",
@@ -585,19 +498,19 @@
         {"at": {"word": "그래서"}, "target": "frontMe", "action": "setStyle", "params": {"opacity": 0}, "speed": "fast"},
         {"at": {"word": "그래서"}, "target": "frontRefl", "action": "setStyle", "params": {"opacity": 0}, "speed": "fast"},
         {
-          "at": {"word": "바닥에"},
+          "at": {"word": "그래서"},
           "target": "mirror",
           "action": "tiltTo",
           "params": {"deg": 90},
-          "until": {"word": "위아래가"},
-          "note": "'바닥에 눕히면': the empty mirror tips back until it is one horizontal line at y 745, x 160–920: the lake's surface"
+          "until": {"word": "눕히면"},
+          "note": "'그래서 바닥에 눕히면': as the people fade, the empty mirror tips back until it is one horizontal line at y 745, x 160–920: the lake's surface"
         },
         {
-          "at": {"word": "위아래가"},
+          "at": {"word": "눕히면"},
           "target": "shore",
           "action": "appear",
           "speed": "fast",
-          "note": "the far shore stands on the water: mountain, tree to its right"
+          "note": "the far shore stands on the water as the mirror lands, so it is there before the caption '위아래가 뒤집혀요.'"
         },
         {"at": {"word": "위아래가"}, "target": "upShore", "action": "appear", "speed": "fast"},
         {"at": {"word": "위아래가"}, "target": "rightShore", "action": "appear", "speed": "fast"},
@@ -660,7 +573,7 @@
         },
         {"at": {"pause": true}, "target": "me", "action": "setStyle", "params": {"opacity": 1}, "speed": "base"}
       ],
-      "endFrame": "Visual zone identical to B1's first frame: the mirror standing, frame x 160–920, y 270–1220, sheen at rest; the person in it at the upper left, hand raised on the right of its body, yellow palm; me from behind at the bottom, right hand raised, blue back of the hand; nothing else. Before the pause (from '뒤집혀요' to the end of '산처럼요'): the lake line at y 745, the mountain and tree above it with a purple up arrow and a teal right arrow, their reflection hanging below at half opacity with a purple down arrow and a teal right arrow. Caption: '호수에 비친 산처럼요.'",
+      "endFrame": "Visual zone identical to B1's first frame: the mirror standing, frame x 160–920, y 270–1220, sheen at rest; the person in it at the upper left, hand raised on the right of its body, yellow palm; me from behind at the bottom, right hand raised, blue back of the hand; nothing else. Before the pause (from '뒤집혀요' to the end of '산처럼요', the shore from '눕히면'): the lake line at y 745, the mountain and tree above it with a purple up arrow and a teal right arrow, their reflection hanging below at half opacity with a purple down arrow and a teal right arrow. Caption: '호수에 비친 산처럼요.'",
       "claims": ["C2", "C8"]
     }
   ]
