@@ -22,3 +22,12 @@
   ("왜 위아래는 안 뒤집을까요?") and frame 0 shows the whole question over
   the mirror, while take3 still says "거울은 왜 …". The other options were
   a split caption ("거울은 왜 위아래는") or a shorter line and a retake.
+- 2026-09-29 · first look · "지금 영상이 뭔가 이해가 약간 어려운거 같기도
+  하네...", after reading YouTube's AI outline of the topic (front-back
+  flip, then the turned-around comparison, no handedness step). QA: fix
+  then ship; both cut critics: ship with notes, both on B4's two hands.
+- 2026-09-29 · rework · push on with a lighter script: cut B4 (the
+  handedness step, "모양은 달라요 … 왼손 모양"), which made five steps and
+  left the hook's "오른손은 왼손이 되는데요" at odds with B2 for 13 s: "빼볼까?".
+  A retake follows, which also replaces take3's "바닥에 눕히면" that
+  Whisper hears as "바닥이 높이면" (QA r1#3).
