@@ -16,3 +16,9 @@
   같은데". Both variants were revised once after the Codex and Claude
   critiques, then B5's 견주다 became 비교하다 in both before this take,
   after the human asked "견주면 무슨뜻이지 ㅋㅋ 더 쉬운 단어로 바꿀까?".
+- 2026-09-29 · storyboard · approved with one change, on the
+  orchestrator's recommendation ("추천대로 가자"): the hook question was 5
+  eojeol and 814 px, too long for one caption, so B1's Display drops 거울은
+  ("왜 위아래는 안 뒤집을까요?") and frame 0 shows the whole question over
+  the mirror, while take3 still says "거울은 왜 …". The other options were
+  a split caption ("거울은 왜 위아래는") or a shorter line and a retake.
