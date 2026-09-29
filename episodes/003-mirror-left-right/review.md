@@ -1,5 +1,164 @@
 # Review · 003-mirror-left-right
 
+## Round 3 · 2026-09-29
+
+**Verdict: ship.**
+
+This round reviewed the render from c8396aa (studio at f2e0c8d): 41.53 s,
+1246 frames, inside topic.md's 40–50 s target. f2e0c8d changes the player
+(a Camera element that clips and transforms the whole picture), the probe
+(clipping to the camera), and the caption format (`until`). So this is a full
+pass.
+
+- **The push-in works.** B5's zoomed pair reads at a glance, and B6's return
+  is clean.
+- **Round 2's two nits are resolved.** The storyboard note is fixed, and B5's
+  long still is down from 3.1 s to 1.7 s.
+- **The loop's end is caption-free.** The last caption clears as the speech
+  ends, and frame 0's question follows.
+- **check-render passes:** 0 fail, 0 warn, 15 pass, 1 skip.
+- **What's left:** two nits.
+
+Evidence is in `review/r3/`:
+
+- `sheet-ends.png`: f0, every beat's last frame, and f1200/f1201 around the
+  caption's clear;
+- `sheet-b5-f736-948.png`: the push-in;
+- `f0820.png` and `f0948.png`.
+
+### Round 2, re-checked
+
+| Round 2 | Now |
+|---------|-----|
+| r2#1 B5's end still for 3.1 s with 2.3 s of silence | **Resolved.** The push-in runs from "보면" (f742) to the pause (f897), so the picture moves through the rest of B5's speech. The still is now 1.73 s (f897–f949) over 1.76 s of silence. The longest still is B3's end: 2.53 s (f570–f646) with 1.64 s of silence, unchanged since round 2 and on purpose. |
+| r2#2 stale "0.7 s of the 1.2 s pause" | **Fixed.** The note reads "0.7 s of the 1.5 s pause". It matches the render: the rise runs f1201–about f1219, then B1's frame holds, with no caption, until f1245. |
+
+### Issues
+
+#### 1. Nit: the push-in drifts up, then down, instead of moving straight in (f742–f897)
+
+- **The cause.** `cameraState` interpolates the camera's `center` and `zoom`
+  separately. So a point's screen position, which is HOME + zoom × (p −
+  center), moves on a curve rather than a line.
+- **Measured on screen:**
+  - the mirror's top edge (drawn at y 270) rises from y 267–272 into the
+    clip's top edge. It's hidden, or a 1 px sliver, from about f812 to f832
+    (`review/r3/f0820.png`). It then slides back down to y 261–268 by f897;
+  - the rings' top goes 297 → 280 (f810–f820) → 312;
+  - the pull-back in B6 does the same in miniature: the top edge leaves at
+    f957–f961 and comes back by f965.
+- **Why it's only a nit.** The pair itself moves smoothly, and it's slow. But
+  in a 5 s push-in, the frame's top edge vanishing for 0.7 s and sinking back
+  reads as a gentle bob, not a straight approach. The storyboard's "the
+  mirror's top edge still in view" holds only at the ends.
+- **Fix:** interpolate the transform's translation (HOME − zoom × center)
+  linearly alongside the zoom, rather than the center. Every point then moves
+  in a straight line from its rest position to its pushed-in one. It's shared
+  code, but nothing else uses Camera yet.
+
+#### 2. Nit: script.md's Visual lines describe the old B3 and B5
+
+- B3's line still says the up and right arrows stay "흐리게 그대로". The
+  render clears them on "뒤집히는".
+- B5's line says "(hold 1.5 s)", with no push-in and me still present. The
+  render fades me out, pushes in and holds 1.0 s.
+- The storyboard owns the picture now, so nothing on screen is wrong. But a
+  later reader of script.md (the publish agent, a re-storyboard) would get the
+  old picture.
+- **Fix:** update those two Visual lines to match, or leave them if script.md
+  is meant to stay as approved.
+
+### check-render
+
+My `--out` run matched the tracked `check.md` and `check.json` byte for byte:
+**0 fail, 0 warn, 15 pass, 1 skip** (labels: no edge label has another
+element's line nearby).
+
+- **Passes at or near a limit:**
+  - bounds: the ink now spans x 144–935 and y 244–1247, the camera's clip
+    (x 144–936, y 244–1246) plus a pixel of ringing. The pushed-in frames fill
+    the clip with the glass.
+  - words: the widest is "늘," at −50 ms.
+- **Everything else passes:**
+  - reaction: every beat at +1, B3 included now that its first word is an
+    exit (it was +3);
+  - freshness;
+  - technical: BT.709 TV range, 30 fps, 48 kHz, silent tail;
+  - centering: within 2 px at every beat end, B5's pushed-in end included;
+  - legibility: 41.4 px;
+  - overlaps;
+  - captions: 24 on their cue, one line each;
+  - readable;
+  - cues and blank runs;
+  - loudness: −14.1 LUFS, −3.6 dBTP;
+  - A/V sync: 0 ms;
+  - loop: 28 px differ.
+
+### Checked and fine
+
+- **B5 pushed in** (`review/r3/f0948.png`).
+  - The two raised hands are now 82 × 103 px (48 × 60 at rest). The
+    reflection's thumb is on the screen left, the ghost's on the screen right,
+    and the palm lines show on both.
+  - The rings are 8 px strokes (5 × 1.6). The dashed outline scales to about
+    6 px with longer dashes and still reads as dashed. Heads are level and
+    feet are at y 1175–1177.
+  - The pair spans x 165–910 around x 537.
+  - I fade out on "보면" (f742–about f760), so at the end only the two in the
+    mirror remain.
+  - The glass fills the clip and meets the background there with a hard edge
+    on three sides, 9 levels lighter (23, 26, 31 on 14, 18, 21). It reads as
+    the mirror seen close, not as a box.
+  - Scaling the strokes 1.6× looks right. Nothing is thicker than the mirror's
+    own frame, which becomes a 9.6 px top edge.
+- **B6's return** (f949–f969). The ghost and rings exit, the camera pulls back
+  in 0.67 s, and I fade back in. The mirror frame is fully back by f969: from
+  f970 its edges sit exactly where they do in B1 (sides at x 157 and 922, top
+  at y 267–272). The only blemish is
+  r3#1's brief dip of the top edge.
+- **The caption `until`.**
+  - "호수에 비친 산처럼요." shows from f1162 to f1200 and is gone at f1201.
+  - The render's audio drops from −36 dB at 40.00 s to −65 dB at 40.05 s, so
+    the caption clears as the voice ends. words.json's end of "산처럼요."
+    (40.32 s) is the aligner's padding; nothing is audible after 40.05 s.
+  - f1201–f1245 carry no caption, and f0 brings the question back.
+- **B3 without the teal arrows.** They exit on "뒤집히는" (f421–f428). B1's
+  plain scene then carries "앞뒤예요" with the hand pulses (f450), and the
+  purple pair grows as before. The end frame matches its new `endFrame`.
+- **End frames** (`review/r3/sheet-ends.png`). Every beat's last frame matches
+  its `endFrame`, including B5's pushed-in one and B6's, which is identical
+  to f0 with no caption.
+- **Motion,** sampled every 2–10 frames through every beat and boundary, and
+  frame by frame at the loop's rise:
+  - the reflection stays inside the glass from f1207 on;
+  - the turn and walk-in are unchanged from round 2.
+
+  A frame-by-frame scan found no single-frame glitches.
+- **The camera's clip at rest.** It trims my bust from y 1250 to y 1246 in
+  every mirror-scene frame, which isn't visible because the cut was already a
+  hard edge. The mirror frame (x 157–922, y 267–1223) sits inside the clip.
+- **Narration.** A fresh Whisper transcript matches all 12 sentences of
+  script.md word for word ("서보면" aside). No text is invented over the tail
+  this time: it peaks at −65 dB after 40.3 s.
+- **Captions.** All 24 match the storyboard on one line.
+- **Facts.** `verify.py` passes. There are no numbers or words in the picture.
+  - research.md's Easy to misstate holds as in round 2: the mirror hand stays
+    on the screen right with a palm, the lake shows scenery only, and there's
+    no perception claim beyond "이렇게 비교하면".
+  - The push-in shows only the two figures whose comparison the words
+    describe, so nothing new is claimed.
+- **Shared changes.** The player applies the camera only when the storyboard
+  has a Camera element, and the probe clips only under `data-clip`.
+  resolveCaptions gives a caption without `until` the same end as before. So
+  001 and 002 should render as they did. I didn't re-render them.
+
+### What these instructions should have said
+
+- **Where a caption or cue really ends.** words.json's `end` can run 0.3 s
+  past the audible end (here "산처럼요."). A check of when a caption clears,
+  or of a cue on a word's end, should measure the audio level, not trust the
+  aligner.
+
 ## Round 2 · 2026-09-29
 
 **Verdict: ship.**
