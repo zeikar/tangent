@@ -1,5 +1,139 @@
 # Review · 003-mirror-left-right
 
+## Round 5 · 2026-09-30
+
+**Verdict: ship.**
+
+This round reviewed the render from a00d27e (studio at 44af18a): 41.53 s,
+1246 frames, the same timing and cues as round 4. The fix round restyled every
+figure: Person's new chibi look with mitten hands, a refactored figure.ts, and
+a new perspective (s 0.6 about VP (−50, −360)) that moves the arrows, rings,
+ghost and push-in. Person and figure.ts are shared code, so this is a full
+pass.
+
+- **research.md's drawing rules all hold with the new figures.**
+- **The turn still reads with mittens:** the back narrows to edge-on at the
+  midpoint, then the palm opens.
+- **The perspective is exact.**
+- **Classic Person has one user, this episode's old storyboards.** It keeps
+  its shape at rest but isn't pixel-identical, and it changed during a turn
+  (r5#1).
+- **check-render passes:** 0 fail, 0 warn, 15 pass, 1 skip.
+
+Evidence is in `review/r5/`:
+
+- `sheet-ends.png`: f0, every beat's last frame, and f1200/f1201;
+- `sheet-b5-f683-690.png`: the ghost through the turn's midpoint;
+- `classic-f686-f690-old-new-diff.png`: classic before, after, and the
+  difference;
+- `f0000.png` and `f0948.png`.
+
+### Issues
+
+#### 1. Nit (shared code; no render changes): classic Person no longer draws exactly as before, and its arms now flatten in a turn
+
+The commit says classic "draws as before". To test that, I rendered 14 stills
+of round 4's storyboard (classic figures, camera, the turn) and 5 of round 1's
+(Hand in B4). I rendered each set twice, with the studio from before the
+restyle (9bc551e) and with today's (44af18a), and compared them pixel for
+pixel.
+
+- **Hand is byte-identical** (round 1's B4 at f610 and f799), and so is
+  round 4's lake frame f1100, which has no person.
+- **Solid classic figures at rest keep their shape.** 131 pixels differ,
+  only 2 of them by more than 16 levels, all at the bust's shoulder corners
+  (x 405–754, y 1168–1205).
+- **The classic ghost's dashes start at a different phase** along both arms.
+  Same outline, different dash positions (f948: about 2,300 pixels).
+- **The one real change is in the turn.** The classic arms now scale
+  horizontally with the turn, so at the midpoint (f686) the raised arm is a
+  line. Before, it kept its thickness (the short dashed stub above the head in
+  `review/r5/classic-f686-f690-old-new-diff.png`). 9d1234a built it that way
+  on purpose: "turns by swinging its arms and hand with cos rather than
+  collapsing to a line".
+- **No shipped render is affected.** No storyboard but 003's uses Person or
+  Hand (grep of `episodes/*/storyboard.json`), and 003 now sets chibi on all
+  three figures.
+- **Fix, only if classic is meant to stay as it was:** build classic's arms
+  as before, a capsule between the arm's screen points (`armPt(SHOULDER)` →
+  `armPt(wrist)`), rather than scaling a capsule built in figure units.
+  Otherwise, correct the commit's claim in the component comment.
+
+### check-render
+
+My `--out` run matched the tracked `check.md` and `check.json` byte for byte:
+**0 fail, 0 warn, 15 pass, 1 skip** (labels: no edge label has another
+element's line nearby).
+
+- **Passes at or near a limit:**
+  - bounds: the ink spans x 144–935 and y 264–1247, inside the camera's clip;
+  - words: the widest is "늘," at −50 ms.
+- **Everything else passes:**
+  - reaction: +1 at every beat;
+  - freshness;
+  - technical: BT.709 TV range, 30 fps, 48 kHz, silent tail;
+  - centering: B1, B2, B5 and B6 at 0, B3 at +2;
+  - legibility: 41.4 px;
+  - overlaps;
+  - captions: 24 on their cue, one line each;
+  - readable;
+  - cues and blank runs;
+  - loudness: −14.1 LUFS, −3.6 dBTP;
+  - A/V sync: 0 ms;
+  - loop: 6 px differ.
+
+### Checked and fine
+
+- **research.md's drawing rules,** at rest (`review/r5/f0000.png`) and in
+  every mirror-scene frame sampled:
+  - **Same screen side.** The person in the mirror raises its hand to the
+    screen right of its body (its mitten spans x 425–493, head center x 340).
+    Mine is on the screen right of mine (x 744–854, head x 600).
+  - **Back vs palm.** Both mitten thumbs are on the screen left of their
+    hands. Mine shows a plain blue back, and the one in the mirror a yellow
+    palm with two creases.
+  - **Never me turned around.** The person in the mirror faces out with eyes
+    and a smile and doesn't move. The only turned figure is the dashed ghost.
+    It ends with its hand on the screen left and its thumb on the screen
+    right, the exact mirror image of the reflection's (`review/r5/f0948.png`).
+  - **The lake is scenery only.** Frames f1100–f1200 match round 4's to within
+    encoder noise (at most 150 px over 16 levels).
+- **The turn with mittens** (`review/r5/sheet-b5-f683-690.png`). The blue back
+  narrows (f683–f685) to an edge-on line at the midpoint (f686). Then a yellow
+  palm opens with its thumb toward the head, on the screen right (f687–f690).
+  - The arm vanishes for that one midpoint frame and leaves the edge-on mitten
+    above the head. It reads as the hand turning.
+  - The faint band across the ghost's eyes is back at the same strength as in
+    round 2: eye row (47, 50, 55), lower face (53, 58, 62), hair cap (83, 88,
+    92), for about 0.6 s over a dimmed me. The chibi's curved hairlines make
+    its lower edge curve, but at 6–8 levels it stays faint. I'd leave it, as
+    in round 2.
+- **Geometry.**
+  - The person in the mirror is me scaled by 0.6 about (−50, −360). The head
+    (600, 1040) maps to (340, 480), and the hand (799.5, 850) to (459.7, 366).
+  - Both purple arrows lie on that hand-to-hand line: every endpoint is on it
+    to 0.1 px. The glass point (587.1, 547.5) sits at 2s/(1+s) = 0.75 of the
+    way.
+- **B5 pushed in** (`review/r5/f0948.png`, zoom 1.19).
+  - The mittens are 81 × 103 px on screen, the rings 21 px apart, and the pair
+    spans y 441–1050 around the zone's center.
+  - The mirror's top edge holds at y 404.
+  - The sheen is cut at the right edge, as the human approved.
+  - The push-in and pull-back move straight, as in round 4.
+- **B2's and B3's arrows.** The up arrows sit 15–20 px above the heads and the
+  right arrows beside the raised arms at the shoulders. The purple pair starts
+  clear of both mittens and their arms.
+- **The loop's rise.** The larger person in the mirror stays inside the glass:
+  from f1207 on, no ink shows above the glass's top edge.
+- **Nothing else moved.**
+  - The cues are unchanged (only cues.json's storyboard hash moved).
+  - Every frame's caption band matches round 4's to within encoder noise (at
+    most 138 px over 16 levels).
+- **Narration and facts.**
+  - A fresh Whisper transcript matches all 12 sentences of script.md.
+  - `verify.py` passes.
+  - There's still no text in the picture.
+
 ## Round 4 · 2026-09-29
 
 **Verdict: ship.**
