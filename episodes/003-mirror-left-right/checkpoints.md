@@ -35,3 +35,7 @@
   holds): "유튜브 ai 설명이 명쾌하긴 한데... ㅋㅋㅋ 너가 한것도 괜찮은거
   같고... 암튼 이걸로 그럼 다시 쭉 사이클 돌려줘". Whisper transcribes it
   word for word, 바닥에 눕히면 included.
+- 2026-09-30 · final · metadata approved ("ㅇㅋ 내용 매우 ㅇㅋ"), video
+  not yet: "근데 사람 그래픽이 좀 엉성한데 ㅋㅋ 약간 더 귀여운 스타일로
+  뽑아볼수 있어?". A fix round for the Person figure follows, with style
+  options shown as stills first.
