@@ -1,9 +1,9 @@
 {
  "episode": "003-mirror-left-right",
  "render": "render.mp4",
- "renderSha256": "c25c95e0560fe8475e9efa3d66a542f3423c1456615840d428e9c2db3b833255",
+ "renderSha256": "e25da19b7fa55fd05433588442332f083aa4573a0fd655e2bf8ce83babd42176",
  "storyboardSha256": "e78dd9d75439b48adbc1aa1e9c084dd46c3f5a1cefd8a4d243bc01d8d71fe76f",
- "studioSha256": "daa748452571c621c7a176cd8921ea6f6a846bd5ae6a459272fde6aa08ce491e",
+ "studioSha256": "ab96ad779ffd79862241dbeda75d779d81d48fc1be44375811c9518a14158f76",
  "verdict": "pass",
  "counts": {
   "fail": 0,
