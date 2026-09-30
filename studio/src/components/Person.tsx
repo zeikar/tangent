@@ -10,8 +10,8 @@ import { Polyline, Svg } from "./shapes";
 // A simple standing person drawn in code, one arm raised, seen from behind
 // or from the front, in one of two looks (classic or chibi). Its body is one
 // silhouette (head, torso and legs, arms) outlined only on the outside; the
-// raised hand shows its back (plain) or its palm (creases) in its own color. It can turn half round about its vertical axis and
-// move. Nothing is drawn below the visual zone, so a big figure low in the
+// raised hand shows its back (plain) or its palm (creases) in its own color.
+// It can turn half round about its vertical axis and move. Nothing is drawn below the visual zone, so a big figure low in the
 // frame is a bust; a person in a mirror (`inside`) is drawn only on its
 // glass. Spec: storyboard.json → components → Person.
 
@@ -58,8 +58,10 @@ export type PersonState = {
 type Look = {
   head: number;
   body: Pt[][]; // neck, torso and legs: narrowed as a turn goes side on
-  raised: (wrist: Pt) => Pt[]; // the raised arm up to the wrist, a polygon
-  lowered: Pt[];
+  // The arms as screen polygons, given where a body point is drawn (the turn
+  // swings them) and r: the raised one up to the wrist.
+  raised: (wrist: Pt, at: (p: Pt) => Pt, r: number) => Pt[];
+  lowered: (at: (p: Pt) => Pt, r: number) => Pt[];
   hand: HandShape;
   handAt: Pt;
   handH: number;
@@ -94,8 +96,10 @@ const LOOKS: Record<LookName, Look> = {
         [-1.5, 5],
       ],
     ],
-    raised: (wrist) => capsule(SHOULDER, wrist, ARM, [true, false]),
-    lowered: capsule([-SHOULDER[0], SHOULDER[1]], [-2.3, 5.5], ARM),
+    // Round arms, built where they are drawn: seen side on mid-turn, an arm
+    // keeps its thickness.
+    raised: (wrist, at, r) => capsule(at(SHOULDER), at(wrist), ARM * r, [true, false]),
+    lowered: (at, r) => capsule(at([-SHOULDER[0], SHOULDER[1]]), at([-2.3, 5.5]), ARM * r),
     hand,
     handAt: [1.9, -1.9],
     handH: 1.6,
@@ -121,8 +125,8 @@ const LOOKS: Record<LookName, Look> = {
       capsule([-0.55, 3.6], [-0.55, 5.35], 0.46),
       capsule([0.55, 3.6], [0.55, 5.35], 0.46),
     ],
-    raised: (wrist) => tube(quad([1.0, 1.8], [2.45, 1.15], wrist, 12), 0.34, [true, false], 0.21),
-    lowered: tube(quad([-1.05, 1.75], [-1.6, 2.2], [-1.75, 3.05], 12), 0.34),
+    raised: (wrist, at) => tube(quad([1.0, 1.8], [2.45, 1.15], wrist, 12), 0.34, [true, false], 0.21).map(at),
+    lowered: (at) => tube(quad([-1.05, 1.75], [-1.6, 2.2], [-1.75, 3.05], 12), 0.34).map(at),
     hand: mitten,
     handAt: [2.1, -2.0],
     handH: 1.45,
@@ -135,6 +139,10 @@ const lookOf = (p: Props) => LOOKS[p.look ?? "classic"];
 
 // The head above a hairline that runs `dip` lower in the middle (head radii).
 const hairShape = (c: Pt, R: number, line: number, dip: number): Pt[] => {
+  if (dip === 0) {
+    const h = Math.asin(Math.max(-1, Math.min(1, line))) * (180 / Math.PI);
+    return arcPoints(c, R, -h, 180 + h);
+  }
   const hy = (x: number) => line + dip * (1 - x * x);
   const above = (deg: number) => -Math.sin((deg * Math.PI) / 180) <= hy(Math.cos((deg * Math.PI) / 180));
   // The two degrees where the head's outline crosses the hairline, found from
@@ -250,7 +258,7 @@ export const Person: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, sc
   const wrist: Pt = [look.handAt[0] + look.handH * look.hand.wrist[0], look.handAt[1] + look.handH * look.hand.wrist[1]];
   const R = look.head * s.r;
   const head = arcPoints(s.at, R, 0, 360).slice(0, -1);
-  const pieces = [head, ...look.body.map((b) => b.map(px(s.body))), look.raised(wrist).map(armPt), look.lowered.map(armPt)]
+  const pieces = [head, ...look.body.map((b) => b.map(px(s.body))), look.raised(wrist, armPt, s.r), look.lowered(armPt, s.r)]
     .map((pts) => clipAbove(pts, cut))
     .filter((pts) => pts.length > 2);
   const outlineWidth = (i: number) => stroke.line * (i === 0 ? 1 + s.pulse.head : 1);
@@ -265,7 +273,11 @@ export const Person: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, sc
   const fx = (x: number) => s.at[0] + x * R * s.features;
   const fy = (y: number) => s.at[1] + y * R;
   const eyes = [-f.eye[0], f.eye[0]].map((x) => arcPoints([fx(x), fy(f.eye[1])], f.eye[2] * R, 0, 360));
-  const mouth = quad([fx(-f.mouth[1]), fy(f.mouth[0])], [fx(0), fy(f.mouth[0] + 2 * f.smile)], [fx(f.mouth[1]), fy(f.mouth[0])]);
+  const [m0, m1]: Pt[] = [
+    [fx(-f.mouth[1]), fy(f.mouth[0])],
+    [fx(f.mouth[1]), fy(f.mouth[0])],
+  ];
+  const smile = f.smile ? quad(m0, [fx(0), fy(f.mouth[0] + 2 * f.smile)], m1) : null;
 
   // The raised hand, thumb toward the body's midline (hand's -x → body's -x).
   const handColor = themeColor(s.face === "back" ? p.backColor : p.palmColor);
@@ -320,7 +332,11 @@ export const Person: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, sc
               {eyes.map((pts, i) => (
                 <polygon key={i} points={pointsAttr(pts)} fill={color.text} />
               ))}
-              <Polyline pts={mouth} color={color.text} width={stroke.line} cap="round" />
+              {smile ? (
+                <Polyline pts={smile} color={color.text} width={stroke.line} cap="round" />
+              ) : (
+                <line x1={m0[0]} y1={m0[1]} x2={m1[0]} y2={m1[1]} stroke={color.text} strokeWidth={stroke.line} strokeLinecap="round" />
+              )}
             </g>
           ) : null}
           {handPts.length > 2 ? (
