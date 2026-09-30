@@ -48,3 +48,5 @@
   their creases); the sheen cut at the pushed-in frame's edge stays.
 - 2026-09-30 · final · approved with the chibi cut and its thumbnail
   (0:02.4): "ㅇㅇ 승인 푸시해줘".
+- 2026-09-30 · final · playlist 빛 이야기, opened with this episode: "뭔가
+  애매하지만 ㅋㅋ 빛 이야기로 ㄱㄱ? 뭐 나중에 바꾸면 되니까".

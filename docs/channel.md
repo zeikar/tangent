@@ -110,7 +110,10 @@ fill the metadata with `videos.update`, which the lock doesn't affect.
   matter little for discovery.
 - **Playlists:** by theme. Current: `일상 속 수학` (math in everyday
   objects), `우주 이야기` (space and astronomy, opened with 002 since the
-  next space topic was already shelved; the human's pick, 2026-09-28). Add
+  next space topic was already shelved; the human's pick, 2026-09-28),
+  `빛 이야기` (light: reflection and color, opened with 003 before a second
+  episode was lined up, since magenta and graphite vs. diamond are open
+  light topics; the human's pick, 2026-09-30, "나중에 바꾸면 되니까"). Add
   a theme playlist when a second episode shares a theme, or with the first
   when another in that theme is already lined up; otherwise an episode
   whose theme has no playlist goes in none, and publish.md names its theme
