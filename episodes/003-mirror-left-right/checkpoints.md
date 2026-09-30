@@ -46,3 +46,5 @@
 - 2026-09-30 · figure style · on the bigger chibi stills: "손톱 빼자 ㅋㅋ
   이상함. 반짝임은 괜찮을듯". Nails removed (backs plain blue, palms keep
   their creases); the sheen cut at the pushed-in frame's edge stays.
+- 2026-09-30 · final · approved with the chibi cut and its thumbnail
+  (0:02.4): "ㅇㅇ 승인 푸시해줘".
