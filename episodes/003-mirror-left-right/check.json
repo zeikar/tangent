@@ -1,9 +1,9 @@
 {
  "episode": "003-mirror-left-right",
  "render": "render.mp4",
- "renderSha256": "41ca101a6558fe40fb354baf391138d6a0f13ab7820302e0f465aee093916daf",
- "storyboardSha256": "54b5e90617a0a23d1443abb6fddc3dfa5670775c21cc580e9bf5e07dcff3af6b",
- "studioSha256": "ad46b46f5f10066a28006d0623c600f2198dc97e9729d684da27872e01bf502c",
+ "renderSha256": "c25c95e0560fe8475e9efa3d66a542f3423c1456615840d428e9c2db3b833255",
+ "storyboardSha256": "e78dd9d75439b48adbc1aa1e9c084dd46c3f5a1cefd8a4d243bc01d8d71fe76f",
+ "studioSha256": "daa748452571c621c7a176cd8921ea6f6a846bd5ae6a459272fde6aa08ce491e",
  "verdict": "pass",
  "counts": {
   "fail": 0,
@@ -28,25 +28,25 @@
   {
    "id": "bounds",
    "status": "pass",
-   "summary": "all 1246 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 144–936, y 260–1247",
+   "summary": "all 1246 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 144–935, y 264–1247",
    "cites": []
   },
   {
    "id": "centering",
    "status": "pass",
-   "summary": "B1 +2/0, B2 +2/0, B3 +2/0, B5 0/0, B6 0/0 (px off x 540: all ink / picture without edge labels; tolerance ±25)",
+   "summary": "B1 0/0, B2 0/0, B3 +2/0, B5 0/0, B6 0/0 (px off x 540: all ink / picture without edge labels; tolerance ±25)",
    "details": [
     {
      "beat": "B1",
      "frame": 158,
-     "off": 1.5,
+     "off": 0,
      "pictureOff": 0,
      "status": "pass"
     },
     {
      "beat": "B2",
      "frame": 420,
-     "off": 1.5,
+     "off": 0,
      "pictureOff": 0,
      "status": "pass"
     },
@@ -67,7 +67,7 @@
     {
      "beat": "B6",
      "frame": 1245,
-     "off": 0,
+     "off": -0.5,
      "pictureOff": 0,
      "status": "pass"
     }
@@ -681,7 +681,7 @@
   {
    "id": "loop",
    "status": "pass",
-   "summary": "28 visual-zone pixels differ by more than 16 levels between the last and first frame (limit 500)",
+   "summary": "6 visual-zone pixels differ by more than 16 levels between the last and first frame (limit 500)",
    "cites": []
   }
  ]

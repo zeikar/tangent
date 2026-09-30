@@ -43,3 +43,6 @@
   괜찮은데 거울에서는 좀 작아보이네 전체적으로 크기 조절해야할듯. 그리고
   chibi도 손금이나 손톱 넣어서 앞뒤 구분하게 할까?". So: larger figures in
   the mirror scene, palm lines on palms and nails on backs of the mittens.
+- 2026-09-30 · figure style · on the bigger chibi stills: "손톱 빼자 ㅋㅋ
+  이상함. 반짝임은 괜찮을듯". Nails removed (backs plain blue, palms keep
+  their creases); the sheen cut at the pushed-in frame's edge stays.

@@ -6,7 +6,7 @@
     "Geometry is px in the 1080×1920 frame, origin top-left; points are [x, y].",
     "Frame 0 is the hook: the whole mirror scene is visibleAtStart (mirror, the person in it, me from behind) under the first caption. The mirror fills the visual zone (x 160–920, y 270–1220), so the picture is as big as the zone and every beat ending on the mirror scene is centered by its frame.",
     "B1's Display drops the spoken '거울은' (script.md, approved 2026-09-29) because the frame-0 picture is the mirror: the first chunk '왜 위아래는 안 뒤집을까요?' is the whole question in 4 eojeol and 644 px, anchored on '거울은' and drawn from frame 0. With '거울은' it was 5 eojeol and 814 px, over the chunk limit and the 800 px line.",
-    "Mirror scene camera: behind me and above my left shoulder, looking into the mirror. Perspective is one vanishing point, VP (182, −49), above the frame. The person in the mirror is me scaled by s = 38/85 = 0.447 about the VP (head (580, 1000) → (360, 420); raised hand (741, 838) → (432, 348)), so my hand, the mirror surface on that line ((528, 500), scale 2s/(1+s) = 0.618), and the mirrored hand lie on one straight line through the VP. B3's two front arrows ride that line. Production may retune the layout; keep the person in the mirror on the scaled copy (same VP and s) so the front arrows stay collinear, and move the ghost's B5 spot and the arrows with it.",
+    "Mirror scene camera: behind me and above my left shoulder, looking into the mirror. Perspective is one vanishing point, VP (−50, −360), above the frame. The person in the mirror is me scaled by s = 0.6 about the VP (me: head (600, 1040), r 95 → head (340, 480), r 57; raised hand (799.5, 850) → (459.7, 366)), so my hand, the mirror surface on that line ((587.1, 547.5), scale 2s/(1+s) = 0.75), and the mirrored hand lie on one straight line through the VP. B3's two front arrows ride that line. Retuned 2026-09-30 for the chibi figures (was VP (182, −49), s 0.447): with chibi proportions the person in the mirror fills the glass as the classic figure did (y ≈ 325–815) only at r 57, and s 0.6 keeps me at a size whose raised hand stays inside the frame.",
     "Drawing rules from research.md (Easy to misstate): the person in the mirror is never drawn as me turned around. Its raised hand is on the same screen side as mine (to the right of its body), it shows a palm where mine shows a back, and each hand's thumb points toward its own body's midline, so both thumbs are on the screen left of their hands: the same outline. It is never labeled 오른손. B5's turned-around ghost is the figure that differs (raised hand on the screen left). The lake (B6) is scenery only: a mountain and a tree, no person.",
     "Hand faces are colored from frame 0 (B1's 'both raised hands in accent colors'): the back of a hand blue, a palm yellow with palm lines. B3 pulses them instead of repainting, so no color changes its meaning mid-episode.",
     "Arrow colors follow one rule: teal is a direction along the mirror's surface (unchanged in the mirror: up and right while it stands), purple is the direction into the mirror (the one it flips). Laid flat as a lake, the direction into the surface is vertical, so the lake's vertical arrows are purple and its horizontal ones teal.",
@@ -19,8 +19,9 @@
     "Text: there is no text in the visual zone. Captions measured in Pretendard Bold 60 (static OTF advance widths, within 2 px of 002's browser measurement): widest '왜 위아래는 안 뒤집을까요?' 644 px, then '좌우가 바뀐 것처럼 보이죠.' 629 px; all fit one 800 px line.",
     "Measured in the first render: B5's ghost ends 22 px left of my raised hand, the rings 29 px apart; bounds, centering and loop pass (check.md).",
     "B5 dims me (0.3) from '내가': the dashed copy turns over a faint me, so its outline and face read as its own (QA r1#1). Once the ghost stands beside the person in the mirror ('보면'), I fade out fully and the camera pushes in slowly on the two of them until B5's speech ends, so the raised hands and their rings read at a glance on a phone; then the frame holds still. B6's '거울이' pulls the camera back to rest and brings me back, so B6 tilts the whole mirror.",
-    "Camera: the picture is seen through a camera and clipped 4 px inside the visual zone (x 144–936, y 244–1246; theme cameraInset, as the encoder rings a few pixels past a hard cut); captions and the channel mark stay put. At rest it shows the picture as drawn, so every frame but B5's push-in is the layout as written. B5's push-in frames the pair and its rings (x 260–730, y 299–842, center (495, 570)) at zoom 1.6: x 164–916, y 310–1180 on screen, the mirror's top edge still in view at y 260 and its other edges and sheen outside.",
-    "B6's last caption '호수에 비친 산처럼요.' ends at the pause (until), when the mirror starts to stand back up, so the loop's last frames carry no caption and frame 0's question follows."
+    "Camera: the picture is seen through a camera and clipped 4 px inside the visual zone (x 144–936, y 244–1246; theme cameraInset, as the encoder rings a few pixels past a hard cut); captions and the channel mark stay put. At rest it shows the picture as drawn, so every frame but B5's push-in is the layout as written. B5's push-in frames the pair and its rings (x 219–846, y 302–813, center (533, 557)) at zoom 1.19; the mirror's top edge stays in view at y ≈ 404, and its sheen shows at the right edge.",
+    "B6's last caption '호수에 비친 산처럼요.' ends at the pause (until), when the mirror starts to stand back up, so the loop's last frames carry no caption and frame 0's question follows.",
+    "Figures are Person look chibi (2026-09-30, the human's pick at the final checkpoint): head 1.3 r, a short bell-shaped body, stubby legs, the raised arm curving up and tapering into a mitten at (2.1, −2.0) r, 1.45 r tall. A mitten's back is plain and its palm shows two creases (nails on the back were tried and dropped, the human's call); the ghost's hand turns edge-on at its turn's midpoint and shows its palm after."
   ],
   "colors": {
     "teal": "거울면을 따라가는 방향 (위·오른쪽): 거울 속에서도 그대로",
@@ -45,7 +46,7 @@
     {
       "name": "Person",
       "status": "new",
-      "spec": "A simple standing person drawn in code with one arm raised, seen from behind (view back: no face, hair covering the upper two thirds of the head) or from the front (view front: two eye dots and a short mouth line in text; the same hair over the top third), so the two views read as one person. Proportions in head radii r from the head's center `at`: shoulders at +1.9r, ±2.0r; waist at +5r, ±1.5r; two legs down to the feet at +11r; arms 0.45r thick with round ends; the raised arm goes up from the shoulder on the `raise` side (screenRight or screenLeft) to a hand centered at (±1.9r, −1.9r); the other arm hangs to (∓2.3r, +5.5r). The raised hand is an open hand, fingers up, 1.25r wide and 1.6r tall, its thumb out toward the body's midline (so both B1 hands have the thumb on the screen left); it shows one face: back (filled backColor at 0.6, 4 px stroke in backColor) or palm (filled palmColor at 0.6, stroke palmColor, three short palm lines in text at 0.6), the same outline either way. Nothing is drawn below y 1250 (the visual zone's bottom): a large figure low in the frame is cut there into a bust, with no line along the cut. Styles: solid (the body opaque, so nothing behind it shows through: filled muted at 0.5 over the background, outlined in text 4 px) or ghost (a dashed text outline 4 px, dash 18 gap 12, filled muted at 0.15; its raised hand filled as above at 0.8). Props: at, r, view, raise, face, backColor, palmColor, style. It exposes its live raised-hand center and size (for Ring and Hand). Actions: appear (fade); exit; setStyle {opacity} (hides and restores it without ending it); pulse {part: head | hand} (that part's stroke 2× and back, its fill brightened); turn (a half turn about the vertical line through at: the figure's horizontal scale runs cos from 1 through 0 to −1 across the span; at the midpoint the view switches back ↔ front and the raised hand's face back ↔ palm; it ends mirrored, the raised hand on the other screen side with its thumb still toward the body's midline, and raise reads the new side from then on); moveTo {at, r} (moves and scales about the head's center over the span; the cut stays at y 1250, so a bust that rises and shrinks shows its legs). Production additions: the turn swings the arms and hand with cos (the hand edge-on at the midpoint), narrows the torso only to its depth (theme figure.profile), keeps the head round while the hairline slides and the face fades in past the midpoint; the body is one silhouette outlined only outside; beneath: [ids] draws it just below those elements; inside: a Mirror id draws it only on that mirror's live glass."
+      "spec": "A simple standing person drawn in code with one arm raised, seen from behind (view back: no face, hair covering the upper two thirds of the head) or from the front (view front: two eye dots and a short mouth line in text; the same hair over the top third), so the two views read as one person. Proportions in head radii r from the head's center `at`: shoulders at +1.9r, ±2.0r; waist at +5r, ±1.5r; two legs down to the feet at +11r; arms 0.45r thick with round ends; the raised arm goes up from the shoulder on the `raise` side (screenRight or screenLeft) to a hand centered at (±1.9r, −1.9r); the other arm hangs to (∓2.3r, +5.5r). The raised hand is an open hand, fingers up, 1.25r wide and 1.6r tall, its thumb out toward the body's midline (so both B1 hands have the thumb on the screen left); it shows one face: back (filled backColor at 0.6, 4 px stroke in backColor) or palm (filled palmColor at 0.6, stroke palmColor, three short palm lines in text at 0.6), the same outline either way. Nothing is drawn below y 1250 (the visual zone's bottom): a large figure low in the frame is cut there into a bust, with no line along the cut. Styles: solid (the body opaque, so nothing behind it shows through: filled muted at 0.5 over the background, outlined in text 4 px) or ghost (a dashed text outline 4 px, dash 18 gap 12, filled muted at 0.15; its raised hand filled as above at 0.8). Props: at, r, view, raise, face, backColor, palmColor, style. It exposes its live raised-hand center and size (for Ring and Hand). Actions: appear (fade); exit; setStyle {opacity} (hides and restores it without ending it); pulse {part: head | hand} (that part's stroke 2× and back, its fill brightened); turn (a half turn about the vertical line through at: the figure's horizontal scale runs cos from 1 through 0 to −1 across the span; at the midpoint the view switches back ↔ front and the raised hand's face back ↔ palm; it ends mirrored, the raised hand on the other screen side with its thumb still toward the body's midline, and raise reads the new side from then on); moveTo {at, r} (moves and scales about the head's center over the span; the cut stays at y 1250, so a bust that rises and shrinks shows its legs). Production additions: the turn swings the arms and hand with cos (the hand edge-on at the midpoint), narrows the torso only to its depth (theme figure.profile), keeps the head round while the hairline slides and the face fades in past the midpoint; the body is one silhouette outlined only outside; beneath: [ids] draws it just below those elements; inside: a Mirror id draws it only on that mirror's live glass. Look chibi (look: chibi): head 1.3 r, a bell-shaped body with stubby legs, chunky arms (the raised one a curved tube tapering into the wrist), mittens at (2.1, −2.0) r, 1.45 r tall, a curved hairline, dot eyes and a small smile; a mitten's back is plain, its palm shows two creases."
     },
     {
       "name": "DirArrow",
@@ -92,15 +93,15 @@
           "id": "me",
           "component": "Person",
           "visibleAtStart": true,
-          "props": {"at": [580, 1000], "r": 85, "view": "back", "raise": "screenRight", "face": "back", "backColor": "blue", "palmColor": "yellow", "style": "solid"},
-          "where": "me from behind, big in the foreground: head (580, 1000), x 495–665, y 915–1085, no face; shoulders y 1162, x 410–750; cut into a bust at y 1250; right hand raised on the screen right, centered (741, 838), x 688–794, y 770–906, blue back of the hand, thumb toward my head (screen left). Drawn over the mirror's bottom edge"
+          "props": {"at": [600, 1040], "r": 95, "view": "back", "raise": "screenRight", "face": "back", "backColor": "blue", "palmColor": "yellow", "style": "solid", "look": "chibi"},
+          "where": "me from behind, big in the foreground: head (600, 1040), r 95 (radius 124 with the chibi head), no face; cut into a bust at the visual zone's bottom; right hand raised on the screen right, a mitten centered (799.5, 850), x 746–853, y 781–919, plain blue back, thumb toward my head (screen left). Drawn over the mirror's bottom edge"
         },
         {
           "id": "reflection",
           "component": "Person",
           "visibleAtStart": true,
-          "props": {"at": [360, 420], "r": 38, "view": "front", "raise": "screenRight", "face": "palm", "backColor": "blue", "palmColor": "yellow", "style": "solid", "inside": "mirror"},
-          "where": "the person in the mirror, facing out: head (360, 420), x 322–398, y 382–458; raised hand (432, 348), x 408–456, y 317–379, yellow palm, thumb toward its head (screen left); shoulders y 492, x 284–436; the lowered arm hangs to (273, 629); feet at y 838. All inside the glass. Me scaled by 0.447 about the VP (notes). Drawn only on the mirror's glass (inside)"
+          "props": {"at": [340, 480], "r": 57, "view": "front", "raise": "screenRight", "face": "palm", "backColor": "blue", "palmColor": "yellow", "style": "solid", "inside": "mirror", "look": "chibi"},
+          "where": "the person in the mirror, facing out: head (340, 480), r 57 (radius 74 with the chibi head); raised hand (459.7, 366), a mitten 83 px tall, yellow palm, thumb toward its head (screen left); feet at y ≈ 815; lowered arm to x ≈ 220. All inside the glass (drawn only on it). Me scaled by 0.6 about the VP (notes)"
         }
       ],
       "cues": [
@@ -157,26 +158,26 @@
         {
           "id": "upRefl",
           "component": "DirArrow",
-          "props": {"from": [360, 367], "to": [360, 307], "color": "teal"},
-          "where": "above the mirrored head, pointing up: 60 px, tail 15 px above the head, tip 34 px below the glass's top edge; 48 px left of the raised hand"
+          "props": {"from": [340, 391], "to": [340, 321], "color": "teal"},
+          "where": "above the mirrored head, pointing up: 70 px, tail 15 px above the head (top y 406), tip 51 px below the glass's top edge; 80 px left of the raised hand"
         },
         {
           "id": "upMe",
           "component": "DirArrow",
-          "props": {"from": [580, 895], "to": [580, 785], "color": "teal"},
-          "where": "above my head, pointing up: 110 px, tail 20 px above the head; 108 px left of my raised hand"
+          "props": {"from": [600, 896], "to": [600, 786], "color": "teal"},
+          "where": "above my head, pointing up: 110 px, tail 20 px above the head (top y 916); 146 px left of my raised hand"
         },
         {
           "id": "rightRefl",
           "component": "DirArrow",
-          "props": {"from": [460, 492], "to": [520, 492], "color": "teal"},
-          "where": "at the mirrored person's raised-hand shoulder, pointing right: 60 px, tail about 16 px right of the raised arm. At shoulder height because the hand's right side is B3's front-arrow path"
+          "props": {"from": [470, 554], "to": [530, 554], "color": "teal"},
+          "where": "right of the mirrored person's raised arm at its shoulder (y 554), pointing right: 60 px, tail about 17 px right of the arm"
         },
         {
           "id": "rightMe",
           "component": "DirArrow",
-          "props": {"from": [790, 1162], "to": [890, 1162], "color": "teal"},
-          "where": "at my raised-hand shoulder, pointing right: 100 px, tail about 20 px right of the raised arm, tip 27 px inside the mirror frame's inner edge (x 917)"
+          "props": {"from": [808, 1164], "to": [893, 1164], "color": "teal"},
+          "where": "right of my raised arm at my shoulder (y 1164), pointing right: 85 px, tail about 20 px right of the arm, tip 24 px inside the mirror frame's inner edge (x 917)"
         }
       ],
       "cues": [
@@ -240,14 +241,14 @@
         {
           "id": "frontMe",
           "component": "DirArrow",
-          "props": {"from": [707, 783], "to": [616, 640], "color": "purple", "taper": [1.4, 1.0]},
-          "where": "from my palm into the mirror: from the upper-left edge of my raised hand toward the vanishing point, up and left, 170 px, narrowing from 7 to 5 px (head 25 → 18) as it goes deeper; on the line hand → mirror surface (528, 500) → mirrored hand, stopping 59% of the way to the surface"
+          "props": {"from": [744.3, 771.4], "to": [658.1, 648.7], "color": "purple", "taper": [1.4, 1.0]},
+          "where": "from my palm into the mirror: from just past the upper-left edge of my raised mitten toward the vanishing point, up and left, 150 px, narrowing from 7 to 5 px (head 25 → 18) as it goes deeper; on the line hand (799.5, 850) → mirror surface (587.1, 547.5) → mirrored hand, stopping 67% of the way to the surface"
         },
         {
           "id": "frontRefl",
           "component": "DirArrow",
-          "props": {"from": [448, 373], "to": [496, 449], "color": "purple", "taper": [0.8, 1.2]},
-          "where": "from the mirrored palm back out toward me: from the lower-right edge of the mirrored hand, down and right on the same line, 90 px, widening from 4 to 6 px (head 14 → 22) as it comes closer; its tip faces frontMe's across the glass point (528, 500). About 10 px right of the mirrored raised arm, 44 px above rightRefl"
+          "props": {"from": [501.1, 424.9], "to": [549.9, 494.5], "color": "purple", "taper": [0.8, 1.2]},
+          "where": "from the mirrored palm back out toward me: from just past the mirrored mitten's lower right (clear of its raised arm), down and right on the same line, 85 px, widening from 4 to 6 px (head 14 → 22) as it comes closer; its tip faces frontMe's across the glass point (587.1, 547.5)"
         }
       ],
       "cues": [
@@ -313,20 +314,20 @@
         {
           "id": "ghost",
           "component": "Person",
-          "props": {"at": [580, 1000], "r": 85, "view": "back", "raise": "screenRight", "face": "back", "backColor": "blue", "palmColor": "yellow", "style": "ghost", "beneath": ["reflection"]},
-          "where": "a dashed copy of me, starting exactly over me; it turns in place (its horizontal extent shrinks by |cos| about x 580, inside x 365–795) and then moves into the mirror beside the person there, ending at head (630, 420) r 38, front view: raised hand on the screen left at (558, 348), yellow palm, thumb toward its head (screen right); lowered arm to (717, 629); legs within x 594–666 near the feet (y 770–838), about 22 px left of my raised hand (x 688). Drawn beneath the person in the mirror, so its hand passes behind that person's legs on the way up"
+          "props": {"at": [600, 1040], "r": 95, "view": "back", "raise": "screenRight", "face": "back", "backColor": "blue", "palmColor": "yellow", "style": "ghost", "beneath": ["reflection"], "look": "chibi"},
+          "where": "a dashed copy of me, starting exactly over me (head (600, 1040), r 95); it turns in place and then moves into the mirror beside the person there, ending at head (725, 480) r 57, front view: raised hand on the screen left at (605.3, 366), yellow palm, thumb toward its head (screen right); lowered arm to x ≈ 845. Drawn beneath the person in the mirror, so its hand passes behind that person's legs on the way up"
         },
         {
           "id": "ringRefl",
           "component": "Ring",
-          "props": {"of": "reflection", "r": 46, "color": "red"},
-          "where": "around the mirrored raised hand (432, 348): x 384–480, y 300–396; about 16 px clear of its head"
+          "props": {"of": "reflection", "r": 62, "color": "red"},
+          "where": "around the mirrored raised hand (459.7, 366), r 62: x 395–525, y 301–431; about 25 px clear of its head"
         },
         {
           "id": "ringGhost",
           "component": "Ring",
-          "props": {"of": "ghost", "r": 46, "color": "red"},
-          "where": "around the ghost's raised hand, (558, 348) once it has arrived: x 510–606, y 300–396; about 29 px between the two rings"
+          "props": {"of": "ghost", "r": 62, "color": "red"},
+          "where": "around the ghost's raised hand, (605.3, 366) once it has arrived: x 541–670; about 16 px between the two rings"
         }
       ],
       "cues": [
@@ -365,7 +366,7 @@
           "at": {"word": "거울"},
           "target": "ghost",
           "action": "moveTo",
-          "params": {"at": [630, 420], "r": 38},
+          "params": {"at": [725, 480], "r": 57},
           "until": {"word": "서"},
           "note": "'거울 속 사람과 나란히 서': up into the mirror and down to the same size, standing to the right of the person there, heads level"
         },
@@ -381,7 +382,7 @@
           "at": {"word": "보면"},
           "target": "camera",
           "action": "moveTo",
-          "params": {"center": [495, 570], "zoom": 1.6},
+          "params": {"center": [533, 557], "zoom": 1.19},
           "until": {"pause": true},
           "note": "a slow push-in on the pair over the rest of B5's words, so the raised hands and their rings read at a glance; the 1 s pause then holds still"
         },
@@ -404,7 +405,7 @@
         },
         {"at": {"word": "좌우가"}, "target": "ringGhost", "action": "pulse", "speed": "base"}
       ],
-      "endFrame": "Visual zone, pushed in (zoom 1.6 on (495, 570)): the person in the mirror and the dashed ghost side by side filling the zone, the same size, heads level, both facing out: the person's raised hand on the right of its body, the ghost's on the left, both yellow palms, a red ring around each; the mirror's top edge near the top of the zone, its other edges out of view; me gone. The person in the mirror hasn't moved. Held still through the 1 s pause. Caption: '좌우가 바뀐 것처럼 보이죠.'",
+      "endFrame": "Visual zone, pushed in (zoom 1.19 on (533, 557)): the person in the mirror and the dashed ghost side by side filling the zone, the same size, heads level, both facing out: the person's raised hand on the right of its body, the ghost's on the left, both yellow palms, a red ring around each; the mirror's top edge near the top of the zone, its sheen at the right edge, its other edges out of view; me gone. The person in the mirror hasn't moved. Held still through the 1 s pause. Caption: '좌우가 바뀐 것처럼 보이죠.'",
       "claims": ["C4", "C3"]
     },
     {
