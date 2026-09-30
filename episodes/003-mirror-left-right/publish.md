@@ -1,5 +1,7 @@
 # 003 · 거울은 왜 좌우만 바뀌어 보일까?
 
+Published: https://youtube.com/shorts/JbPU1ruxlSM (2026-09-30)
+
 Video: `publish/003-mirror-left-right.mp4` · Thumbnail: `publish/003-mirror-left-right.thumb.png`
 
 ## Title

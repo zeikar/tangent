@@ -173,3 +173,50 @@ early and too few views to read closely.
   storyboard agents write for that first frame, and the cut critic judges
   it. A question header held for the whole video was the other option; the
   human found it too much. First used in 003.
+
+### Episode 003, the mirror's left and right (2026-09-28 → 30)
+
+Published 2026-09-30 (https://youtube.com/shorts/JbPU1ruxlSM), 41.5 s, the
+first episode under the frame-0 hook.
+
+- **Topic:** the human's own list of six; the mirror on the orchestrator's
+  pick (the first frame is recognizable, the answer flips the question).
+- **Research:** why a mirror *seems* to swap left and right is contested
+  in psychology, so the topic was reshaped to state only the comparison's
+  geometry, with the floor mirror shown as scenery (people still report a
+  left-right swap of their own body in it).
+- **Scripts:** both critics found each variant's comparison beat the
+  hardest to follow, and both fixes carried it with the raised hand. The
+  human asked what 견주면 meant; narration.md now prefers everyday words.
+- **Storyboard:** the hook question was 5 eojeol and 814 px, too long for
+  one caption, so the caption drops 거울은 while the take still says it
+  (the human's pick over a split or a retake).
+- **Production:** six new components (Mirror, Person, Hand, DirArrow, Ring,
+  Scenery); the frame-0 caption, untested on a real render until now,
+  passed as built.
+- **First look → a cut beat:** after reading YouTube's AI outline of the
+  topic, the human found the render "이해가 약간 어려운". The handedness
+  step (a right hand's image is a left hand's shape) made five steps and
+  contradicted the hook for 13 s; cutting it and retaking fixed both. As
+  in 001, the fix was subtraction.
+- **Fix rounds (4):** sync to the cut script; a Camera push-in and a caption
+  that ends on an anchor (so the loop's last frames carry none); a camera
+  interpolation bug; and at the final checkpoint a cuter figure, chosen
+  from three styles shown as stills before any render (chibi; nails tried
+  and dropped).
+- **Silent failures, all caught by QA, none by the checks:** take3's
+  "바닥에 눕히면" sounded like "바닥이 높이면" to Whisper while align.py
+  passed it (forced alignment can't hear a mispronunciation); the camera
+  bob passed check-render; and the chibi commit's claim that the classic
+  look was unchanged was false (a pixel diff against the old studio found
+  it).
+- **Two process notes:** checking the new player on 002 started rebuilding
+  a shipped episode's media until the human stopped it; shared-code checks
+  belong on the episode in production or a scratch copy. And YouTube
+  labeled 001 and 002 as AI from Gemini TTS's SynthID, so disclosure is Yes
+  from 003 on (channel.md).
+- **Human wait:** minutes at every checkpoint; the one block was a fresh
+  clone without `.env`.
+- **Left for later:** a channel mascot (the human's idea; the chibi Person
+  is a reusable figure meanwhile) and a first-caption fit that keeps the
+  subject word.
