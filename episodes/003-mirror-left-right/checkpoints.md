@@ -39,3 +39,7 @@
   not yet: "근데 사람 그래픽이 좀 엉성한데 ㅋㅋ 약간 더 귀여운 스타일로
   뽑아볼수 있어?". A fix round for the Person figure follows, with style
   options shown as stills first.
+- 2026-09-30 · figure style · picked A (chibi) from three options: "A
+  괜찮은데 거울에서는 좀 작아보이네 전체적으로 크기 조절해야할듯. 그리고
+  chibi도 손금이나 손톱 넣어서 앞뒤 구분하게 할까?". So: larger figures in
+  the mirror scene, palm lines on palms and nails on backs of the mittens.
