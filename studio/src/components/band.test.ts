@@ -68,7 +68,10 @@ describe("band curl and uncurl", () => {
 
   it("never come to rest midway", () => {
     // The most any outline point moves in a frame, over each span's middle.
-    const moved = (f: number) => Math.max(...outline(f).map(([x, y], i) => Math.hypot(x - outline(f - 1)[i][0], y - outline(f - 1)[i][1])));
+    const moved = (f: number) => {
+      const prev = outline(f - 1);
+      return Math.max(...outline(f).map(([x, y], i) => Math.hypot(x - prev[i][0], y - prev[i][1])));
+    };
     for (const [from, to] of [[100, 134], [290, 326]]) {
       const span = to - from;
       for (let f = from + Math.ceil(span * 0.2); f <= to - Math.ceil(span * 0.2); f++) expect(moved(f), `frame ${f}`).toBeGreaterThan(MIN_MOVE);
