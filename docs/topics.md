@@ -7,37 +7,35 @@ of candidates are in git history (up to d4a76eb).
 
 Made so far: 001 A4 paper ([episodes/001-a4-paper-ratio](../episodes/001-a4-paper-ratio/topic.md)),
 002 the Moon's rotation ([episodes/002-moon-rotation](../episodes/002-moon-rotation/topic.md)),
-003 the mirror's left and right ([episodes/003-mirror-left-right](../episodes/003-mirror-left-right/topic.md)).
+003 the mirror's left and right ([episodes/003-mirror-left-right](../episodes/003-mirror-left-right/topic.md)),
+004 magenta missing from the rainbow ([episodes/004-magenta-rainbow](../episodes/004-magenta-rainbow/topic.md)).
 
 ## The human's taste
 
-In the human's words where they gave them.
+Summarized from what the human said, with the date.
 
-- **Less formulaic.** "뭔가 자꾸 틀에박힌? 아이디어 나오는거 같아서 ㅋㅋ
-  에이전트에게 자유를 더 주고싶어" ("the ideas keep coming out kind of
-  formulaic; I want to give the agent more freedom") (2026-09-26), after
-  several rounds of mostly "why does everyday X do Y" candidates.
-- **Not only everyday phenomena.** "실제현상이군. 꼭 안그래도 되니까 더
-  뽑아보자. 수학 과학 공학" ("These are real-world phenomena. They don't have
-  to be, so let's pick more: math, science, engineering") (2026-09-26). Pure
-  math, any science, and engineering are all fine.
-- **Common is fine; dull isn't.** "a4 엄청 흔하지 않아? 그냥 흔한것도
-  올릴까?" ("Isn't A4 super common? Should I just post common ones too?")
-  (2026-09-26). Most Shorts viewers come from the feed and haven't seen the
-  existing explanations. The topics below were rejected because the human
-  already knew them and wasn't drawn to them, not for being common.
-- **Quantum physics appeals.** "난 이런 양자 물리 쪽도 관심있거든" ("I'm into
-  this quantum physics kind of stuff too") (2026-09-26), while suggesting
-  "자석은 왜 자석일까?" ("Why is a magnet a magnet?").
+- **Less formulaic.** The ideas kept coming out formulaic, and the human
+  wants to give the agent more freedom (2026-09-26), after several rounds
+  of mostly "why does everyday X do Y" candidates.
+- **Not only everyday phenomena.** The ideas were all real-world phenomena,
+  and they don't have to be: bring more from math, science, and
+  engineering (2026-09-26). Pure math, any science, and engineering are
+  all fine.
+- **Common is fine; dull isn't.** A4 itself is very common, so common
+  topics can go up too (2026-09-26). Most Shorts viewers come from the
+  feed and haven't seen the existing explanations. The topics below were
+  rejected because the human already knew them and wasn't drawn to them,
+  not for being common.
+- **Quantum physics appeals.** The human is into quantum physics too
+  (2026-09-26), and suggested why a magnet is a magnet.
 - **The picture is the explanation** (2026-09-26): an animation the viewer
   watches happen, not a diagram illustrating the narration.
-- **The picture comes first; Korean coverage doesn't count.** "1순위는
-  그림으로 설명" ("the first priority is explaining with a picture"), and on
-  whether a topic was already told in Korean: "다 빼도 될듯한데 ㅋㅋ a4
-  용지도 흔한 주제잖아?" ("I think we can drop all that, lol; A4 paper is a
-  common topic too, right?") (2026-09-27). Richer visuals (textures,
-  characters, animation) may come later; for now, early in the channel and
-  the repo, pictures drawn in code.
+- **The picture comes first; Korean coverage doesn't count.** Explaining
+  with a picture is the first priority, and whether a topic was already
+  told in Korean can be dropped as a criterion, since A4 paper was a common
+  topic too (2026-09-27). Richer visuals (textures, characters,
+  animation) may come later; for now, early in the channel and the repo,
+  pictures drawn in code.
 
 ## Shown, not picked
 
@@ -70,10 +68,10 @@ the notes are in `git show d4a76eb:docs/topics.md`.
   reactor, always twelve pentagons, Janus and Epimetheus swapping orbits,
   the bomb tester, Riemann rearrangement. The human picked their own idea
   instead, the Moon's rotation.
-- 2026-09-28, the human's own list; 003 took the mirror, and the rest are
-  still open (one-line notes in 003's topic.md): magenta missing from the
-  rainbow, why eclipses don't happen every month, Hilbert's hotel,
-  graphite vs. diamond colors, touch and Pauli exclusion.
+- 2026-09-28, the human's own list; 003 took the mirror and 004 magenta,
+  and the rest are still open (one-line notes in 004's topic.md): why
+  eclipses don't happen every month, Hilbert's hotel, graphite vs. diamond
+  colors, touch and Pauli exclusion.
 - Set aside earlier as already told in Korean, which no longer counts
   against an idea (2026-09-27): the lunar birthday cycle, 11,172 Hangul
   syllables, curved platform gaps, the West Sea's tides, bus bunching,
@@ -84,9 +82,8 @@ the notes are in `git show d4a76eb:docs/topics.md`.
 
 ## Rejected
 
-- 2026-09-26: "다 아는 얘기 (내가 아는 얘기) 이기도 하고 뭔가 흔한거 같기도
-  하고" ("it's something everyone knows (something I know), and it also kind
-  of seems common"); later clarified as dull rather than common.
+- 2026-09-26: stories everyone knows (the human knew them) that also felt
+  common; later clarified as dull rather than common.
   - Guessing one in a million with twenty questions (binary search, 2^20)
   - Why steel bridges are full of triangles (truss rigidity)
   - The birthday paradox (23 people, 253 pairs)

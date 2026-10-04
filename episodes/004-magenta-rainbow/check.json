@@ -1,0 +1,822 @@
+{
+ "episode": "004-magenta-rainbow",
+ "render": "render.mp4",
+ "renderSha256": "bd0ab787124660ae7927462e3bba04ef386bddad5a8dfc63e30af4ce195f6212",
+ "storyboardSha256": "f2e4aba559849fb9ba25b6adb766564b4da9cce3aca040e002b6055e1dd76982",
+ "studioSha256": "a71d5553019dac00d9ebb1e2f85f9e4d3522b55fcd56b14ca5ff7a754d7923c9",
+ "verdict": "pass",
+ "counts": {
+  "fail": 0,
+  "warn": 0,
+  "pass": 15,
+  "skip": 1
+ },
+ "contactSheet": "check/sheet.png",
+ "checks": [
+  {
+   "id": "freshness",
+   "status": "pass",
+   "summary": "render.mp4, cues.json and the studio code all match this storyboard.json",
+   "cites": []
+  },
+  {
+   "id": "technical",
+   "status": "pass",
+   "summary": "1080×1920 yuv420p bt709 tv, 30 fps, 1452 frames (48.40 s); audio 48000 Hz, last 100 ms at -120 dBFS",
+   "cites": []
+  },
+  {
+   "id": "bounds",
+   "status": "pass",
+   "summary": "all 1452 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 144–936, y 248–1255",
+   "cites": []
+  },
+  {
+   "id": "centering",
+   "status": "pass",
+   "summary": "B1 0/0, B2 0/0, B3 0/0, B4 0/0, B5 0/0, B6 0/0, B7 0/0 (px off x 540: all ink / picture without edge labels; tolerance ±25)",
+   "details": [
+    {
+     "beat": "B1",
+     "frame": 202,
+     "off": 0,
+     "pictureOff": 0,
+     "status": "pass"
+    },
+    {
+     "beat": "B2",
+     "frame": 433,
+     "off": 0,
+     "pictureOff": 0,
+     "status": "pass"
+    },
+    {
+     "beat": "B3",
+     "frame": 607,
+     "off": 0,
+     "pictureOff": 0,
+     "status": "pass"
+    },
+    {
+     "beat": "B4",
+     "frame": 786,
+     "off": 0,
+     "pictureOff": 0,
+     "status": "pass"
+    },
+    {
+     "beat": "B5",
+     "frame": 1019,
+     "off": 0,
+     "pictureOff": 0,
+     "status": "pass"
+    },
+    {
+     "beat": "B6",
+     "frame": 1213,
+     "off": 0,
+     "pictureOff": 0,
+     "status": "pass"
+    },
+    {
+     "beat": "B7",
+     "frame": 1451,
+     "off": 0,
+     "pictureOff": 0,
+     "status": "pass"
+    }
+   ],
+   "cites": []
+  },
+  {
+   "id": "legibility",
+   "status": "pass",
+   "summary": "smallest glyph \"노\" 39.6 px in strip \"노\" (floor 30 px, 44 text items)",
+   "details": [
+    {
+     "id": "strip",
+     "kind": "name",
+     "text": "노",
+     "char": "노",
+     "height": 39.6,
+     "frame": 0
+    },
+    {
+     "id": "bars",
+     "kind": "label",
+     "text": "L",
+     "char": "L",
+     "height": 39.6,
+     "frame": 376
+    },
+    {
+     "id": "bars",
+     "kind": "label",
+     "text": "M",
+     "char": "M",
+     "height": 39.6,
+     "frame": 387
+    },
+    {
+     "id": "strip",
+     "kind": "name",
+     "text": "보",
+     "char": "보",
+     "height": 40.2,
+     "frame": 0
+    },
+    {
+     "id": "bars",
+     "kind": "label",
+     "text": "S",
+     "char": "S",
+     "height": 40.8,
+     "frame": 396
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "그래서 빛 하나로",
+     "char": "그",
+     "height": 41.4,
+     "frame": 858
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "L, M, S 원추세포예요.",
+     "char": "L",
+     "height": 42.1,
+     "frame": 368
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "우리 눈이 만든 고리예요.",
+     "char": "고",
+     "height": 42.2,
+     "frame": 1377
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "색을 느끼는 세포는",
+     "char": "느",
+     "height": 42.4,
+     "frame": 263
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "L과 S 원추세포는 세게,",
+     "char": "L",
+     "height": 42.4,
+     "frame": 467
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "M 원추세포는",
+     "char": "M",
+     "height": 42.4,
+     "frame": 526
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "M 원추세포가",
+     "char": "M",
+     "height": 42.4,
+     "frame": 787
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "M 원추세포도 덩달아",
+     "char": "M",
+     "height": 42.4,
+     "frame": 940
+    },
+    {
+     "id": "strip",
+     "kind": "name",
+     "text": "초",
+     "char": "초",
+     "height": 42.8,
+     "frame": 0
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "이 모양은 안 나와요.",
+     "char": "모",
+     "height": 43.1,
+     "frame": 733
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "이 모양이 나와요.",
+     "char": "모",
+     "height": 43.1,
+     "frame": 1112
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "빨주노초파남보 어디에도 없어요.",
+     "char": "노",
+     "height": 43.2,
+     "frame": 61
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "맨 끝 보라와도 달라요.",
+     "char": "도",
+     "height": 43.5,
+     "frame": 136
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "다 비춰 봐도",
+     "char": "도",
+     "height": 43.5,
+     "frame": 701
+    },
+    {
+     "id": "captions",
+     "kind": "caption",
+     "text": "보통 세 가지,",
+     "char": "보",
+     "height": 43.7,
+     "frame": 293
+    }
+   ],
+   "cites": []
+  },
+  {
+   "id": "overlaps",
+   "status": "pass",
+   "summary": "no text meets other text, lines, or a fill drawn over it (in or across elements); no entrance draws while an exit is still visible",
+   "details": [],
+   "cites": []
+  },
+  {
+   "id": "labels",
+   "status": "skip",
+   "summary": "no edge label has another element's line nearby",
+   "details": [],
+   "cites": []
+  },
+  {
+   "id": "captions",
+   "status": "pass",
+   "summary": "all 33 captions appear 0–0 frames after their cue (limit 3), on one line, inside the caption zone",
+   "details": [
+    {
+     "text": "이 색, 무지개에 있을까요?",
+     "from": 0,
+     "shown": 0,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "빨주노초파남보 어디에도 없어요.",
+     "from": 61,
+     "shown": 61,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "맨 끝 보라와도 달라요.",
+     "from": 136,
+     "shown": 136,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "답은 우리 눈에 있어요.",
+     "from": 203,
+     "shown": 203,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "색을 느끼는 세포는",
+     "from": 263,
+     "shown": 263,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "보통 세 가지,",
+     "from": 293,
+     "shown": 293,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "긴 파장 쪽부터",
+     "from": 329,
+     "shown": 329,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "L, M, S 원추세포예요.",
+     "from": 368,
+     "shown": 368,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "이 색을 보면",
+     "from": 434,
+     "shown": 434,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "L과 S 원추세포는 세게,",
+     "from": 467,
+     "shown": 467,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "M 원추세포는",
+     "from": 526,
+     "shown": 526,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "약하게 반응해요.",
+     "from": 555,
+     "shown": 555,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "무지개 빛은 저마다",
+     "from": 608,
+     "shown": 608,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "파장이 하나예요.",
+     "from": 635,
+     "shown": 635,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "빨강부터 보라까지",
+     "from": 671,
+     "shown": 671,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "다 비춰 봐도",
+     "from": 701,
+     "shown": 701,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "이 모양은 안 나와요.",
+     "from": 733,
+     "shown": 733,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "M 원추세포가",
+     "from": 787,
+     "shown": 787,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "가운데 끼어 있거든요.",
+     "from": 812,
+     "shown": 812,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "그래서 빛 하나로",
+     "from": 858,
+     "shown": 858,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "양쪽을 함께 자극하면",
+     "from": 892,
+     "shown": 892,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "M 원추세포도 덩달아",
+     "from": 940,
+     "shown": 940,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "세게 반응해요.",
+     "from": 976,
+     "shown": 976,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "빨강 빛과 파랑 빛,",
+     "from": 1020,
+     "shown": 1020,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "둘을 알맞게 섞으면",
+     "from": 1066,
+     "shown": 1066,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "이 모양이 나와요.",
+     "from": 1112,
+     "shown": 1112,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "이게 마젠타예요.",
+     "from": 1144,
+     "shown": 1144,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "색상환이 둥근 건",
+     "from": 1214,
+     "shown": 1214,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "마젠타 같은 색들이",
+     "from": 1251,
+     "shown": 1251,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "빨강과 보라를",
+     "from": 1286,
+     "shown": 1286,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "이어 줘서예요.",
+     "from": 1319,
+     "shown": 1319,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "빛이 아니라",
+     "from": 1350,
+     "shown": 1350,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "우리 눈이 만든 고리예요.",
+     "from": 1377,
+     "shown": 1377,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    }
+   ],
+   "cites": []
+  },
+  {
+   "id": "readable",
+   "status": "pass",
+   "summary": "every name and label stays fully visible at least 30 frames",
+   "details": [],
+   "cites": []
+  },
+  {
+   "id": "reaction",
+   "status": "pass",
+   "summary": "B1 +1, B2 +1, B3 +1, B4 +1, B5 +1, B6 +0, B7 +1 (frames from each beat's first word to the first visible change; — = no cue on that word; limit 3)",
+   "details": [
+    {
+     "beat": "B1",
+     "frame": 4,
+     "hasCue": true,
+     "latency": 1,
+     "status": "pass"
+    },
+    {
+     "beat": "B2",
+     "frame": 203,
+     "hasCue": true,
+     "latency": 1,
+     "status": "pass"
+    },
+    {
+     "beat": "B3",
+     "frame": 434,
+     "hasCue": true,
+     "latency": 1,
+     "status": "pass"
+    },
+    {
+     "beat": "B4",
+     "frame": 608,
+     "hasCue": true,
+     "latency": 1,
+     "status": "pass"
+    },
+    {
+     "beat": "B5",
+     "frame": 787,
+     "hasCue": true,
+     "latency": 1,
+     "status": "pass"
+    },
+    {
+     "beat": "B6",
+     "frame": 1020,
+     "hasCue": true,
+     "latency": 0,
+     "status": "pass"
+    },
+    {
+     "beat": "B7",
+     "frame": 1214,
+     "hasCue": true,
+     "latency": 1,
+     "status": "pass"
+    }
+   ],
+   "cites": []
+  },
+  {
+   "id": "cues",
+   "status": "pass",
+   "summary": "every cue after a beat's first word shows a change within 5 frames",
+   "details": [],
+   "cites": []
+  },
+  {
+   "id": "blank",
+   "status": "pass",
+   "summary": "the visual zone is never empty for more than 3 frames in a row",
+   "cites": []
+  },
+  {
+   "id": "loudness",
+   "status": "pass",
+   "summary": "-14.1 LUFS integrated (target -14 ±1), true peak -2.3 dBTP (max -1), range 2.4 LU",
+   "cites": []
+  },
+  {
+   "id": "av-sync",
+   "status": "pass",
+   "summary": "render audio is 0 ms off against narration.mp3 (limit ±20 ms)",
+   "cites": []
+  },
+  {
+   "id": "words",
+   "status": "pass",
+   "summary": "28 of 28 words after a pause start within 70 ms of an audible onset (widest \"빨주노초파남보,\" at 2.02 s, +70 ms); limit ±200 ms",
+   "details": [
+    {
+     "word": "이",
+     "start": 0.14,
+     "dev": -40
+    },
+    {
+     "word": "무지개에",
+     "start": 0.84,
+     "dev": -30
+    },
+    {
+     "word": "빨주노초파남보,",
+     "start": 2.02,
+     "dev": 70
+    },
+    {
+     "word": "어디에도",
+     "start": 3.18,
+     "dev": -40
+    },
+    {
+     "word": "맨",
+     "start": 4.52,
+     "dev": -20
+    },
+    {
+     "word": "답은",
+     "start": 6.76,
+     "dev": 10
+    },
+    {
+     "word": "우리",
+     "start": 7.4,
+     "dev": -20
+    },
+    {
+     "word": "색을",
+     "start": 8.78,
+     "dev": -40
+    },
+    {
+     "word": "긴",
+     "start": 10.98,
+     "dev": 10
+    },
+    {
+     "word": "엘,",
+     "start": 12.28,
+     "dev": -40
+    },
+    {
+     "word": "이",
+     "start": 14.48,
+     "dev": -40
+    },
+    {
+     "word": "엘과",
+     "start": 15.58,
+     "dev": -30
+    },
+    {
+     "word": "엠",
+     "start": 17.52,
+     "dev": -40
+    },
+    {
+     "word": "무지개",
+     "start": 20.26,
+     "dev": -50
+    },
+    {
+     "word": "빨강부터",
+     "start": 22.38,
+     "dev": 60
+    },
+    {
+     "word": "이",
+     "start": 24.44,
+     "dev": -60
+    },
+    {
+     "word": "엠",
+     "start": 26.22,
+     "dev": -40
+    },
+    {
+     "word": "그래서",
+     "start": 28.6,
+     "dev": 10
+    },
+    {
+     "word": "빛",
+     "start": 29.18,
+     "dev": 30
+    },
+    {
+     "word": "엠",
+     "start": 31.32,
+     "dev": -50
+    },
+    {
+     "word": "빨강",
+     "start": 34,
+     "dev": 60
+    },
+    {
+     "word": "둘을",
+     "start": 35.54,
+     "dev": 30
+    },
+    {
+     "word": "이",
+     "start": 37.06,
+     "dev": -30
+    },
+    {
+     "word": "이게",
+     "start": 38.12,
+     "dev": -30
+    },
+    {
+     "word": "색상환이",
+     "start": 40.48,
+     "dev": -20
+    },
+    {
+     "word": "마젠타",
+     "start": 41.7,
+     "dev": 0
+    },
+    {
+     "word": "빛이",
+     "start": 45,
+     "dev": 10
+    },
+    {
+     "word": "우리",
+     "start": 45.9,
+     "dev": -40
+    }
+   ],
+   "cites": []
+  },
+  {
+   "id": "loop",
+   "status": "pass",
+   "summary": "89 visual-zone pixels differ by more than 16 levels between the last and first frame (limit 500)",
+   "cites": []
+  }
+ ]
+}

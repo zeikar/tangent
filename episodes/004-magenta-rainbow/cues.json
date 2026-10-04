@@ -1,0 +1,619 @@
+{
+ "storyboardSha256": "f2e4aba559849fb9ba25b6adb766564b4da9cce3aca040e002b6055e1dd76982",
+ "narrationSource": "take3@1.08.wav",
+ "takeWordsSha256": "f98835903ded274e402e540379e0b5a484e2b2b237fc738a845f4dc8b70f1db2",
+ "fps": 30,
+ "durationInFrames": 1452,
+ "beats": [
+  {
+   "id": "B1",
+   "startFrame": 0,
+   "endFrame": 202,
+   "pauseFrame": 180,
+   "captions": [
+    {
+     "word": "이",
+     "frame": 4
+    },
+    {
+     "word": "빨주노초파남보",
+     "frame": 61
+    },
+    {
+     "word": "맨",
+     "frame": 136
+    }
+   ],
+   "cues": [
+    {
+     "target": "chip",
+     "action": "pulse",
+     "word": "이",
+     "frame": 4
+    },
+    {
+     "target": "strip",
+     "action": "pulse",
+     "word": "무지개에",
+     "frame": 25
+    },
+    {
+     "target": "chip",
+     "action": "moveTo",
+     "word": "있을까요",
+     "frame": 37,
+     "untilFrame": 61
+    },
+    {
+     "target": "chip",
+     "action": "moveTo",
+     "word": "빨주노초파남보",
+     "frame": 61,
+     "untilFrame": 136
+    },
+    {
+     "target": "strip",
+     "action": "pulse",
+     "word": "끝",
+     "frame": 142
+    },
+    {
+     "target": "chip",
+     "action": "pulse",
+     "word": "달라요",
+     "frame": 169
+    }
+   ]
+  },
+  {
+   "id": "B2",
+   "startFrame": 203,
+   "endFrame": 433,
+   "pauseFrame": 419,
+   "captions": [
+    {
+     "word": "답은",
+     "frame": 203
+    },
+    {
+     "word": "색을",
+     "frame": 263
+    },
+    {
+     "word": "보통",
+     "frame": 293
+    },
+    {
+     "word": "긴",
+     "frame": 329
+    },
+    {
+     "word": "엘",
+     "frame": 368
+    }
+   ],
+   "cues": [
+    {
+     "target": "strip",
+     "action": "moveTo",
+     "word": "답은",
+     "frame": 203,
+     "untilFrame": 263
+    },
+    {
+     "target": "chip",
+     "action": "moveTo",
+     "word": "답은",
+     "frame": 203,
+     "untilFrame": 263
+    },
+    {
+     "target": "curves",
+     "action": "appear",
+     "word": "색을",
+     "frame": 263
+    },
+    {
+     "target": "bars",
+     "action": "appear",
+     "word": "색을",
+     "frame": 263
+    },
+    {
+     "target": "curves",
+     "action": "appear",
+     "word": "세포는",
+     "frame": 281
+    },
+    {
+     "target": "bars",
+     "action": "appear",
+     "word": "세포는",
+     "frame": 281
+    },
+    {
+     "target": "curves",
+     "action": "appear",
+     "word": "보통",
+     "frame": 293
+    },
+    {
+     "target": "bars",
+     "action": "appear",
+     "word": "보통",
+     "frame": 293
+    },
+    {
+     "target": "strip",
+     "action": "pulse",
+     "word": "긴",
+     "frame": 329
+    },
+    {
+     "target": "bars",
+     "action": "label",
+     "word": "엘",
+     "frame": 368
+    },
+    {
+     "target": "curves",
+     "action": "pulse",
+     "word": "엘",
+     "frame": 368
+    },
+    {
+     "target": "bars",
+     "action": "label",
+     "word": "엠",
+     "frame": 379
+    },
+    {
+     "target": "curves",
+     "action": "pulse",
+     "word": "엠",
+     "frame": 379
+    },
+    {
+     "target": "bars",
+     "action": "label",
+     "word": "에스",
+     "frame": 388
+    },
+    {
+     "target": "curves",
+     "action": "pulse",
+     "word": "에스",
+     "frame": 388
+    }
+   ]
+  },
+  {
+   "id": "B3",
+   "startFrame": 434,
+   "endFrame": 607,
+   "pauseFrame": 578,
+   "captions": [
+    {
+     "word": "이",
+     "frame": 434
+    },
+    {
+     "word": "엘과",
+     "frame": 467
+    },
+    {
+     "word": "엠",
+     "frame": 526
+    },
+    {
+     "word": "약하게",
+     "frame": 555
+    }
+   ],
+   "cues": [
+    {
+     "target": "chip",
+     "action": "pulse",
+     "word": "이",
+     "frame": 434
+    },
+    {
+     "target": "bars",
+     "action": "setLights",
+     "word": "보면",
+     "frame": 447
+    },
+    {
+     "target": "bars",
+     "action": "pulse",
+     "word": "엘과",
+     "frame": 467
+    },
+    {
+     "target": "bars",
+     "action": "pulse",
+     "word": "에스",
+     "frame": 479
+    },
+    {
+     "target": "bars",
+     "action": "pulse",
+     "word": "엠",
+     "frame": 526
+    },
+    {
+     "target": "bars",
+     "action": "markTarget",
+     "word": "반응해요",
+     "frame": 567
+    },
+    {
+     "target": "chip",
+     "action": "outline",
+     "word": "반응해요",
+     "frame": 567
+    }
+   ]
+  },
+  {
+   "id": "B4",
+   "startFrame": 608,
+   "endFrame": 786,
+   "pauseFrame": 764,
+   "captions": [
+    {
+     "word": "무지개",
+     "frame": 608
+    },
+    {
+     "word": "파장이",
+     "frame": 635
+    },
+    {
+     "word": "빨강부터",
+     "frame": 671
+    },
+    {
+     "word": "다",
+     "frame": 701
+    },
+    {
+     "word": "이",
+     "frame": 733
+    }
+   ],
+   "cues": [
+    {
+     "target": "light",
+     "action": "appear",
+     "word": "무지개",
+     "frame": 608
+    },
+    {
+     "target": "bars",
+     "action": "follow",
+     "word": "무지개",
+     "frame": 608
+    },
+    {
+     "target": "nowChip",
+     "action": "appear",
+     "word": "빛은",
+     "frame": 616
+    },
+    {
+     "target": "light",
+     "action": "pulse",
+     "word": "하나예요",
+     "frame": 647
+    },
+    {
+     "target": "light",
+     "action": "moveTo",
+     "word": "빨강부터",
+     "frame": 671,
+     "untilFrame": 754
+    },
+    {
+     "target": "bars",
+     "action": "pulseTarget",
+     "word": "모양은",
+     "frame": 737
+    }
+   ]
+  },
+  {
+   "id": "B5",
+   "startFrame": 787,
+   "endFrame": 1019,
+   "pauseFrame": 998,
+   "captions": [
+    {
+     "word": "엠",
+     "frame": 787
+    },
+    {
+     "word": "가운데",
+     "frame": 812
+    },
+    {
+     "word": "그래서",
+     "frame": 858
+    },
+    {
+     "word": "양쪽을",
+     "frame": 892
+    },
+    {
+     "word": "엠",
+     "frame": 940
+    },
+    {
+     "word": "세게",
+     "frame": 976
+    }
+   ],
+   "cues": [
+    {
+     "target": "curves",
+     "action": "pulse",
+     "word": "엠",
+     "frame": 787
+    },
+    {
+     "target": "bars",
+     "action": "pulse",
+     "word": "엠",
+     "frame": 787
+    },
+    {
+     "target": "curves",
+     "action": "pulse",
+     "word": "가운데",
+     "frame": 812
+    },
+    {
+     "target": "curves",
+     "action": "pulse",
+     "word": "끼어",
+     "frame": 823
+    },
+    {
+     "target": "curves",
+     "action": "pulse",
+     "word": "끼어",
+     "frame": 823
+    },
+    {
+     "target": "light",
+     "action": "moveTo",
+     "word": "그래서",
+     "frame": 858,
+     "untilFrame": 892
+    },
+    {
+     "target": "light",
+     "action": "pulse",
+     "word": "양쪽을",
+     "frame": 892
+    },
+    {
+     "target": "light",
+     "action": "pulse",
+     "word": "양쪽을",
+     "frame": 892
+    },
+    {
+     "target": "bars",
+     "action": "pulse",
+     "word": "함께",
+     "frame": 905
+    },
+    {
+     "target": "bars",
+     "action": "pulse",
+     "word": "함께",
+     "frame": 905
+    },
+    {
+     "target": "bars",
+     "action": "mismatch",
+     "word": "엠",
+     "frame": 940
+    },
+    {
+     "target": "light",
+     "action": "pulse",
+     "word": "덩달아",
+     "frame": 964
+    }
+   ]
+  },
+  {
+   "id": "B6",
+   "startFrame": 1020,
+   "endFrame": 1213,
+   "pauseFrame": 1175,
+   "captions": [
+    {
+     "word": "빨강",
+     "frame": 1020
+    },
+    {
+     "word": "둘을",
+     "frame": 1066
+    },
+    {
+     "word": "이",
+     "frame": 1112
+    },
+    {
+     "word": "이게",
+     "frame": 1144
+    }
+   ],
+   "cues": [
+    {
+     "target": "bars",
+     "action": "mismatch",
+     "word": "빨강",
+     "frame": 1020
+    },
+    {
+     "target": "light",
+     "action": "moveTo",
+     "word": "빨강",
+     "frame": 1020,
+     "untilFrame": 1054
+    },
+    {
+     "target": "light",
+     "action": "moveTo",
+     "word": "알맞게",
+     "frame": 1078,
+     "untilFrame": 1112
+    },
+    {
+     "target": "bars",
+     "action": "pulseTarget",
+     "word": "모양이",
+     "frame": 1115
+    },
+    {
+     "target": "chip",
+     "action": "pulse",
+     "word": "이게",
+     "frame": 1144
+    },
+    {
+     "target": "nowChip",
+     "action": "pulse",
+     "word": "이게",
+     "frame": 1144
+    },
+    {
+     "target": "name",
+     "action": "appear",
+     "word": "마젠타예요",
+     "frame": 1156
+    }
+   ]
+  },
+  {
+   "id": "B7",
+   "startFrame": 1214,
+   "endFrame": 1451,
+   "pauseFrame": 1413,
+   "captions": [
+    {
+     "word": "색상환이",
+     "frame": 1214
+    },
+    {
+     "word": "마젠타",
+     "frame": 1251
+    },
+    {
+     "word": "빨강과",
+     "frame": 1286
+    },
+    {
+     "word": "이어",
+     "frame": 1319
+    },
+    {
+     "word": "빛이",
+     "frame": 1350
+    },
+    {
+     "word": "우리",
+     "frame": 1377,
+     "untilFrame": 1413
+    }
+   ],
+   "cues": [
+    {
+     "target": "curves",
+     "action": "exit",
+     "word": "색상환이",
+     "frame": 1214
+    },
+    {
+     "target": "light",
+     "action": "exit",
+     "word": "색상환이",
+     "frame": 1214
+    },
+    {
+     "target": "bars",
+     "action": "exit",
+     "word": "색상환이",
+     "frame": 1214
+    },
+    {
+     "target": "nowChip",
+     "action": "exit",
+     "word": "색상환이",
+     "frame": 1214
+    },
+    {
+     "target": "chip",
+     "action": "exit",
+     "word": "색상환이",
+     "frame": 1214
+    },
+    {
+     "target": "name",
+     "action": "exit",
+     "word": "색상환이",
+     "frame": 1214
+    },
+    {
+     "target": "strip",
+     "action": "curl",
+     "word": "둥근",
+     "frame": 1229,
+     "untilFrame": 1262
+    },
+    {
+     "target": "strip",
+     "action": "pulse",
+     "word": "빨강과",
+     "frame": 1286
+    },
+    {
+     "target": "strip",
+     "action": "pulse",
+     "word": "보라를",
+     "frame": 1306
+    },
+    {
+     "target": "strip",
+     "action": "bridge",
+     "word": "이어",
+     "frame": 1319,
+     "untilFrame": 1350
+    },
+    {
+     "target": "strip",
+     "action": "pulse",
+     "word": "우리",
+     "frame": 1377,
+     "untilFrame": 1399
+    },
+    {
+     "target": "strip",
+     "action": "uncurl",
+     "pause": true,
+     "frame": 1413
+    },
+    {
+     "target": "loopChip",
+     "action": "appear",
+     "pause": true,
+     "frame": 1413
+    }
+   ]
+  }
+ ]
+}

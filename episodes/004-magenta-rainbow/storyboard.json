@@ -1,0 +1,610 @@
+{
+  "slug": "004-magenta-rainbow",
+  "loop": true,
+  "notes": [
+    "Written against script.md (script b, picked 2026-10-03) and take1@1.08.words.json, which narration.json names.",
+    "Geometry is px in the 1080×1920 frame, origin top-left; points are [x, y]. Clock positions describe the ring (12 o'clock is up).",
+    "Color is the subject. The strip, the chips and the ring are never theme colors: each is the screen color of a light, computed from its wavelengths (Screen color, next note), and never mixed from the bar colors (C18). Theme colors only mark things: the three cells (yellow, teal, purple), the light lines and dashed targets (text) and the floor (muted). Theme red isn't used: B5's excess is hatched in the middle cell's own teal (fix round 1: beside the magenta chips, red read as pink, as if the middle cell saw magenta). No cell is painted red, green or blue, and no on-screen text says a screen color is a real spectral color (C17).",
+    "Screen color of a light [[nm, power], ...]: XYZ = Σ power × CIE 1931 2° x̄ȳz̄(nm) (verify.py's 5 nm table, linear between rows) → linear sRGB (verify.py's to_rgb: BT.709 primaries, D65 white) → negative channels clipped to 0 → scaled so the largest channel is 1 → sRGB-encoded. Clipping, not adding white: adding white turns the red end rose (#FF0055, near theme red's hue) where clipping keeps it #FF0000. Check values: 680 nm #FF0000 (and everything from 610 nm up), 595 #FF6100, 570 #FAFF00, 527 #00FF00, 483.34 #00A5FF, 472 #0042FF, 450 #4F00FF, 445 #5A00FF, 405 #7000FF, 400 #7100FF; 630 nm + 450 nm at power 1 : 0.975 → exactly #FF00FF (HSV hue 300°, verify.py's k = 0.9749); at 1 : 0.5 → #FF00C0. The screen can't show a spectral color (C17): these are the closest clipped approximations, said nowhere on screen.",
+    "Cone responses: LMS = Σ power × verify.py's Stockman–Sharpe table (each cone's peak = 1; linear between 5 nm rows, as verify.py's same_balance interpolates). Bars from B3 on are ratios: each bar is its response over the largest of the three, so the tallest stands at full height and the others show their ratio to it, whatever the brightness. Key states: magenta mix (630 + 450 at 1 : 0.975) L 0.482, M 0.158, S 1; 675 nm L 1, M 0.066, S 0; 405 nm L 0.039, M 0.038, S 1 (both under 4%: C5); 483.34 nm (verify.py's w_star, the single wavelength with the mix's L:S) L 0.482, M 0.795, S 1, so L and S sit exactly on the target and M is 5× it (C6). On the B4 sweep the tallest bar is L down to 554 nm, M to 486 nm, then S (C4), and the closest any single wavelength comes to the target is 0.25 off in one bar (at 475 nm).",
+    "Wavelength axis, shared by the strip, the curves and the light lines: long wavelengths on the left (the script's red end left, violet end right), linear, x = 144 + (680 − nm) × 792/280: 680 nm at x 144, 540 nm at x 540, 400 nm at x 936, 4 px inside the content bounds (the first render's bounds check: the encoder spreads a saturated edge 1–3 px, so a band or curve ending exactly at x 140 or 940 put ink outside). The band stops at 680 nm rather than 700: from 610 nm up the clipped color is one flat #FF0000, and 680 keeps that block to a quarter of the band; L is 0.025 there, M 0.002. The light sweeps 675 → 405 nm (x 158 → 922) so its 5 px line and its dots stay inside x 144–936.",
+    "Layout B2–B6, top to bottom: the chips row (target chip left at (330, 350), the 'now' chip right at (750, 350), both 170 px; '마젠타' between them in B6), the three bars (tracks y 480–720, floor y 720, labels below), the graph (curves from the axis band's top edge, y 1100, value 1 at y 840), the axis band (y 1100–1160) and its seven names (ink y 1184–1234). The bars stand above the graph rather than beside it: in a portrait frame three bars get the frame's whole width, centers 270 / 540 / 810, labeled L, M, S as the captions write the cells (the first cut's labels, 긴 파장 / 중간 파장 / 짧은 파장 at up to 205 px, needed all of it; 'L 원추세포' at about 240 px would leave 30 px between labels and run together).",
+    "Frame 0 is the hook: the big magenta chip (380 px, x 350–730, y 370–750) over the full-width band (x 144–936, y 860–1020, 160 px thick) with 빨 주 노 초 파 남 보 under it, all visibleAtStart, under the first caption '이 색, 무지개에 있을까요?' drawn from frame 0. The ink spans x 144–936, y 370–1093: the picture fills the zone's width and centers on it.",
+    "Loop: the last frame is the first. B7's ring opens back into the B1 band (same center, size and names), and the magenta at the middle of its purple bridge rises and grows into loopChip, a new id at the hook chip's exact place, size and light (chip exited on '색상환이' and an exited id can't come back). Nothing else is alive at the end. The last caption ends at the pause ('until'), so the loop's last frames carry none and frame 0's question follows.",
+    "YouTube's 4:2:0 chroma subsampling smears thin saturated red and magenta edges and bands gradients, so every computed color is a wide fill: the band is 160 px thick in B1 and 60 px as the axis, the ring 90 px, chips 170 px or more, with no colored outlines anywhere. Every thin line is theme-colored: light lines and dashed targets in text, curves 5 px in yellow, teal, purple. In B1 the sliding chip stops 26 px above the band (a dark gap, 10 px at the violet end's pulse), so neither color bleeds into the other where they are compared. The band and the ring are drawn in slices of 1 px or finer so they read as smooth gradients.",
+    "Magenta against red: no theme red anywhere (B5's excess is hatched teal). The band's red end is #FF0000 (hue 0°) and the hook chip #FF00FF (300°); the violet end #7100FF (267°). The purple bridge in B7 runs 267° → 300° → 360°.",
+    "Draw order is declaration order: strip < chip (B1) < curves < bars (B2) < light < nowChip (B4) < name (B6) < loopChip (B7). The light lines and their dots lie over the curves and the axis band; LightLine draws the middle cell's dots last, on top, because B5 is about it.",
+    "An element is invisible until its appear cue, unless it has visibleAtStart. Cues sharing an anchor run in parallel, except that an appear waits for the exits on its anchor. Every exit is a 0.2 s even fade. Easing from theme.ts: ease.out for appear (but ease.smooth for one growing out of a point, loopChip's: it's a move), ease.exit for exit, ease.smooth for everything else, unless params say ease: linear or cruise. Each beat's first-word cue that isn't an entrance or exit is linear (B1 and B3's chip pulse, B5's pulses, B6's mismatch fade) or cruise (B2's moves), so it shows within the 3-frame reaction window.",
+    "Text in the visual zone is Korean, plus the bar labels' letters L, M, S (as the captions write the cells: L, M, S 원추세포, never 적·녹·청원추세포), no TeX: the seven names, the bar labels and '마젠타', all label type (Pretendard SemiBold 56) in text. Measured from the static OTF: one syllable is 48.4 px advance, 44–47 px ink wide and 40–49 px tall (노 39.6, 보 40.2), above the 30 px floor; 마젠타 141 px ink. The names sit at 645, 595, 570, 527, 472, 445, 415 nm (x 243, 384, 455, 577, 732, 809, 894), over red, orange, yellow, green, blue, indigo and violet screen colors; the closest pair (주 and 노) has a 26 px ink gap, and 보 ends at x 920. Captions measured in Pretendard Bold 60: widest '빨주노초파남보 어디에도 없어요.' 771 px, then '양쪽 사이에 끼어 있거든요.' 629 px and the hook '이 색, 무지개에 있을까요?' 610 px; all fit one 800 px line.",
+    "Extents, measured on production's renders (2026-10-03, fix round 1 2026-10-04): the curl and uncurl in B7 stay inside x 144–936 and the visual zone at every frame (studio's band.test.ts samples every quarter frame; check-render's bounds pass). The band bends (a plain interpolation of curvature and length overshoots the width), its middle rising to the ring's top, and grows to r and band about the ring's center, the two overlapping so no frame mid-curl moves less than 9 px (the first render's curl nearly stopped, at 1.3 px, on a small ring); it shortens where its outer corners would pass the bounds: by at most 0.9% bending (785 of 792 px) and 4.7% (755 px) for a few frames straightening at nearly full thickness. In the uncurl, loopChip's 90 px seed waits in the ring's hole and passes up through the falling arch in 3 frames; it grows only once the arch's crest is below y 750. The bridge's glow at its peak reaches 18 px past the ring's outer edge at rest and 19 px inside its inner edge. The dots at 483 nm: S and M's overlap by about 3 px (values 0.324 and 0.257, 17 px apart), M's on top; both read at B5's end and under M's dot pulse."
+  ],
+  "colors": {
+    "yellow": "L 원추세포 (곡선·막대)",
+    "teal": "M 원추세포 (곡선·막대)",
+    "purple": "S 원추세포 (곡선·막대)",
+    "text": "빛 한 줄기(세로선), 점선 목표, 글자",
+    "muted": "막대 바닥선"
+  },
+  "components": [
+    {
+      "name": "Note",
+      "status": "existing",
+      "spec": "One line of plain text with $...$ math (studio/src/components/Note.tsx): props text, at [x, y] (the ink center), color (default text); type.label. Actions: appear, exit, setText. Used for B6's '마젠타'."
+    },
+    {
+      "name": "Spectrum",
+      "status": "new",
+      "spec": "The rainbow band: light spread out by wavelength, a wide band filled with each wavelength's screen color (notes: Screen color), drawn in slices of 1 px or finer, with no outline and no thin colored line anywhere. Props: nm [long, short] (the ends' wavelengths, long on the left, linear in nm), center, w, h (the straight band's box), names ([text, nm] pairs, shown from the start: here 빨 주 노 초 파 남 보 at 645, 595, 570, 527, 472, 445, 415 nm, label type in text, each centered on its wavelength's x with its ink top 24 px below the band's bottom edge; an action's names param, true or false, fades them in or out). Actions: pulse {part: band | redEnd | violetEnd | bridge} (that part swells to 1.2× its thickness about its centerline and back; an end is the 40 nm next to it, and the name under it (빨 or 보) scales 1.3× and back with it; a name hangs from the band's bottom edge above it, swollen or not, and scales down from its ink top, so it keeps its 24 px gap); moveTo {center, w, h, names} (straight to straight; names fade to the given visibility over the span); curl {center, r, band, gap} (the band bends along its length into a ring: centerline radius r, thickness band, its two ends gap degrees apart around 6 o'clock, the long (red) end on the gap's left and the short (violet) end on its right, so the band's middle (540 nm) ends at 12 o'clock and its first moments look like a rainbow's arch; names fade out over the first third; every intermediate shape stays inside x 144–936 and the visual zone (notes: extents); it bends over the span's first 65% and grows to r and band over its last 55%, the two overlapping so it never stops midway; growing starts once it is bent past a half circle); bridge (fills the ring's gap over the span, sweeping from the violet end clockwise through 6 o'clock to the red end, with the purples: at each point the screen color of a mixture of the band's two end lights, the mixture chosen so the hue runs from the violet end's through #FF00FF (hue 300°) exactly at 6 o'clock to the red end's; the closed ring shows no seam or outline at either joint); uncurl {center, w, h, names} (the reverse of curl, back to a straight band at that box: the ring shrinks to the radius of its new length over the span's first 55% and unbends over its last 65%, thickening as it straightens, the two overlapping; the bridge opens at its middle (6 o'clock) and each half draws back into its end of the band over the span's first 30%, so no piece of it ever stands apart from the ring; names fade in over the last third). pulse {part: bridge} lifts the bridge's colors toward white by up to 35% with a soft glow of the same colors spreading at most 20 px past the ring at rest (a blur of σ 5.5 px beyond its 9 px swell), and back. With until, a pulse spans its anchors."
+    },
+    {
+      "name": "ColorChip",
+      "status": "new",
+      "spec": "A color swatch: a rectangle (this episode uses squares) with 16 px rounded corners, filled with the screen color of a light (notes: Screen color), no outline. Props: center, w, h, and either light [[nm, power], ...] (fixed) or of (a LightLine id: the chip shows that element's live lights, recomputed every frame). Actions: appear (fades in; with params from [x, y] and fromSize, it instead grows out of that point: a fromSize square there moves and scales to center, w, h over the span, fully opaque throughout; with path [[x, y, from, to], ...] the square first travels those legs at its seed size, each over its shares of the span, and with grow [from, to] it scales, and makes for its center from where the path left it, only over those shares); moveTo {center, w, h}; pulse (scales 1.08× about its center and back); outline (a dashed text frame, 4 px, dash 18 gap 12, 12 px outside the chip, drawn on clockwise from its top-left corner over the span and kept: 'this is the target'); exit."
+    },
+    {
+      "name": "ConeCurves",
+      "status": "new",
+      "spec": "The three cone response curves over the wavelength axis, drawn from verify.py's Stockman–Sharpe table (each cone's peak = 1, linear between 5 nm rows) as 5 px polylines (stroke.arrow) in their colors. Props: nm [long, short], x0, x1 (the band's linear mapping), base (y of value 0: the axis band's top edge), height (px for value 1), cones [{cone: L | M | S, color}]. A curve is drawn only where its value is at least 0.01, so no line runs along the axis or over the band. Actions: appear {cone} (that curve rises out of the axis: its values scale 0 → 1 over the span); pulse {cone} (its stroke 5 → 10 px and back); exit."
+    },
+    {
+      "name": "LightLine",
+      "status": "new",
+      "spec": "Light of one or more single wavelengths, shown on the graph. For each light: a vertical text line, 5 px, at the light's x (the band's mapping) from y0 to y1, and a dot (radius 10, filled in that cone's color, no outline) where it crosses each curve, at y = base − height × value; a dot is hidden where its curve is under 0.03; the middle cell's dots are drawn last. Props: nm, x0, x1 (as ConeCurves), y0, y1, base, height, cones [{cone, color}], lights [[nm, power], ...] (what it shows on appearing). It exposes its live lights, which ConeBars (follow) and ColorChip (of) read every frame. A light's line and dots fade with its power, full from 0.3 up. Actions: appear (the lines grow up from y1 to y0, the dots fading in over the span's second half); moveTo {lights} (each light's nm and power move linearly in the eased progress; when the target lists more lights than are on, each new one starts where the last light already on stands, at its target power, so a line splits in two with no jump in the mixture's ratios or color; lights ending at power 0 are dropped); pulse {cone?} (with cone: those dots scale 1.6× and back; without: the lines' stroke 5 → 10 px and back); exit."
+    },
+    {
+      "name": "ConeBars",
+      "status": "new",
+      "spec": "Three bars, one per cone, showing the responses to a light as ratios: each bar is its response (verify.py's table, linear between 5 nm rows, summed over the lights by power) divided by the largest of the three, so the tallest always stands at full height. Props: centers [xL, xM, xS], floor (y), width, height (px for 1), cones [{cone, color, label}]. Each bar has a track (its full-height column, filled in its color at 0.15) and a bar (filled in its color at 0.85 from the floor up to its value; values are 0 until setLights or follow); a muted 4 px floor line runs under all three, 40 px past the outer bars; each label (label type, text) is centered under its bar, its ink top 24 px below the floor. Actions: appear {cone, label} (that track and label fade in, or only the track with label: false; the floor line draws with the first); label {cone} (that bar's label fades in, for a cell named after its bar appears); setLights {lights} (the bars move to that light's ratios over the span and hold them); follow {of} (from then on the bars show that LightLine's live lights, easing from their current heights over the span); markTarget (dashed outlines of the bars as they stand now: left, top and right sides, 4 px, text, dash 18 gap 12, 8 px outside each bar's edges, drawn on over the span and kept until exit: the target); pulse {cone} (that bar's fill to 1.0 and its width to 1.1× and back); pulseTarget (the outlines' stroke 4 → 8 px and back); mismatch {cone, show} (show true: the part of that bar above its target outline is hatched in its own color, 45° stripes 12 px wide every 24 px at the bar's fill over gaps at 0.3, fading in over the span and following the bar's live height, under the dashed target line that runs across the bar; show false fades it back to solid); exit."
+    }
+  ],
+  "beats": [
+    {
+      "id": "B1",
+      "name": "훅",
+      "readAloud": "이 색, 무지개에 있을까요? 빨주노초파남보, 어디에도 없어요. 맨 끝 보라와도 달라요.",
+      "captions": [
+        {"text": "이 색, 무지개에 있을까요?", "at": {"word": "이"}},
+        {"text": "빨주노초파남보 어디에도 없어요.", "at": {"word": "빨주노초파남보"}},
+        {"text": "맨 끝 보라와도 달라요.", "at": {"word": "맨"}}
+      ],
+      "pauseAfter": 0.3,
+      "elements": [
+        {
+          "id": "strip",
+          "component": "Spectrum",
+          "visibleAtStart": true,
+          "props": {"nm": [680, 400], "center": [540, 940], "w": 792, "h": 160, "names": [["빨", 645], ["주", 595], ["노", 570], ["초", 527], ["파", 472], ["남", 445], ["보", 415]]},
+          "where": "full width across the lower visual zone: x 144–936, y 860–1020; red (680 nm) at the left end, violet (400 nm) at the right; names' ink y 1044–1093. Becomes the graph's axis in B2 and the ring in B7, and is the band again on the last frame"
+        },
+        {
+          "id": "chip",
+          "component": "ColorChip",
+          "visibleAtStart": true,
+          "props": {"center": [540, 560], "w": 380, "h": 380, "light": [[630, 1], [450, 0.975]]},
+          "where": "the hook's magenta square (#FF00FF, the light B6 mixes), centered above the band: x 350–730, y 370–750, 110 px above it. Slides along the band in B1; from B2 the target chip at (330, 350), 170 px"
+        }
+      ],
+      "cues": [
+        {
+          "at": {"word": "이"},
+          "target": "chip",
+          "action": "pulse",
+          "params": {"ease": "linear"},
+          "speed": "base",
+          "note": "'이 색': the chip is the subject. Linear so it shows within 3 frames"
+        },
+        {
+          "at": {"word": "무지개에"},
+          "target": "strip",
+          "action": "pulse",
+          "params": {"part": "band"},
+          "speed": "base",
+          "note": "'무지개에': the band is the rainbow (light spread by wavelength, C13)"
+        },
+        {
+          "at": {"word": "있을까요"},
+          "target": "chip",
+          "action": "moveTo",
+          "params": {"center": [244, 734], "w": 200, "h": 200},
+          "until": {"word": "빨주노초파남보"},
+          "note": "the chip shrinks onto the band's red end, its bottom 26 px above the band (x 144–344, y 634–834), so the violet end's pulse (1.2×, 16 px up) still leaves a 10 px gap; ready to compare"
+        },
+        {
+          "at": {"word": "빨주노초파남보"},
+          "target": "chip",
+          "action": "moveTo",
+          "params": {"center": [828, 734], "w": 200, "h": 200, "ease": "cruise"},
+          "until": {"word": "맨"},
+          "note": "the aligner hears 빨주노초파남보 as one word, so the slide starts on it and glides at an even speed through '어디에도 없어요', the chip passing over every color without matching one, and stops over the violet end on '맨' (x 728–928, so its 1.08× pulse on '달라요' reaches x 936, not past it)"
+        },
+        {
+          "at": {"word": "끝"},
+          "target": "strip",
+          "action": "pulse",
+          "params": {"part": "violetEnd"},
+          "speed": "base",
+          "note": "'맨 끝 보라': the last 40 nm (x 823–936) swell under the chip, with 보"
+        },
+        {
+          "at": {"word": "달라요"},
+          "target": "chip",
+          "action": "pulse",
+          "speed": "base",
+          "note": "'달라요': magenta beside violet, side by side and different"
+        }
+      ],
+      "endFrame": "Visual zone: the band as at frame 0 (x 144–936, y 860–1020) with its seven names; the magenta chip, 200 px, right above the violet end (x 728–928, y 634–834), a 26 px dark gap between them; nothing else. Caption: '맨 끝 보라와도 달라요.'",
+      "claims": ["C13", "C8", "C12", "C17", "C18"]
+    },
+    {
+      "id": "B2",
+      "name": "세 가지 세포",
+      "readAloud": "답은 우리 눈에 있어요. 색을 느끼는 세포는 보통 세 가지, 긴 파장 쪽부터 엘, 엠, 에스 원추세포예요.",
+      "captions": [
+        {"text": "답은 우리 눈에 있어요.", "at": {"word": "답은"}},
+        {"text": "색을 느끼는 세포는", "at": {"word": "색을"}},
+        {"text": "보통 세 가지,", "at": {"word": "보통"}},
+        {"text": "긴 파장 쪽부터", "at": {"word": "긴"}},
+        {"text": "L, M, S 원추세포예요.", "at": {"word": "엘"}}
+      ],
+      "pauseAfter": 0,
+      "elements": [
+        {
+          "id": "curves",
+          "component": "ConeCurves",
+          "props": {
+            "nm": [680, 400], "x0": 144, "x1": 936, "base": 1100, "height": 260,
+            "cones": [{"cone": "L", "color": "yellow"}, {"cone": "M", "color": "teal"}, {"cone": "S", "color": "purple"}]
+          },
+          "where": "over the axis band: value 0 at y 1100 (the band's top edge), value 1 at y 840. Peaks: L 570 nm (x 455), M about 543 nm (x 532), S about 442 nm (x 817). L runs x 144–904 (value 0.025 at the left edge), M x 212–905, S x 560–936 (0.057 at the right edge); L and M overlap widely and M's peak sits between L's and S's (C1, C3). No labels of their own: no room beside the peaks for 'L 원추세포' (the bar labels sit 46 px above them), so each curve is named by the bar of its color, whose label comes in as the curve pulses"
+        },
+        {
+          "id": "bars",
+          "component": "ConeBars",
+          "props": {
+            "centers": [270, 540, 810], "floor": 720, "width": 150, "height": 240,
+            "cones": [
+              {"cone": "L", "color": "yellow", "label": "L"},
+              {"cone": "M", "color": "teal", "label": "M"},
+              {"cone": "S", "color": "purple", "label": "S"}
+            ]
+          },
+          "where": "above the graph: bars x 195–345, 465–615, 735–885, tracks y 480–720, floor line x 155–925 at y 720; labels L, M, S centered under their bars, ink top y 744, 46 px or more above the curves' peaks (the caption says 원추세포 when they are named). Same colors and order (L, M, S: long, middle, short) as the curves"
+        }
+      ],
+      "cues": [
+        {
+          "at": {"word": "답은"},
+          "target": "strip",
+          "action": "moveTo",
+          "params": {"center": [540, 1130], "w": 792, "h": 60, "names": true, "ease": "cruise"},
+          "until": {"word": "색을"},
+          "note": "'답은 우리 눈에 있어요': the band goes down and thins into the graph's axis (y 1100–1160), names riding under it (ink y 1184–1234), slowly through the pause after the sentence, so the frame's middle never stands empty before the first curve (fix round 1). Cruise so it shows within 3 frames"
+        },
+        {
+          "at": {"word": "답은"},
+          "target": "chip",
+          "action": "moveTo",
+          "params": {"center": [330, 350], "w": 170, "h": 170, "ease": "cruise"},
+          "until": {"word": "색을"},
+          "note": "the chip steps aside to its slot above the bars (x 245–415, y 265–435) before the curves rise under where it was"
+        },
+        {
+          "at": {"word": "색을"},
+          "target": "curves",
+          "action": "appear",
+          "params": {"cone": "L"},
+          "speed": "base",
+          "note": "'색을 느끼는 세포는 보통': one curve and its bar's track per word as the band lands, long first, all three up for '세 가지'; their names wait for '엘, 엠, 에스' (rising there instead would leave the middle empty 3.5 s after the band lands, fix round 1's r1#6)"
+        },
+        {"at": {"word": "색을"}, "target": "bars", "action": "appear", "params": {"cone": "L", "label": false}, "speed": "base"},
+        {"at": {"word": "세포는"}, "target": "curves", "action": "appear", "params": {"cone": "M"}, "speed": "base"},
+        {"at": {"word": "세포는"}, "target": "bars", "action": "appear", "params": {"cone": "M", "label": false}, "speed": "base"},
+        {"at": {"word": "보통"}, "target": "curves", "action": "appear", "params": {"cone": "S"}, "speed": "base"},
+        {"at": {"word": "보통"}, "target": "bars", "action": "appear", "params": {"cone": "S", "label": false}, "speed": "base"},
+        {
+          "at": {"word": "긴"},
+          "target": "strip",
+          "action": "pulse",
+          "params": {"part": "redEnd"},
+          "speed": "base",
+          "note": "'긴 파장 쪽부터': the axis band's red end, the long-wavelength side, before the cells are named from it (fix round 3: the frame held still here)"
+        },
+        {
+          "at": {"word": "엘"},
+          "target": "bars",
+          "action": "label",
+          "params": {"cone": "L"},
+          "speed": "fast",
+          "note": "'엘, 엠, 에스': each cell is named on its word, its label coming in under its bar as its curve pulses"
+        },
+        {"at": {"word": "엘"}, "target": "curves", "action": "pulse", "params": {"cone": "L"}, "speed": "base"},
+        {"at": {"word": "엠"}, "target": "bars", "action": "label", "params": {"cone": "M"}, "speed": "fast"},
+        {"at": {"word": "엠"}, "target": "curves", "action": "pulse", "params": {"cone": "M"}, "speed": "base"},
+        {"at": {"word": "에스"}, "target": "bars", "action": "label", "params": {"cone": "S"}, "speed": "fast"},
+        {"at": {"word": "에스"}, "target": "curves", "action": "pulse", "params": {"cone": "S"}, "speed": "base"}
+      ],
+      "endFrame": "Visual zone, top to bottom: the magenta chip at the upper left (x 245–415, y 265–435); three empty bar tracks (yellow, teal, purple, faint) on the floor line with L, M, S under them; the three curves risen over the axis band, yellow and teal overlapping widely, teal's peak between yellow's and purple's; the thin axis band (y 1100–1160) with its seven names. Caption: 'L, M, S 원추세포예요.'",
+      "claims": ["C1", "C3", "C15"]
+    },
+    {
+      "id": "B3",
+      "name": "목표 모양",
+      "readAloud": "이 색을 보면, 엘과 에스 원추세포는 세게, 엠 원추세포는 약하게 반응해요.",
+      "captions": [
+        {"text": "이 색을 보면", "at": {"word": "이"}},
+        {"text": "L과 S 원추세포는 세게,", "at": {"word": "엘과"}},
+        {"text": "M 원추세포는", "at": {"word": "엠"}},
+        {"text": "약하게 반응해요.", "at": {"word": "약하게"}}
+      ],
+      "pauseAfter": 0.4,
+      "elements": [],
+      "cues": [
+        {
+          "at": {"word": "이"},
+          "target": "chip",
+          "action": "pulse",
+          "params": {"ease": "linear"},
+          "speed": "base",
+          "note": "'이 색을': the chip, linear for the 3-frame reaction"
+        },
+        {
+          "at": {"word": "보면"},
+          "target": "bars",
+          "action": "setLights",
+          "params": {"lights": [[630, 1], [450, 0.975]]},
+          "speed": "base",
+          "note": "'보면': the bars rise to the chip's light, L 0.482, M 0.158, S 1 (C6): both sides high, the middle low"
+        },
+        {"at": {"word": "엘과"}, "target": "bars", "action": "pulse", "params": {"cone": "L"}, "speed": "base", "note": "'엘과'"},
+        {"at": {"word": "에스"}, "target": "bars", "action": "pulse", "params": {"cone": "S"}, "speed": "base", "note": "'에스 원추세포는 세게'"},
+        {"at": {"word": "엠"}, "target": "bars", "action": "pulse", "params": {"cone": "M"}, "speed": "base", "note": "'엠 원추세포는 약하게'"},
+        {
+          "at": {"word": "반응해요"},
+          "target": "bars",
+          "action": "markTarget",
+          "speed": "base",
+          "note": "the shape stays behind as a dashed outline: the target the rest of the video compares against"
+        },
+        {
+          "at": {"word": "반응해요"},
+          "target": "chip",
+          "action": "outline",
+          "speed": "base",
+          "note": "the chip takes the same dashed frame: the target chip"
+        }
+      ],
+      "endFrame": "Visual zone: the bars filled to L 0.482 (y 604–720), M 0.158 (y 682–720), S 1 (y 480–720), each inside a dashed text outline 8 px out; the magenta chip in a dashed frame (x 233–427, y 253–447); curves and axis band as at B2's end. Held through the 0.4 s pause. Caption: '약하게 반응해요.'",
+      "claims": ["C6", "C10", "C2"]
+    },
+    {
+      "id": "B4",
+      "name": "무지개 훑기",
+      "readAloud": "무지개 빛은 저마다 파장이 하나예요. 빨강부터 보라까지 다 비춰 봐도, 이 모양은 안 나와요.",
+      "captions": [
+        {"text": "무지개 빛은 저마다", "at": {"word": "무지개"}},
+        {"text": "파장이 하나예요.", "at": {"word": "파장이"}},
+        {"text": "빨강부터 보라까지", "at": {"word": "빨강부터"}},
+        {"text": "다 비춰 봐도", "at": {"word": "다"}},
+        {"text": "이 모양은 안 나와요.", "at": {"word": "이"}}
+      ],
+      "pauseAfter": 0.2,
+      "elements": [
+        {
+          "id": "light",
+          "component": "LightLine",
+          "props": {
+            "nm": [680, 400], "x0": 144, "x1": 936, "y0": 825, "y1": 1165, "base": 1100, "height": 260,
+            "cones": [{"cone": "L", "color": "yellow"}, {"cone": "M", "color": "teal"}, {"cone": "S", "color": "purple"}],
+            "lights": [[675, 1]]
+          },
+          "where": "a vertical white line from y 825 (15 px above the curves' peaks, 31 px below the bar labels) down across the axis band to y 1165, at 675 nm (x 158) on appearing; dots where it crosses the curves. Sweeps to 405 nm (x 922), returns to 483.34 nm (x 700) in B5, splits to 630 nm (x 285) and 450 nm (x 795) in B6"
+        },
+        {
+          "id": "nowChip",
+          "component": "ColorChip",
+          "props": {"center": [750, 350], "w": 170, "h": 170, "of": "light"},
+          "where": "the 'now' chip beside the target chip: x 665–835, y 265–435, 250 px to its right; shows the light's live color (#FF0000 at 675 nm)"
+        }
+      ],
+      "cues": [
+        {
+          "at": {"word": "무지개"},
+          "target": "light",
+          "action": "appear",
+          "speed": "fast",
+          "note": "'무지개 빛은': one wavelength's light stands at the red end"
+        },
+        {
+          "at": {"word": "무지개"},
+          "target": "bars",
+          "action": "follow",
+          "params": {"of": "light"},
+          "speed": "base",
+          "note": "the bars leave the target and show this light (L 1, M 0.066, S 0); the dashed outlines stay"
+        },
+        {
+          "at": {"word": "빛은"},
+          "target": "nowChip",
+          "action": "appear",
+          "speed": "fast",
+          "note": "the light's color appears beside the target chip: red next to magenta"
+        },
+        {
+          "at": {"word": "하나예요"},
+          "target": "light",
+          "action": "pulse",
+          "speed": "base",
+          "note": "'파장이 하나예요': one line, one wavelength"
+        },
+        {
+          "at": {"word": "빨강부터"},
+          "target": "light",
+          "action": "moveTo",
+          "params": {"lights": [[405, 1]], "ease": "cruise"},
+          "until": {"word": "나와요"},
+          "note": "'빨강부터 보라까지 다 비춰 봐도, 이 모양은 안': an even sweep to the violet end over the whole line, arriving on '나와요' (fix round 1: over half of it, then a 2.8 s hold, the bars were seen missing the target only briefly). The chip runs through the band's colors; the tallest bar passes L → M (554 nm) → S (486 nm) and never takes the target's shape (C4, C5)"
+        },
+        {
+          "at": {"word": "모양은"},
+          "target": "bars",
+          "action": "pulseTarget",
+          "speed": "base",
+          "note": "'이 모양은 안 나와요': the target outline that nothing fills, the sweep still on its way"
+        }
+      ],
+      "endFrame": "Visual zone: the light line at 405 nm (x 922) with only purple's dot showing (S 0.122, y 1068); the bars S full, L and M stubs of about 9 px (0.039, 0.038), the dashed target outlines above them empty; the now chip violet (#7000FF) beside the dashed magenta target chip. Held through the 0.2 s pause. Caption: '이 모양은 안 나와요.'",
+      "claims": ["C13", "C4", "C5", "C18"]
+    },
+    {
+      "id": "B5",
+      "name": "끼어 있는 중간",
+      "readAloud": "엠 원추세포가 가운데 끼어 있거든요. 그래서 빛 하나로 양쪽을 함께 자극하면, 엠 원추세포도 덩달아 세게 반응해요.",
+      "captions": [
+        {"text": "M 원추세포가", "at": {"word": "엠", "nth": 1}},
+        {"text": "가운데 끼어 있거든요.", "at": {"word": "가운데"}},
+        {"text": "그래서 빛 하나로", "at": {"word": "그래서"}},
+        {"text": "양쪽을 함께 자극하면", "at": {"word": "양쪽을"}},
+        {"text": "M 원추세포도 덩달아", "at": {"word": "엠", "nth": 2}},
+        {"text": "세게 반응해요.", "at": {"word": "세게"}}
+      ],
+      "pauseAfter": 0.3,
+      "elements": [],
+      "cues": [
+        {
+          "at": {"word": "엠", "nth": 1},
+          "target": "curves",
+          "action": "pulse",
+          "params": {"cone": "M", "ease": "linear"},
+          "speed": "base",
+          "note": "'엠 원추세포가': the teal curve and its bar. Linear for the 3-frame reaction"
+        },
+        {"at": {"word": "엠", "nth": 1}, "target": "bars", "action": "pulse", "params": {"cone": "M", "ease": "linear"}, "speed": "base"},
+        {
+          "at": {"word": "가운데"},
+          "target": "curves",
+          "action": "pulse",
+          "params": {"cone": "M"},
+          "speed": "base",
+          "note": "'가운데': the middle curve again, between the other two"
+        },
+        {
+          "at": {"word": "끼어"},
+          "target": "curves",
+          "action": "pulse",
+          "params": {"cone": "L"},
+          "speed": "base",
+          "note": "'끼어 있거든요': the two curves it sits between, L and S, picked out, so the next sentence's '양쪽' reads as them (the words don't name them again)"
+        },
+        {"at": {"word": "끼어"}, "target": "curves", "action": "pulse", "params": {"cone": "S"}, "speed": "base"},
+        {
+          "at": {"word": "그래서"},
+          "target": "light",
+          "action": "moveTo",
+          "params": {"lights": [[483.34, 1]]},
+          "until": {"word": "양쪽을"},
+          "note": "one move back to 483.34 nm, between blue and cyan, the single wavelength with the target's L:S. On the way L's bar climbs to its outline; M's climbs past its own (C6)"
+        },
+        {
+          "at": {"word": "양쪽을"},
+          "target": "light",
+          "action": "pulse",
+          "params": {"cone": "L"},
+          "speed": "base",
+          "note": "'양쪽을': where the one light meets L's and S's curves, both at once"
+        },
+        {"at": {"word": "양쪽을"}, "target": "light", "action": "pulse", "params": {"cone": "S"}, "speed": "base"},
+        {
+          "at": {"word": "함께"},
+          "target": "bars",
+          "action": "pulse",
+          "params": {"cone": "L"},
+          "speed": "base",
+          "note": "'함께 자극하면': L and S sit exactly on the target, no brightness change needed"
+        },
+        {"at": {"word": "함께"}, "target": "bars", "action": "pulse", "params": {"cone": "S"}, "speed": "base"},
+        {
+          "at": {"word": "엠", "nth": 2},
+          "target": "bars",
+          "action": "mismatch",
+          "params": {"cone": "M", "show": true},
+          "speed": "fast",
+          "note": "'엠 원추세포도 덩달아': M stands at 0.795, five times its 0.158 target; the excess (y 529–682) turns hatched, under the dashed target line"
+        },
+        {
+          "at": {"word": "덩달아"},
+          "target": "light",
+          "action": "pulse",
+          "params": {"cone": "M"},
+          "speed": "base",
+          "note": "where the line meets the teal curve: high, sandwiched between yellow's and purple's dots"
+        }
+      ],
+      "endFrame": "Visual zone: the light line at 483.34 nm (x 700) with three dots stacked on it, yellow lowest (y 1059), teal (y 1033), purple top (y 1016); the bars L 0.482 and S 1 filling their outlines, M solid teal up to its 0.158 outline, the dashed line across it, and hatched teal from there to 0.795 (y 529–682); the now chip azure (#00A5FF) beside the dashed magenta target. Caption: '세게 반응해요.'",
+      "claims": ["C1", "C5", "C6"]
+    },
+    {
+      "id": "B6",
+      "name": "빛 두 개",
+      "readAloud": "빨강 빛과 파랑 빛, 둘을 알맞게 섞으면, 이 모양이 나와요. 이게 마젠타예요.",
+      "captions": [
+        {"text": "빨강 빛과 파랑 빛,", "at": {"word": "빨강"}},
+        {"text": "둘을 알맞게 섞으면", "at": {"word": "둘을"}},
+        {"text": "이 모양이 나와요.", "at": {"word": "이"}},
+        {"text": "이게 마젠타예요.", "at": {"word": "이게"}}
+      ],
+      "pauseAfter": 0.8,
+      "elements": [
+        {
+          "id": "name",
+          "component": "Note",
+          "props": {"text": "마젠타", "at": [540, 350], "color": "text"},
+          "where": "between the two chips, ink x 469–611, y 325–375: 54 px from each chip's edge, naming both once they match"
+        }
+      ],
+      "cues": [
+        {
+          "at": {"word": "빨강"},
+          "target": "bars",
+          "action": "mismatch",
+          "params": {"cone": "M", "show": false, "ease": "linear"},
+          "speed": "fast",
+          "note": "the hatching clears as the next try begins. Linear for the 3-frame reaction"
+        },
+        {
+          "at": {"word": "빨강"},
+          "target": "light",
+          "action": "moveTo",
+          "params": {"lights": [[630, 1], [450, 0.5]]},
+          "until": {"word": "빛"},
+          "note": "'빨강 빛과 파랑 빛': the line splits in two, one to red (630 nm), the other to blue (450 nm) at half power. Bars and now chip follow the pair (passing mint and pink) and land near the shape: L 0.891, M 0.221, S 1, chip #FF00C0"
+        },
+        {
+          "at": {"word": "알맞게"},
+          "target": "light",
+          "action": "moveTo",
+          "params": {"lights": [[630, 1], [450, 0.975]]},
+          "until": {"word": "이"},
+          "note": "'알맞게 섞으면': the blue light turns up to 1 : 0.975; L drops onto its outline (0.482), M settles to 0.158, the chip becomes #FF00FF. The ratio matters (C10)"
+        },
+        {
+          "at": {"word": "모양이"},
+          "target": "bars",
+          "action": "pulseTarget",
+          "speed": "base",
+          "note": "'이 모양이 나와요': the outlines, filled exactly"
+        },
+        {
+          "at": {"word": "이게"},
+          "target": "chip",
+          "action": "pulse",
+          "speed": "base",
+          "note": "'이게': the two chips, now the same color"
+        },
+        {"at": {"word": "이게"}, "target": "nowChip", "action": "pulse", "speed": "base"},
+        {
+          "at": {"word": "마젠타예요"},
+          "target": "name",
+          "action": "appear",
+          "speed": "fast",
+          "note": "the color gets its name"
+        }
+      ],
+      "endFrame": "Visual zone: two light lines, at 630 nm (x 285; yellow dot y 996, teal y 1084) and 450 nm (x 795; purple dot y 852, yellow and teal near the axis); the bars exactly filling their dashed outlines (L 0.482, M 0.158, S 1); both chips #FF00FF, the target in its dashed frame, '마젠타' between them. Held through the 0.8 s pause. Caption: '이게 마젠타예요.'",
+      "claims": ["C6", "C10"]
+    },
+    {
+      "id": "B7",
+      "name": "눈이 만든 고리",
+      "readAloud": "색상환이 둥근 건, 마젠타 같은 색들이 빨강과 보라를 이어 줘서예요. 빛이 아니라, 우리 눈이 만든 고리예요.",
+      "captions": [
+        {"text": "색상환이 둥근 건", "at": {"word": "색상환이"}},
+        {"text": "마젠타 같은 색들이", "at": {"word": "마젠타"}},
+        {"text": "빨강과 보라를", "at": {"word": "빨강과"}},
+        {"text": "이어 줘서예요.", "at": {"word": "이어"}},
+        {"text": "빛이 아니라", "at": {"word": "빛이"}},
+        {"text": "우리 눈이 만든 고리예요.", "at": {"word": "우리"}, "until": {"pause": true}}
+      ],
+      "pauseAfter": 1.3,
+      "elements": [
+        {
+          "id": "loopChip",
+          "component": "ColorChip",
+          "props": {"center": [540, 560], "w": 380, "h": 380, "light": [[630, 1], [450, 0.975]]},
+          "where": "the hook chip again, at frame 0's exact place, size and light (x 350–730, y 370–750); grows out of the bridge's middle (540, 990) as the ring opens"
+        }
+      ],
+      "cues": [
+        {
+          "at": {"word": "색상환이"},
+          "target": "curves",
+          "action": "exit",
+          "speed": "fast",
+          "note": "'색상환이': graph, bars and chips clear; only the band stays"
+        },
+        {"at": {"word": "색상환이"}, "target": "light", "action": "exit", "speed": "fast"},
+        {"at": {"word": "색상환이"}, "target": "bars", "action": "exit", "speed": "fast"},
+        {"at": {"word": "색상환이"}, "target": "nowChip", "action": "exit", "speed": "fast"},
+        {"at": {"word": "색상환이"}, "target": "chip", "action": "exit", "speed": "fast"},
+        {"at": {"word": "색상환이"}, "target": "name", "action": "exit", "speed": "fast"},
+        {
+          "at": {"word": "둥근"},
+          "target": "strip",
+          "action": "curl",
+          "params": {"center": [540, 720], "r": 270, "band": 90, "gap": 90},
+          "until": {"word": "같은"},
+          "note": "'둥근 건': the band arches up like a rainbow and rolls into a ring (outer edge x 225–855, y 405–1035), green at 12 o'clock, its red end at 7:30 and violet end at 4:30, the bottom quarter empty"
+        },
+        {
+          "at": {"word": "빨강과"},
+          "target": "strip",
+          "action": "pulse",
+          "params": {"part": "redEnd"},
+          "speed": "base",
+          "note": "'빨강과': the red end, at the gap's left"
+        },
+        {
+          "at": {"word": "보라를"},
+          "target": "strip",
+          "action": "pulse",
+          "params": {"part": "violetEnd"},
+          "speed": "base",
+          "note": "'보라를': the violet end, at its right"
+        },
+        {
+          "at": {"word": "이어"},
+          "target": "strip",
+          "action": "bridge",
+          "until": {"word": "빛이"},
+          "note": "'이어 줘서예요': the purples fill the gap from violet through magenta (6 o'clock, (540, 990)) to red, and the ring closes (C14)"
+        },
+        {
+          "at": {"word": "우리"},
+          "target": "strip",
+          "action": "pulse",
+          "params": {"part": "bridge"},
+          "until": {"word": "고리예요"},
+          "note": "'우리 눈이 만든': only the filled part glows"
+        },
+        {
+          "at": {"pause": true},
+          "target": "strip",
+          "action": "uncurl",
+          "params": {"center": [540, 940], "w": 792, "h": 160, "names": true},
+          "speed": "slow",
+          "note": "after the last word: the ring opens at its magenta and back into frame 0's band, names returning, the bridge drawing back into the band's two ends. Slow, ending 3 frames before the last (fix round 1: the 0.7 s version hid under the growing chip)"
+        },
+        {
+          "at": {"pause": true},
+          "target": "loopChip",
+          "action": "appear",
+          "params": {"from": [540, 990], "fromSize": 90, "path": [[540, 720, 0, 0.45], [540, 560, 0.55, 0.72]], "grow": [0.72, 1]},
+          "speed": "slow",
+          "note": "the bridge's magenta, a 90 px seed where the ring opens, rises into the ring's hole (its center, (540, 720)) while the ring shrinks, passes up through the falling arch in about 3 frames, and grows into the hook chip only once the arch's crest is below the chip's bottom edge (y 750, from about 0.72 of the span): the ring is seen opening before the chip covers anything. The loop"
+        }
+      ],
+      "endFrame": "The last frame equals frame 0: the magenta chip (x 350–730, y 370–750) over the full band (x 144–936, y 860–1020) with its seven names, nothing else; no caption (the last one ended at the pause). Before that, at '고리예요': the closed ring, the purple bridge across its bottom quarter, magenta at 6 o'clock, glowing. Held through the 1.3 s pause, the last 3 frames still.",
+      "claims": ["C14", "C15"]
+    }
+  ]
+}

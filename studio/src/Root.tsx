@@ -8,6 +8,7 @@ import { StyleSheet, styleSheetSchema } from "./compositions/StyleSheet";
 import { a4Cues, a4PaperRatio } from "./episodes/001-a4-paper-ratio";
 import { moonCues, moonRotation } from "./episodes/002-moon-rotation";
 import { mirrorCues, mirrorLeftRight } from "./episodes/003-mirror-left-right";
+import { magentaCues, magentaRainbow } from "./episodes/004-magenta-rainbow";
 import { MeasureTex, measureTexSchema } from "./probe/MeasureTex";
 import { episodeSchema } from "./storyboard/Episode";
 import { VIDEO } from "./style/theme";
@@ -48,6 +49,15 @@ export const RemotionRoot: React.FC = () => {
         calculateMetadata={mirrorLeftRight.calculateMetadata}
         defaultProps={{ showSafeArea: false }}
         durationInFrames={mirrorCues.durationInFrames}
+        {...VIDEO}
+      />
+      <Composition
+        id="004-magenta-rainbow"
+        component={magentaRainbow.Component}
+        schema={episodeSchema}
+        calculateMetadata={magentaRainbow.calculateMetadata}
+        defaultProps={{ showSafeArea: false }}
+        durationInFrames={magentaCues.durationInFrames}
         {...VIDEO}
       />
       <Folder name="tools">

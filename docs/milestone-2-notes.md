@@ -195,7 +195,7 @@ first episode under the frame-0 hook.
   Scenery); the frame-0 caption, untested on a real render until now,
   passed as built.
 - **First look → a cut beat:** after reading YouTube's AI outline of the
-  topic, the human found the render "이해가 약간 어려운". The handedness
+  topic, the human found the render somewhat hard to follow. The handedness
   step (a right hand's image is a left hand's shape) made five steps and
   contradicted the hook for 13 s; cutting it and retaking fixed both. As
   in 001, the fix was subtraction.
@@ -220,3 +220,71 @@ first episode under the frame-0 hook.
 - **Left for later:** a channel mascot (the human's idea; the chibi Person
   is a reusable figure meanwhile) and a first-caption fit that keeps the
   subject word.
+
+### Episode 004, magenta missing from the rainbow (2026-10-03 → 04)
+
+48.4 s. Topic to upload in about 17 hours, most of it the overnight wait
+before the first look.
+
+- **Topic:** the human's own idea, 003's next candidate. The orchestrator
+  swapped 003's note of a spectrum bending into a ring for a cone-response
+  slider as the key picture: the ring shows where magenta sits, not why it's
+  missing. The ring stayed as the ending.
+- **Research (33 min):** the core held, and in a form that doesn't depend on
+  how the curves are scaled (C6: the single wavelength with the magenta
+  mix's L:S drives M about 5×). It caught two overreaches before anything
+  was drawn: a chip mixed from red/green/blue bar colors is off by up to 74°
+  of hue (C18), and "L responds at short wavelengths" doesn't explain
+  violet's reddish tint (C16). Neither changed the insight, so topic.md was
+  corrected without a human question.
+- **Scripts:** both critics flagged each variant's reason beat (b's
+  "끼어 있어서예요" heard as a fact about position, a's "M을 더 세게" heard as
+  stronger than L and S, which is false). The human picked b, which names
+  the cells by wavelength instead of L/M/S. The two writers shared one
+  scratchpad and one overwrote the other's syllable counter; revision
+  messages now name a subfolder per variant.
+- **Title bait:** the human asked whether "마젠타는 존재하지 않는 색" would be
+  a lie. Flat, it is (C9), so it went in the title as a question and the
+  hook stayed; topic.md carries the note to publish.
+- **Storyboard:** approved without notes. Colors computed from wavelength
+  (CIE 1931 → sRGB, negatives clipped so the red end stays clear of theme
+  red), cells yellow/teal/purple so none reads as an RGB "red cell".
+- **Production (35 min):** five new components; the color and cone math
+  lives once in light.ts and is tested against the storyboard's check
+  values. Two renders failed bounds: the encoder spreads a saturated edge
+  1–3 px, so a band drawn exactly at x 140 fails; production moved the axis
+  4 px in. The 4:2:0 check found only 1–2 px fringes on wide color areas.
+- **First look:** no notes on the flow. QA's Whisper and a spectrogram said
+  take1's "…남보" sounded like 남복; the human heard a 1.8 s clip and kept the
+  take. The cut critic caught what QA didn't: theme red (a rose) on B5's
+  overshoot could read as magenta in a video about magenta; it became
+  hatched teal.
+- **Fix round (1, 15 min):** that, the loop's uncurl (the chip hid the
+  opening ring), a slower sweep, B2's empty middle, the curl's stall, a
+  label gap. One player easing rule changed (an appear growing out of a
+  point), so QA did a full pass; no shipped storyboard uses it.
+- **AI disclosure back to No:** 003's Yes put the label over the Short,
+  where 001 and 002's No left YouTube's detected label in the description.
+  channel.md had said animated content's label sits in the description;
+  that held only for No.
+- **Brown and gray:** "갈색도 무지개에 없는데?" is answered in a pinned
+  comment (C8), the first one; publish.md's format has no slot for it yet.
+- **Reopened at the final checkpoint:** the human found B5's "세게
+  건드려요" awkward and wanted the cells' real names, as Namuwiki gives
+  them: L, M, S 원추세포, said in full. That made a rewrite of three lines,
+  a retake (take3, which also fixed the 남보 doubt), and two short fix
+  rounds (sync to the take; QA's r3#1, a red-end pulse on "긴 파장 쪽부터").
+  Full names cost 4 s; "가운데" for "엘과 에스 원추세포 사이에" won 1.5 s
+  back. The wording a viewer hears once is worth a listen before the final
+  checkpoint, not after.
+- **Chat quotes out of the repo:** the repo is public, and checkpoints.md
+  and the notes quoted the human verbatim. They now record decisions and
+  reasons, summarized (episode runbook, decisions.md, the topic agent);
+  the existing files were rewritten the same way, and 004's commits were
+  squashed before the push.
+- **Uploaded from a phone:** the human was away, so the final cut, the
+  thumbnail frame and publish.md went to the phone and the upload happened
+  there.
+- **Left for later:** a storyboard rule to keep elements 4 px inside the
+  bounds; a pinned-comment slot in publish.md.
+
