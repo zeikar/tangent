@@ -36,17 +36,19 @@ variables don't carry over between Bash calls).
 ## `checkpoints.md`
 
 Every human decision goes into `episodes/<slug>/checkpoints.md` as soon as
-it's made, in the human's own words where they gave reasons, and is
-committed with that stage:
+it's made, one line each: what was decided and why, summarized in English.
+No quotes from the conversation and no back-and-forth on the way to a
+decision: the repo is public, and the line is the decision, not the chat.
+It's committed with that stage:
 
 ```markdown
 # Checkpoints · <slug>
 
 - <date> · topic · picked "<title>": <why>
-- <date> · script + take · script b: "<the human's words>"
+- <date> · script + take · script b: <why>
 - <date> · storyboard · approved (notes: …)
 - <date> · first look · <feel, notes; length gate decision if any>
-- <date> · rework · <restoryboard | rewrite | push on>: "<the human's words>"
+- <date> · rework · <restoryboard | rewrite | push on>: <what and why>
 - <date> · retake · take<N>: <why, and what the human heard>
 - <date> · final · approved with metadata
 ```

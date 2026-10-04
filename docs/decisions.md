@@ -98,9 +98,10 @@ re-run, hand-edited, or gated by a human.
 - **Human checkpoints:** topic, script + take, storyboard, the first render
   (feel, before any polish), and the final cut with its upload metadata. Each
   is something to hear or see (the takes page, the storyboard viewer page, the
-  video), not a document to read. The orchestrator records each decision, in
-  the human's words, in the episode's `checkpoints.md`: proof the checkpoint
-  passed, and a record of the channel's taste. No full autonomy early on.
+  video), not a document to read. The orchestrator records each decision and
+  its reason, summarized, in the episode's `checkpoints.md`: proof the
+  checkpoint passed, and a record of the channel's taste. No quotes from
+  the conversation in committed files: the repo is public (2026-10-04). No full autonomy early on.
 
 ## Agents: one specialist per stage group
 

@@ -64,10 +64,11 @@ you doubt. End with the one you'd make first, and why.
 
 ## `docs/topics.md`
 
-Keep its top sections: the human's taste in their own words, what was made,
+Keep its top sections: the human's taste (summarized, no quotes from the
+conversation: the repo is public), what was made,
 what was shown, and what was rejected. Add your ideas as a new dated
 section. When the task brings the human's verdicts, add passed ideas to
-Rejected (one line each, with the date and the human's words), delete that
+Rejected (one line each, with the date and the reason), delete that
 round's dated section, and add a new remark about their taste to the taste
 section; don't rewrite earlier sections.
 

@@ -45,7 +45,7 @@ description, tags, thumbnail, and playlist.
 
 Two per-video answers the defaults don't cover: Audience, "No, it's not made
 for kids" (시청자층, "아니요, 아동용이 아닙니다"), and Altered or synthetic
-content, "Yes" (변경되거나 합성된 콘텐츠, "예"; below).
+content, "No" (변경되거나 합성된 콘텐츠, "아니요"; below).
 
 ## AI disclosure
 
@@ -59,19 +59,28 @@ requiring it
 checked 2026-09-25).
 
 Our episodes use a stock synthetic voice (not a real person's) over
-code-rendered animation, which by those rules alone would be No. The answer
-is Yes (예) since 003 (2026-09-29): Gemini TTS embeds a SynthID watermark in
-every clip ([Google DeepMind](https://deepmind.google/models/gemini-audio/)),
-and since 2026-05-27 YouTube labels content its systems detect as AI even
-when the creator answered No
-([YouTube Blog](https://blog.youtube/news-and-events/improving-ai-labels-viewers-creators/)).
-001 and 002 were uploaded with No and got the label anyway. Answering No
-every time while YouTube detects AI every time reads as not disclosing,
-which the help page warns can bring penalties; the label alone doesn't
-change recommendation or monetization, and for animated content it sits in
-the expanded description rather than over the video. Switching TTS engines
-to avoid the label isn't a reason to switch: the voice would still be AI.
-The description doesn't mention the TTS voice; the label covers it.
+code-rendered animation, so the answer is No (아니요), from 004 on
+(2026-10-04). Gemini TTS embeds a SynthID watermark in every clip
+([Google DeepMind](https://deepmind.google/models/gemini-audio/)), and since
+2026-05-27 YouTube labels content its systems detect as AI even when the
+creator answered No
+([YouTube Blog](https://blog.youtube/news-and-events/improving-ai-labels-viewers-creators/)),
+so the episodes carry an AI label either way. Where it shows depends on the
+answer:
+
+- **No (001, 002):** YouTube's own label, inside the expanded description.
+- **Yes (003):** the answer says the video is realistic synthetic content,
+  and on Shorts the label sits over the video itself (too blatant for the
+  human, 2026-10-04; the blog: Shorts get "an overlay on the
+  video itself", non-realistic content the expanded description).
+
+003 answered Yes (2026-09-29) for fear that answering No while YouTube
+detects AI every time would read as not disclosing, which the help page
+warns can bring penalties. But the penalties are for content that requires
+disclosure, and by the help page's own examples ours doesn't; the detected
+label still tells viewers the voice is AI. Switching TTS engines to avoid
+the label isn't a reason to switch: the voice would still be AI. The
+description doesn't mention the TTS voice; the label covers it.
 
 ## Uploading by API
 
@@ -96,8 +105,8 @@ fill the metadata with `videos.update`, which the lock doesn't affect.
 - **Description:** first two lines show the phenomenon, not the answer; then
   the key math or reasoning in plain text, variables defined; decimals
   written so they don't read as exact (297 ÷ 210 ≈ 1.41429 next to √2 ≈
-  1.41421, not "1.414…"). Then 출처 (sources), kept compact ("출처는
-  컴팩트하게", 2026-09-28): the one best source per claim the video relies
+  1.41421, not "1.414…"). Then 출처 (sources), kept compact (the
+  human's call, 2026-09-28): the one best source per claim the video relies
   on, primary over secondary, a few in all; only sources that were actually
   read (a standard we couldn't open is named in the body, not cited; a
   standard read through a preview is cited with that note), each source a
@@ -113,7 +122,7 @@ fill the metadata with `videos.update`, which the lock doesn't affect.
   next space topic was already shelved; the human's pick, 2026-09-28),
   `빛 이야기` (light: reflection and color, opened with 003 before a second
   episode was lined up, since magenta and graphite vs. diamond are open
-  light topics; the human's pick, 2026-09-30, "나중에 바꾸면 되니까"). Add
+  light topics; the human's pick, 2026-09-30, since it can change later). Add
   a theme playlist when a second episode shares a theme, or with the first
   when another in that theme is already lined up; otherwise an episode
   whose theme has no playlist goes in none, and publish.md names its theme
@@ -155,7 +164,7 @@ Video: `publish/<slug>.mp4` · Thumbnail: `publish/<slug>.thumb.png`
 - Thumbnail: <m:ss.s> (anywhere in <start>–<end> s), <what it shows>
 - Playlist: <playlist>
 - Audience: No, it's not made for kids (아니요, 아동용이 아닙니다)
-- Altered or synthetic content: Yes (예)
+- Altered or synthetic content: No (아니요)
 - Everything else: the upload defaults
 
 ---

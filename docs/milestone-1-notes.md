@@ -224,7 +224,7 @@ C1–C11; the script may only use those.
   "same shape" overlays; whether unspoken labels need claim IDs; whether the
   loop ending is a channel convention.
 - **Checkpoint format.** Asked to review the script, the human's first reaction
-  was "do I have to read it?". Listening to the 45 s table read was enough to
+  was to ask whether they had to read it. Listening to the 45 s table read was enough to
   approve. Later checkpoints should present something to hear or see (table
   read, a handful of frames), not a document to read.
 - Approved with the orchestrator's calls on the open questions: US Letter as
@@ -446,7 +446,7 @@ critics, check-render, and fresh agents for research, script, and QA.
 ### v1 beat v2 on feel (2026-09-25)
 
 After three QA rounds and two Codex rounds, v2 passed every check, and the
-human still found v1 better: "전체적인 내용? 흐름? 그냥 필". Our reading, which
+human still found v1 better, its content and flow, by feel. Our reading, which
 the human agreed with: forcing a full curiosity arc (question → guess →
 search → proof → use) into a 45 s Short made it choppy, swapped the classic
 one-line derivation for a four-step one, and each polish round added small
