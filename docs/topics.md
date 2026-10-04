@@ -8,7 +8,8 @@ of candidates are in git history (up to d4a76eb).
 Made so far: 001 A4 paper ([episodes/001-a4-paper-ratio](../episodes/001-a4-paper-ratio/topic.md)),
 002 the Moon's rotation ([episodes/002-moon-rotation](../episodes/002-moon-rotation/topic.md)),
 003 the mirror's left and right ([episodes/003-mirror-left-right](../episodes/003-mirror-left-right/topic.md)),
-004 magenta missing from the rainbow ([episodes/004-magenta-rainbow](../episodes/004-magenta-rainbow/topic.md)).
+004 magenta missing from the rainbow ([episodes/004-magenta-rainbow](../episodes/004-magenta-rainbow/topic.md)),
+005 Hilbert's hotel ([episodes/005-hilbert-hotel](../episodes/005-hilbert-hotel/topic.md)).
 
 ## The human's taste
 
@@ -68,9 +69,9 @@ the notes are in `git show d4a76eb:docs/topics.md`.
   reactor, always twelve pentagons, Janus and Epimetheus swapping orbits,
   the bomb tester, Riemann rearrangement. The human picked their own idea
   instead, the Moon's rotation.
-- 2026-09-28, the human's own list; 003 took the mirror and 004 magenta,
-  and the rest are still open (one-line notes in 004's topic.md): why
-  eclipses don't happen every month, Hilbert's hotel, graphite vs. diamond
+- 2026-09-28, the human's own list; 003 took the mirror, 004 magenta, and
+  005 Hilbert's hotel, and the rest are still open (one-line notes in 005's
+  topic.md): why eclipses don't happen every month, graphite vs. diamond
   colors, touch and Pauli exclusion.
 - Set aside earlier as already told in Korean, which no longer counts
   against an idea (2026-09-27): the lunar birthday cycle, 11,172 Hangul
