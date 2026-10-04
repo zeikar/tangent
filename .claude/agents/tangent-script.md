@@ -80,6 +80,11 @@ judgment, not a template:
   though most who stayed watched to the end.
 - Follow one line of thought in the order that's easiest to follow. Prefer
   the shortest familiar explanation over a clever one with more steps.
+- Get to the answer well before the end. 004 spent 27 s on mechanism (three
+  cone curves, a target shape, a sweep) and said "이게 마젠타예요" at 38 s of
+  48; viewers who didn't swipe away left after 27 s on average, before the
+  answer. 001 and 002, one picture each, kept most of them to the end. When
+  the reason takes several steps, cut steps, not the answer.
 - Fewer, bigger pictures beat many small moves; let a result sit still for a
   moment when it lands.
 - End where the idea pays off. Returning to the opening picture makes the

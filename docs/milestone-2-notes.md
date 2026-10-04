@@ -288,3 +288,30 @@ before the first look.
 - **Left for later:** a storyboard rule to keep elements 4 px inside the
   bounds; a pinned-comment slot in publish.md.
 
+
+### 004's first numbers, the answer came late (2026-10-04)
+
+YouTube Studio's automated review about 6 hours after upload: 1,170 views,
+424 engaged, 38.7% of feed viewers staying to watch, average view duration
+27 s (55.85% of 48.4 s), 3.41 h watched, 7 likes, 1 comment.
+
+- **The feed number didn't move.** About 40% stayed, as on 001 and 002
+  (~42%), so neither the frame-0 caption (from 003) nor 004's hook shows an
+  effect either way at these counts.
+- **Those who stayed left before the answer.** 3.41 h over 1,170 views is
+  10.5 s a view, so the 27 s average is over about 455 views, roughly the
+  engaged ones (inferred, not YouTube's stated definition). 27 s is where
+  B5 ("엠 원추세포가 가운데 끼어 있거든요", 26.2 s) begins; the answer, "이게
+  마젠타예요", comes at 38.5 s. 002's average view rate was 135% and 001
+  kept ~68% at 47 s, both measured hours after upload. 004's mechanism
+  (B2–B5, 6.8–33.5 s) was the longest yet, and the full cone names added
+  4 s of it at the final checkpoint.
+- **Taken:** the review's tip to compress the mechanism, as a "Telling it"
+  line in the script brief (get to the answer well before the end; cut
+  steps, not the answer). The script critic reads that section too.
+- **Not taken:** a stronger first two seconds (e.g. magenta bouncing off
+  the rainbow under "무지개에 없는 가짜 색?"). The human found it vague, the
+  feed number is the same as on 001 and 002, and "가짜 색" is the flat claim
+  the title avoided (C9).
+- **Still open:** the retention curve, to see whether viewers left at B2's
+  graph or at B5, and 003's numbers at the same age.
