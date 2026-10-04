@@ -5,3 +5,8 @@
   recommendation: after 004's answer came late (38 s of 48), this one shows
   its first answer as a picture within about 10 s, and the guests moving
   are the explanation.
+- 2026-10-04 · topic · reshaped around the why: the human found the hotel
+  story common and the why more interesting. The hotel stays as the hook (the
+  human's pick over reframing as "naturals vs. evens"), next to a 10-room
+  hotel where the last guest is pushed out; the 2n move is shown as pairing
+  naturals with evens.
