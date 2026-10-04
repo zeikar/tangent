@@ -142,3 +142,27 @@ assert sorted(tri) == list(range(1, S * (S + 1) // 2 + 1))
 assert all((0 + n - 1) * n // 2 + n == n * (n + 1) // 2 for n in GUESTS)
 print(f"C16 2^n 3^c distinct (2592 = 2^5 3^4); triangular rule fills rooms 1..{S * (S + 1) // 2} "
       "with no gap and no clash")
+
+# C17: the 10-room picture. Shifting a full 10-room hotel by one frees room 1 but
+# sends guest 10 to a room that doesn't exist: still 10 rooms for 11 people.
+ROOMS10 = range(1, 11)
+moved = {g: g + 1 for g in ROOMS10}
+housed = {g: r for g, r in moved.items() if r in ROOMS10}
+assert moved[10] == 11 and 11 not in ROOMS10
+assert set(housed.values()) == set(range(2, 11)) and len(housed) + 1 == 10
+# Pigeonhole is stronger than the picture: however the guests of a full finite hotel
+# swap rooms, one guest per room fills every room again, so no room frees up.
+# Exhaustive over all assignments for hotels of 1..6 rooms.
+for n in range(1, 7):
+    for a in itertools.product(range(n), repeat=n):
+        if len(set(a)) == n:
+            assert set(a) == set(range(n))
+print("C17 10 rooms shifted: guest 10 -> room 11 (none), rooms 2..10 full, room 1 free; "
+      "hotels of 1..6 rooms: every one-per-room reshuffle refills every room")
+
+# C18: natural density. Among 1..n the evens are n//2 (share -> 1/2) and the squares
+# isqrt(n) (share -> 0), although both pair off with all of 1, 2, 3, ... (C7, C8).
+for n in (10, 1_000, 1_000_000):
+    assert sum(1 for m in range(1, n + 1) if m % 2 == 0) == n // 2 == n / 2
+assert [math.isqrt(n) / n for n in (100, 10_000, 1_000_000)] == [0.1, 0.01, 0.001]
+print("C18 evens in 1..n: n/2 (n = 10, 1000, 10^6); squares: 1/10, 1/100, 1/1000 of 10^2, 10^4, 10^6")
