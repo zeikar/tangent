@@ -1,5 +1,7 @@
 # 004 · 마젠타는 존재하지 않는 색일까?
 
+Published: https://youtube.com/shorts/AvyFBIurzu4 (2026-10-04)
+
 Video: `publish/004-magenta-rainbow.mp4` · Thumbnail: `publish/004-magenta-rainbow.thumb.png`
 
 ## Title
