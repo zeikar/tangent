@@ -33,6 +33,32 @@ export const arcPoints = (c: Pt, radius: number | ((deg: number) => number), fro
   });
 };
 
+// The first `t` share (0..1) of a polyline, by length: a line drawn on.
+export const trimPolyline = (pts: Pt[], t: number): Pt[] => {
+  if (t >= 1) return pts;
+  const lengths = pts.slice(1).map((p, i) => dist(pts[i], p));
+  let left = t * lengths.reduce((a, b) => a + b, 0);
+  const out: Pt[] = [pts[0]];
+  for (let i = 0; i < lengths.length && left > 0; i++) {
+    const k = Math.min(1, left / (lengths[i] || 1));
+    out.push(lerpPt(pts[i], pts[i + 1], k));
+    left -= lengths[i];
+  }
+  return out;
+};
+
+// A rounded rectangle's outline, clockwise from the top edge's left end.
+export const roundedRectPoints = ([l, t, r, b]: [number, number, number, number], radius: number): Pt[] => {
+  const corner = (c: Pt, from: number) => arcPoints(c, radius, from, from - 90);
+  return [
+    [l + radius, t],
+    ...corner([r - radius, t + radius], 90),
+    ...corner([r - radius, b - radius], 0),
+    ...corner([l + radius, b - radius], -90),
+    ...corner([l + radius, t + radius], 180),
+  ];
+};
+
 export const pointsAttr = (pts: Pt[]) => pts.map(([x, y]) => `${x.toFixed(2)},${y.toFixed(2)}`).join(" ");
 
 // A filled arrowhead: its tip at `tip`, pointing along `deg`, `len` long and as wide.

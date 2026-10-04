@@ -5,12 +5,16 @@ import { Body } from "../components/Body";
 import { Camera, CameraState, cameraState, cameraTransform } from "../components/Camera";
 import { bodyState } from "../components/bodies";
 import { Captions } from "../components/Captions";
+import { ColorChip } from "../components/ColorChip";
 import { Compass } from "../components/Compass";
+import { ConeBars } from "../components/ConeBars";
+import { ConeCurves } from "../components/ConeCurves";
 import { Dimension } from "../components/Dimension";
 import { DirArrow } from "../components/DirArrow";
 import { Equation } from "../components/Equation";
 import { HalvingNest } from "../components/HalvingNest";
 import { Hand } from "../components/Hand";
+import { LightLine, lightLineState } from "../components/LightLine";
 import { Mirror, mirrorState } from "../components/Mirror";
 import { Mismatch } from "../components/Mismatch";
 import { Note } from "../components/Note";
@@ -21,6 +25,7 @@ import { Person, personState } from "../components/Person";
 import { RimTrace } from "../components/RimTrace";
 import { Ring } from "../components/Ring";
 import { Scenery } from "../components/Scenery";
+import { Spectrum } from "../components/Spectrum";
 import { SpinArrow } from "../components/SpinArrow";
 import { StarField } from "../components/StarField";
 import { Tether, tetherState } from "../components/Tether";
@@ -58,6 +63,11 @@ const components: Record<string, Component> = {
   Ring: { draw: Ring },
   Scenery: { draw: Scenery },
   Camera: { draw: Camera, state: cameraState },
+  Spectrum: { draw: Spectrum },
+  ColorChip: { draw: ColorChip },
+  ConeCurves: { draw: ConeCurves },
+  LightLine: { draw: LightLine, state: lightLineState },
+  ConeBars: { draw: ConeBars },
 };
 
 // Draw order is declaration order, except that an element drawn beneath

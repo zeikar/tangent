@@ -102,8 +102,9 @@ export const mix = (a: string, b: string, t: number) =>
 export const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
 // Easing: out for entrances, an even fade for exits (both start on their
-// word), smooth for everything else, a part flying in from a label included
-// (it's a move), unless the cue asks for linear or cruise (`frames` long).
+// word), smooth for everything else, a part flying in from a label or growing
+// out of a point included (it's a move), unless the cue asks for linear or
+// cruise (`frames` long).
 const easeFor = (c: StoryboardCue, frames: number, fps: number) =>
   c.params?.ease === "linear"
     ? ease.linear
@@ -111,7 +112,7 @@ const easeFor = (c: StoryboardCue, frames: number, fps: number) =>
       ? cruise((cruiseRamp * fps) / Math.max(frames, 1))
       : c.action === "exit"
         ? ease.exit
-        : (c.action === "appear" || c.action === "reveal") && !c.params?.fromLabel
+        : (c.action === "appear" || c.action === "reveal") && !c.params?.fromLabel && !c.params?.from
           ? ease.out
           : ease.smooth;
 

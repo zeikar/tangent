@@ -163,6 +163,32 @@ export const scenery = {
   trunk: 10, // a tree's trunk width
 } as const;
 
+// Light drawn as its screen color, and the eye's response to it (Spectrum,
+// ColorChip, ConeCurves, LightLine, ConeBars). Computed colors are wide fills
+// only: YouTube's 4:2:0 chroma subsampling smears thin saturated lines.
+export const optics = {
+  inset: 4, // px: a band or curve stays this far inside the content bounds; the encoder spreads a saturated edge 1–3 px
+  slice: 1, // px: a curved band's slices along its outer edge, at most (reads as a smooth gradient)
+  sliver: 24, // px: a ring's bridge drawn into its middle is gone once narrower than this on its outside (a thin saturated line)
+  partPulse: 1.2, // a pulsed part of a band, its thickness
+  end: 40, // nm: a band's end, as a pulse picks it out
+  whiten: 0.35, // a pulsed bridge's colors lifted toward white, at the peak
+  glow: 20, // px: a pulsed bridge's glow reaches this far past the ring at rest, at most
+  chipPulse: 1.08, // a pulsed chip's scale
+  curveMin: 0.01, // a cone curve is drawn where it is at least this
+  dot: 10, // radius of a light's dot on a curve
+  dotMin: 0.03, // a dot shows where its curve is at least this
+  dotPulse: 1.6,
+  fullPower: 0.3, // a light's line and dots are fully opaque from this power up
+  track: 0.15, // a bar's full-height track, in its color
+  bar: 0.85, // a bar, in its color
+  barPulse: 1.1, // a pulsed bar's width (its fill goes to 1)
+  targetGap: 8, // px: a bar to its dashed target outline
+  hatch: 24, // px: the stripe period hatching a bar above its target (stripes and gaps alike half of it)
+  hatchGap: 0.3, // the hatching's gaps, in the bar's color
+  floorOverhang: 40, // px: the bars' floor line past the outer bars
+} as const;
+
 // Default animation lengths. These are durations, not start times; start times
 // always come from beat cues.
 export const duration = {
