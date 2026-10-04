@@ -36,3 +36,5 @@
 - 2026-10-04 · final · approved the take3 cut (48.40 s, b515620) with the
   updated description (L, M, S 원추세포) and the same title, pinned comment
   and thumbnail; the human uploaded it from their phone.
+- 2026-10-04 · final · the brown/gray note moved from a pinned comment to
+  the description (above the sources): pinning didn't work from the phone.
