@@ -10,3 +10,7 @@
   human's pick over reframing as "naturals vs. evens"), next to a 10-room
   hotel where the last guest is pushed out; the 2n move is shown as pairing
   naturals with evens.
+- 2026-10-05 · script + take · script a, take1: the human liked a. Terms
+  such as 가산/비가산 무한 stay out of the video (a label with no picture,
+  and "countable" invites the uncountable this video doesn't show); the
+  uncountable is lined up as its own episode (real numbers vs. integers).

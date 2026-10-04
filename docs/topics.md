@@ -73,6 +73,9 @@ the notes are in `git show d4a76eb:docs/topics.md`.
   005 Hilbert's hotel, and the rest are still open (one-line notes in 005's
   topic.md): why eclipses don't happen every month, graphite vs. diamond
   colors, touch and Pauli exclusion.
+- 2026-10-05, the human's idea, lined up after 005: real numbers vs.
+  integers, both infinite but different sizes (Cantor's diagonal; notes in
+  005's topic.md).
 - Set aside earlier as already told in Korean, which no longer counts
   against an idea (2026-09-27): the lunar birthday cycle, 11,172 Hangul
   syllables, curved platform gaps, the West Sea's tides, bus bunching,
