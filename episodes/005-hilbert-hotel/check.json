@@ -1,0 +1,932 @@
+{
+ "episode": "005-hilbert-hotel",
+ "render": "render.mp4",
+ "renderSha256": "74fe4f3c9d9504cb6176c5c8a2d5a0ff5d8bca83efc4d73f57235fe4a4d334b0",
+ "storyboardSha256": "509c300acba5bf6103b3a911690bc065278e31d3385d72caefb880fe3eef7da6",
+ "studioSha256": "30bafe9deeab242047ec146b87be19af3096a9e2eaf37d3d2a1363b7a50d3514",
+ "verdict": "pass",
+ "counts": {
+  "fail": 0,
+  "warn": 2,
+  "pass": 13,
+  "skip": 1
+ },
+ "contactSheet": "check/sheet.png",
+ "checks": [
+  {
+   "id": "freshness",
+   "status": "pass",
+   "summary": "render.mp4, cues.json and the studio code all match this storyboard.json",
+   "cites": []
+  },
+  {
+   "id": "technical",
+   "status": "pass",
+   "summary": "1080×1920 yuv420p bt709 tv, 30 fps, 1343 frames (44.77 s); audio 48000 Hz, last 100 ms at -120 dBFS",
+   "cites": []
+  },
+  {
+   "id": "bounds",
+   "status": "pass",
+   "summary": "all 1343 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 146–935, y 405–1086",
+   "cites": []
+  },
+  {
+   "id": "centering",
+   "status": "pass",
+   "summary": "B1 +7/-8, B2 +7/-8, B3 +3/0, B4 +3/-7, B5 +18/-20, B6 +19/-20, B7 +7/-8 (px off x 540: all ink / picture without edge labels; tolerance ±25)",
+   "details": [
+    {
+     "beat": "B1",
+     "frame": 127,
+     "off": 7,
+     "pictureOff": -8,
+     "status": "pass"
+    },
+    {
+     "beat": "B2",
+     "frame": 312,
+     "off": 7,
+     "pictureOff": -8,
+     "status": "pass"
+    },
+    {
+     "beat": "B3",
+     "frame": 576,
+     "off": 2.5,
+     "pictureOff": 0,
+     "status": "pass"
+    },
+    {
+     "beat": "B4",
+     "frame": 842,
+     "off": 2.5,
+     "pictureOff": -7.2000000000000455,
+     "status": "pass"
+    },
+    {
+     "beat": "B5",
+     "frame": 996,
+     "off": 18,
+     "pictureOff": -19.700000000000045,
+     "status": "pass"
+    },
+    {
+     "beat": "B6",
+     "frame": 1168,
+     "off": 18.5,
+     "pictureOff": -19.700000000000045,
+     "status": "pass"
+    },
+    {
+     "beat": "B7",
+     "frame": 1342,
+     "off": 7,
+     "pictureOff": -8,
+     "status": "pass"
+    }
+   ],
+   "cites": []
+  },
+  {
+   "id": "legibility",
+   "status": "pass",
+   "summary": "smallest glyph \"1\" 35.5 px in inf \"1\" (floor 30 px, 76 text items)",
+   "details": [
+    {
+     "id": "inf",
+     "kind": "number",
+     "text": "1",
+     "char": "1",
+     "height": 35.5,
+     "frame": 0
+    },
+    {
+     "id": "inf",
+     "kind": "number",
+     "text": "2",
+     "char": "2",
+     "height": 35.5,
+     "frame": 0
+    },
+    {
+     "id": "inf",
+     "kind": "number",
+     "text": "10",
+     "char": "1",
+     "height": 35.5,
+     "frame": 330
+    },
+    {
+     "id": "fin",
+     "kind": "number",
+     "text": "1",
+     "char": "1",
+     "height": 35.5,
+     "frame": 333
+    },
+    {
+     "id": "fin",
+     "kind": "number",
+     "text": "2",
+     "char": "2",
+     "height": 35.5,
+     "frame": 333
+    },
+    {
+     "id": "fin",
+     "kind": "number",
+     "text": "10",
+     "char": "1",
+     "height": 35.5,
+     "frame": 333
+    },
+    {
+     "id": "inf",
+     "kind": "number",
+     "text": "11",
+     "char": "1",
+     "height": 35.5,
+     "frame": 332
+    },
+    {
+     "id": "inf",
+     "kind": "number",
+     "text": "12",
+     "char": "1",
+     "height": 35.5,
+     "frame": 332
+    },
+    {
+     "id": "inf",
+     "kind": "tag",
+     "text": "1",
+     "char": "1",
+     "height": 35.5,
+     "frame": 599
+    },
+    {
+     "id": "inf",
+     "kind": "tag",
+     "text": "2",
+     "char": "2",
+     "height": 35.5,
+     "frame": 601
+    },
+    {
+     "id": "rowN",
+     "kind": "number",
+     "text": "1",
+     "char": "1",
+     "height": 35.5,
+     "frame": 875
+    },
+    {
+     "id": "rowN",
+     "kind": "number",
+     "text": "2",
+     "char": "2",
+     "height": 35.5,
+     "frame": 875
+    },
+    {
+     "id": "rowN",
+     "kind": "number",
+     "text": "4",
+     "char": "4",
+     "height": 36,
+     "frame": 875
+    },
+    {
+     "id": "inf",
+     "kind": "number",
+     "text": "4",
+     "char": "4",
+     "height": 36.1,
+     "frame": 317
+    },
+    {
+     "id": "fin",
+     "kind": "number",
+     "text": "4",
+     "char": "4",
+     "height": 36.1,
+     "frame": 333
+    },
+    {
+     "id": "inf",
+     "kind": "tag",
+     "text": "4",
+     "char": "4",
+     "height": 36.1,
+     "frame": 604
+    },
+    {
+     "id": "inf",
+     "kind": "number",
+     "text": "3",
+     "char": "3",
+     "height": 36.6,
+     "frame": 0
+    },
+    {
+     "id": "inf",
+     "kind": "number",
+     "text": "5",
+     "char": "5",
+     "height": 36.6,
+     "frame": 320
+    },
+    {
+     "id": "inf",
+     "kind": "number",
+     "text": "6",
+     "char": "6",
+     "height": 36.6,
+     "frame": 323
+    },
+    {
+     "id": "inf",
+     "kind": "number",
+     "text": "8",
+     "char": "8",
+     "height": 36.6,
+     "frame": 327
+    }
+   ],
+   "cites": []
+  },
+  {
+   "id": "overlaps",
+   "status": "warn",
+   "summary": "f883–889: dbl's lines cross rowN \"7\" (while moving); f884–889: dbl's lines cross rowN \"1\" (while moving); f884–889: dbl's lines cross rowN \"2\" (while moving); f884–889: dbl's lines cross rowN \"3\" (while moving); f884–889: dbl's lines cross rowN \"4\" (while moving); f884–889: dbl's lines cross rowN \"5\" (while moving); f884–889: dbl's lines cross rowN \"6\" (while moving); f884–889: dbl's lines cross rowN \"8\" (while moving); f885: dbl's lines cross lblN \"자연수\" (while moving)",
+   "details": [
+    {
+     "status": "warn",
+     "what": "dbl's lines cross rowN \"7\" (while moving)",
+     "frames": [
+      883,
+      884,
+      885,
+      886,
+      887,
+      888,
+      889
+     ]
+    },
+    {
+     "status": "warn",
+     "what": "dbl's lines cross rowN \"1\" (while moving)",
+     "frames": [
+      884,
+      885,
+      886,
+      887,
+      888,
+      889
+     ]
+    },
+    {
+     "status": "warn",
+     "what": "dbl's lines cross rowN \"2\" (while moving)",
+     "frames": [
+      884,
+      885,
+      886,
+      887,
+      888,
+      889
+     ]
+    },
+    {
+     "status": "warn",
+     "what": "dbl's lines cross rowN \"3\" (while moving)",
+     "frames": [
+      884,
+      885,
+      886,
+      887,
+      888,
+      889
+     ]
+    },
+    {
+     "status": "warn",
+     "what": "dbl's lines cross rowN \"4\" (while moving)",
+     "frames": [
+      884,
+      885,
+      886,
+      887,
+      888,
+      889
+     ]
+    },
+    {
+     "status": "warn",
+     "what": "dbl's lines cross rowN \"5\" (while moving)",
+     "frames": [
+      884,
+      885,
+      886,
+      887,
+      888,
+      889
+     ]
+    },
+    {
+     "status": "warn",
+     "what": "dbl's lines cross rowN \"6\" (while moving)",
+     "frames": [
+      884,
+      885,
+      886,
+      887,
+      888,
+      889
+     ]
+    },
+    {
+     "status": "warn",
+     "what": "dbl's lines cross rowN \"8\" (while moving)",
+     "frames": [
+      884,
+      885,
+      886,
+      887,
+      888,
+      889
+     ]
+    },
+    {
+     "status": "warn",
+     "what": "dbl's lines cross lblN \"자연수\" (while moving)",
+     "frames": [
+      885
+     ]
+    }
+   ],
+   "cites": [
+    {
+     "frame": 886,
+     "note": "overlaps: f883–889: dbl's lines cross rowN \"7\" (while moving)",
+     "file": "f0886.png"
+    },
+    {
+     "frame": 887,
+     "note": "overlaps: f884–889: dbl's lines cross rowN \"1\" (while moving)",
+     "file": "f0887.png"
+    },
+    {
+     "frame": 887,
+     "note": "overlaps: f884–889: dbl's lines cross rowN \"2\" (while moving)",
+     "file": "f0887.png"
+    }
+   ]
+  },
+  {
+   "id": "labels",
+   "status": "skip",
+   "summary": "no edge label has another element's line nearby",
+   "details": [],
+   "cites": []
+  },
+  {
+   "id": "captions",
+   "status": "pass",
+   "summary": "all 31 captions appear 0–0 frames after their cue (limit 3), on one line, inside the caption zone",
+   "details": [
+    {
+     "text": "무한한 호텔이 꽉 찼어요.",
+     "from": 0,
+     "shown": 0,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "한 명 더",
+     "from": 71,
+     "shown": 71,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "들어갈 수 있을까요?",
+     "from": 85,
+     "shown": 85,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "있어요. 모두 동시에",
+     "from": 128,
+     "shown": 128,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "자기 방 바로 다음",
+     "from": 183,
+     "shown": 183,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "방으로 옮기면 돼요.",
+     "from": 215,
+     "shown": 215,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "1번 방이 비죠.",
+     "from": 253,
+     "shown": 253,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "방이 10개뿐인 호텔에서",
+     "from": 313,
+     "shown": 313,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "똑같이 하면",
+     "from": 350,
+     "shown": 350,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "마지막 방 손님이",
+     "from": 377,
+     "shown": 377,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "밖으로 밀려나요.",
+     "from": 405,
+     "shown": 405,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "무한 호텔엔",
+     "from": 449,
+     "shown": 449,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "마지막 방이 없어서",
+     "from": 472,
+     "shown": 472,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "밀려나는 사람이 없어요.",
+     "from": 506,
+     "shown": 506,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "새 손님이 끝없이",
+     "from": 577,
+     "shown": 577,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "줄지어 와도요.",
+     "from": 606,
+     "shown": 606,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "있던 손님은 모두",
+     "from": 641,
+     "shown": 641,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "자기 방 번호의",
+     "from": 675,
+     "shown": 675,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "2배인 방으로 옮기면 돼요.",
+     "from": 700,
+     "shown": 700,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "홀수 방이 전부 비죠.",
+     "from": 754,
+     "shown": 754,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "번호만 보면",
+     "from": 843,
+     "shown": 843,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "이건 자연수와 짝수를",
+     "from": 875,
+     "shown": 875,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "하나도 안 남기고",
+     "from": 923,
+     "shown": 923,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "짝지은 거예요.",
+     "from": 947,
+     "shown": 947,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "수학에서는 이렇게 짝지어지면",
+     "from": 997,
+     "shown": 997,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "크기가 같다고 해요.",
+     "from": 1045,
+     "shown": 1045,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "짝수는 자연수의 일부인데도요.",
+     "from": 1084,
+     "shown": 1084,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "무한에서는 일부가",
+     "from": 1169,
+     "shown": 1169,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "전체만큼 클 수 있어요.",
+     "from": 1211,
+     "shown": 1211,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "그래서 꽉 찬 호텔에도",
+     "from": 1264,
+     "shown": 1264,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    },
+    {
+     "text": "자리가 나는 거예요.",
+     "from": 1303,
+     "shown": 1303,
+     "late": 0,
+     "lines": 1,
+     "inside": true,
+     "problems": []
+    }
+   ],
+   "cites": []
+  },
+  {
+   "id": "readable",
+   "status": "pass",
+   "summary": "every name and label stays fully visible at least 30 frames",
+   "details": [],
+   "cites": []
+  },
+  {
+   "id": "reaction",
+   "status": "pass",
+   "summary": "B1 —, B2 +1, B3 +1, B4 +1, B5 +1, B6 —, B7 — (frames from each beat's first word to the first visible change; — = no cue on that word; limit 3)",
+   "details": [
+    {
+     "beat": "B1",
+     "frame": 3,
+     "hasCue": false,
+     "latency": null,
+     "status": "skip"
+    },
+    {
+     "beat": "B2",
+     "frame": 128,
+     "hasCue": true,
+     "latency": 1,
+     "status": "pass"
+    },
+    {
+     "beat": "B3",
+     "frame": 313,
+     "hasCue": true,
+     "latency": 1,
+     "status": "pass"
+    },
+    {
+     "beat": "B4",
+     "frame": 577,
+     "hasCue": true,
+     "latency": 1,
+     "status": "pass"
+    },
+    {
+     "beat": "B5",
+     "frame": 843,
+     "hasCue": true,
+     "latency": 1,
+     "status": "pass"
+    },
+    {
+     "beat": "B6",
+     "frame": 997,
+     "hasCue": false,
+     "latency": null,
+     "status": "skip"
+    },
+    {
+     "beat": "B7",
+     "frame": 1169,
+     "hasCue": false,
+     "latency": null,
+     "status": "skip"
+    }
+   ],
+   "cites": []
+  },
+  {
+   "id": "cues",
+   "status": "warn",
+   "summary": "3 cues show nothing within 5 frames of their word: B3 f415 finHops.setStyle none; B6 f1117 rowN.setStyle +6; B7 f1303 rowN.exit +6",
+   "details": [
+    {
+     "beat": "B3",
+     "frame": 415,
+     "what": "finHops.setStyle",
+     "latency": null
+    },
+    {
+     "beat": "B6",
+     "frame": 1117,
+     "what": "rowN.setStyle",
+     "latency": 6
+    },
+    {
+     "beat": "B7",
+     "frame": 1303,
+     "what": "rowN.exit",
+     "latency": 6
+    }
+   ],
+   "cites": [
+    {
+     "frame": 415,
+     "pair": [
+      414,
+      420
+     ],
+     "note": "cues: B3 finHops.setStyle at f415",
+     "file": "cues-1.png"
+    },
+    {
+     "frame": 1117,
+     "pair": [
+      1116,
+      1122
+     ],
+     "note": "cues: B6 rowN.setStyle at f1117",
+     "file": "cues-2.png"
+    },
+    {
+     "frame": 1303,
+     "pair": [
+      1302,
+      1308
+     ],
+     "note": "cues: B7 rowN.exit at f1303",
+     "file": "cues-3.png"
+    }
+   ]
+  },
+  {
+   "id": "blank",
+   "status": "pass",
+   "summary": "the visual zone is never empty for more than 3 frames in a row",
+   "cites": []
+  },
+  {
+   "id": "loudness",
+   "status": "pass",
+   "summary": "-14 LUFS integrated (target -14 ±1), true peak -3.3 dBTP (max -1), range 3.1 LU",
+   "cites": []
+  },
+  {
+   "id": "av-sync",
+   "status": "pass",
+   "summary": "render audio is 0 ms off against narration.mp3 (limit ±20 ms)",
+   "cites": []
+  },
+  {
+   "id": "words",
+   "status": "pass",
+   "summary": "20 of 20 words after a pause start within 70 ms of an audible onset (widest \"있어요.\" at 4.28 s, -70 ms); limit ±200 ms",
+   "details": [
+    {
+     "word": "방이",
+     "start": 0.1,
+     "dev": 20
+    },
+    {
+     "word": "한",
+     "start": 2.36,
+     "dev": 0
+    },
+    {
+     "word": "있어요.",
+     "start": 4.28,
+     "dev": -70
+    },
+    {
+     "word": "모두",
+     "start": 5.22,
+     "dev": -20
+    },
+    {
+     "word": "자기",
+     "start": 6.1,
+     "dev": 0
+    },
+    {
+     "word": "일",
+     "start": 8.44,
+     "dev": -40
+    },
+    {
+     "word": "방이",
+     "start": 10.42,
+     "dev": 10
+    },
+    {
+     "word": "마지막",
+     "start": 12.56,
+     "dev": 10
+    },
+    {
+     "word": "무한",
+     "start": 14.96,
+     "dev": -30
+    },
+    {
+     "word": "새",
+     "start": 19.24,
+     "dev": -20
+    },
+    {
+     "word": "있던",
+     "start": 21.38,
+     "dev": -10
+    },
+    {
+     "word": "자기",
+     "start": 22.5,
+     "dev": -10
+    },
+    {
+     "word": "홀수",
+     "start": 25.12,
+     "dev": 10
+    },
+    {
+     "word": "번호만",
+     "start": 28.1,
+     "dev": 10
+    },
+    {
+     "word": "이건",
+     "start": 29.16,
+     "dev": -30
+    },
+    {
+     "word": "수학에서는",
+     "start": 33.22,
+     "dev": -30
+    },
+    {
+     "word": "짝수는",
+     "start": 36.14,
+     "dev": 40
+    },
+    {
+     "word": "무한에서는,",
+     "start": 38.96,
+     "dev": -10
+    },
+    {
+     "word": "일부가",
+     "start": 39.94,
+     "dev": -60
+    },
+    {
+     "word": "그래서",
+     "start": 42.12,
+     "dev": 10
+    }
+   ],
+   "cites": []
+  },
+  {
+   "id": "loop",
+   "status": "pass",
+   "summary": "2 visual-zone pixels differ by more than 16 levels between the last and first frame (limit 500)",
+   "cites": []
+  }
+ ]
+}

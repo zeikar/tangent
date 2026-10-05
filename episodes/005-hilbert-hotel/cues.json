@@ -1,0 +1,579 @@
+{
+ "storyboardSha256": "509c300acba5bf6103b3a911690bc065278e31d3385d72caefb880fe3eef7da6",
+ "narrationSource": "take1@1.08.wav",
+ "takeWordsSha256": "6bb3ff08f88c4b137b5ddd22e997b0d245ae3963949345eb9c2dcecb6233750f",
+ "fps": 30,
+ "durationInFrames": 1343,
+ "beats": [
+  {
+   "id": "B1",
+   "startFrame": 0,
+   "endFrame": 127,
+   "pauseFrame": 114,
+   "captions": [
+    {
+     "word": "방이",
+     "frame": 3
+    },
+    {
+     "word": "한",
+     "frame": 71
+    },
+    {
+     "word": "들어갈",
+     "frame": 85
+    }
+   ],
+   "cues": [
+    {
+     "target": "inf",
+     "action": "pulse",
+     "word": "무한한",
+     "frame": 17,
+     "untilFrame": 40
+    },
+    {
+     "target": "inf",
+     "action": "pulse",
+     "word": "꽉",
+     "frame": 40
+    },
+    {
+     "target": "inf",
+     "action": "pulse",
+     "word": "한",
+     "frame": 71
+    }
+   ]
+  },
+  {
+   "id": "B2",
+   "startFrame": 128,
+   "endFrame": 312,
+   "pauseFrame": 280,
+   "captions": [
+    {
+     "word": "있어요",
+     "frame": 128
+    },
+    {
+     "word": "자기",
+     "frame": 183
+    },
+    {
+     "word": "방으로",
+     "frame": 215
+    },
+    {
+     "word": "일",
+     "frame": 253
+    }
+   ],
+   "cues": [
+    {
+     "target": "inf",
+     "action": "pulse",
+     "word": "있어요",
+     "frame": 128
+    },
+    {
+     "target": "inf",
+     "action": "pulse",
+     "word": "모두",
+     "frame": 157
+    },
+    {
+     "target": "hops",
+     "action": "appear",
+     "word": "바로",
+     "frame": 197
+    },
+    {
+     "target": "inf",
+     "action": "shift",
+     "word": "옮기면",
+     "frame": 225
+    },
+    {
+     "target": "inf",
+     "action": "light",
+     "word": "일",
+     "frame": 253
+    },
+    {
+     "target": "hops",
+     "action": "setStyle",
+     "word": "일",
+     "frame": 253
+    },
+    {
+     "target": "inf",
+     "action": "admit",
+     "word": "비죠",
+     "frame": 269
+    }
+   ]
+  },
+  {
+   "id": "B3",
+   "startFrame": 313,
+   "endFrame": 576,
+   "pauseFrame": 542,
+   "captions": [
+    {
+     "word": "방이",
+     "frame": 313
+    },
+    {
+     "word": "똑같이",
+     "frame": 350
+    },
+    {
+     "word": "마지막",
+     "frame": 377
+    },
+    {
+     "word": "밖으로",
+     "frame": 405
+    },
+    {
+     "word": "무한",
+     "frame": 449
+    },
+    {
+     "word": "마지막",
+     "frame": 472
+    },
+    {
+     "word": "밀려나는",
+     "frame": 506
+    }
+   ],
+   "cues": [
+    {
+     "target": "inf",
+     "action": "moveTo",
+     "word": "방이",
+     "frame": 313
+    },
+    {
+     "target": "fin",
+     "action": "appear",
+     "word": "개뿐인",
+     "frame": 326
+    },
+    {
+     "target": "finHops",
+     "action": "appear",
+     "word": "똑같이",
+     "frame": 350
+    },
+    {
+     "target": "fin",
+     "action": "shift",
+     "word": "하면",
+     "frame": 361
+    },
+    {
+     "target": "fin",
+     "action": "pulse",
+     "word": "마지막",
+     "frame": 377
+    },
+    {
+     "target": "fin",
+     "action": "setGuests",
+     "word": "밀려나요",
+     "frame": 415
+    },
+    {
+     "target": "finHops",
+     "action": "setStyle",
+     "word": "밀려나요",
+     "frame": 415
+    },
+    {
+     "target": "inf",
+     "action": "pulse",
+     "word": "무한",
+     "frame": 449,
+     "untilFrame": 472
+    },
+    {
+     "target": "inf",
+     "action": "pulse",
+     "word": "마지막",
+     "frame": 472
+    },
+    {
+     "target": "hops",
+     "action": "setStyle",
+     "word": "마지막",
+     "frame": 472
+    },
+    {
+     "target": "inf",
+     "action": "pulse",
+     "word": "밀려나는",
+     "frame": 506
+    }
+   ]
+  },
+  {
+   "id": "B4",
+   "startFrame": 577,
+   "endFrame": 842,
+   "pauseFrame": 791,
+   "captions": [
+    {
+     "word": "새",
+     "frame": 577
+    },
+    {
+     "word": "줄지어",
+     "frame": 606
+    },
+    {
+     "word": "있던",
+     "frame": 641
+    },
+    {
+     "word": "자기",
+     "frame": 675
+    },
+    {
+     "word": "두",
+     "frame": 700
+    },
+    {
+     "word": "홀수",
+     "frame": 754
+    }
+   ],
+   "cues": [
+    {
+     "target": "fin",
+     "action": "exit",
+     "word": "새",
+     "frame": 577
+    },
+    {
+     "target": "finHops",
+     "action": "exit",
+     "word": "새",
+     "frame": 577
+    },
+    {
+     "target": "hops",
+     "action": "exit",
+     "word": "새",
+     "frame": 577
+    },
+    {
+     "target": "inf",
+     "action": "moveTo",
+     "word": "새",
+     "frame": 577
+    },
+    {
+     "target": "inf",
+     "action": "setGuests",
+     "word": "새",
+     "frame": 577
+    },
+    {
+     "target": "inf",
+     "action": "lineUp",
+     "word": "끝없이",
+     "frame": 592,
+     "untilFrame": 616
+    },
+    {
+     "target": "inf",
+     "action": "pulse",
+     "word": "있던",
+     "frame": 641
+    },
+    {
+     "target": "inf",
+     "action": "pulse",
+     "word": "번호의",
+     "frame": 688
+    },
+    {
+     "target": "dbl",
+     "action": "appear",
+     "word": "두",
+     "frame": 700
+    },
+    {
+     "target": "inf",
+     "action": "shift",
+     "word": "옮기면",
+     "frame": 727
+    },
+    {
+     "target": "inf",
+     "action": "light",
+     "word": "홀수",
+     "frame": 754
+    },
+    {
+     "target": "qArrows",
+     "action": "appear",
+     "word": "비죠",
+     "frame": 779
+    },
+    {
+     "target": "inf",
+     "action": "admit",
+     "pause": true,
+     "frame": 791
+    }
+   ]
+  },
+  {
+   "id": "B5",
+   "startFrame": 843,
+   "endFrame": 996,
+   "pauseFrame": 969,
+   "captions": [
+    {
+     "word": "번호만",
+     "frame": 843
+    },
+    {
+     "word": "이건",
+     "frame": 875
+    },
+    {
+     "word": "하나도",
+     "frame": 923
+    },
+    {
+     "word": "짝지은",
+     "frame": 947
+    }
+   ],
+   "cues": [
+    {
+     "target": "qArrows",
+     "action": "exit",
+     "word": "번호만",
+     "frame": 843
+    },
+    {
+     "target": "inf",
+     "action": "setGuests",
+     "word": "번호만",
+     "frame": 843
+    },
+    {
+     "target": "inf",
+     "action": "setGuests",
+     "word": "보면",
+     "frame": 856
+    },
+    {
+     "target": "inf",
+     "action": "setStyle",
+     "word": "보면",
+     "frame": 856
+    },
+    {
+     "target": "rowN",
+     "action": "appear",
+     "word": "이건",
+     "frame": 875
+    },
+    {
+     "target": "rowE",
+     "action": "appear",
+     "word": "이건",
+     "frame": 875
+    },
+    {
+     "target": "dbl",
+     "action": "pairTo",
+     "word": "이건",
+     "frame": 875
+    },
+    {
+     "target": "lblN",
+     "action": "appear",
+     "word": "자연수와",
+     "frame": 884
+    },
+    {
+     "target": "lblE",
+     "action": "appear",
+     "word": "짝수를",
+     "frame": 903
+    },
+    {
+     "target": "rowE",
+     "action": "pulse",
+     "word": "짝수를",
+     "frame": 903
+    },
+    {
+     "target": "dbl",
+     "action": "pulse",
+     "word": "하나도",
+     "frame": 923
+    }
+   ]
+  },
+  {
+   "id": "B6",
+   "startFrame": 997,
+   "endFrame": 1168,
+   "pauseFrame": 1134,
+   "captions": [
+    {
+     "word": "수학에서는",
+     "frame": 997
+    },
+    {
+     "word": "크기가",
+     "frame": 1045
+    },
+    {
+     "word": "짝수는",
+     "frame": 1084
+    }
+   ],
+   "cues": [
+    {
+     "target": "dbl",
+     "action": "pulse",
+     "word": "짝지어지면",
+     "frame": 1022
+    },
+    {
+     "target": "rowE",
+     "action": "pulse",
+     "word": "짝수는",
+     "frame": 1084
+    },
+    {
+     "target": "rowN",
+     "action": "setStyle",
+     "word": "일부인데도요",
+     "frame": 1117
+    },
+    {
+     "target": "rowN",
+     "action": "setStyle",
+     "word": "일부인데도요",
+     "frame": 1117
+    }
+   ]
+  },
+  {
+   "id": "B7",
+   "startFrame": 1169,
+   "endFrame": 1342,
+   "pauseFrame": 1330,
+   "captions": [
+    {
+     "word": "무한에서는",
+     "frame": 1169
+    },
+    {
+     "word": "전체만큼",
+     "frame": 1211
+    },
+    {
+     "word": "그래서",
+     "frame": 1264
+    },
+    {
+     "word": "자리가",
+     "frame": 1303,
+     "untilFrame": 1330
+    }
+   ],
+   "cues": [
+    {
+     "target": "rowE",
+     "action": "pulse",
+     "word": "일부가",
+     "frame": 1198
+    },
+    {
+     "target": "rowN",
+     "action": "pulse",
+     "word": "전체만큼",
+     "frame": 1211
+    },
+    {
+     "target": "rowE",
+     "action": "exit",
+     "word": "그래서",
+     "frame": 1264
+    },
+    {
+     "target": "dbl",
+     "action": "exit",
+     "word": "그래서",
+     "frame": 1264
+    },
+    {
+     "target": "lblN",
+     "action": "exit",
+     "word": "그래서",
+     "frame": 1264
+    },
+    {
+     "target": "lblE",
+     "action": "exit",
+     "word": "그래서",
+     "frame": 1264
+    },
+    {
+     "target": "rowN",
+     "action": "gather",
+     "word": "그래서",
+     "frame": 1264
+    },
+    {
+     "target": "inf",
+     "action": "moveTo",
+     "word": "그래서",
+     "frame": 1264
+    },
+    {
+     "target": "inf",
+     "action": "setStyle",
+     "word": "그래서",
+     "frame": 1264
+    },
+    {
+     "target": "inf",
+     "action": "setGuests",
+     "word": "그래서",
+     "frame": 1264
+    },
+    {
+     "target": "inf",
+     "action": "setGuests",
+     "word": "자리가",
+     "frame": 1303
+    },
+    {
+     "target": "inf",
+     "action": "lineUp",
+     "word": "자리가",
+     "frame": 1303
+    },
+    {
+     "target": "rowN",
+     "action": "exit",
+     "word": "자리가",
+     "frame": 1303
+    }
+   ]
+  }
+ ]
+}
