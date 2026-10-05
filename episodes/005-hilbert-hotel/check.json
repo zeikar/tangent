@@ -1,14 +1,14 @@
 {
  "episode": "005-hilbert-hotel",
  "render": "render.mp4",
- "renderSha256": "74fe4f3c9d9504cb6176c5c8a2d5a0ff5d8bca83efc4d73f57235fe4a4d334b0",
- "storyboardSha256": "509c300acba5bf6103b3a911690bc065278e31d3385d72caefb880fe3eef7da6",
- "studioSha256": "30bafe9deeab242047ec146b87be19af3096a9e2eaf37d3d2a1363b7a50d3514",
+ "renderSha256": "92d8df0a33e52b55dd126b622431e61da2724c50d59363d1791143d49b2d9d2d",
+ "storyboardSha256": "613b769175e988299eae7eae741cb50396a423d4e1d789845dbdb111030e0264",
+ "studioSha256": "bf9729d4222737f15d02175e162762f5d564f1d8e9f7c495fba6451233db1532",
  "verdict": "pass",
  "counts": {
   "fail": 0,
-  "warn": 2,
-  "pass": 13,
+  "warn": 1,
+  "pass": 14,
   "skip": 1
  },
  "contactSheet": "check/sheet.png",
@@ -22,19 +22,19 @@
   {
    "id": "technical",
    "status": "pass",
-   "summary": "1080×1920 yuv420p bt709 tv, 30 fps, 1343 frames (44.77 s); audio 48000 Hz, last 100 ms at -120 dBFS",
+   "summary": "1080×1920 yuv420p bt709 tv, 30 fps, 1346 frames (44.87 s); audio 48000 Hz, last 100 ms at -120 dBFS",
    "cites": []
   },
   {
    "id": "bounds",
    "status": "pass",
-   "summary": "all 1343 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 146–935, y 405–1086",
+   "summary": "all 1346 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 144–935, y 405–1106",
    "cites": []
   },
   {
    "id": "centering",
    "status": "pass",
-   "summary": "B1 +7/-8, B2 +7/-8, B3 +3/0, B4 +3/-7, B5 +18/-20, B6 +19/-20, B7 +7/-8 (px off x 540: all ink / picture without edge labels; tolerance ±25)",
+   "summary": "B1 +7/-8, B2 +7/-8, B3 -2/-1, B4 +3/-7, B5 +19/-20, B6 +18/-20, B7 +7/-8 (px off x 540: all ink / picture without edge labels; tolerance ±25)",
    "details": [
     {
      "beat": "B1",
@@ -53,34 +53,34 @@
     {
      "beat": "B3",
      "frame": 576,
-     "off": 2.5,
-     "pictureOff": 0,
+     "off": -2.5,
+     "pictureOff": -1.3500000000000227,
      "status": "pass"
     },
     {
      "beat": "B4",
      "frame": 842,
      "off": 2.5,
-     "pictureOff": -7.2000000000000455,
+     "pictureOff": -7.25,
      "status": "pass"
     },
     {
      "beat": "B5",
      "frame": 996,
-     "off": 18,
+     "off": 18.5,
      "pictureOff": -19.700000000000045,
      "status": "pass"
     },
     {
      "beat": "B6",
      "frame": 1168,
-     "off": 18.5,
+     "off": 18,
      "pictureOff": -19.700000000000045,
      "status": "pass"
     },
     {
      "beat": "B7",
-     "frame": 1342,
+     "frame": 1345,
      "off": 7,
      "pictureOff": -8,
      "status": "pass"
@@ -155,7 +155,7 @@
      "text": "12",
      "char": "1",
      "height": 35.5,
-     "frame": 332
+     "frame": 333
     },
     {
      "id": "inf",
@@ -203,7 +203,7 @@
      "text": "4",
      "char": "4",
      "height": 36.1,
-     "frame": 317
+     "frame": 316
     },
     {
      "id": "fin",
@@ -258,131 +258,10 @@
   },
   {
    "id": "overlaps",
-   "status": "warn",
-   "summary": "f883–889: dbl's lines cross rowN \"7\" (while moving); f884–889: dbl's lines cross rowN \"1\" (while moving); f884–889: dbl's lines cross rowN \"2\" (while moving); f884–889: dbl's lines cross rowN \"3\" (while moving); f884–889: dbl's lines cross rowN \"4\" (while moving); f884–889: dbl's lines cross rowN \"5\" (while moving); f884–889: dbl's lines cross rowN \"6\" (while moving); f884–889: dbl's lines cross rowN \"8\" (while moving); f885: dbl's lines cross lblN \"자연수\" (while moving)",
-   "details": [
-    {
-     "status": "warn",
-     "what": "dbl's lines cross rowN \"7\" (while moving)",
-     "frames": [
-      883,
-      884,
-      885,
-      886,
-      887,
-      888,
-      889
-     ]
-    },
-    {
-     "status": "warn",
-     "what": "dbl's lines cross rowN \"1\" (while moving)",
-     "frames": [
-      884,
-      885,
-      886,
-      887,
-      888,
-      889
-     ]
-    },
-    {
-     "status": "warn",
-     "what": "dbl's lines cross rowN \"2\" (while moving)",
-     "frames": [
-      884,
-      885,
-      886,
-      887,
-      888,
-      889
-     ]
-    },
-    {
-     "status": "warn",
-     "what": "dbl's lines cross rowN \"3\" (while moving)",
-     "frames": [
-      884,
-      885,
-      886,
-      887,
-      888,
-      889
-     ]
-    },
-    {
-     "status": "warn",
-     "what": "dbl's lines cross rowN \"4\" (while moving)",
-     "frames": [
-      884,
-      885,
-      886,
-      887,
-      888,
-      889
-     ]
-    },
-    {
-     "status": "warn",
-     "what": "dbl's lines cross rowN \"5\" (while moving)",
-     "frames": [
-      884,
-      885,
-      886,
-      887,
-      888,
-      889
-     ]
-    },
-    {
-     "status": "warn",
-     "what": "dbl's lines cross rowN \"6\" (while moving)",
-     "frames": [
-      884,
-      885,
-      886,
-      887,
-      888,
-      889
-     ]
-    },
-    {
-     "status": "warn",
-     "what": "dbl's lines cross rowN \"8\" (while moving)",
-     "frames": [
-      884,
-      885,
-      886,
-      887,
-      888,
-      889
-     ]
-    },
-    {
-     "status": "warn",
-     "what": "dbl's lines cross lblN \"자연수\" (while moving)",
-     "frames": [
-      885
-     ]
-    }
-   ],
-   "cites": [
-    {
-     "frame": 886,
-     "note": "overlaps: f883–889: dbl's lines cross rowN \"7\" (while moving)",
-     "file": "f0886.png"
-    },
-    {
-     "frame": 887,
-     "note": "overlaps: f884–889: dbl's lines cross rowN \"1\" (while moving)",
-     "file": "f0887.png"
-    },
-    {
-     "frame": 887,
-     "note": "overlaps: f884–889: dbl's lines cross rowN \"2\" (while moving)",
-     "file": "f0887.png"
-    }
-   ]
+   "status": "pass",
+   "summary": "no text meets other text, lines, or a fill drawn over it (in or across elements); no entrance draws while an exit is still visible",
+   "details": [],
+   "cites": []
   },
   {
    "id": "labels",
@@ -745,7 +624,7 @@
   {
    "id": "cues",
    "status": "warn",
-   "summary": "3 cues show nothing within 5 frames of their word: B3 f415 finHops.setStyle none; B6 f1117 rowN.setStyle +6; B7 f1303 rowN.exit +6",
+   "summary": "2 cues show nothing within 5 frames of their word: B3 f415 finHops.setStyle none; B6 f1117 rowN.setStyle +6",
    "details": [
     {
      "beat": "B3",
@@ -757,12 +636,6 @@
      "beat": "B6",
      "frame": 1117,
      "what": "rowN.setStyle",
-     "latency": 6
-    },
-    {
-     "beat": "B7",
-     "frame": 1303,
-     "what": "rowN.exit",
      "latency": 6
     }
    ],
@@ -784,15 +657,6 @@
      ],
      "note": "cues: B6 rowN.setStyle at f1117",
      "file": "cues-2.png"
-    },
-    {
-     "frame": 1303,
-     "pair": [
-      1302,
-      1308
-     ],
-     "note": "cues: B7 rowN.exit at f1303",
-     "file": "cues-3.png"
     }
    ]
   },
@@ -925,7 +789,7 @@
   {
    "id": "loop",
    "status": "pass",
-   "summary": "2 visual-zone pixels differ by more than 16 levels between the last and first frame (limit 500)",
+   "summary": "7 visual-zone pixels differ by more than 16 levels between the last and first frame (limit 500)",
    "cites": []
   }
  ]

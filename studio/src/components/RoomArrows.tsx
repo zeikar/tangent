@@ -1,9 +1,9 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
-import { bump, ElementTimeline, lerp, mix, phase, Scene, themeColor } from "../storyboard/timeline";
+import { bump, ElementTimeline, lerp, mix, phase, rawProgress, Scene, themeColor } from "../storyboard/timeline";
 import { hotel, mark, stroke, VIDEO } from "../style/theme";
-import { Fade, fadeAt, fadeClip, FadedPolyline, lerpFade } from "./fade";
-import { arcPoints, lerpPt, Pt, pointsAttr, resample, trimPolyline } from "./geometry";
+import { Fade, fadeAt, fadeClip, FadedPolyline } from "./fade";
+import { arcPoints, lerpPt, Pt, pointsAttr, trimPolyline } from "./geometry";
 import { GUEST_HEIGHT, HotelState, hotelOf } from "./Hotel";
 import { rowOf } from "./NumberRow";
 import { curvedArrowParts, lifecycle, Svg } from "./shapes";
@@ -11,13 +11,20 @@ import { curvedArrowParts, lifecycle, Svg } from "./shapes";
 // Arrows showing an assignment between places in a Hotel, from its live
 // geometry and fade: a half-ellipse over the roof from room n to room map(n),
 // or a straight arrow from newcomer k on the street up into room 2k − 1.
-// Arrows from rooms can straighten into pairing lines between two
-// NumberRows. Spec: storyboard.json → components → RoomArrows.
+// Arrows from rooms can hand over to pairing lines between two NumberRows. Spec: storyboard.json → components → RoomArrows.
 
-type Props = { of: string; from: "rooms" | "street"; map: "n+1" | "2n" | "2k-1"; color: string };
+// fade: each point at the hotel's opacity for its x (along, the default), or
+// the whole arrow at its tip's (tip: arrows to rooms deep in the fade go first).
+type Props = { of: string; from: "rooms" | "street"; map: "n+1" | "2n" | "2k-1"; color: string; fade?: "along" | "tip" };
 
-// Points per arrow when an arc straightens into a line.
-const MORPH_POINTS = 64;
+// Pairing: the arcs fade out evenly over this share of the move, before
+// anything appears over them (a row's name on the next word)...
+const ARCS_GONE = 0.4;
+// ...and the lines grow from this share of its eased progress on. A
+// NumberRow's numbers flying down on the same cue (same span and easing) stay
+// below the lines' growing ends: from here on a line's end runs down faster
+// than any number's ink top.
+const LINES_FROM = 0.5;
 
 // Arrow n's path (n = 1, 2, …), tail to tip, for every arrow that starts
 // before the hotel ends.
@@ -62,14 +69,14 @@ export const RoomArrows: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el
   // Per-arrow styles and pulses, in action order; which: a list of n, or all.
   const styles: { which?: number[]; opacity?: number; color?: string; t: number }[] = [];
   const pulses: { which?: number[]; b: number }[] = [];
-  let pair: { top: string; bottom: string; t: number } | null = null;
+  let pair: { top: string; bottom: string; raw: number; t: number } | null = null;
   const { appear, out } = lifecycle(el, frame, (a) => {
     const q = a.params;
     if (a.action === "setStyle") styles.push({ which: q.which, opacity: q.opacity, color: q.color, t: phase(a, frame) });
     else if (a.action === "pulse") pulses.push({ which: q.which, b: bump(a, frame) });
     else if (a.action === "pairTo") {
       if (p.map !== "2n") throw new Error(`RoomArrows ${el.spec.id}: only 2n arrows pair rows`);
-      pair = { top: q.top, bottom: q.bottom, t: phase(a, frame) };
+      pair = { top: q.top, bottom: q.bottom, raw: rawProgress(a, frame), t: phase(a, frame) };
     } else throw new Error(`RoomArrows ${el.spec.id}: unknown action ${a.action}`);
   });
   if (appear <= 0 || out <= 0) return null;
@@ -85,52 +92,61 @@ export const RoomArrows: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el
     return { opacity, color: c, pulse: Math.max(0, ...pulses.filter((s) => picked(s.which, n)).map((s) => s.b)) };
   };
 
-  // Paired: each arc straightens into a vertical line between the top row's
-  // n-th number and the bottom row's (at their places while it does, then
-  // following them), its head shrinking away.
-  const paired = pair as { top: string; bottom: string; t: number } | null;
+  // Paired: the arcs fade out first, then each pairing line grows down from
+  // the top row's n-th number toward the bottom row's (at their places while
+  // it grows, then following them).
+  const paired = pair as { top: string; bottom: string; raw: number; t: number } | null;
   const top = paired && rowOf(scene, paired.top);
   const bottom = paired && rowOf(scene, paired.bottom);
-  const arcs = paired && paired.t >= 1 ? [] : paths(p, h);
-  const count = paired && paired.t >= 1 ? top!.count : arcs.length;
-  let fade: Fade = h.fade;
-  if (paired) fade = lerpFade(h.fade, top!.fade, paired.t);
+  const arcsShown = paired ? 1 - Math.min(1, paired.raw / ARCS_GONE) : 1;
+  const grown = paired ? Math.max(0, (paired.t - LINES_FROM) / (1 - LINES_FROM)) : 0;
 
-  const drawn = Array.from({ length: count }, (_, i) => {
-    const n = i + 1;
+  const arrow = (n: number, pts: Pt[], fade: Fade, shown: number) => {
     const st = styleOf(n);
-    let pts = arcs[i] && trimPolyline(arcs[i], appear);
-    let head = mark.head * lerp(1, mark.pulseScale, st.pulse);
-    if (paired) {
-      const at = paired.t >= 1 ? "live" : "rest";
-      const [a, b] = [top![at](n), bottom![at](n)];
-      const line: Pt[] = [
-        [a.x, a.y + a.half + hotel.pairGap],
-        [b.x, b.y - b.half - hotel.pairGap],
-      ];
-      if (paired.t >= 1) pts = line;
-      else {
-        const [from, to] = [resample(pts!, MORPH_POINTS), resample(line, MORPH_POINTS)];
-        pts = from.map((q, j) => lerpPt(q, to[j], paired.t));
-      }
-      head *= 1 - paired.t;
-    }
-    if (!pts || pts.length < 2) return null;
+    if (pts.length < 2 || shown * st.opacity <= 0) return null;
     const width = lerp(stroke.arrow, hotel.arrowPulse, st.pulse);
-    const parts = head > 0 ? curvedArrowParts(pts, head) : { line: pts, head: null };
+    const parts = curvedArrowParts(pts, mark.head * lerp(1, mark.pulseScale, st.pulse));
     const tip = pts[pts.length - 1];
+    // Fading at its tip: the whole arrow at the opacity of where it points.
+    const atTip = p.fade === "tip" ? fadeAt(fade, tip[0]) : 1;
+    const along = p.fade === "tip" ? null : fade;
+    const o = st.opacity * shown * atTip;
     return (
-      <g key={n}>
-        <FadedPolyline pts={parts.line} fade={fade} color={st.color} width={width} opacity={st.opacity} />
-        {parts.head && fadeAt(fade, tip[0]) > 0 ? (
-          <polygon points={pointsAttr(parts.head)} fill={st.color} opacity={st.opacity * fadeAt(fade, tip[0])} />
-        ) : null}
+      <g key={`a${n}`}>
+        <FadedPolyline pts={parts.line} fade={along} color={st.color} width={width} opacity={o} />
+        {fadeAt(fade, tip[0]) > 0 ? <polygon points={pointsAttr(parts.head)} fill={st.color} opacity={o * fadeAt(along, tip[0])} /> : null}
       </g>
     );
-  });
+  };
+  const arcs = arcsShown > 0 ? paths(p, h).map((pts, i) => arrow(i + 1, trimPolyline(pts, appear), h.fade, arcsShown)) : [];
+  const lines =
+    paired && grown > 0
+      ? Array.from({ length: top!.count }, (_, i) => {
+          const n = i + 1;
+          const st = styleOf(n);
+          const at = paired.t >= 1 ? "live" : "rest";
+          const [a, b] = [top![at](n), bottom![at](n)];
+          const from: Pt = [a.x, a.y + a.half + hotel.pairGap];
+          const pts = [from, lerpPt(from, [b.x, b.y - b.half - hotel.pairGap], grown)];
+          return (
+            <FadedPolyline
+              key={`l${n}`}
+              pts={pts}
+              fade={top!.fade}
+              color={st.color}
+              width={lerp(stroke.arrow, hotel.arrowPulse, st.pulse)}
+              opacity={st.opacity}
+            />
+          );
+        })
+      : [];
+  const fade: Fade = paired && grown > 0 ? top!.fade : h.fade;
   return (
     <AbsoluteFill style={{ opacity: out, clipPath: fadeClip(fade, VIDEO.width) }}>
-      <Svg>{drawn}</Svg>
+      <Svg>
+        {arcs}
+        {lines}
+      </Svg>
     </AbsoluteFill>
   );
 };

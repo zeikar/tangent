@@ -25,7 +25,15 @@ type Props = {
 // 36.7 px at 44, 48.3 at 58).
 const DIGIT_HALF = 0.417;
 
-export type RowNumber = { n: number; value: number; x: number; y: number; size: number; scale: number; color: string; opacity: number };
+// Growing out of a hotel: a number whose room is past the hotel's fade comes
+// in at its place from this share of the appear on, once the numbers moving
+// in have nearly landed (none passes one already showing)...
+const LATE = 0.75;
+// ...and a copy leaving a room number stays unseen while it meets that
+// number's row, then fades in over this drop (px).
+const EMERGE = 40;
+
+export type RowNumber = { n: number; value: number; x: number; y: number; size: number; pulse: number; color: string; opacity: number };
 
 export type NumberRowState = {
   fade: Fade;
@@ -58,7 +66,7 @@ export const numberRowState = (el: ElementTimeline, scene: Scene): NumberRowStat
     x: restX(i + 1),
     y: p.y,
     size: p.size,
-    scale: 1,
+    pulse: 0,
     color: themeColor(p.color),
     opacity: 1,
     shown: 0, // the appear's or gather's share of its opacity, with the fade
@@ -67,8 +75,8 @@ export const numberRowState = (el: ElementTimeline, scene: Scene): NumberRowStat
     const q = a.params;
     switch (a.action) {
       case "pulse": {
-        const s = lerp(1, hotel.numberPulse, bump(a, frame));
-        for (const r of rows) if (picks(q.which, r.value)) r.scale = Math.max(r.scale, s);
+        const b = bump(a, frame);
+        for (const r of rows) if (picks(q.which, r.value)) r.pulse = Math.max(r.pulse, b);
         break;
       }
       case "setStyle": {
@@ -99,15 +107,15 @@ export const numberRowState = (el: ElementTimeline, scene: Scene): NumberRowStat
         // Out of the hotel's room number of the same value, at its size and place.
         const h = hotelOf(scene, appear.params.from);
         const [sx, sy] = h.numberAt(r.value);
-        if (fadeAt(h.fade, sx) > 0) {
+        if (fadeAt(h.fade, sx) <= 0) r.shown = phase(appear, frame, LATE, 1) * fadeAt(p.fade, r.x);
+        else {
           [r.x, r.y, r.size] = [lerp(sx, r.x, t), lerp(sy, r.y, t), lerp(hotel.number, p.size, t)];
           if (p.values === "n") r.shown = fadeAt(p.fade, r.x);
           else {
-            // A copy leaving the number it was: faint while it still meets
-            // that number's row, then fading in on the way.
-            const clear = sy + 2 * DIGIT_HALF * p.size + 2;
-            const faint = 0.25 * Math.min(1, t / 0.1);
-            r.shown = fadeAt(p.fade, r.x) * (r.y < clear ? faint : lerp(faint, 1, Math.min(1, (r.y - clear) / 40)));
+            // A copy leaving the number it was, unseen until its ink top is
+            // below that number's row (grown to this row's size).
+            const below = r.y - DIGIT_HALF * r.size - (sy + DIGIT_HALF * p.size);
+            r.shown = fadeAt(p.fade, r.x) * Math.min(1, Math.max(0, below / EMERGE));
           }
         }
       }
@@ -152,20 +160,26 @@ export const NumberRow: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el,
   if (measuring.length) return <AbsoluteFill>{measuring}</AbsoluteFill>;
   return (
     <AbsoluteFill style={{ clipPath: fadeClip(s.fade, VIDEO.width) }}>
-      {s.numbers.map((r) => (
-        <InkTex
-          key={r.n}
-          tex={String(r.value)}
-          ink={ink(String(r.value))}
-          fontSize={p.size}
-          x={r.x}
-          y={r.y}
-          color={r.color}
-          opacity={r.opacity}
-          scale={(r.size / p.size) * r.scale}
-          kind="number"
-        />
-      ))}
+      {s.numbers.map((r) => {
+        const i = ink(String(r.value));
+        // A pulse grows a number, but never closer than numberGap to its
+        // neighbours (which grow alike), and lifts its color toward text.
+        const grow = Math.max(1, Math.min(hotel.numberPulse, (p.step - hotel.numberGap) / (i.r - i.l)));
+        return (
+          <InkTex
+            key={r.n}
+            tex={String(r.value)}
+            ink={i}
+            fontSize={p.size}
+            x={r.x}
+            y={r.y}
+            color={mix(r.color, color.text, hotel.numberLift * r.pulse)}
+            opacity={r.opacity}
+            scale={(r.size / p.size) * lerp(1, grow, r.pulse)}
+            kind="number"
+          />
+        );
+      })}
     </AbsoluteFill>
   );
 };

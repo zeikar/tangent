@@ -1,9 +1,9 @@
 {
- "storyboardSha256": "509c300acba5bf6103b3a911690bc065278e31d3385d72caefb880fe3eef7da6",
+ "storyboardSha256": "613b769175e988299eae7eae741cb50396a423d4e1d789845dbdb111030e0264",
  "narrationSource": "take1@1.08.wav",
  "takeWordsSha256": "6bb3ff08f88c4b137b5ddd22e997b0d245ae3963949345eb9c2dcecb6233750f",
  "fps": 30,
- "durationInFrames": 1343,
+ "durationInFrames": 1346,
  "beats": [
   {
    "id": "B1",
@@ -473,7 +473,7 @@
   {
    "id": "B7",
    "startFrame": 1169,
-   "endFrame": 1342,
+   "endFrame": 1345,
    "pauseFrame": 1330,
    "captions": [
     {
@@ -504,6 +504,12 @@
     {
      "target": "rowN",
      "action": "pulse",
+     "word": "전체만큼",
+     "frame": 1211
+    },
+    {
+     "target": "rowN",
+     "action": "setStyle",
      "word": "전체만큼",
      "frame": 1211
     },
@@ -558,20 +564,20 @@
     {
      "target": "inf",
      "action": "setGuests",
-     "word": "자리가",
-     "frame": 1303
+     "pause": true,
+     "frame": 1330
     },
     {
      "target": "inf",
      "action": "lineUp",
-     "word": "자리가",
-     "frame": 1303
+     "pause": true,
+     "frame": 1330
     },
     {
      "target": "rowN",
      "action": "exit",
-     "word": "자리가",
-     "frame": 1303
+     "pause": true,
+     "frame": 1330
     }
    ]
   }

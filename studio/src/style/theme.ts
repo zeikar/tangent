@@ -197,13 +197,17 @@ export const optics = {
 export const hotel = {
   number: 44, // TeX px: room numbers and newcomers' tags
   numberDrop: 40, // a room's roof to its number's ink center
-  numberPulse: 1.2, // a pulsed number's scale, in a room or a row
+  numberPulse: 1.2, // a pulsed number's scale, in a room or a row...
+  numberGap: 22, // ...but a row's number stops growing this close to its neighbours
+  numberLift: 0.5, // a pulsed row number's color, lifted this far toward text at its peak
   street: 230, // the floor to the street line's feet
-  tagGap: 16, // a newcomer's feet to its tag's ink top
+  tagGap: 16, // a newcomer's feet to its tag's top
+  tagPad: [12, 6], // a tag's ink to its badge's edge: across, up and down
+  tagRadius: 10, // a tag badge's corners
   floorPast: 0.6, // of w: a finite hotel's floor line past its outside spot
   lit: 0.15, // a lit room's fill, in yellow
   guestPulse: 6, // a pulsed guest's outline (its fill goes to figure.pulse)
-  wallPulse: 10, // a pulsed end wall
+  wallPulse: 14, // a pulsed end wall (the floor past it lifts to text with it)
   wave: 1.5, // of w: half the width of a rooms pulse running along the row
   arrowGap: 6, // a roof to a room arrow's ends
   arrowInset: 0.15, // of w: a room arrow's ends from its rooms' centers

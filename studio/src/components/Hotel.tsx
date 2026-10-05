@@ -3,7 +3,7 @@ import { AbsoluteFill } from "remotion";
 import { Action, bump, ElementTimeline, lerp, mix, phase, Scene, themeColor } from "../storyboard/timeline";
 import { color, figure, hotel, stroke, VIDEO } from "../style/theme";
 import { Fade, fadeAt, fadeClip, FadedPolyline, lerpFade } from "./fade";
-import { arcPoints, lerpPt, Pt, pointsAttr } from "./geometry";
+import { arcPoints, lerpPt, Pt, pointsAttr, roundedRectPoints } from "./geometry";
 import { InkTex, useTexInk } from "./InkText";
 import { lifecycle, Polyline, Svg } from "./shapes";
 
@@ -68,7 +68,7 @@ export type HotelState = {
   numberScale: number;
   roomsOpacity: number;
   groundOpacity: number;
-  wallWidth: number;
+  wallPulse: number;
   roomPulse: (n: number) => number;
   lit: (n: number) => number;
   guests: { at: Pt; color: string; opacity: number; pulse: number; tag: { k: number; at: Pt; opacity: number } | null }[];
@@ -256,7 +256,7 @@ export const hotelState = (el: ElementTimeline, scene: Scene): HotelState => {
     numberScale,
     roomsOpacity,
     groundOpacity,
-    wallWidth: lerp(stroke.sheet, hotel.wallPulse, wallPulse),
+    wallPulse,
     roomPulse: (n) => Math.max(0, ...roomPulses.map((f) => f(n, roomX, w, end))),
     lit: (n) => Math.max(0, ...lights.map((l) => (l.on(n) ? l.level * (1 - (l.off.get(n) ?? 0)) : 0))),
     guests: guests.map((g) => {
@@ -308,6 +308,14 @@ export const Hotel: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, sce
   if (measuring.length) return <AbsoluteFill>{measuring}</AbsoluteFill>;
 
   const { w, roof, floor, left } = s;
+  // A newcomer's number tag: a badge in its color under its feet, the number
+  // dark on it, so it reads as the newcomer's, not as a room number.
+  const tagged = tags.map((t) => {
+    const i = ink(String(t.k));
+    const [half, height] = [(i.r - i.l) / 2 + hotel.tagPad[0], i.b - i.t + 2 * hotel.tagPad[1]];
+    const top = t.at[1] + hotel.tagGap;
+    return { ...t, shown: t.opacity * fadeOf(t.at[0]), badge: [t.at[0] - half, top, t.at[0] + half, top + height] as [number, number, number, number] };
+  });
   const wallX = (k: number) => left + k * w;
   const outline = (pulse: number) => mix(color.muted, color.text, pulse);
   const half = stroke.line / 2;
@@ -329,7 +337,9 @@ export const Hotel: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, sce
   const outside = s.finite !== null ? s.spotAt({ at: "outside" })[0] + hotel.floorPast * w : null;
   const floorEnds = [
     { key: "door", pts: [[s.ground, floor], [left, floor]] as Pt[], c: color.muted, o: s.groundOpacity },
-    ...(outside !== null ? [{ key: "past", pts: [[wallX(s.finite!), floor], [outside, floor]] as Pt[], c: color.muted, o: s.groundOpacity }] : []),
+    ...(outside !== null
+      ? [{ key: "past", pts: [[wallX(s.finite!), floor], [outside, floor]] as Pt[], c: outline(s.wallPulse), o: s.groundOpacity }]
+      : []),
   ];
   const lit = roomList.filter((n) => s.lit(n) > 0);
   const fadeEnd = s.fade ? s.fade[1] : Infinity;
@@ -361,7 +371,7 @@ export const Hotel: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, sce
             x2={wallX(s.finite)}
             y2={roof - half}
             stroke={color.text}
-            strokeWidth={s.wallWidth}
+            strokeWidth={lerp(stroke.sheet, hotel.wallPulse, s.wallPulse)}
             opacity={s.roomsOpacity}
           />
         ) : null}
@@ -374,6 +384,15 @@ export const Hotel: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, sce
         {s.guests.map((g, i) => {
           const o = g.opacity * fadeOf(g.at[0]);
           return o > 0 ? <GuestIcon key={i} at={g.at} w={w} color={g.color} opacity={o} pulse={g.pulse} /> : null;
+        })}
+        {tagged.map((t) => {
+          const ring = roundedRectPoints(t.badge, hotel.tagRadius);
+          return (
+            <g key={`b${t.k}`} opacity={t.shown}>
+              <polygon points={pointsAttr(ring)} fill={t.color} fillOpacity={figure.guest} />
+              <Polyline pts={ring} color={t.color} width={stroke.line} closed />
+            </g>
+          );
         })}
       </Svg>
       {numbers.map((n) => {
@@ -393,22 +412,19 @@ export const Hotel: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, sce
           />
         );
       })}
-      {tags.map((t) => {
-        const i = ink(String(t.k));
-        return (
-          <InkTex
-            key={`t${t.k}`}
-            tex={String(t.k)}
-            ink={i}
-            fontSize={hotel.number}
-            x={t.at[0]}
-            y={t.at[1] + hotel.tagGap + (i.b - i.t) / 2}
-            color={t.color}
-            opacity={t.opacity * fadeOf(t.at[0])}
-            kind="tag"
-          />
-        );
-      })}
+      {tagged.map((t) => (
+        <InkTex
+          key={`t${t.k}`}
+          tex={String(t.k)}
+          ink={ink(String(t.k))}
+          fontSize={hotel.number}
+          x={t.at[0]}
+          y={(t.badge[1] + t.badge[3]) / 2}
+          color={color.bg}
+          opacity={t.shown}
+          kind="tag"
+        />
+      ))}
     </AbsoluteFill>
   );
 };
