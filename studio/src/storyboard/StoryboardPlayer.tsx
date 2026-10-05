@@ -14,16 +14,19 @@ import { DirArrow } from "../components/DirArrow";
 import { Equation } from "../components/Equation";
 import { HalvingNest } from "../components/HalvingNest";
 import { Hand } from "../components/Hand";
+import { Hotel, hotelState } from "../components/Hotel";
 import { LightLine, lightLineState } from "../components/LightLine";
 import { Mirror, mirrorState } from "../components/Mirror";
 import { Mismatch } from "../components/Mismatch";
 import { Note } from "../components/Note";
 import { NumberLine } from "../components/NumberLine";
+import { NumberRow, numberRowState } from "../components/NumberRow";
 import { OrbitPath } from "../components/OrbitPath";
 import { PaperRect, paperState } from "../components/PaperRect";
 import { Person, personState } from "../components/Person";
 import { RimTrace } from "../components/RimTrace";
 import { Ring } from "../components/Ring";
+import { RoomArrows } from "../components/RoomArrows";
 import { Scenery } from "../components/Scenery";
 import { Spectrum } from "../components/Spectrum";
 import { SpinArrow } from "../components/SpinArrow";
@@ -68,6 +71,9 @@ const components: Record<string, Component> = {
   ConeCurves: { draw: ConeCurves },
   LightLine: { draw: LightLine, state: lightLineState },
   ConeBars: { draw: ConeBars },
+  Hotel: { draw: Hotel, state: hotelState },
+  RoomArrows: { draw: RoomArrows },
+  NumberRow: { draw: NumberRow, state: numberRowState },
 };
 
 // Draw order is declaration order, except that an element drawn beneath

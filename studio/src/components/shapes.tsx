@@ -73,13 +73,12 @@ export const StraightArrow: React.FC<Stroke & { tail: Pt; deg: number; length: n
   );
 };
 
-// A curved arrow along `pts` (a polyline from arcPoints), its head at the last
-// point, pointing along the last segment.
-export const CurvedArrow: React.FC<Stroke & { pts: Pt[]; head: number }> = ({ pts, head, color, width, opacity }) => {
-  if (pts.length < 2) return null;
+// A curved arrow's parts along `pts` (at least two points): its line, which
+// stops where the head's base begins, measured back along the curve, and its
+// head at the last point, pointing along the last segment.
+export const curvedArrowParts = (pts: Pt[], head: number) => {
   const length = pts.slice(1).reduce((sum, p, i) => sum + dist(pts[i], p), 0);
   const h = headFor(length, head);
-  // The line stops where the head's base begins, measured back along the curve.
   let left = h;
   let k = pts.length - 1;
   while (k > 0 && dist(pts[k - 1], pts[k]) < left) left -= dist(pts[k - 1], pts[k--]);
@@ -89,10 +88,18 @@ export const CurvedArrow: React.FC<Stroke & { pts: Pt[]; head: number }> = ({ pt
   const neck: Pt = [x1 - ((x1 - x0) * left) / seg, y1 - ((y1 - y0) * left) / seg];
   const tip = pts[pts.length - 1];
   const deg = Math.atan2(neck[1] - tip[1], tip[0] - neck[0]) * (180 / Math.PI);
+  return { line: [...pts.slice(0, k), neck], head: headPoints(tip, deg, h) };
+};
+
+// A curved arrow along `pts` (a polyline from arcPoints), its head at the last
+// point, pointing along the last segment.
+export const CurvedArrow: React.FC<Stroke & { pts: Pt[]; head: number }> = ({ pts, head, color, width, opacity }) => {
+  if (pts.length < 2) return null;
+  const parts = curvedArrowParts(pts, head);
   return (
     <g opacity={opacity}>
-      <Polyline pts={[...pts.slice(0, k), neck]} color={color} width={width} />
-      <polygon points={pointsAttr(headPoints(tip, deg, h))} fill={color} />
+      <Polyline pts={parts.line} color={color} width={width} />
+      <polygon points={pointsAttr(parts.head)} fill={color} />
     </g>
   );
 };

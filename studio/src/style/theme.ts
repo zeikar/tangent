@@ -141,6 +141,7 @@ export const figure = {
   hand: 0.6, // a hand's face, in its color
   ghostHand: 0.8,
   pulse: 0.85, // a pulsed part's fill at its peak
+  guest: 0.6, // a hotel guest (Hotel), in its color: an icon, not a solid person
   palmLines: 0.6, // in text
   profile: 0.5, // a turning person's body seen side on, as a share of its width
 } as const;
@@ -187,6 +188,31 @@ export const optics = {
   hatch: 24, // px: the stripe period hatching a bar above its target (stripes and gaps alike half of it)
   hatchGap: 0.3, // the hatching's gaps, in the bar's color
   floorOverhang: 40, // px: the bars' floor line past the outer bars
+} as const;
+
+// A row of numbered rooms seen from the front (Hotel), arrows between its
+// places (RoomArrows) and rows of numbers taken from it (NumberRow): px, or a
+// share of the room width w where noted. An endless row fades out to the
+// right, each drawn piece at the opacity of its x.
+export const hotel = {
+  number: 44, // TeX px: room numbers and newcomers' tags
+  numberDrop: 40, // a room's roof to its number's ink center
+  numberPulse: 1.2, // a pulsed number's scale, in a room or a row
+  street: 230, // the floor to the street line's feet
+  tagGap: 16, // a newcomer's feet to its tag's ink top
+  floorPast: 0.6, // of w: a finite hotel's floor line past its outside spot
+  lit: 0.15, // a lit room's fill, in yellow
+  guestPulse: 6, // a pulsed guest's outline (its fill goes to figure.pulse)
+  wallPulse: 10, // a pulsed end wall
+  wave: 1.5, // of w: half the width of a rooms pulse running along the row
+  arrowGap: 6, // a roof to a room arrow's ends
+  arrowInset: 0.15, // of w: a room arrow's ends from its rooms' centers
+  arrowRise: 0.4, // a room arrow's height, of its span
+  arrowPulse: 8, // a pulsed arrow's stroke (its head grows by mark.pulseScale)
+  headGap: 14, // a newcomer's head to its arrow's tail
+  floorGap: 8, // a newcomer's arrow tip to its room's floor
+  pairGap: 12, // a pairing line's ends to its numbers' ink
+  fadeStep: 8, // a fading line is cut into pieces at most this long
 } as const;
 
 // Default animation lengths. These are durations, not start times; start times

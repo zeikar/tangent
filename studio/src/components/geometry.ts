@@ -66,3 +66,19 @@ export const headPoints = (tip: Pt, deg: number, len: number): Pt[] => {
   const back = polar(tip, len, deg + 180);
   return [tip, polar(back, len / 2, deg + 90), polar(back, len / 2, deg - 90)];
 };
+
+// `n` points (n ≥ 2) evenly spaced along a polyline by length, both ends
+// included: two polylines resampled alike morph point for point.
+export const resample = (pts: Pt[], n: number): Pt[] => {
+  const lengths = pts.slice(1).map((p, i) => dist(pts[i], p));
+  const total = lengths.reduce((a, b) => a + b, 0);
+  const out: Pt[] = [];
+  let seg = 0;
+  let before = 0;
+  for (let i = 0; i < n; i++) {
+    const at = (total * i) / (n - 1);
+    while (seg < lengths.length - 1 && before + lengths[seg] < at) before += lengths[seg++];
+    out.push(lerpPt(pts[seg], pts[seg + 1], lengths[seg] ? Math.min(1, (at - before) / lengths[seg]) : 0));
+  }
+  return out;
+};
