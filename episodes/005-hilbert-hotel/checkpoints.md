@@ -17,3 +17,7 @@
 - 2026-10-05 · storyboard · approved without notes, including B1's caption
   dropping 방이 ("무한한 호텔이 꽉 찼어요.", 4 eojeol, while the take still
   says it), B4's pause at 1.2 s, and B7's row pulses.
+- 2026-10-05 · first look · no notes on the flow; one fix round from QA's
+  r1#1–4 and the cut critique's B3 size, B4 street arrows and B7 ending.
+  The first caption stays as approved for now, though both critics wanted
+  a question there (a retake would be needed).
