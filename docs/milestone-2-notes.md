@@ -315,3 +315,47 @@ YouTube Studio's automated review about 6 hours after upload: 1,170 views,
   the title avoided (C9).
 - **Still open:** the retention curve, to see whether viewers left at B2's
   graph or at B5, and 003's numbers at the same age.
+
+### Episode 005, Hilbert's hotel (2026-10-04 → 05)
+
+Published 2026-10-05 (https://youtube.com/shorts/wxwNU1ga1Ks), 44.9 s, the
+first episode written under "get to the answer well before the end": room
+1 empties at 9 s and the odd rooms at 25 s.
+
+- **Topic:** the human's own idea from the 2026-09-28 list, the
+  orchestrator's first pick for its quick picture-led answer. The human
+  then found the hotel itself common and the *why* more interesting, so the
+  topic was reshaped around it: a 10-room hotel pushes its last guest out,
+  and n → 2n pairs the naturals with the evens. The hotel stayed as the
+  hook (the human's pick over reframing as "naturals vs. evens").
+- **Research (~20 min):** "1924년 강연" is wrong (a 1924–25 lecture
+  course), Gamow spread the story without inventing it, the buses aren't
+  Hilbert's, and "셀 수 없이" contradicts the term 가산 for naturals and
+  evens (C19). None changed the insight.
+- **A race at the reshape:** the reshape went to the research agent
+  mid-run; the orchestrator committed its first report and spawned the
+  writers before it handled the message and revised research.md, so both
+  writers had to be told. A mid-run message to an agent means waiting for
+  its next report before acting on the files.
+- **Scripts:** both critics said revise, none restructure. Variant b found
+  that a spoken 2 collides with 이 (이 번 방, 이번엔) in a numbered-room
+  episode, so neither script says 2 aloud. The human picked a by ear,
+  overnight; terms like 가산/비가산 stayed out (a label with no picture),
+  and the uncountable was lined up as its own episode.
+- **Storyboard (~25 min), approved without notes:** the frame-0 caption
+  dropped 방이 to fit 4 eojeol, as 003 dropped 거울은.
+- **Production (~25 min), first look, one fix round (~15 min):** three new
+  components (Hotel, RoomArrows, NumberRow) and a per-piece fade. QA caught
+  a flying '8' reading "810" beside the '10' for 3 frames, which no check
+  flags (same row, boxes 8 px apart). Both critics wanted a question in the
+  first caption; the human kept the statement, with the title carrying the
+  question. A white edge needed 8 px, not 4, inside the bounds.
+- **Playlist:** 집합론, the human's pick after 무한 이야기, 무한의 크기 and
+  상상 속 수학 felt off. The orchestrator's own edit to publish.md used stale
+  string offsets and glued two notes lines; the publish agent repaired them.
+  An agent's file is better changed by that agent.
+- **Human wait:** overnight before the takes, then about 8 h at the final
+  checkpoint; every other checkpoint came back within minutes.
+- **Left for later:** check-render compares gray only (blue → red is
+  invisible to it) and has no minimum gap for text passing near text; a
+  storyboard rule to keep white edges 8 px inside the bounds.

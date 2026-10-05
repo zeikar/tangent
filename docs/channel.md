@@ -122,7 +122,10 @@ fill the metadata with `videos.update`, which the lock doesn't affect.
   next space topic was already shelved; the human's pick, 2026-09-28),
   `빛 이야기` (light: reflection and color, opened with 003 before a second
   episode was lined up, since magenta and graphite vs. diamond are open
-  light topics; the human's pick, 2026-09-30, since it can change later). Add
+  light topics; the human's pick, 2026-09-30, since it can change later),
+  `집합론` (set theory: the sizes of infinite sets, opened with 005 since
+  the uncountable episode was lined up; the human's pick over 무한 이야기,
+  무한의 크기 and 상상 속 수학, 2026-10-05, as the accurate field name). Add
   a theme playlist when a second episode shares a theme, or with the first
   when another in that theme is already lined up; otherwise an episode
   whose theme has no playlist goes in none, and publish.md names its theme
