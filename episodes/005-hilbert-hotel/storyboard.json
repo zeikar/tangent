@@ -1,0 +1,1183 @@
+{
+  "slug": "005-hilbert-hotel",
+  "loop": true,
+  "notes": [
+    "Written against script.md (script a, picked 2026-10-05) and take1@1.08.words.json, which narration.json names. B1's Display drops the spoken '방이' so the frame-0 chunk fits 4 eojeol (see Captions below).",
+    "Geometry is px in the 1080×1920 frame, origin top-left; points are [x, y]. A Hotel is placed by origin (room 1's left wall x, the floor line y) and room [w, h]; room n's center x is origin.x + (n − 0.5) w, its roof is floor − h.",
+    "One hotel, three layouts. Big (B1, B2, and B7's end, the loop): origin (264, 845), room 120 × 200 (roof y 645), fade x 624 → 936, ground from x 160; room centers 324, 444, 564, 684, 804, 924 (rooms 1–3 full, 4 at 0.81, 5 at 0.42, 6 at 0.04); the newcomer at the door stands at x 204. B3 (two hotels, room for room): both rooms 62 × 130 from x 152, the 10-room hotel's floor at 670 (roof 540), the infinite one's at 950 (roof 820, fade 834 → 936); room n's center 121 + 62n, so room 10 is at 741, the end wall at x 772, and right under the wall and the pushed-out guest (803) sits the infinite hotel's room 11 (803, full opacity), then 12 (865, 0.70) and 13 (927, 0.09). B4: origin (152, 788), room 90 × 160 (roof 628), fade 692 → 936; centers 107 + 90n (197, 287, … 737 at 0.82, 827 at 0.45, 917 at 0.08), so 1→2, 2→4, 3→6 and 4→8 are all on screen; the newcomers' street line stands 230 px below the floor (feet y 1018, tags to y 1070).",
+    "Why three sizes: frame 0 wants the hotel as big as it can be while still reading as endless (5 rooms before the fade at w 120); B3 needs 13 room widths across 792 px (w 62, the writer's ~12 widths), with room 10 against the wall over the infinite hotel's room 11 as the focus (the critics' preference); B4 needs room 8 on screen for 4→8 (w 90). The door spot exists only in the big layout; B3 and B4 put room 1 at the left edge (x 152), so the picture stays centered without it.",
+    "Rows (B5–B6): two NumberRows on B4's room centers (x 197 + 90 (n − 1)) with B4's fade: the top row, 1, 2, 3, … (the rooms the guests came from), at B4's room-number height (ink center y 668), so it is the room numbers themselves; the bottom row, 2, 4, 6, … (the rooms they moved to), at y 856; TeX 58 px (digits 46.7 px tall, '10' 61.6 px wide, 28 px apart at the 90 px step). Pairing lines: vertical, x 197 + 90 (n − 1), y 704–820, 12 px clear of both rows' ink. Row names centered on the frame: '자연수' ink center (540, 595), 24 px above the top row; '짝수' (540, 929), 24 px below the bottom row.",
+    "Frame 0 is the hook: the big hotel, visibleAtStart, full (a blue guest in every room out to the fade), its numbers 1–6, and the yellow newcomer standing at the door left of room 1, under the first caption '무한한 호텔이 꽉 찼어요.'. The ink spans x 160 to about 911 (where the fade drops under the ink level), y 643–847: the full width of the zone at its middle. A row of rooms is long and low by nature; taller rooms would only add empty space above the guests, and wider ones would show fewer rooms before the fade.",
+    "Endless means fading: an infinite hotel, its arrows and the number rows are drawn at full opacity left of the fade's start and fade linearly to 0 at x 936, the content edge minus 4 px (004's bounds lesson: the encoder spreads an edge a few px). Nothing is drawn past x 936: the fade is applied per drawn piece (each segment or glyph at the opacity of its x, so the probe sees it) and clipped at x 936, since a piece near the end can straddle it (the bottom row's '18' at x 917 is 62 px wide; its teal at 0.08 still counts as ink).",
+    "Loop: the last frame is the first. Both show the hotel in the big layout, a blue guest in every room, numbers, walls and ground at full opacity, no light, and the yellow newcomer at the door; nothing else is alive. B7 turns the newcomers in the odd rooms blue (they are guests now) as a new newcomer stands at the door. The last caption ends at the pause (until), so the loop's last frames carry none and frame 0's caption follows.",
+    "Honest moves (research C15, C17). Every move is all guests at once: they start together, slide straight along the floor and land together. In 2n the row of guests stretches to twice its spacing (guest n is always at n times the current spacing), so no one walks ahead or arrives after another; the arrows say who goes where, which is the mathematics (the assignment). Newcomers move straight along their own arrows into their rooms, also all at once. In B3, the 10-room hotel's empty room 1 is never lit, and nobody is admitted to it: the picture shows only that this one move pushes someone out (C17).",
+    "Color meanings hold for the whole episode: a guest's color says who it is (blue: was already in the hotel; yellow: new), and an arrow takes the color of the guest it moves. B2's newcomer turns blue on B4's first word, when the hotel recenters, so the 2n move is only blue guests and yellow keeps meaning 'new'. Yellow also lights an empty room: a room for a newcomer.",
+    "Draw order is declaration order: inf < hops < fin < finHops < dbl < qArrows < rowN < rowE < lblN < lblE. Arrows draw over the hotel; the rows draw over the fading hotel.",
+    "An element is invisible until its appear cue, unless it has visibleAtStart. Cues sharing an anchor run in parallel, except that an appear waits for the exits on its anchor. Every exit is a 0.2 s even fade. Easing from theme.ts: ease.out for appear, ease.exit for exit, ease.smooth for everything else, unless params say ease: linear or cruise. A beat's first-word cue that isn't an entrance or exit is linear (B2's pulse) or cruise (B3's move), so it shows within the 3-frame reaction window. B1, B6 and B7 have no cue on their first word.",
+    "Numbers never move from one element to the other by being drawn twice: when the top row appears (B5) it takes over the hotel's room numbers on that frame (the hotel stops drawing them), and when it gathers back (B7) the hotel draws them again from the frame the row lands. The bottom row's copies leave the even rooms' numbers under 0.3 opacity until clear of them. Check-render fails any two texts meeting, moving or not.",
+    "Text: in the visual zone, only TeX numbers and the two row names. Room numbers and the newcomers' tags are TeX 44 px (digits 35.5 px tall; '10' 46.7 px wide, which leaves 5.6 px to each wall in B3's 62 px rooms); the rows TeX 58 px; '자연수' and '짝수' in Note (Pretendard SemiBold 56, advance width 145 and 97 px). Captions measured from Pretendard-Bold.otf advance widths at 60 px: widest '짝수는 자연수의 일부인데도요.' 719 px, then '수학에서는 이렇게 짝지어지면' 702 px and '2배인 방으로 옮기면 돼요.' 614 px; all fit one 800 px line.",
+    "Extents worked out from the geometry, not yet measured on a render: the 2n arcs in B4 that rise from fading rooms (n = 6–8) reach about y 400 near x 936, where they are nearly gone; the tallest clearly visible one, 5→10, peaks at y 453; the B3 hops clear the end wall by 21 px; the guests at w 62 clear each wall by 8 px; the pulsed row numbers (1.2×) clear the pairing lines by 5.5 px. B5's arc-to-line straightening and the bottom row's flight cross the top row's numbers while moving (a warn at most); if it reads badly, the lines may grow in place as the arcs fade."
+  ],
+  "colors": {
+    "blue": "원래 있던 손님, 그 손님이 옮기는 화살표, 짝짓기 선",
+    "yellow": "새 손님과 번호표, 새 손님의 화살표, 새 손님을 받을 빈 방",
+    "teal": "짝수 (아래 줄, B6에서 켜지는 위 줄의 짝수, '짝수' 이름)",
+    "red": "방 10개 호텔에서 밖으로 밀려난 손님과 그 화살표",
+    "text": "방 번호, 자연수 줄과 '자연수' 이름, 방 10개 호텔 끝의 벽",
+    "muted": "방 칸과 바닥선, B6에서 흐려지는 위 줄의 홀수"
+  },
+  "components": [
+    {
+      "name": "Hotel",
+      "status": "new",
+      "spec": "A hotel seen from the front: one row of numbered rooms, each holding at most one guest, and newcomers waiting outside. Props: rooms (a count N: rooms 1..N, ending in a wall; or 'infinite'); origin [x, y] (room 1's left wall and the floor line); room [w, h]; fade [x0, x1] (infinite only: the hotel is drawn at opacity 1 left of x0, falling linearly to 0 at x1, nothing past x1; per piece, so the probe sees it); ground (x where the floor line starts on the left); guests {color} (every room full from the start); waiting {at: door, color} (one newcomer at the door: one room width left of room 1's center, on the floor). Drawing: room outlines muted, 4 px (stroke.line), neighbours sharing walls, the roof one line along the tops, no fill; the floor line muted 4 px from `ground` into the fade (a finite hotel's to 0.6 w past its outside spot); a finite hotel's end wall after room N in text, 6 px (stroke.sheet), floor to roof. Room numbers: TeX 44 px in text, ink centered on the room's center x at roof + 40; they never scale. A guest is a person icon centered on its room, standing on the floor, scaled with w: a body 0.6 w wide and 0.55 w tall with its top corners rounded at 0.2 w (shoulders), a round head of radius 0.16 w centered 0.75 w above the floor, filled in its color at 0.6 with a 4 px outline in its color (0.91 w tall: 109 px at w 120, 82 at 90, 56 at 62). A lit room (empty, for a newcomer): outline yellow 4 px over the walls, fill yellow at 0.15. Street line: newcomer k stands under room k's center, feet 230 px below the floor, its tag k (TeX 44 px, in its color) centered under its feet, ink top 16 px below them. A finite hotel's outside spot: one room width right of room N's center, on the floor. Exposes its live geometry (rooms, roof, floor, number places, street and outside spots, fade) to RoomArrows and NumberRow. Actions: appear (fade in); exit; moveTo {origin, room, fade, ground} (geometry only: strokes and number size never scale; guests stay in their rooms); pulse {part: guests | rooms | numbers | wall | waiting, rooms?: [n]} (guests: fill 0.6 → 0.85, outline 4 → 6 px and back; rooms: those rooms' walls muted → text and back; numbers: scale 1.2 and back; wall: 6 → 10 px and back); with wave: true, a rooms pulse runs left to right through every room into the fade over its span, so the eye follows the row off the edge; shift {map: n+1 | 2n} (every guest in a room moves at once from room n to room map(n), sliding straight along the floor; all start and land together, so in 2n the row stretches to twice its spacing; in a finite hotel a guest whose new room is past N slides through the end wall to the outside spot); light {rooms: [n] | odd} (lit at once, out to the fade; a light goes off when a guest lands in its room); lineUp {at: street, count: infinite, tags: true, color} (the street line appears newcomer by newcomer from the left into the fade over the span) or {at: door, color} (one newcomer fades in at the door); admit {map: 1 | 2k-1} (the waiting newcomers move into rooms at once: the one at the door slides right into room 1; street newcomer k moves straight along its arrow up into room 2k−1, its tag fading as it leaves; all land together and become those rooms' guests in their color); setGuests {rooms: all | odd | even | outside | [n], color?, opacity?} (recolor or fade guests; a guest at opacity 0 still holds its room); setStyle {rooms?, ground?} (those parts' opacity). Its room numbers are handed to a NumberRow and back (see NumberRow)."
+    },
+    {
+      "name": "RoomArrows",
+      "status": "new",
+      "spec": "Arrows showing an assignment between places in a Hotel, read from its live geometry and fade. Props: of (a Hotel id), from: rooms | street, map: n+1 | 2n (from rooms) or 2k-1 (from street), color. From rooms: one arrow per room n, a half-ellipse above the roof from 6 px above room n's roof at its center + 0.15 w to 6 px above room map(n)'s roof at its center − 0.15 w, its height 0.4 × that span, 5 px (stroke.arrow), its 18 px head (mark.head) at the tip pointing down into the target room. In a finite hotel, room N's arrow arcs over the end wall and points down at the outside spot (the room that isn't there). From street: newcomer k's arrow is straight, from 14 px above its head to 8 px below room 2k−1's floor at its center. Arrows run on into the fade, every point at the hotel's opacity for its x; curves are polylines (geometry.ts). Actions: appear (all at once, each growing from its tail); exit; setStyle {which?: [n], opacity?, color?}; pulse {which?} (stroke 5 → 8 px, head 1.3×, and back); pairTo {top, bottom} (2n only: each arrow n straightens into a plain vertical 5 px line at NumberRow top's n-th x, from 12 px below that row's ink to 12 px above NumberRow bottom's n-th number, its head shrinking away; from then on it follows those rows and their fade)."
+    },
+    {
+      "name": "NumberRow",
+      "status": "new",
+      "spec": "A row of numbers going on to the right. Props: values: n | 2n (the n-th number, n = 1, 2, 3, …), x0 (the first number's center), step, y (ink center), size (TeX px; 58 = type.mathInline), color, fade [x0, x1] (as Hotel's). Actions: appear {from: hotel} (all at once, each number starts on the hotel's room number of the same value, at its size and place, and moves and grows to its own place; a row of n takes over the hotel's room numbers: from the cue's frame the hotel no longer draws them, so no number is drawn twice; a row of 2n starts as copies of the even rooms' numbers that fade in as they leave, under 0.3 opacity until clear of the number they left; a number whose room lies past the hotel's fade fades in at its place); pulse {which?: all | even | odd} (scale 1.2 and back); setStyle {which: all | even | odd, color?, opacity?}; gather {into: hotel} (a row of n only, the reverse: each number moves and shrinks onto room n's number in that hotel's live geometry, taking its color; the hotel draws its numbers again from the frame they land, and the row is no longer drawn; each number's opacity follows the fade at its x, the row's at the start and the hotel's at the end); exit."
+    },
+    {
+      "name": "Note",
+      "status": "existing",
+      "spec": "One line of plain text with $...$ math (studio/src/components/Note.tsx): props text, at [x, y] (the ink center), color (default text); type.label. Actions: appear, exit, setText. Used for the row names '자연수' and '짝수'."
+    }
+  ],
+  "beats": [
+    {
+      "id": "B1",
+      "name": "훅",
+      "readAloud": "방이 무한한 호텔이 꽉 찼어요. 한 명 더 들어갈 수 있을까요?",
+      "captions": [
+        {
+          "text": "무한한 호텔이 꽉 찼어요.",
+          "at": {
+            "word": "방이"
+          }
+        },
+        {
+          "text": "한 명 더",
+          "at": {
+            "word": "한"
+          }
+        },
+        {
+          "text": "들어갈 수 있을까요?",
+          "at": {
+            "word": "들어갈"
+          }
+        }
+      ],
+      "pauseAfter": 0,
+      "elements": [
+        {
+          "id": "inf",
+          "component": "Hotel",
+          "visibleAtStart": true,
+          "props": {
+            "rooms": "infinite",
+            "origin": [264, 845],
+            "room": [120, 200],
+            "fade": [624, 936],
+            "ground": 160,
+            "guests": {
+              "color": "blue"
+            },
+            "waiting": {
+              "at": "door",
+              "color": "yellow"
+            }
+          },
+          "where": "the big layout: rooms from x 264 (room 1) on, 120 × 200, roof y 645, floor y 845, fading out by x 936 (rooms 1–3 full, 4 at 0.81, 5 at 0.42); the floor line from x 160; the yellow newcomer at the door at x 204, left of room 1, feet on the floor. The infinite hotel for the whole episode: moves down in B3, recenters smaller in B4, hands its numbers to the rows in B5 and takes them back in B7, ending as it starts"
+        }
+      ],
+      "cues": [
+        {
+          "at": {
+            "word": "무한한"
+          },
+          "target": "inf",
+          "action": "pulse",
+          "params": {
+            "part": "rooms",
+            "wave": true,
+            "ease": "linear"
+          },
+          "until": {
+            "word": "꽉"
+          },
+          "note": "'무한한': a glow runs along the rooms from room 1 into the fade, so the eye follows the row off the edge: it doesn't end"
+        },
+        {
+          "at": {
+            "word": "꽉"
+          },
+          "target": "inf",
+          "action": "pulse",
+          "params": {
+            "part": "guests"
+          },
+          "speed": "base",
+          "note": "'꽉 찼어요': every room's guest at once; no room is empty"
+        },
+        {
+          "at": {
+            "word": "한"
+          },
+          "target": "inf",
+          "action": "pulse",
+          "params": {
+            "part": "waiting"
+          },
+          "speed": "base",
+          "note": "'한 명 더': the newcomer at the door"
+        }
+      ],
+      "endFrame": "Frame 0's picture, still: the big hotel full of blue guests, fading out to the right, the yellow newcomer at the door left of room 1. Caption: '들어갈 수 있을까요?'",
+      "claims": ["C1"]
+    },
+    {
+      "id": "B2",
+      "name": "한 칸씩",
+      "readAloud": "있어요. 모두 동시에, 자기 방 바로 다음 방으로 옮기면 돼요. 일 번 방이 비죠.",
+      "captions": [
+        {
+          "text": "있어요. 모두 동시에",
+          "at": {
+            "word": "있어요"
+          }
+        },
+        {
+          "text": "자기 방 바로 다음",
+          "at": {
+            "word": "자기"
+          }
+        },
+        {
+          "text": "방으로 옮기면 돼요.",
+          "at": {
+            "word": "방으로"
+          }
+        },
+        {
+          "text": "1번 방이 비죠.",
+          "at": {
+            "word": "일"
+          }
+        }
+      ],
+      "pauseAfter": 0.5,
+      "elements": [
+        {
+          "id": "hops",
+          "component": "RoomArrows",
+          "props": {
+            "of": "inf",
+            "from": "rooms",
+            "map": "n+1",
+            "color": "blue"
+          },
+          "where": "one short arc over each room to the next, on the big layout: from (center + 18, 639) to (next center − 18, 639), 34 px high (top y 605), into the fade; dimmed to 0.35 after the move and kept, following the hotel, until B4"
+        }
+      ],
+      "cues": [
+        {
+          "at": {
+            "word": "있어요"
+          },
+          "target": "inf",
+          "action": "pulse",
+          "params": {
+            "part": "waiting",
+            "ease": "linear"
+          },
+          "speed": "base",
+          "note": "'있어요': the answer is about the newcomer. Linear so it shows within 3 frames"
+        },
+        {
+          "at": {
+            "word": "모두"
+          },
+          "target": "inf",
+          "action": "pulse",
+          "params": {
+            "part": "guests"
+          },
+          "speed": "base",
+          "note": "'모두 동시에': every guest at the same moment, out into the fade"
+        },
+        {
+          "at": {
+            "word": "바로"
+          },
+          "target": "hops",
+          "action": "appear",
+          "speed": "base",
+          "note": "'바로 다음 방으로': one arrow per guest, all at once, room n to n+1, running on into the fade"
+        },
+        {
+          "at": {
+            "word": "옮기면"
+          },
+          "target": "inf",
+          "action": "shift",
+          "params": {
+            "map": "n+1"
+          },
+          "speed": "base",
+          "note": "'옮기면': every guest slides one room right at once, out to the fade; room 1 is left empty (C1, C15: all together, never one after another)"
+        },
+        {
+          "at": {
+            "word": "일"
+          },
+          "target": "inf",
+          "action": "light",
+          "params": {
+            "rooms": [1]
+          },
+          "speed": "fast",
+          "note": "'일 번 방이': the empty room 1 lights yellow, a room for the newcomer"
+        },
+        {
+          "at": {
+            "word": "일"
+          },
+          "target": "hops",
+          "action": "setStyle",
+          "params": {
+            "opacity": 0.35
+          },
+          "speed": "base",
+          "note": "the arrows step back but stay, as the record of the move"
+        },
+        {
+          "at": {
+            "word": "비죠"
+          },
+          "target": "inf",
+          "action": "admit",
+          "params": {
+            "map": "1"
+          },
+          "speed": "base",
+          "note": "'비죠': the newcomer slides from the door into room 1; the light goes off as it lands. The hotel is full again, newcomer included"
+        }
+      ],
+      "endFrame": "The big hotel full again: the yellow newcomer in room 1, blue guests in rooms 2 on into the fade, nobody at the door, no light; the one-room arrows at 0.35 over every pair of rooms. Caption: '1번 방이 비죠.' Held through the 0.5 s pause.",
+      "claims": ["C1", "C15"]
+    },
+    {
+      "id": "B3",
+      "name": "마지막 방",
+      "readAloud": "방이 열 개뿐인 호텔에서 똑같이 하면, 마지막 방 손님이 밖으로 밀려나요. 무한 호텔엔 마지막 방이 없어서, 밀려나는 사람이 없어요.",
+      "captions": [
+        {
+          "text": "방이 10개뿐인 호텔에서",
+          "at": {
+            "word": "방이",
+            "nth": 1
+          }
+        },
+        {
+          "text": "똑같이 하면",
+          "at": {
+            "word": "똑같이"
+          }
+        },
+        {
+          "text": "마지막 방 손님이",
+          "at": {
+            "word": "마지막",
+            "nth": 1
+          }
+        },
+        {
+          "text": "밖으로 밀려나요.",
+          "at": {
+            "word": "밖으로"
+          }
+        },
+        {
+          "text": "무한 호텔엔",
+          "at": {
+            "word": "무한"
+          }
+        },
+        {
+          "text": "마지막 방이 없어서",
+          "at": {
+            "word": "마지막",
+            "nth": 2
+          }
+        },
+        {
+          "text": "밀려나는 사람이 없어요.",
+          "at": {
+            "word": "밀려나는"
+          }
+        }
+      ],
+      "pauseAfter": 0.5,
+      "elements": [
+        {
+          "id": "fin",
+          "component": "Hotel",
+          "props": {
+            "rooms": 10,
+            "origin": [152, 670],
+            "room": [62, 130],
+            "ground": 152,
+            "guests": {
+              "color": "blue"
+            }
+          },
+          "where": "the 10-room hotel, above the infinite one and room for room with it: rooms 1–10 at x 152–772, roof y 540, floor y 670, numbers' ink center y 580; the end wall at x 772; the floor line from x 152 to 840, past the outside spot (803)"
+        },
+        {
+          "id": "finHops",
+          "component": "RoomArrows",
+          "props": {
+            "of": "fin",
+            "from": "rooms",
+            "map": "n+1",
+            "color": "blue"
+          },
+          "where": "the same one-room arcs over the 10-room hotel (17 px high, top y 517); room 10's arcs over the end wall (21 px clear) and points down at the outside spot (803): the room that isn't there"
+        }
+      ],
+      "cues": [
+        {
+          "at": {
+            "word": "방이",
+            "nth": 1
+          },
+          "target": "inf",
+          "action": "moveTo",
+          "params": {
+            "origin": [152, 950],
+            "room": [62, 130],
+            "fade": [834, 936],
+            "ground": 152,
+            "ease": "cruise"
+          },
+          "speed": "base",
+          "note": "'방이 열 개뿐인': the infinite hotel shrinks and moves down (rooms 62 × 130, roof y 820, floor y 950, fade 834 → 936), its dimmed arrows with it. Cruise so it shows within 3 frames"
+        },
+        {
+          "at": {
+            "word": "개뿐인"
+          },
+          "target": "fin",
+          "action": "appear",
+          "speed": "base",
+          "note": "the 10-room hotel fades in above, full, the same shape, its rooms 1–10 right over the infinite hotel's 1–10 (by now the infinite hotel is below y 727)"
+        },
+        {
+          "at": {
+            "word": "똑같이"
+          },
+          "target": "finHops",
+          "action": "appear",
+          "speed": "base",
+          "note": "'똑같이': the same arrows, all at once; room 10's goes over the wall to nothing"
+        },
+        {
+          "at": {
+            "word": "하면"
+          },
+          "target": "fin",
+          "action": "shift",
+          "params": {
+            "map": "n+1"
+          },
+          "speed": "base",
+          "note": "'하면': all ten slide one room right at once; the guest of room 10 slides through the end wall to the outside spot. Room 1 is left empty and is not lit: nobody comes in (C17)"
+        },
+        {
+          "at": {
+            "word": "마지막",
+            "nth": 1
+          },
+          "target": "fin",
+          "action": "pulse",
+          "params": {
+            "part": "wall"
+          },
+          "speed": "base",
+          "note": "'마지막 방': the end wall, where the hotel stops"
+        },
+        {
+          "at": {
+            "word": "밀려나요"
+          },
+          "target": "fin",
+          "action": "setGuests",
+          "params": {
+            "rooms": "outside",
+            "color": "red"
+          },
+          "speed": "fast",
+          "note": "'밀려나요': the guest outside turns red: it has no room"
+        },
+        {
+          "at": {
+            "word": "밀려나요"
+          },
+          "target": "finHops",
+          "action": "setStyle",
+          "params": {
+            "which": [10],
+            "color": "red"
+          },
+          "speed": "fast",
+          "note": "and so does the arrow that sent it there"
+        },
+        {
+          "at": {
+            "word": "무한"
+          },
+          "target": "inf",
+          "action": "pulse",
+          "params": {
+            "part": "rooms",
+            "wave": true,
+            "ease": "linear"
+          },
+          "until": {
+            "word": "마지막",
+            "nth": 2
+          },
+          "note": "'무한 호텔엔': the glow runs along the lower row past room 10 and on into the fade"
+        },
+        {
+          "at": {
+            "word": "마지막",
+            "nth": 2
+          },
+          "target": "inf",
+          "action": "pulse",
+          "params": {
+            "part": "rooms",
+            "rooms": [11]
+          },
+          "speed": "base",
+          "note": "'마지막 방이 없어서': room 11 lights its walls, right under the wall and the red guest"
+        },
+        {
+          "at": {
+            "word": "마지막",
+            "nth": 2
+          },
+          "target": "hops",
+          "action": "setStyle",
+          "params": {
+            "which": [10],
+            "opacity": 1
+          },
+          "speed": "base",
+          "note": "the lower hotel's arrow from room 10 to room 11 comes back to full: the same guest has a room here"
+        },
+        {
+          "at": {
+            "word": "밀려나는"
+          },
+          "target": "inf",
+          "action": "pulse",
+          "params": {
+            "part": "guests",
+            "rooms": [11]
+          },
+          "speed": "base",
+          "note": "'밀려나는 사람이 없어요': the guest in room 11, the counterpart of the red one above"
+        }
+      ],
+      "endFrame": "Two hotels, rooms aligned. Above: rooms 1–10, room 1 empty and unlit, blue guests in 2–10, the end wall at x 772, the red guest standing outside it at x 803, the one-room arrows (room 10's red, over the wall). Below: the infinite hotel full (the yellow newcomer in room 1, blue guests after it), room 11 under the red guest, 12 and 13 fading out; its arrows at 0.35 except room 10's, full. Caption: '밀려나는 사람이 없어요.' Held through the 0.5 s pause.",
+      "claims": ["C17", "C1"]
+    },
+    {
+      "id": "B4",
+      "name": "두 배 번호",
+      "readAloud": "새 손님이 끝없이 줄지어 와도요. 있던 손님은 모두, 자기 방 번호의 두 배인 방으로 옮기면 돼요. 홀수 방이 전부 비죠.",
+      "captions": [
+        {
+          "text": "새 손님이 끝없이",
+          "at": {
+            "word": "새"
+          }
+        },
+        {
+          "text": "줄지어 와도요.",
+          "at": {
+            "word": "줄지어"
+          }
+        },
+        {
+          "text": "있던 손님은 모두",
+          "at": {
+            "word": "있던"
+          }
+        },
+        {
+          "text": "자기 방 번호의",
+          "at": {
+            "word": "자기"
+          }
+        },
+        {
+          "text": "2배인 방으로 옮기면 돼요.",
+          "at": {
+            "word": "두"
+          }
+        },
+        {
+          "text": "홀수 방이 전부 비죠.",
+          "at": {
+            "word": "홀수"
+          }
+        }
+      ],
+      "pauseAfter": 1.2,
+      "elements": [
+        {
+          "id": "dbl",
+          "component": "RoomArrows",
+          "props": {
+            "of": "inf",
+            "from": "rooms",
+            "map": "2n",
+            "color": "blue"
+          },
+          "where": "B4 layout: an arc over the roof (y 628) from room n to room 2n, 0.4 × its span high: 1→2 (top y 597), 2→4 (561), 3→6 (525), 4→8 (489, its head at 0.45 opacity), 5→10 on into the fade; the later ones rise from rooms already fading. Straightens into the pairing lines in B5"
+        },
+        {
+          "id": "qArrows",
+          "component": "RoomArrows",
+          "props": {
+            "of": "inf",
+            "from": "street",
+            "map": "2k-1",
+            "color": "yellow"
+          },
+          "where": "B4 layout: straight arrows from newcomer k (over its head, y 922) up to the floor of room 2k−1 (y 796): from x 197 straight up into room 1, 287 → 377 (room 3), 377 → 557 (5), 467 → 737 (7), 557 → 917 (9, fading)"
+        }
+      ],
+      "cues": [
+        {
+          "at": {
+            "word": "새"
+          },
+          "target": "fin",
+          "action": "exit",
+          "speed": "fast",
+          "note": "'새 손님이': the 10-room hotel goes"
+        },
+        {
+          "at": {
+            "word": "새"
+          },
+          "target": "finHops",
+          "action": "exit",
+          "speed": "fast"
+        },
+        {
+          "at": {
+            "word": "새"
+          },
+          "target": "hops",
+          "action": "exit",
+          "speed": "fast"
+        },
+        {
+          "at": {
+            "word": "새"
+          },
+          "target": "inf",
+          "action": "moveTo",
+          "params": {
+            "origin": [152, 788],
+            "room": [90, 160],
+            "fade": [692, 936],
+            "ground": 152,
+            "ease": "cruise"
+          },
+          "speed": "base",
+          "note": "the infinite hotel comes back to the middle, bigger again (rooms 90 × 160, roof y 628, floor y 788, room 1 at the left edge)"
+        },
+        {
+          "at": {
+            "word": "새"
+          },
+          "target": "inf",
+          "action": "setGuests",
+          "params": {
+            "rooms": [1],
+            "color": "blue"
+          },
+          "speed": "base",
+          "note": "B2's newcomer in room 1 is a guest now: blue, so yellow keeps meaning new"
+        },
+        {
+          "at": {
+            "word": "끝없이"
+          },
+          "target": "inf",
+          "action": "lineUp",
+          "params": {
+            "at": "street",
+            "count": "infinite",
+            "tags": true,
+            "color": "yellow"
+          },
+          "until": {
+            "word": "와도요"
+          },
+          "note": "'끝없이 줄지어': the newcomers line up on the street in front of the hotel, one under each room, from the door side on into the fade, each with its number tag 1, 2, 3, …"
+        },
+        {
+          "at": {
+            "word": "있던"
+          },
+          "target": "inf",
+          "action": "pulse",
+          "params": {
+            "part": "guests"
+          },
+          "speed": "base",
+          "note": "'있던 손님은 모두': every guest in a room"
+        },
+        {
+          "at": {
+            "word": "번호의"
+          },
+          "target": "inf",
+          "action": "pulse",
+          "params": {
+            "part": "numbers"
+          },
+          "speed": "base",
+          "note": "'자기 방 번호의': the room numbers, which the arrows will connect"
+        },
+        {
+          "at": {
+            "word": "두"
+          },
+          "target": "dbl",
+          "action": "appear",
+          "speed": "base",
+          "note": "'두 배인 방으로': all the arrows at once, room n to room 2n, longer as n grows and running into the fade (C3)"
+        },
+        {
+          "at": {
+            "word": "옮기면"
+          },
+          "target": "inf",
+          "action": "shift",
+          "params": {
+            "map": "2n"
+          },
+          "speed": "base",
+          "note": "'옮기면': every guest slides at once to room 2n; the row stretches to double spacing and all land together (C15: the assignment, not a walk)"
+        },
+        {
+          "at": {
+            "word": "홀수"
+          },
+          "target": "inf",
+          "action": "light",
+          "params": {
+            "rooms": "odd"
+          },
+          "speed": "fast",
+          "note": "'홀수 방이 전부': rooms 1, 3, 5, 7, … light yellow, all at once, out into the fade"
+        },
+        {
+          "at": {
+            "word": "비죠"
+          },
+          "target": "qArrows",
+          "action": "appear",
+          "speed": "fast",
+          "note": "'비죠': each newcomer's arrow to its room, newcomer k to room 2k−1, all at once, into the fade"
+        },
+        {
+          "at": {
+            "pause": true
+          },
+          "target": "inf",
+          "action": "admit",
+          "params": {
+            "map": "2k-1"
+          },
+          "speed": "base",
+          "note": "after the last word: every newcomer moves along its arrow into its odd room at once, tags falling away; the lights go off as they land and the hotel is full again. Held 0.5 s (pauseAfter 1.2 instead of the script's 0.8: the rooms stay visibly empty through '비죠' and the full hotel still gets its moment)"
+        }
+      ],
+      "endFrame": "B4 layout: the infinite hotel full again, blue guests in the even rooms, yellow newcomers in the odd rooms, out into the fade; the blue arcs n → 2n above the roof; the yellow arrows below from the now empty street into the odd rooms; no tags, no lights. Caption: '홀수 방이 전부 비죠.' Held 0.5 s.",
+      "claims": ["C3", "C15"]
+    },
+    {
+      "id": "B5",
+      "name": "짝짓기",
+      "readAloud": "번호만 보면, 이건 자연수와 짝수를 하나도 안 남기고 짝지은 거예요.",
+      "captions": [
+        {
+          "text": "번호만 보면",
+          "at": {
+            "word": "번호만"
+          }
+        },
+        {
+          "text": "이건 자연수와 짝수를",
+          "at": {
+            "word": "이건"
+          }
+        },
+        {
+          "text": "하나도 안 남기고",
+          "at": {
+            "word": "하나도"
+          }
+        },
+        {
+          "text": "짝지은 거예요.",
+          "at": {
+            "word": "짝지은"
+          }
+        }
+      ],
+      "pauseAfter": 0.4,
+      "elements": [
+        {
+          "id": "rowN",
+          "component": "NumberRow",
+          "props": {
+            "values": "n",
+            "x0": 197,
+            "step": 90,
+            "size": 58,
+            "fade": [692, 936],
+            "y": 668,
+            "color": "text"
+          },
+          "where": "the top row 1, 2, 3, …: the room numbers themselves, at B4's room centers x 197, 287, … and ink center y 668, grown from 44 to 58 px; fading out as the rooms did (7 at 0.82, 8 at 0.45, 9 at 0.08)"
+        },
+        {
+          "id": "rowE",
+          "component": "NumberRow",
+          "props": {
+            "values": "2n",
+            "x0": 197,
+            "step": 90,
+            "size": 58,
+            "fade": [692, 936],
+            "y": 856,
+            "color": "teal"
+          },
+          "where": "the bottom row 2, 4, 6, …: each 2n under the n it is paired with, ink center y 856; '10' under 5 (x 557), 14, 16, 18 fading"
+        },
+        {
+          "id": "lblN",
+          "component": "Note",
+          "props": {
+            "text": "자연수",
+            "at": [540, 595],
+            "color": "text"
+          },
+          "where": "centered over the top row, ink x 467–613, 24 px above it"
+        },
+        {
+          "id": "lblE",
+          "component": "Note",
+          "props": {
+            "text": "짝수",
+            "at": [540, 929],
+            "color": "teal"
+          },
+          "where": "centered under the bottom row, ink x 492–588, 24 px below it"
+        }
+      ],
+      "cues": [
+        {
+          "at": {
+            "word": "번호만"
+          },
+          "target": "qArrows",
+          "action": "exit",
+          "speed": "fast",
+          "note": "'번호만': the newcomers and their arrows go first"
+        },
+        {
+          "at": {
+            "word": "번호만"
+          },
+          "target": "inf",
+          "action": "setGuests",
+          "params": {
+            "rooms": "odd",
+            "opacity": 0,
+            "ease": "linear"
+          },
+          "speed": "fast"
+        },
+        {
+          "at": {
+            "word": "보면"
+          },
+          "target": "inf",
+          "action": "setGuests",
+          "params": {
+            "rooms": "even",
+            "opacity": 0
+          },
+          "speed": "fast",
+          "note": "'보면': the guests, the walls and the floor line fade too, leaving only the room numbers and the blue arcs between them"
+        },
+        {
+          "at": {
+            "word": "보면"
+          },
+          "target": "inf",
+          "action": "setStyle",
+          "params": {
+            "rooms": 0,
+            "ground": 0
+          },
+          "speed": "fast"
+        },
+        {
+          "at": {
+            "word": "이건"
+          },
+          "target": "rowN",
+          "action": "appear",
+          "params": {
+            "from": "inf"
+          },
+          "speed": "base",
+          "note": "'이건': the room numbers become the top row in place, growing to 58 px (the hotel stops drawing them on this frame)"
+        },
+        {
+          "at": {
+            "word": "이건"
+          },
+          "target": "rowE",
+          "action": "appear",
+          "params": {
+            "from": "inf"
+          },
+          "speed": "base",
+          "note": "each even room's number drops down under the number whose guest moved in: 2 under 1, 4 under 2, 6 under 3, …, fading in as it leaves"
+        },
+        {
+          "at": {
+            "word": "이건"
+          },
+          "target": "dbl",
+          "action": "pairTo",
+          "params": {
+            "top": "rowN",
+            "bottom": "rowE"
+          },
+          "speed": "base",
+          "note": "the arcs n → 2n straighten into vertical pairing lines between n and 2n, their heads gone (C7)"
+        },
+        {
+          "at": {
+            "word": "자연수와"
+          },
+          "target": "lblN",
+          "action": "appear",
+          "speed": "fast",
+          "note": "'자연수와': names the top row"
+        },
+        {
+          "at": {
+            "word": "짝수를"
+          },
+          "target": "lblE",
+          "action": "appear",
+          "speed": "fast",
+          "note": "'짝수를': names the bottom row"
+        },
+        {
+          "at": {
+            "word": "짝수를"
+          },
+          "target": "rowE",
+          "action": "pulse",
+          "speed": "base"
+        },
+        {
+          "at": {
+            "word": "하나도"
+          },
+          "target": "dbl",
+          "action": "pulse",
+          "speed": "base",
+          "note": "'하나도 안 남기고': every pairing line at once, out into the fade: no number on either row without one"
+        }
+      ],
+      "endFrame": "Two rows on the dark ground: '자연수' over 1, 2, 3, … (text) and '짝수' under 2, 4, 6, … (teal), both fading out to the right at the same step, a blue vertical line joining each n to 2n. No hotel. Caption: '짝지은 거예요.' Held 0.4 s.",
+      "claims": ["C3", "C7"]
+    },
+    {
+      "id": "B6",
+      "name": "크기가 같다",
+      "readAloud": "수학에서는 이렇게 짝지어지면, 크기가 같다고 해요. 짝수는 자연수의 일부인데도요.",
+      "captions": [
+        {
+          "text": "수학에서는 이렇게 짝지어지면",
+          "at": {
+            "word": "수학에서는"
+          }
+        },
+        {
+          "text": "크기가 같다고 해요.",
+          "at": {
+            "word": "크기가"
+          }
+        },
+        {
+          "text": "짝수는 자연수의 일부인데도요.",
+          "at": {
+            "word": "짝수는"
+          }
+        }
+      ],
+      "pauseAfter": 0.6,
+      "elements": [],
+      "cues": [
+        {
+          "at": {
+            "word": "짝지어지면"
+          },
+          "target": "dbl",
+          "action": "pulse",
+          "speed": "base",
+          "note": "'이렇게 짝지어지면': the pairing lines (C6: this pairing is what 'the same size' means)"
+        },
+        {
+          "at": {
+            "word": "짝수는"
+          },
+          "target": "rowE",
+          "action": "pulse",
+          "speed": "base",
+          "note": "'짝수는': the bottom row"
+        },
+        {
+          "at": {
+            "word": "일부인데도요"
+          },
+          "target": "rowN",
+          "action": "setStyle",
+          "params": {
+            "which": "even",
+            "color": "teal"
+          },
+          "speed": "base",
+          "note": "'일부인데도요': inside the top row, 2, 4, 6, 8, … turn teal like the bottom row: the evens are every other number of it"
+        },
+        {
+          "at": {
+            "word": "일부인데도요"
+          },
+          "target": "rowN",
+          "action": "setStyle",
+          "params": {
+            "which": "odd",
+            "color": "muted"
+          },
+          "speed": "base",
+          "note": "and the odd numbers dim; the pairing lines stay as they are"
+        }
+      ],
+      "endFrame": "The two rows and their pairing lines as at B5's end, but in the top row the even numbers are teal and the odd ones muted: a part of the top row, paired one for one with the whole bottom row. Caption: '짝수는 자연수의 일부인데도요.' Held 0.6 s.",
+      "claims": ["C6", "C7"]
+    },
+    {
+      "id": "B7",
+      "name": "일부가 전체만큼",
+      "readAloud": "무한에서는, 일부가 전체만큼 클 수 있어요. 그래서 꽉 찬 호텔에도, 자리가 나는 거예요.",
+      "captions": [
+        {
+          "text": "무한에서는 일부가",
+          "at": {
+            "word": "무한에서는"
+          }
+        },
+        {
+          "text": "전체만큼 클 수 있어요.",
+          "at": {
+            "word": "전체만큼"
+          }
+        },
+        {
+          "text": "그래서 꽉 찬 호텔에도",
+          "at": {
+            "word": "그래서"
+          }
+        },
+        {
+          "text": "자리가 나는 거예요.",
+          "at": {
+            "word": "자리가"
+          },
+          "until": {
+            "pause": true
+          }
+        }
+      ],
+      "pauseAfter": 0.4,
+      "elements": [],
+      "cues": [
+        {
+          "at": {
+            "word": "일부가"
+          },
+          "target": "rowE",
+          "action": "pulse",
+          "speed": "base",
+          "note": "'일부가': the evens, the part"
+        },
+        {
+          "at": {
+            "word": "전체만큼"
+          },
+          "target": "rowN",
+          "action": "pulse",
+          "speed": "base",
+          "note": "'전체만큼': the whole row of numbers"
+        },
+        {
+          "at": {
+            "word": "그래서"
+          },
+          "target": "rowE",
+          "action": "exit",
+          "speed": "fast",
+          "note": "'그래서': the bottom row, the lines and the names go"
+        },
+        {
+          "at": {
+            "word": "그래서"
+          },
+          "target": "dbl",
+          "action": "exit",
+          "speed": "fast"
+        },
+        {
+          "at": {
+            "word": "그래서"
+          },
+          "target": "lblN",
+          "action": "exit",
+          "speed": "fast"
+        },
+        {
+          "at": {
+            "word": "그래서"
+          },
+          "target": "lblE",
+          "action": "exit",
+          "speed": "fast"
+        },
+        {
+          "at": {
+            "word": "그래서"
+          },
+          "target": "rowN",
+          "action": "gather",
+          "params": {
+            "into": "inf"
+          },
+          "speed": "base",
+          "note": "the top row folds back into the hotel's room numbers, following the hotel as it grows into the big layout; each number lands on its room centered, so it never crosses a wall"
+        },
+        {
+          "at": {
+            "word": "그래서"
+          },
+          "target": "inf",
+          "action": "moveTo",
+          "params": {
+            "origin": [264, 845],
+            "room": [120, 200],
+            "fade": [624, 936],
+            "ground": 160
+          },
+          "speed": "base",
+          "note": "the hotel returns in the big layout, frame 0's place and size"
+        },
+        {
+          "at": {
+            "word": "그래서"
+          },
+          "target": "inf",
+          "action": "setStyle",
+          "params": {
+            "rooms": 1,
+            "ground": 1
+          },
+          "speed": "base"
+        },
+        {
+          "at": {
+            "word": "그래서"
+          },
+          "target": "inf",
+          "action": "setGuests",
+          "params": {
+            "rooms": "all",
+            "opacity": 1
+          },
+          "speed": "base",
+          "note": "'꽉 찬 호텔': as B4 left it: blue guests in the even rooms, yellow newcomers in the odd ones"
+        },
+        {
+          "at": {
+            "word": "자리가"
+          },
+          "target": "inf",
+          "action": "setGuests",
+          "params": {
+            "rooms": "odd",
+            "color": "blue"
+          },
+          "speed": "base",
+          "note": "'자리가 나는': the newcomers are guests now, all blue"
+        },
+        {
+          "at": {
+            "word": "자리가"
+          },
+          "target": "inf",
+          "action": "lineUp",
+          "params": {
+            "at": "door",
+            "color": "yellow"
+          },
+          "speed": "base",
+          "note": "and a new newcomer stands at the door: frame 0's picture, the loop"
+        },
+        {
+          "at": {
+            "word": "자리가"
+          },
+          "target": "rowN",
+          "action": "exit",
+          "speed": "fast",
+          "note": "ends the folded row's id (nothing of it is drawn after the gather)"
+        }
+      ],
+      "endFrame": "The last frame equals frame 0: the big hotel full of blue guests, fading out to the right, its numbers, walls and floor line at full opacity, no light, and the yellow newcomer at the door left of room 1; nothing else. No caption (the last one ended at the pause). Held 0.4 s, the last frames still.",
+      "claims": ["C7", "C10", "C3"]
+    }
+  ]
+}
