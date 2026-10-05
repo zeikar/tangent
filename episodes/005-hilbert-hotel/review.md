@@ -1,5 +1,204 @@
 # Review · 005-hilbert-hotel
 
+## Round 2 · 2026-10-05
+
+**Verdict: ship.**
+
+This round reviewed the render from 79e3e92, fix round 1. It runs 44.87 s
+(1346 frames). B7's pause grew from 0.4 to 0.5 s, and every earlier frame
+keeps its number.
+
+- **The change is local, as production said:**
+  - theme.ts changed only inside the `hotel` block. Only fade.tsx,
+    Hotel.tsx, NumberRow.tsx and RoomArrows.tsx read that block, and only
+    005 uses those components.
+  - geometry.ts is byte for byte its pre-005 state (no diff against
+    3fc3e74).
+  - So no shared code moves. I re-judged the changed beats and their
+    boundaries, and I diffed every frame against round 1's render to find
+    them.
+- **Frame by frame against round 1** (pixels more than 16 levels off):
+  - **Identical:** f0–f283, f1000–f1083, f1105–f1168 and f1285–f1302:
+    B1, most of B2, B6 outside its pulse, and B7's hold after the gather.
+  - **Encoder noise only:** f284–f309 (B2's end) and f1169–f1180 (B7's
+    start), at most 37 pixels.
+  - **Changed:** f313–f999 (B3, B4 and B5, with B6's first three frames
+    as encoder noise), f1084–f1104 (B6's row pulse) and f1199–f1342 (B7).
+    Those are exactly the changed beats, so my round 1 findings on
+    everything else still hold.
+- **The audio** of round 1's render and this one is identical (same PCM
+  hash over the first 44.7 s), so round 1's Whisper pass stands.
+- **All four round 1 issues are fixed:** r1#1 through r1#4, each detailed
+  below.
+- **The critique changes read well:** B3 at phone scale, the B4 badges and
+  arrows, and B7's ending.
+- **check-render:** 0 fail, 1 warn, 14 pass, 1 skip.
+- **One nit:** at its peak, the thicker wall pulse comes within 1 px of the
+  '10' (r2#1).
+- **For the human:** B5's copies of 2, 4, 6, 8 first show a third of the
+  way along their path. So where they came from is implied by their
+  direction, not seen (r2#2).
+
+Evidence is in `review/r2/`:
+
+- `sheet.png`: f0 and every beat's last frame;
+- `b5-f843-905.png`: B5's handoff, every frame from f875;
+- `b3-f373-423.png`: the end wall through the shift, the pulse and the red
+  recolor;
+- `phone-f700-f842-f576-f887.png`: four frames at phone scale (400 px
+  wide): B4's badges, B4's end, B3's end, B5's copies in flight;
+- `b4-tags-f0700.png`: the badges at full resolution;
+- `b7-f1264-1345.png`: B7 from "그래서" to the last frame;
+- `rows-f899-f1264.png`: the row pulses at rest and at their peaks, and
+  B7's top row turning white.
+
+### Issues
+
+#### 1. Nit: at its peak, the wall pulse nearly touches the '10' (f385–f390, 12.83–13.00 s)
+
+- **The pulse now reads:** the wall grows from 6 to 14 px, about its
+  center x 788. The floor past it lifts to white, which also shows
+  (`review/r2/b3-f373-423.png`, f386–f389). r1#3 is fixed.
+- **It grows into room 10:** the wall's left edge comes to within 1 px of
+  the '0' of '10' (f387–f388, at y 515) and stays within 2 px for f385–f390.
+  At rest the gap is 5 px. For about 6 frames, '10' and the wall read as
+  touching. check-render's overlaps check doesn't flag a 1 px gap.
+- **Fix, if worth it:** cap the growth at about 10 px. Growing rightward
+  only would run into the pushed-out guest's outline (ink from x ≈ 799), so
+  the cap is the simpler fix. The floor's lift already carries the
+  emphasis.
+
+#### 2. For the human: B5's copies show up a third of the way into their flight (f884–f891, 29.47–29.70 s)
+
+Production asked whether the bottom row still reads as coming from the even
+rooms. Measured per frame (`review/r2/b5-f843-905.png`):
+
+- **The arcs leave cleanly:** they fade out in place (f875–f883) and never
+  cross the top row or '자연수', which fades in at f884–f886 over nothing.
+  The pairing lines grow down from the top row (ticks at f886, full by
+  f892).
+- **The first frame they show** is f884, already partway along:
+  - '2' at x 257, 33% of the way from room 2 (x 287) toward its place
+    under 1 (x 197);
+  - '4' at x 408, between the top row's 3 and 4, nearer the 3;
+  - '6' at x 558, right under the top row's 5;
+  - '8' at x 698, between 6 and 7.
+- **They come in below the row:** their ink top is at y 709, 17 px under
+  the top row's ink. They are at full strength from f885 and land at
+  f891–f895.
+- **How it reads:** a set of teal numbers drops in from just under the top
+  row and fans left, and the farther a number lands, the more it slides.
+  That direction points back at 2, 4, 6, 8, but no frame shows a number
+  leaving its room's number. It is a correct picture, with the
+  where-from implied rather than seen.
+- **If the human wants it explicit:** give the copies a vertical-first path
+  that drops straight down under its source and then slides left. Then each
+  copy's first visible frame sits right under its own 2, 4, 6 or 8. That
+  keeps today's rule that a copy stays unseen until it is below the row.
+  Showing the copies on the row itself would bring back round 1's
+  text-on-text overlap.
+
+### Round 1's issues
+
+- **r1#1 fixed** (`review/r2/b5-f843-905.png`):
+  - Nothing crosses a number or '자연수' (check-render's overlaps check
+    now passes).
+  - 10–18 start fading in at f892, after the '8' has landed. The '8' is at
+    x 474–489 when '10' first shows at x 526, a gap of 37 px, and no number
+    passes another.
+  - B5's end frame is unchanged.
+- **r1#2 fixed:**
+  - On "전체만큼" (f1211) the top row returns to text color as it pulses.
+    It is all white by f1240 and stays white into the gather
+    (`review/r2/rows-f899-f1264.png`).
+- **r1#3 fixed,** with r2#1 as a side effect.
+- **r1#4 fixed:**
+  - At the peak of all three rowE pulses (f913, f1094, f1208), the gap
+    between two-digit numbers stays at 20–22 px (27–28 at rest, 15 in
+    round 1). Single digits go from 59 to 53 px apart.
+  - The color lift toward white shows.
+  - The top row's pulse on "전체만큼" grows '2' from 29 to 35 px wide,
+    keeping gaps of 52 px or more.
+
+### The critique changes
+
+- **B3, bigger and set apart** (`review/r2/phone-f700-f842-f576-f887.png`,
+  third frame):
+  - The hotels are now 230 px apart (floors 630 and 1010) and read as two
+    separate rows.
+  - At phone scale (0.37×), the room numbers are about 13 px tall and
+    readable. The red guest and the lit 10 → 11 arrow are the only accents,
+    so the eye finds the pair, and the red guest stands right over room 11.
+  - At full size, '10' sits 6 px from its left wall and 5 px from the end
+    wall (4 px inside the number).
+  - The taller rooms (150) leave about 34 px of empty wall between number
+    and head (ink y 538 to 572). That is fine.
+  - B3's centering is −2/−1.
+  - B2 → B3 (f310–f337) is the same move as before, into the new
+    positions, and the finite hotel fades in clear of the moving one.
+  - B3 → B4 (f577–f601) is clean.
+- **B4's badges** (`review/r2/b4-tags-f0700.png`):
+  - **Contrast:** the badge fill averages #9B7033 (yellow at 0.6 over the
+    ground), and the digits' cores are near black. Contrast is 4.40–4.47:1
+    for tags 1–6, which confirms production's 4.4:1 estimate. Tag 7 is at
+    3.3:1 and tag 8 at 1.8:1, as the fade intends.
+  - **Readable:** the digits are TeX at 44 px (35.5 px tall), so the large
+    text bar of 3:1 applies, and they read at phone scale.
+  - **Distinct:** the tags no longer look like room numbers.
+  - **Arrival:** the badges come in with their newcomers (f595–f616) and
+    fade away as the newcomers leave the street (f794–f797).
+- **B4's arrows** (f779–f842):
+  - **What shows:** only the arrows into rooms 1, 3, 5 and 7 are visible;
+    the one into 9 is a trace. The newcomers past 4 still move into the
+    fade with the others during the admit, which is right, since every
+    newcomer moves at once.
+  - **The end frame** has four calm arrows instead of round 1's fan, and
+    still matches its `endFrame`.
+- **B7's ending** (`review/r2/b7-f1264-1345.png`):
+  - **The gather** (f1264–f1286) is as in round 1.
+  - **During the last line:** the alternating hotel (yellow newcomers in
+    the odd rooms) stays on screen through "자리가 나는 거예요" (f1303–f1329).
+  - **In the pause:** from f1330 the odd guests turn blue and the newcomer
+    fades in at the door. The picture is complete by f1340 and still from
+    there to the last frame.
+  - **The caption** ends at f1330.
+  - **The loop:** the last frame differs from frame 0 by 8 pixels in the
+    visual zone.
+
+### check-render
+
+My `--out` run matched the tracked `check.md` and `check.json` byte for
+byte: **0 fail, 1 warn, 14 pass, 1 skip** (labels: no edge label has
+another element's line nearby).
+
+- **cues (warn):** B3 f415 (the red recolor, which shows by f423) and B6
+  f1117 (+6, inside its word). Both are unchanged from round 1 and fine.
+  Round 1's third warn, B7's f1303 bookkeeping exit, is gone: that cue now
+  sits on the pause.
+- **overlaps** now passes.
+- **Bounds:**
+  - The ink spans x 144–935 and y 405–1106. The badges' bottom is at
+    1106, and the caption band starts at 1280.
+  - B3's room 1 wall is drawn at x 146–149, inside the content edge at
+    140.
+- **Everything else passes:**
+  - freshness;
+  - technical;
+  - centering: B3 −2/−1, B5 +19/−20;
+  - legibility: 35.5 px;
+  - captions: 31, each on its cue;
+  - readable, reaction and blank runs;
+  - loudness: −14 LUFS, −3.3 dBTP;
+  - A/V sync: 0 ms;
+  - words;
+  - loop: 7 pixels.
+
+### What these instructions should have said
+
+- **Diffing against the last round** is the cheapest way to prove that a
+  local fix stayed local: keep the previous round's decoded frames until
+  the next round. This round, that made the focused review safe.
+
 ## Round 1 · 2026-10-05
 
 **Verdict: fix then ship.**
