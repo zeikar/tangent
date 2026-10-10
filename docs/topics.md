@@ -9,7 +9,8 @@ Made so far: 001 A4 paper ([episodes/001-a4-paper-ratio](../episodes/001-a4-pape
 002 the Moon's rotation ([episodes/002-moon-rotation](../episodes/002-moon-rotation/topic.md)),
 003 the mirror's left and right ([episodes/003-mirror-left-right](../episodes/003-mirror-left-right/topic.md)),
 004 magenta missing from the rainbow ([episodes/004-magenta-rainbow](../episodes/004-magenta-rainbow/topic.md)),
-005 Hilbert's hotel ([episodes/005-hilbert-hotel](../episodes/005-hilbert-hotel/topic.md)).
+005 Hilbert's hotel ([episodes/005-hilbert-hotel](../episodes/005-hilbert-hotel/topic.md)),
+006 82000, zeros and ones in bases 2–5 ([episodes/006-zeros-and-ones](../episodes/006-zeros-and-ones/topic.md)).
 
 ## The human's taste
 
@@ -75,7 +76,8 @@ the notes are in `git show d4a76eb:docs/topics.md`.
   colors, touch and Pauli exclusion.
 - 2026-10-05, the human's idea, lined up after 005: real numbers vs.
   integers, both infinite but different sizes (Cantor's diagonal; notes in
-  005's topic.md).
+  005's topic.md). Still next after 006, which the human brought on
+  2026-10-10 and put first.
 - Set aside earlier as already told in Korean, which no longer counts
   against an idea (2026-09-27): the lunar birthday cycle, 11,172 Hangul
   syllables, curved platform gaps, the West Sea's tides, bus bunching,
