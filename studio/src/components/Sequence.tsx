@@ -2,30 +2,28 @@ import React from "react";
 import { AbsoluteFill } from "remotion";
 import { bump, ElementTimeline, lerp, mix, phase, Scene } from "../storyboard/timeline";
 import { color, counter, hotel, stroke } from "../style/theme";
-import { arcPoints, lerpPt, Pt, pointsAttr, roundedRectPoints } from "./geometry";
+import { lerpPt, Pt, pointsAttr, roundedRectPoints } from "./geometry";
 import { InkTex, useTexInk } from "./InkText";
 import { lifecycle, Polyline, Svg } from "./shapes";
 
-// A sequence's terms in a row of cells, with one long dotted jump between two
-// of them and an open (dashed) cell for the term nobody knows. The whole row
-// moves and scales about its center; its strokes, dashes and dots keep their
-// px. Spec: storyboard.json → components → Sequence.
+// A sequence's terms side by side in a row of cells, with an open (dashed)
+// cell for the term nobody knows. The whole row moves and scales about its
+// center; its strokes and dashes keep their px. Spec: storyboard.json →
+// components → Sequence.
 
 type Props = {
   terms: string[]; // TeX, in order; cells are addressed by their term
   open: string; // the term whose cell is dashed
-  jumpAfter: string;
   center: Pt;
   size: number; // TeX px at scale 1
   cell: [w: number, h: number]; // a one-character term's cell
   wide: number; // a longer term's cell width
   gap: number;
-  jump: number;
 };
 
 type Cell = { term: string; opacity: number; lit: number; pulse: number; blink: number };
 
-export type SequenceState = { center: Pt; scale: number; cells: Cell[]; spark: number | null };
+export type SequenceState = { center: Pt; scale: number; cells: Cell[] };
 
 const picked = (p: Props, cells: unknown, id: string): string[] => {
   const list = cells === "all" ? p.terms : cells;
@@ -39,7 +37,6 @@ export const sequenceState = (el: ElementTimeline, scene: Scene): SequenceState 
   const { frame } = scene;
   let center = p.center;
   let scale = 1;
-  let spark: number | null = null;
   const cells: Cell[] = p.terms.map((term) => ({ term, opacity: 1, lit: 0, pulse: 0, blink: 1 }));
   const each = (list: unknown, f: (c: Cell) => void) => {
     const terms = picked(p, list, el.spec.id);
@@ -63,8 +60,7 @@ export const sequenceState = (el: ElementTimeline, scene: Scene): SequenceState 
         each(q.cells, (c) => (c.lit = lerp(c.lit, 0, t)));
         break;
       case "pulse":
-        if (q.part === "jump") spark = t < 1 ? t : spark;
-        else each(q.cells, (c) => (c.pulse = Math.max(c.pulse, bump(a, frame))));
+        each(q.cells, (c) => (c.pulse = Math.max(c.pulse, bump(a, frame))));
         break;
       case "blink": {
         // `times` dips to counter.blink and back, ending at rest.
@@ -76,30 +72,17 @@ export const sequenceState = (el: ElementTimeline, scene: Scene): SequenceState 
         throw new Error(`Sequence ${el.spec.id}: unknown action ${a.action}`);
     }
   });
-  return { center, scale, cells, spark };
+  return { center, scale, cells };
 };
 
-// Each cell's box, and the jump's ends, at a center and scale.
+// Each cell's box at a center and scale.
 const layout = (p: Props, [cx, cy]: Pt, s: number) => {
   const widths = p.terms.map((t) => (t.length > 1 ? p.wide : p.cell[0]));
-  const starts: number[] = [];
-  let x = 0;
-  let jump: [number, number] = [0, 0];
-  p.terms.forEach((t, i) => {
-    starts.push(x);
-    x += widths[i];
-    if (t === p.jumpAfter) {
-      jump = [x, x + p.jump];
-      x += p.jump;
-    } else if (i < p.terms.length - 1) x += p.gap;
-  });
-  const at = (u: number) => cx + (u - x / 2) * s;
+  const starts = widths.map((_, i) => widths.slice(0, i).reduce((a, w) => a + w + p.gap, 0));
+  const total = starts[starts.length - 1] + widths[widths.length - 1];
+  const at = (u: number) => cx + (u - total / 2) * s;
   const [top, bottom] = [cy - (p.cell[1] / 2) * s, cy + (p.cell[1] / 2) * s];
-  return {
-    boxes: starts.map((u, i) => [at(u), top, at(u + widths[i]), bottom] as [number, number, number, number]),
-    jump: [at(jump[0]), at(jump[1])] as [number, number],
-    inset: counter.dotInset * s,
-  };
+  return starts.map((u, i) => [at(u), top, at(u + widths[i]), bottom] as [number, number, number, number]);
 };
 
 export const Sequence: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, scene }) => {
@@ -108,13 +91,7 @@ export const Sequence: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, 
   const { ink, measuring } = useTexInk(`sequence ${el.spec.id}`, p.terms, p.size);
   if (measuring.length) return <AbsoluteFill>{measuring}</AbsoluteFill>;
 
-  const { boxes, jump, inset } = layout(p, s.center, s.scale);
-  const cy = s.center[1];
-  const dots = Array.from({ length: counter.dots }, (_, i) => {
-    const u = i / (counter.dots - 1);
-    const light = s.spark === null ? 0 : Math.max(0, 1 - Math.abs(u - lerp(-counter.spark, 1 + counter.spark, s.spark)) / counter.spark);
-    return { at: [lerp(jump[0] + inset, jump[1] - inset, u), cy] as Pt, light };
-  });
+  const boxes = layout(p, s.center, s.scale);
   // A lit cell is at full opacity whatever setStyle set.
   const shown = (c: Cell) => lerp(c.opacity, 1, c.lit) * c.blink;
   return (
@@ -142,9 +119,6 @@ export const Sequence: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, 
             </g>
           );
         })}
-        {dots.map((d, i) => (
-          <polygon key={i} points={pointsAttr(arcPoints(d.at, counter.dot / 2, 0, 360))} fill={mix(color.muted, color.yellow, d.light)} />
-        ))}
       </Svg>
       {s.cells.map((c, i) => {
         const [l, t, r, b] = boxes[i];

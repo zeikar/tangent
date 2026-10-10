@@ -1,5 +1,5 @@
 {
- "storyboardSha256": "08f29ff22e9283462db8afd36fcf56ce78c4844d7d9d3a8e9c3b6206e0b18ded",
+ "storyboardSha256": "016a65dd0aa22f721ed69b42a10a4fdca178f6c54194623b74316b2c8cdf1d20",
  "narrationSource": "take3@1.08.wav",
  "takeWordsSha256": "c4c62b7af2302fe649844846b13ec3349c6781a999042d177b18d3feb8a3f130",
  "fps": 30,
@@ -34,13 +34,6 @@
      "action": "pulse",
      "word": "사",
      "frame": 37
-    },
-    {
-     "target": "seq",
-     "action": "pulse",
-     "word": "팔만",
-     "frame": 56,
-     "untilFrame": 68
     },
     {
      "target": "seq",
@@ -260,7 +253,7 @@
     },
     {
      "target": "counter",
-     "action": "pulse",
+     "action": "blink",
      "word": "불이",
      "frame": 515
     },
@@ -452,7 +445,7 @@
     },
     {
      "target": "counter",
-     "action": "pulse",
+     "action": "blink",
      "word": "켜져야",
      "frame": 971
     },

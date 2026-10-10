@@ -4,19 +4,19 @@
   "notes": [
     "Written against script.md (the merge of variant a's B1–B6 and variant b's B6–B10, picked 2026-10-10) and take3@1.08.words.json, which narration.json names. B1's caption is '$2,\\ 3,\\ 4,\\ 82000$, 그다음은?' (variant b's form): the math span makes the frame-0 question 2 caption units instead of 5, and it measures about 760 px wide at the caption size (math 487 px in bold TeX, ', 그다음은?' 271 px in Pretendard Bold 60), inside the 800 px line. script.md's B1 Display was changed to the same text at this stage (the validator wants captions to equal the Display).",
     "Geometry is px in the 1080×1920 frame, origin top-left; points are [x, y]. The content bounds are x 140–940 and the visual zone y 240–1250; every white or saturated edge stays at least 8 px inside them (x 148–932), since 005 found a white edge rings about 8 px in the encode: the full-width outlines are drawn on x 150 and 930, so their 4 px strokes end at 148 and 932 (production moved them in 2 px; the render's faint ringing reaches x 145 and 935).",
-    "One sequence, two layouts (Sequence 'seq'). Big, for frame 0 and the loop (B1, B11's end): terms in TeX 72 (digits 58 px tall), cells 116 tall centered on y 745 (y 687–803): 2 at x 150–234, 3 at 244–328, 4 at 338–422, the jump 422–582 (160 px, six 8 px muted dots evenly between x 442 and 562), 82000 at 582–836 (its ink 210 px wide), the dashed ? cell at 846–930. Header, from B2's pause to B11's first word: the same row scaled 2/3 about its center and moved to center [540, 300]: x 280–800, y 261–339, TeX 48 (digits 38.7 px tall), strokes, dashes and dots unscaled.",
+    "One sequence, two layouts (Sequence 'seq'). The five cells sit side by side with the ordinary gap, so they read as one sequence (the human's first-look note: the dotted jump between 4 and 82000 is gone, at frame 0, in the header and at the loop). Big, for frame 0 and the loop (B1, B11's end): terms in TeX 87 (digits 70 px tall), cells 104 × 140 (82000's 316 wide), 12 apart, centered on y 745 (y 675–815): 2 at x 150–254, 3 at 266–370, 4 at 382–486, 82000 at 498–814 (its ink about 254 px wide), the dashed ? cell at 826–930. Header, from B2's pause to B11's first word: the same row scaled 0.55 about its center and moved to center [540, 300]: x 325–755, y 261–339, TeX 48 (digits 38.6 px tall), strokes and dashes unscaled.",
     "The counter (BaseCounter 'counter'), B3–B8. The number itself ('10진법' row, no box, no lamp, digits always white): label at x 250 (Pretendard SemiBold 48, 136 px wide), digits TeX 64 (51.6 px tall) right-aligned in columns of 38.72 px (one digit's advance), the ones column centered at x 882 (82000's ink x 711–898), ink center y 452. Base rows: each a box x 150–930, 100 tall (y ± 50; production's change from 92, so a pulsed lamp's rays stay 4 px inside it), corners 16, its lamp centered at x 200 (r 20; lit rays from r 28 to r 38, turned 22.5° off the axes so none points straight at the name or along a bar, reaching x 165–235 at rest and 156–244 at a 1.25× pulse), its name ('{base}진법' in rowStyle.label) from x 250 (SemiBold 48, about 112 px), its digits TeX 48 (38.7 px tall) right-aligned in columns of 29.04 px with the ones column centered at x 886. 82000's 17 binary digits run from about x 409 to 898, 47 px clear of '2진법'. Row centers: 3진법 at 584 in B3; from B4 2진법 584, 3진법 712, 4진법 840, 5진법 968; B8 adds 6진법 at 1096 (box to y 1146).",
-    "The device (the human, hearing the takes, asked what '줄에 불이 켜진다' means; B4 is where it must read at a glance). A lamp is a round bulb at a row's left end: dark (a muted 4 px circle over the background) or lit (filled yellow, with eight short yellow rays). A row is lit when every digit in it is 0 or 1: its lamp lights and its whole box lights with it (outline yellow, a yellow band at 0.12 behind its digits). Digits 0 and 1 are white; from B4's '영과' every digit 2 or more is red, and one red digit keeps the row's lamp dark. On '일뿐인' the 2진법 row's own 1 and 0 pulse (production's addition for the orchestrator's note that the line must read at once): the row that is only 0s and 1s is picked out just before its lamp lights on '불이'. Lamps exist from B4's '이진법부터' but stay dark until 'power' on '불이'; from then on they follow the digits on every frame, so no lamp is ever lit by hand. The 2진법 row is lit from '불이' to the end of the counter (every number is 0/1 in base 2, C2).",
+    "The device (the human, hearing the takes, asked what '줄에 불이 켜진다' means; B4 is where it must read at a glance). A lamp is a round bulb at a row's left end: dark (a muted 4 px circle over the background) or lit (filled yellow, with eight short yellow rays). A row is lit when every digit in it is 0 or 1: its lamp lights and its whole box lights with it (outline yellow, a yellow band at 0.12 behind its digits). Digits 0 and 1 are white; from B4's '영과' every digit 2 or more is red, and one red digit keeps the row's lamp dark. On '일뿐인' the 2진법 row's own 1 and 0 turn yellow and back (production's addition for the orchestrator's note that the line must read at once; yellow since round 1, QA r1#1): the row that is only 0s and 1s is picked out as its lamp lights on '불이'. On '불이' the three red 2s blink twice, dipping in opacity while staying full red: they are why those lamps stay dark. B8's red 4s and 3s blink the same way on '켜져야'. Lamps exist from B4's '이진법부터' but stay dark until 'power' on '불이'; from then on they follow the digits on every frame, so no lamp is ever lit by hand. The 2진법 row is lit from '불이' to the end of the counter (every number is 0/1 in base 2, C2).",
     "Numbers on screen, all from verify.py or recomputed from it: 2 = 10 / 2 / 2 / 2 (bases 2–5), 3 = 11 / 10 / 3 / 3, 4 = 100 / 11 / 10 / 4 (C3); 5 = 101 / 12 / 11 / 10 (the run's first value); near misses (C18): 81900 = 10011111111101100 / 11011100100 / 103333230 / 10110100 and 81901 = …101 / …101 / 103333231 / 10110101 (bases 2, 3, 5 lit), 81921 = 10100000000000001 / 11011101010 / 110000001 / 10110141, 81984 = 10100000001000000 / 11011110110 / 110001000 / 10110414 and 81985 = 10100000001000001 / 11011110111 / 110001001 / 10110420 (bases 2, 3, 4 lit); 82000 = 10100000001010000 / 11011111001 / 110001100 / 10111000 (C4, 17 / 11 / 9 / 8 digits) and 1431344 in base 6 (C5); the funnel 99,999 → 2,046 → 30 → 1 for 2..100,000 (C13); the search bar's '10진법 1100만 자리' (C7). The counter computes every row from its value; nothing is typed in.",
     "The run (B6) and the near misses. From '오진법' to the end of the speech the value climbs from 5 to 81,899 on a log scale with smooth easing (slow out of 5, thousands and tens of thousands in the middle, slowing near 81,899), a new value every frame, digits changing in place without rolls. Rows 3–5 stay mostly dark, but a lower lamp should flicker on now and then: production picks the frames' values so that some of them are real numbers on the way that light one of rows 3–5 (for instance the first number at or above the schedule's value that does), never a made-up state. Then the value stops at the near misses, about 0.4 s each: 81900, 81901, 81921 in B6's pause, 81984, 81985 on '네 줄은', each reached by counting through the numbers between, and 82000 on '팔만'.",
     "Funnel (B9): counted values from verify.py (C13), drawn as four stepped tiers 780, 676, 572 and 468 wide, not to scale (to scale, 30 and 1 would be invisible: the script's note). The first tier is labeled '2진법 줄까지' under the heading '2부터 10만까지': its 99,999 is every number from 2 to 100,000, which is the script's '2진법 줄은 모두 통과'. Each tier carries a small lit lamp, the counter's lamp, so it reads as the same filter.",
     "Search bar (B10): the axis is digit count, not size. The left end is 82000's lit lamp, labeled '82000' above and '5자리' below; the right tick is labeled '10진법 1100만 자리' below; '자릿수' names the bar above it. Past the tick the bar goes on as a dashed line fading out by x 924: the search stopped there, the numbers didn't (C7–C8). Its searched part turns white as the scan light passes; no other dot lights.",
-    "Frame 0 is the hook: seq in the big layout, visibleAtStart, all five cells white and unlit, under the caption '2, 3, 4, 82000, 그다음은?'. The row spans the full content width at the middle of the zone, like 005's hotel; the jump between 4 and 82000 is the picture's own information (the caption can't show it), and the caption's math is 47.5 px tall against the cells' 58 px, so the two don't read as the same line twice at one size.",
+    "Frame 0 is the hook: seq in the big layout, visibleAtStart, all five cells white and unlit, under the caption '2, 3, 4, 82000, 그다음은?'. The row spans the full content width at the middle of the zone, like 005's hotel, its five cells side by side; the caption's math is 47.5 px tall against the cells' 70 px, so the two don't read as the same line twice at one size.",
     "Loop: B11 moves seq back to the big layout, unlights its cells and returns 2, 3, 4, 82000 to full opacity on its first word, with the bar's exits; the last ? blink ends before the 0.5 s pause does, so the last frame is frame 0's picture.",
     "Easing: theme.ts's ease.out for appear and reveal, ease.exit for exit, ease.smooth otherwise, unless params say linear. A beat's first-word cue that isn't an entrance or exit is linear (B1's and B5's, B2's dimming, B8's blink), so it shows inside the 3-frame reaction window. Cues sharing an anchor run in parallel; an appear or reveal waits for that anchor's exits (B9, B10).",
     "Draw order is declaration order: seq < counter < range < funnel < axisName < scan < startLabel < endLabel. No two of them share space while both are visible; the header stays above y 339 and everything else below y 373.",
     "Text in the visual zone: TeX numbers (sizes above), the counter's row names and the funnel's tier names in Pretendard SemiBold 48 (a '2' is 34 px tall, the smallest glyph), and four Notes (type.label 56): '2부터 10만까지' 351 px, '자릿수' 145, '5자리' 131, '10진법 1100만 자리' 453. TeX measured with measure-tex.mts; Pretendard widths from the static OTFs' advance widths. Captions measured the same way at 60 px: the widest after B1 are '2진법부터 5진법까지 써 봐요.' 703 px and '1100만 자리까지 찾아봤지만,' 699 px, both on one line.",
-    "Extents as production measured them (probe and frames of the first render): lamp rays end at x 235 at rest, 15 px from the row names (ink from x 250), and at a 1.25× pulse 6 px from them and 4 px inside the box's outline; a rolling digit rises 20 px and stays about 9 px inside its 100 px box; a pulsed counter digit grows at most to its 29.04 px column less 3 px (about 1.08× for a 0, 1.15× for a 1); Sequence terms grow 1.15× except 82000, held about 6 px inside its pulsed outline (about 1.08×); the funnel's names start 84 px in, 13 px past their lamps' rays, and its counts end 32 px in; B10's labels' ink: '82000' x 157–303, '5자리' 169–291, '10진법 1100만 자리' 478–922, '자릿수' 469–611. Ink spans by beat end: B1 and B11 x 148–932 (the cells' strokes); B2 278–802; B3–B8 148–932 (the boxes); B9 148–932; B10 157–922. Every beat end is centered within 2 px of x 540.",
+    "Extents as production measured them (probe and frames of the first render): lamp rays end at x 235 at rest, 15 px from the row names (ink from x 250), and at a 1.25× pulse 6 px from them and 4 px inside the box's outline; a rolling digit rises 20 px and stays about 9 px inside its 100 px box; a pulsed counter digit grows at most to its 29.04 px column less 3 px (about 1.08× for a 0, 1.15× for a 1); Sequence terms grow 1.15× except 82000, held 6 px inside its pulsed outline (about 1.13× at full size); the funnel's names start 84 px in, 13 px past their lamps' rays, and its counts end 32 px in; B10's labels' ink: '82000' x 157–303, '5자리' 169–291, '10진법 1100만 자리' 478–922, '자릿수' 469–611. Ink spans by beat end: B1 and B11 x 148–932 (the cells' strokes); B2 323–757; B3–B8 148–932 (the boxes); B9 148–932; B10 157–922. Every beat end is centered within 2 px of x 540.",
     "Pacing: B4 gets a 0.4 s pause the script didn't have, so the first lit row (the moment the device has to read) stays still for about 1.5 s before B5 steps on. B6's 0.8 s and B7's 1 s pauses are the script's and carry the near misses and the held result."
   ],
   "colors": {
@@ -29,12 +29,12 @@
     {
       "name": "Sequence",
       "status": "new",
-      "spec": "A sequence's terms in a row of cells, with one long dotted jump between two of them (the 2, 3, 4, 82000, ? header). Props: terms (TeX strings in order; cells are addressed by their term), open (the term whose cell is drawn dashed: '?'), jumpAfter (the term after which the jump goes), center [x, y], size (TeX px), cell [w, h] (a one-digit cell), wide (the width of a longer term's cell), gap (between cells), jump (the jump's width). Drawing: each cell a rounded rect (corners 12) outlined 4 px (stroke.line) in text, no fill, its term's ink centered in it, TeX in text; the open cell's outline dashed (stroke.dash); in the jump, six round dots (8 px across, muted) spaced evenly from 20 px inside one cell to 20 px before the next. A lit cell: outline yellow and fill yellow at 0.15 (hotel.lit), its term still text, at full opacity whatever setStyle set. Actions: moveTo {center, scale} (the whole row moves and scales about its center, TeX size with it; strokes, dashes and dots keep their px); setStyle {cells, opacity}; light {cells} (outline and fill fade to lit over the span); unlight {cells: all | [..]}; pulse {cells} (each cell's outline thickens 4 → 8 px inward and its term grows up to 1.15×, staying 6 px clear of the outline, and back; the cell itself doesn't grow, so neighbors never touch) or {part: jump} (the dots light yellow one after another from left to right and fade back, a spark crossing the gap, over the span); blink {cells, times} (the cell's opacity dips to 0.25 and back `times` times over the span, ending at rest)."
+      "spec": "A sequence's terms side by side in a row of cells (the 2, 3, 4, 82000, ? header). Props: terms (TeX strings in order; cells are addressed by their term), open (the term whose cell is drawn dashed: '?'), center [x, y], size (TeX px), cell [w, h] (a one-digit cell), wide (the width of a longer term's cell), gap (between cells). Drawing: each cell a rounded rect (corners 12) outlined 4 px (stroke.line) in text, no fill, its term's ink centered in it, TeX in text; the open cell's outline dashed (stroke.dash). A lit cell: outline yellow and fill yellow at 0.15 (hotel.lit), its term still text, at full opacity whatever setStyle set. Actions: moveTo {center, scale} (the whole row moves and scales about its center, TeX size with it; strokes and dashes keep their px); setStyle {cells, opacity}; light {cells} (outline and fill fade to lit over the span); unlight {cells: all | [..]}; pulse {cells} (each cell's outline thickens 4 → 8 px inward and its term grows up to 1.15×, staying 6 px clear of the outline, and back; the cell itself doesn't grow, so neighbors never touch); blink {cells, times} (the cell's opacity dips to 0.25 and back `times` times over the span, ending at rest). Round 1 dropped the dotted jump and its spark."
     },
     {
       "name": "BaseCounter",
       "status": "new",
-      "spec": "The device: one number and the same number written in several bases, row under row, each base row with a lamp that is lit when the row has only 0s and 1s. Props: value (start), decimal {y, label, size, ones} (the number in base 10: a label at labelX and digits right-aligned on the ones column, no box, no lamp, digits always text), rowStyle {box: [x0, x1], height, radius, lampX, lampR, labelX, size, ones} (shared by the base rows). Base rows exist only once added (addRow); each draws a rounded box (muted 4 px outline), its label 'N진법' (Pretendard SemiBold 48, text) from labelX, and the value's digits in base N right-aligned in one-digit columns (TeX size, column pitch one digit's advance, so equal digits stack in columns as the number grows leftward), and its lamp at lampX once lamps are shown. Digits are text; after `color`, a digit of 2 or more is red (the decimal row stays text). Lamp: dark is a circle r lampR, muted 4 px outline over the background fill; lit is filled yellow with a yellow outline and eight 4 px yellow rays from r 28 to r 38. Before `power` every lamp is dark; after it, a row's lamp is lit exactly when its digits are all 0 or 1, and a lit row's box lights too (outline yellow, a yellow band at 0.12 filling the box, drawn beneath its text); lamps and boxes change over 0.35 s (duration.fast), or within the frame when the value moves faster than that. Actions: appear (the decimal row fades in); addRow {base, y} (that row's box, label, digits and, if lamps are shown, lamp fade in at y; in the counter's colors and power state); moveRow {base, y} (slides); lamps (every row's dark lamp fades in; rows added later come with theirs); color (digits of 2 or more turn red over the span); power (lamps go live over the span: rows that qualify light, lamp first, then the box); step {to} (the value changes to `to`: in every row, each digit column that changes rolls upward, the old digit rising 20 px and fading out as the new one rises 20 px into place, a new leading column rising in at the left, a vanished one fading; rolls stay inside their row's box); set {to} (the value changes with a crossfade, no roll: resets); run {from, to} (with until: the value climbs from `from` to `to` on a log scale under ease.smooth, one value per frame, digits changing in place); count {stops} (each stop gets an equal slot of the span: the value counts up through the numbers between in the slot's first quarter, a number per frame, skipping evenly if there are more numbers than frames, and holds the stop for the rest); pulse {part: lamps, rows?} (each named row's lamp scales 1.25 and back, rays included) or {part: digits, rows?, which?: red | all} (those digits scale 1.15 about their own centers, their color lifted halfway to text, and back: the red 2s 'blinking'; at 1.15 a digit stays about 2 px clear of its neighbors); exit."
+      "spec": "The device: one number and the same number written in several bases, row under row, each base row with a lamp that is lit when the row has only 0s and 1s. Props: value (start), decimal {y, label, size, ones} (the number in base 10: a label at labelX and digits right-aligned on the ones column, no box, no lamp, digits always text), rowStyle {box: [x0, x1], height, radius, lampX, lampR, labelX, label ('{base}' stands for the row's base), size, ones} (shared by the base rows). Base rows exist only once added (addRow); each draws a rounded box (muted 4 px outline), its label 'N진법' (Pretendard SemiBold 48, text) from labelX, and the value's digits in base N right-aligned in one-digit columns (TeX size, column pitch one digit's advance, so equal digits stack in columns as the number grows leftward), and its lamp at lampX once lamps are shown. Digits are text; after `color`, a digit of 2 or more is red (the decimal row stays text). Lamp: dark is a circle r lampR, muted 4 px outline over the background fill; lit is filled yellow with a yellow outline and eight 4 px yellow rays from r 28 to r 38, turned 22.5° off the axes. Before `power` every lamp is dark; after it, a row's lamp is lit exactly when its digits are all 0 or 1, and a lit row's box lights too (outline yellow, a yellow band at 0.12 filling the box, drawn beneath its text); lamps and boxes change over 0.35 s (duration.fast), or within the frame when the value moves faster than that. Actions: appear (the decimal row fades in); addRow {base, y} (that row's box, label, digits and, if lamps are shown, lamp fade in at y; in the counter's colors and power state); moveRow {base, y} (slides); lamps (every row's dark lamp fades in; rows added later come with theirs); color (digits of 2 or more turn red over the span); power (lamps go live over the span: rows that qualify light, lamp first, then the box); step {to} (the value changes to `to`: in every row, each digit column that changes rolls upward, the old digit rising 20 px and fading out as the new one rises 20 px into place, a new leading column rising in at the left, a vanished one fading; rolls stay inside their row's box); set {to} (the value changes with a crossfade, no roll: resets); run {from, to} (with until: the value climbs from `from` to `to` on a log scale under ease.smooth, one value per frame, digits changing in place); count {stops} (each stop gets an equal slot of the span: the value counts up through the numbers between in the slot's first quarter, a number per frame, skipping evenly if there are more numbers than frames, and holds the stop for the rest); pulse {part: lamps, rows?} (each named row's lamp scales 1.25 and back, rays included) or {part: digits, rows?, which: red | all, color?} (those digits scale up to 1.15 about their own centers, stopping 3 px short of a neighbor, and turn to `color` at the peak if given, and back); blink {rows?, which: red | all, times?} (those digits' opacity dips to 0.25 and back `times` times over the span, keeping their color; round 1 replaced the red digits' pulse, which washed them pink); exit."
     },
     {
       "name": "Funnel",
@@ -80,23 +80,21 @@
               "?"
             ],
             "open": "?",
-            "jumpAfter": "4",
             "center": [
               540,
               745
             ],
             "w": 780,
-            "h": 116,
-            "size": 72,
+            "h": 140,
+            "size": 87,
             "cell": [
-              84,
-              116
+              104,
+              140
             ],
-            "wide": 254,
-            "gap": 10,
-            "jump": 160
+            "wide": 316,
+            "gap": 12
           },
-          "where": "the big layout across the middle of the visual zone: cells 2 (x 150–234), 3 (244–328), 4 (338–422), the dotted jump (422–582), 82000 (582–836), the dashed ? cell (846–930), all y 687–803. The sequence for the whole episode: it shrinks into the header in B2's pause, its cells light one by one (B4, B5, B7), and it grows back here in B11"
+          "where": "the big layout across the middle of the visual zone: cells 2 (x 150–254), 3 (266–370), 4 (382–486), 82000 (498–814), the dashed ? cell (826–930), side by side, all y 675–815. The sequence for the whole episode: it shrinks into the header in B2's pause, its cells light one by one (B4, B5, B7), and it grows back here in B11"
         }
       ],
       "cues": [
@@ -145,20 +143,6 @@
         },
         {
           "at": {
-            "word": "팔만"
-          },
-          "target": "seq",
-          "action": "pulse",
-          "params": {
-            "part": "jump"
-          },
-          "until": {
-            "word": "이천"
-          },
-          "note": "'팔만': a spark runs along the dots from 4 to 82000: the sudden jump (C4, about 20,000 times)"
-        },
-        {
-          "at": {
             "word": "이천"
           },
           "target": "seq",
@@ -187,7 +171,7 @@
           "note": "'그다음은?': the empty cell blinks twice"
         }
       ],
-      "endFrame": "Frame 0's picture, still: five cells in one row across the middle of the visual zone (x 150–930, y 687–803): 2, 3, 4 side by side, a long dotted gap, then 82000 and the dashed ? cell, all white, none lit. Caption: '2, 3, 4, 82000, 그다음은?'",
+      "endFrame": "Frame 0's picture, still: five cells side by side in one row across the middle of the visual zone (x 150–930, y 675–815): 2, 3, 4, 82000 and the dashed ? cell, all white, none lit. Caption: '2, 3, 4, 82000, 그다음은?'",
       "claims": [
         "C1",
         "C4"
@@ -253,15 +237,15 @@
               540,
               300
             ],
-            "w": 520,
+            "w": 429,
             "h": 77,
-            "scale": 0.667
+            "scale": 0.55
           },
           "speed": "base",
           "note": "in the pause the row shrinks to 2/3 and rises to the top of the zone, where it stays as the header (the dimmed terms stay dim until they light)"
         }
       ],
-      "endFrame": "The sequence as the header at the top of the visual zone (x 280–800, y 261–339, TeX 48): 2, 3, 4 and 82000 at 0.45, the ? cell full white. The rest of the zone empty. Caption '아직 아무도 몰라요.', held through the 0.3 s pause.",
+      "endFrame": "The sequence as the header at the top of the visual zone (x 325–755, y 261–339, TeX 48): 2, 3, 4 and 82000 at 0.45, the ? cell full white. The rest of the zone empty. Caption '아직 아무도 몰라요.', held through the 0.3 s pause.",
       "claims": [
         "C8"
       ]
@@ -597,10 +581,11 @@
             "rows": [
               2
             ],
-            "which": "all"
+            "which": "all",
+            "color": "yellow"
           },
-          "speed": "base",
-          "note": "'일뿐인': the 2진법 row's own 1 and 0, the one row with only 0s and 1s, picked out just before its lamp lights on '불이'"
+          "speed": "slow",
+          "note": "'일뿐인': the 2진법 row's own 1 and 0 turn yellow and back, peaking as its lamp lights on '불이': the one row with only 0s and 1s (round 1, QA r1#1: the scale alone didn't register)"
         },
         {
           "at": {
@@ -616,18 +601,18 @@
             "word": "불이"
           },
           "target": "counter",
-          "action": "pulse",
+          "action": "blink",
           "params": {
-            "part": "digits",
             "rows": [
               3,
               4,
               5
             ],
-            "which": "red"
+            "which": "red",
+            "times": 2
           },
-          "speed": "base",
-          "note": "at the same moment the three red 2s blink once: they are why those lamps stay dark"
+          "speed": "slow",
+          "note": "at the same moment the three red 2s blink twice, staying full red: they are why those lamps stay dark (round 1, QA r1#1: the old pulse washed them pink)"
         },
         {
           "at": {
@@ -1013,16 +998,16 @@
             "word": "켜져야"
           },
           "target": "counter",
-          "action": "pulse",
+          "action": "blink",
           "params": {
-            "part": "digits",
             "rows": [
               6
             ],
-            "which": "red"
+            "which": "red",
+            "times": 2
           },
-          "speed": "base",
-          "note": "'켜져야': the red digits that keep the fifth lamp dark: 82000 is not the next number"
+          "speed": "slow",
+          "note": "'켜져야': the red digits that keep the fifth lamp dark blink twice, staying full red: 82000 is not the next number"
         },
         {
           "at": {
@@ -1479,7 +1464,7 @@
               745
             ],
             "w": 780,
-            "h": 116,
+            "h": 140,
             "scale": 1
           },
           "speed": "slow",
@@ -1546,7 +1531,7 @@
           "note": "'없어요': the last blink ends at rest before the pause does (loop)"
         }
       ],
-      "endFrame": "Frame 0's picture again (loop): the five cells big across the middle (x 150–930, y 687–803), all white and unlit, the dotted gap, the ? cell at rest; nothing else in the zone. Caption '증명은 아직 없어요.', held through the 0.5 s pause.",
+      "endFrame": "Frame 0's picture again (loop): the five cells big and side by side across the middle (x 150–930, y 675–815), all white and unlit, the ? cell at rest; nothing else in the zone. Caption '증명은 아직 없어요.', held through the 0.5 s pause.",
       "claims": [
         "C9",
         "C8"

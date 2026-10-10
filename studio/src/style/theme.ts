@@ -235,18 +235,13 @@ export const counter = {
   roll: 20, // a rolling digit rises this far out of its place, and the new one into it
   digitPulse: 1.15, // a pulsed digit's scale...
   digitGap: 3, // ...but it stops growing this close to its neighbours (which grow alike)
-  digitLift: 0.5, // a pulsed digit's color, lifted this far toward text
   flicker: 3, // a running count shows, every this many frames, the next number lighting one more row
-  // Sequence: cells round each term, dots across the jump.
+  blink: 0.25, // a blinking cell's or digit's opacity at each dip
+  // Sequence: cells round each term.
   cellRadius: 12,
   cellPulse: 8, // a pulsed cell's outline, grown inward
   termPulse: 1.15, // a pulsed term's scale...
   termGap: 6, // ...but it stays this far inside the pulsed outline
-  blink: 0.25, // a blinking cell's opacity at each dip
-  dots: 6, // dots across the jump...
-  dot: 8, // ...this wide...
-  dotInset: 20, // ...the outer two this far in from the cells beside it (at full scale)
-  spark: 0.35, // a spark crossing the dots lights each this far along them, either side
   // Funnel: tiers of counts, each with a small lit lamp.
   tierLamp: 14, // its lamp's radius...
   tierLampX: 44, // ...centered this far in from the tier's left edge

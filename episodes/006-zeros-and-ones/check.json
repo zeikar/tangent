@@ -1,9 +1,9 @@
 {
  "episode": "006-zeros-and-ones",
  "render": "render.mp4",
- "renderSha256": "8f69d7ec9703c1f6774b36aa0c4aec9a65f2982ce97922e6569a7d9d9f79c06c",
- "storyboardSha256": "08f29ff22e9283462db8afd36fcf56ce78c4844d7d9d3a8e9c3b6206e0b18ded",
- "studioSha256": "23b84fe298809aaca936e3a9caedad8ecd76c5ecd2233b72780bae5fb3dda486",
+ "renderSha256": "773b63a5c58c7b2715d3b0a2ece86d9be89644e10bca8fb3ce0223c4bb00b801",
+ "storyboardSha256": "016a65dd0aa22f721ed69b42a10a4fdca178f6c54194623b74316b2c8cdf1d20",
+ "studioSha256": "4f0df747be33471e66fbc92abb0e74e284a0a23a8e344bec52fbb9204e725b79",
  "verdict": "pass",
  "counts": {
   "fail": 0,
@@ -34,7 +34,7 @@
   {
    "id": "centering",
    "status": "pass",
-   "summary": "B1 0/0, B2 +2/0, B3 +1/0, B4 -1/0, B5 -1/0, B6 +2/0, B7 +2/0, B8 -1/0, B9 0/0, B10 +1/0, B11 0/0 (px off x 540: all ink / picture without edge labels; tolerance ±25)",
+   "summary": "B1 0/0, B2 +1/0, B3 +2/0, B4 0/0, B5 0/0, B6 0/0, B7 -1/0, B8 -1/0, B9 0/0, B10 +1/0, B11 0/0 (px off x 540: all ink / picture without edge labels; tolerance ±25)",
    "details": [
     {
      "beat": "B1",
@@ -46,42 +46,42 @@
     {
      "beat": "B2",
      "frame": 179,
-     "off": 1.5,
+     "off": 1,
      "pictureOff": 0,
      "status": "pass"
     },
     {
      "beat": "B3",
      "frame": 385,
-     "off": 1,
+     "off": 1.5,
      "pictureOff": 0,
      "status": "pass"
     },
     {
      "beat": "B4",
      "frame": 560,
-     "off": -1.5,
+     "off": 0,
      "pictureOff": 0,
      "status": "pass"
     },
     {
      "beat": "B5",
      "frame": 718,
-     "off": -1.5,
+     "off": 0,
      "pictureOff": 0,
      "status": "pass"
     },
     {
      "beat": "B6",
      "frame": 788,
-     "off": 1.5,
+     "off": 0,
      "pictureOff": 0,
      "status": "pass"
     },
     {
      "beat": "B7",
      "frame": 906,
-     "off": 1.5,
+     "off": -1.5,
      "pictureOff": 0,
      "status": "pass"
     },
@@ -206,7 +206,7 @@
      "kind": "term",
      "text": "2",
      "char": "2",
-     "height": 38.7,
+     "height": 38.6,
      "frame": 529
     },
     {
@@ -214,7 +214,7 @@
      "kind": "term",
      "text": "82000",
      "char": "2",
-     "height": 38.7,
+     "height": 38.6,
      "frame": 857
     },
     {
@@ -238,7 +238,7 @@
      "kind": "term",
      "text": "4",
      "char": "4",
-     "height": 39.3,
+     "height": 39.2,
      "frame": 629
     },
     {
@@ -270,7 +270,7 @@
      "kind": "term",
      "text": "3",
      "char": "3",
-     "height": 39.9,
+     "height": 39.8,
      "frame": 575
     },
     {
@@ -662,19 +662,13 @@
   {
    "id": "cues",
    "status": "warn",
-   "summary": "4 cues show nothing within 5 frames of their word: B4 f419 counter.lamps +6; B4 f484 counter.color +7; B10 f1294 seq.blink +8; B11 f1417 seq.blink +6",
+   "summary": "3 cues show nothing within 5 frames of their word: B4 f484 counter.color +6; B10 f1294 seq.blink +8; B11 f1417 seq.blink +6",
    "details": [
-    {
-     "beat": "B4",
-     "frame": 419,
-     "what": "counter.lamps",
-     "latency": 6
-    },
     {
      "beat": "B4",
      "frame": 484,
      "what": "counter.color",
-     "latency": 7
+     "latency": 6
     },
     {
      "beat": "B10",
@@ -691,22 +685,13 @@
    ],
    "cites": [
     {
-     "frame": 419,
-     "pair": [
-      418,
-      424
-     ],
-     "note": "cues: B4 counter.lamps at f419",
-     "file": "cues-1.png"
-    },
-    {
      "frame": 484,
      "pair": [
       483,
       489
      ],
      "note": "cues: B4 counter.color at f484",
-     "file": "cues-2.png"
+     "file": "cues-1.png"
     },
     {
      "frame": 1294,
@@ -715,6 +700,15 @@
       1299
      ],
      "note": "cues: B10 seq.blink at f1294",
+     "file": "cues-2.png"
+    },
+    {
+     "frame": 1417,
+     "pair": [
+      1416,
+      1422
+     ],
+     "note": "cues: B11 seq.blink at f1417",
      "file": "cues-3.png"
     }
    ]
@@ -873,7 +867,7 @@
   {
    "id": "loop",
    "status": "pass",
-   "summary": "13 visual-zone pixels differ by more than 16 levels between the last and first frame (limit 500)",
+   "summary": "16 visual-zone pixels differ by more than 16 levels between the last and first frame (limit 500)",
    "cites": []
   }
  ]

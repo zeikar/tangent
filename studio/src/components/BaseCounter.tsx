@@ -1,6 +1,6 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
-import { Action, bump, ElementTimeline, lerp, mix, phase, rawProgress, Scene } from "../storyboard/timeline";
+import { Action, bump, ElementTimeline, lerp, mix, phase, rawProgress, Scene, themeColor } from "../storyboard/timeline";
 import { color, counter, duration, stroke, VIDEO } from "../style/theme";
 import { countValue, digitsOf, only01, runValues } from "./bases";
 import { pointsAttr, roundedRectPoints } from "./geometry";
@@ -51,7 +51,8 @@ export type CounterState = {
   power: { lamp: number; box: number }; // lamps live
   lit: (base: number) => number; // a row's lamp, 0..1, once live
   lampPulse: (base: number) => number;
-  digitPulse: (base: number, digit: number) => number;
+  // A digit's pulses: how far it grows and turns to a pulse's color (0..1 each), and its blinks' opacity.
+  digitPulse: (base: number, digit: number) => { grow: number; tint: { color: string; t: number } | null; opacity: number };
 };
 
 const valueActions = new Set(["step", "set", "run", "count"]);
@@ -67,7 +68,14 @@ export const counterState = (el: ElementTimeline, scene: Scene): CounterState =>
   let colored = 0;
   const power = { lamp: 0, box: 0 };
   const lampPulses: { rows?: number[]; b: number }[] = [];
-  const digitPulses: { rows?: number[]; red: boolean; b: number }[] = [];
+  // Pulses and blinks on digits, each picking rows (all if none) and red digits or all.
+  type OnDigits = { rows?: number[]; red: boolean };
+  const digitPulses: (OnDigits & { b: number; color: string | null })[] = [];
+  const digitBlinks: (OnDigits & { opacity: number })[] = [];
+  const onDigits = (q: Action["params"]): OnDigits => {
+    if (q.which !== "red" && q.which !== "all") throw new Error(`BaseCounter ${el.spec.id}: ${q.which} digits? which must be red or all`);
+    return { rows: q.rows, red: q.which === "red" };
+  };
   const rowOf = (base: number, a: Action) => {
     const r = rows.find((r) => r.base === base);
     if (!r) throw new Error(`BaseCounter ${el.spec.id}: ${a.action} on base ${base}, which has no row yet`);
@@ -116,11 +124,15 @@ export const counterState = (el: ElementTimeline, scene: Scene): CounterState =>
         break;
       case "pulse":
         if (q.part === "lamps") lampPulses.push({ rows: q.rows, b: bump(a, frame) });
-        else if (q.part === "digits") {
-          if (q.which !== "red" && q.which !== "all") throw new Error(`BaseCounter ${el.spec.id}: pulse digits which must be red or all`);
-          digitPulses.push({ rows: q.rows, red: q.which === "red", b: bump(a, frame) });
-        } else throw new Error(`BaseCounter ${el.spec.id}: unknown pulse part ${q.part}`);
+        else if (q.part === "digits") digitPulses.push({ ...onDigits(q), b: bump(a, frame), color: q.color ? themeColor(q.color) : null });
+        else throw new Error(`BaseCounter ${el.spec.id}: unknown pulse part ${q.part}`);
         break;
+      case "blink": {
+        // `times` dips to counter.blink and back, ending at rest; the digits keep their color.
+        const dip = Math.sin(Math.PI * (q.times ?? 1) * t) ** 2;
+        digitBlinks.push({ ...onDigits(q), opacity: 1 - (1 - counter.blink) * dip });
+        break;
+      }
       default:
         throw new Error(`BaseCounter ${el.spec.id}: unknown action ${a.action}`);
     }
@@ -145,8 +157,16 @@ export const counterState = (el: ElementTimeline, scene: Scene): CounterState =>
       return lerp(only01(ch.from, base) ? 1 : 0, now, ch.lamps);
     },
     lampPulse: (base) => Math.max(0, ...lampPulses.filter((l) => !l.rows || l.rows.includes(base)).map((l) => l.b)),
-    digitPulse: (base, digit) =>
-      Math.max(0, ...digitPulses.filter((d) => (!d.rows || d.rows.includes(base)) && (!d.red || digit >= 2)).map((d) => d.b)),
+    digitPulse: (base, digit) => {
+      const on = (d: OnDigits) => (!d.rows || d.rows.includes(base)) && (!d.red || digit >= 2);
+      const pulses = digitPulses.filter(on);
+      const tinted = pulses.filter((d) => d.color).sort((x, y) => y.b - x.b)[0];
+      return {
+        grow: Math.max(0, ...pulses.map((d) => d.b)),
+        tint: tinted ? { color: tinted.color!, t: tinted.b } : null,
+        opacity: digitBlinks.filter(on).reduce((o, d) => o * d.opacity, 1),
+      };
+    },
   };
 };
 
@@ -196,7 +216,7 @@ export const BaseCounter: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ e
   const old = (base: number, since: number) => (s.change && since < s.change.since ? digitsOf(s.change.from, base) : null);
   const textOf = (base: number, d: number) => (base === DECIMAL || d < 2 ? color.text : mix(color.text, color.red, s.colored));
   // A pulsed digit grows about its center, but never closer than digitGap
-  // to its neighbours, and its color lifts toward text.
+  // to its neighbours, and turns toward the pulse's color if it has one.
   const digit = (base: number, g: Glyph, size: number, ink: (t: string) => Rel, opacity: number) => {
     const i = ink(String(g.d));
     const pitch = DIGIT_ADVANCE * size;
@@ -210,9 +230,9 @@ export const BaseCounter: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ e
         fontSize={size}
         x={g.x}
         y={g.y}
-        color={mix(textOf(base, g.d), color.text, counter.digitLift * pulse)}
-        opacity={g.opacity * opacity}
-        scale={lerp(1, grow, pulse)}
+        color={pulse.tint ? mix(textOf(base, g.d), pulse.tint.color, pulse.tint.t) : textOf(base, g.d)}
+        opacity={g.opacity * opacity * pulse.opacity}
+        scale={lerp(1, grow, pulse.grow)}
         kind="number"
       />
     );

@@ -19,3 +19,9 @@
 - 2026-10-10 · first look · the dotted gap between 4 and 82000 goes: the
   five terms sit side by side so they read as one sequence, at frame 0 and
   at the loop's end. No other notes on flow or pace.
+- 2026-10-10 · rework · rewrite: on hearing the take again, the human drops
+  the lamp-and-row wording ("줄", "불이 켜진다") from the narration and
+  states the rule directly: the number is written with only 0s and 1s in
+  every base from 2 up to the base named (e.g. "5진법까지는요?"). The
+  first-look note (no dotted gap) carries over to the restoryboard; fix
+  round 1 had already applied it (and QA r1#1) when the rewrite came.
