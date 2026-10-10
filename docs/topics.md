@@ -83,6 +83,17 @@ the notes are in `git show d4a76eb:docs/topics.md`.
   integers, both infinite but different sizes (Cantor's diagonal; notes in
   005's topic.md). Still next after 006, which the human brought on
   2026-10-10 and put first.
+- 2026-10-10, the human's idea while making 006, with a first draft from
+  another chatbot (not kept; the pipeline writes its own): 1/3 never ends
+  in base 10 but is 0.4 in base 12. The honest insight is that the
+  infinity moves rather than vanishes: a fraction ends in base b exactly
+  when its denominator's prime factors divide b, so in base 12 it is 1/5
+  that never ends (0.2497 2497…). Picture: a ruler cut in tenths, where
+  1/3 falls between ticks at every zoom, beside one cut in twelfths, where
+  it lands on the 4th tick. The draft's ending, π = 10 in base π, is a
+  separate and shakier idea (a non-integer base: digits 0–3, expansions
+  not unique, and 4 becomes 10.2201…), so it stays out of this one. Pairs
+  with 006 as a bases episode.
 - Set aside earlier as already told in Korean, which no longer counts
   against an idea (2026-09-27): the lunar birthday cycle, 11,172 Hangul
   syllables, curved platform gaps, the West Sea's tides, bus bunching,
