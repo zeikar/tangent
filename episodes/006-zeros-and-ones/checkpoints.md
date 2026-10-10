@@ -6,3 +6,8 @@
   itself is the frame-0 question, the answer comes at once, it ends on an
   open problem). A light search found Numberphile's 2015 video but no Korean
   one; the human makes it either way.
+- 2026-10-10 · script + take · a merge, read by take3: variant a's B1–B6
+  (its bases intro and 3-and-4 beat were better) and variant b's B6–B10
+  (its ending was better), words unchanged, renumbered B1–B11. The merge
+  also brought the length back under 50 s. The human asked what "줄에 불이
+  켜진다" means by ear; it is to be judged on the storyboard page.
