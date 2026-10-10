@@ -39,6 +39,11 @@ Summarized from what the human said, with the date.
   animation) may come later; for now, early in the channel and the repo,
   pictures drawn in code.
 
+- **Numberphile topics are welcome** (2026-10-10). The human found 006
+  there and wants more like it, sequences especially. Take the topic, not
+  the telling: research from primary sources, our own picture and script,
+  and no reuse of a video's examples, images, or wording.
+
 ## Shown, not picked
 
 The human has seen these; they weren't turned down one by one. Names only;
