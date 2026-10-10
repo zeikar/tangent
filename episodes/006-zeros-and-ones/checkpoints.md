@@ -16,3 +16,6 @@
   2 or more in red), which answers what "줄에 불이 켜진다" means on screen.
   B1's caption is one math span (`$2,\ 3,\ 4,\ 82000$, 그다음은?`) to stay
   within the chunk limit, and B4 holds a 0.4 s pause the script didn't have.
+- 2026-10-10 · first look · the dotted gap between 4 and 82000 goes: the
+  five terms sit side by side so they read as one sequence, at frame 0 and
+  at the loop's end. No other notes on flow or pace.
