@@ -11,3 +11,8 @@
   (its ending was better), words unchanged, renumbered B1–B11. The merge
   also brought the length back under 50 s. The human asked what "줄에 불이
   켜진다" means by ear; it is to be judged on the storyboard page.
+- 2026-10-10 · storyboard · approved as drafted: each base is a row of
+  digits with a lamp that lights when the row is all 0s and 1s (digits of
+  2 or more in red), which answers what "줄에 불이 켜진다" means on screen.
+  B1's caption is one math span (`$2,\ 3,\ 4,\ 82000$, 그다음은?`) to stay
+  within the chunk limit, and B4 holds a 0.4 s pause the script didn't have.

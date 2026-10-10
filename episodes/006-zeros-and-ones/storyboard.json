@@ -1,0 +1,1539 @@
+{
+  "slug": "006-zeros-and-ones",
+  "loop": true,
+  "notes": [
+    "Written against script.md (the merge of variant a's B1–B6 and variant b's B6–B10, picked 2026-10-10) and take3@1.08.words.json, which narration.json names. B1's caption is '$2,\\ 3,\\ 4,\\ 82000$, 그다음은?' (variant b's form): the math span makes the frame-0 question 2 caption units instead of 5, and it measures about 760 px wide at the caption size (math 487 px in bold TeX, ', 그다음은?' 271 px in Pretendard Bold 60), inside the 800 px line. script.md's B1 Display was changed to the same text at this stage (the validator wants captions to equal the Display).",
+    "Geometry is px in the 1080×1920 frame, origin top-left; points are [x, y]. The content bounds are x 140–940 and the visual zone y 240–1250; everything here stays 8 px inside them (x 148–932), since 005 found a white edge rings about 8 px in the encode.",
+    "One sequence, two layouts (Sequence 'seq'). Big, for frame 0 and the loop (B1, B11's end): terms in TeX 72 (digits 58 px tall), cells 116 tall centered on y 745 (y 687–803): 2 at x 148–232, 3 at 242–326, 4 at 336–420, the jump 420–584 (164 px, six 8 px muted dots evenly between x 440 and 564), 82000 at 584–838 (its ink 210 px wide), the dashed ? cell at 848–932. Header, from B2's pause to B11's first word: the same row scaled 2/3 about its center and moved to center [540, 300]: x 279–801, y 261–339, TeX 48 (digits 38.7 px tall), strokes, dashes and dots unscaled.",
+    "The counter (BaseCounter 'counter'), B3–B8. The number itself ('10진법' row, no box, no lamp, digits always white): label at x 250 (Pretendard SemiBold 48, 136 px wide), digits TeX 64 (51.6 px tall) right-aligned in columns of 38.72 px (one digit's advance), the ones column centered at x 882 (82000's ink x 711–898), ink center y 452. Base rows: each a box x 148–932, 92 tall (y ± 46), corners 16, its lamp centered at x 200 (r 20; lit rays reach r 38, x 162–238), its name from x 250 (SemiBold 48, about 112 px), its digits TeX 48 (38.7 px tall) right-aligned in columns of 29.04 px with the ones column centered at x 886. 82000's 17 binary digits run from about x 409 to 898, 47 px clear of '2진법'. Row centers: 3진법 at 584 in B3; from B4 2진법 584, 3진법 712, 4진법 840, 5진법 968; B8 adds 6진법 at 1096 (box to y 1142).",
+    "The device (the human, hearing the takes, asked what '줄에 불이 켜진다' means; B4 is where it must read at a glance). A lamp is a round bulb at a row's left end: dark (a muted 4 px circle over the background) or lit (filled yellow, with eight short yellow rays). A row is lit when every digit in it is 0 or 1: its lamp lights and its whole box lights with it (outline yellow, a yellow band at 0.12 behind its digits). Digits 0 and 1 are white; from B4's '영과' every digit 2 or more is red, and one red digit keeps the row's lamp dark. Lamps exist from B4's '이진법부터' but stay dark until 'power' on '불이'; from then on they follow the digits on every frame, so no lamp is ever lit by hand. The 2진법 row is lit from '불이' to the end of the counter (every number is 0/1 in base 2, C2).",
+    "Numbers on screen, all from verify.py or recomputed from it: 2 = 10 / 2 / 2 / 2 (bases 2–5), 3 = 11 / 10 / 3 / 3, 4 = 100 / 11 / 10 / 4 (C3); 5 = 101 / 12 / 11 / 10 (the run's first value); near misses (C18): 81900 = 10011111111101100 / 11011100100 / 103333230 / 10110100 and 81901 = …101 / …101 / 103333231 / 10110101 (bases 2, 3, 5 lit), 81921 = 10100000000000001 / 11011101010 / 110000001 / 10110141, 81984 = 10100000001000000 / 11011110110 / 110001000 / 10110414 and 81985 = 10100000001000001 / 11011110111 / 110001001 / 10110420 (bases 2, 3, 4 lit); 82000 = 10100000001010000 / 11011111001 / 110001100 / 10111000 (C4, 17 / 11 / 9 / 8 digits) and 1431344 in base 6 (C5); the funnel 99,999 → 2,046 → 30 → 1 for 2..100,000 (C13); the search bar's '10진법 1100만 자리' (C7). The counter computes every row from its value; nothing is typed in.",
+    "The run (B6) and the near misses. From '오진법' to the end of the speech the value climbs from 5 to 81,899 on a log scale with smooth easing (slow out of 5, thousands and tens of thousands in the middle, slowing near 81,899), a new value every frame, digits changing in place without rolls. Rows 3–5 stay mostly dark, but a lower lamp should flicker on now and then: production picks the frames' values so that some of them are real numbers on the way that light one of rows 3–5 (for instance the first number at or above the schedule's value that does), never a made-up state. Then the value stops at the near misses, about 0.4 s each: 81900, 81901, 81921 in B6's pause, 81984, 81985 on '네 줄은', each reached by counting through the numbers between, and 82000 on '팔만'.",
+    "Funnel (B9): counted values from verify.py (C13), drawn as four stepped tiers 784, 680, 576 and 472 wide, not to scale (to scale, 30 and 1 would be invisible: the script's note). The first tier is labeled '2진법 줄까지' under the heading '2부터 10만까지': its 99,999 is every number from 2 to 100,000, which is the script's '2진법 줄은 모두 통과'. Each tier carries a small lit lamp, the counter's lamp, so it reads as the same filter.",
+    "Search bar (B10): the axis is digit count, not size. The left end is 82000's lit lamp, labeled '82000' above and '5자리' below; the right tick is labeled '10진법 1100만 자리' below; '자릿수' names the bar above it. Past the tick the bar goes on as a dashed line fading out by x 924: the search stopped there, the numbers didn't (C7–C8). Its searched part turns white as the scan light passes; no other dot lights.",
+    "Frame 0 is the hook: seq in the big layout, visibleAtStart, all five cells white and unlit, under the caption '2, 3, 4, 82000, 그다음은?'. The row spans the full content width at the middle of the zone, like 005's hotel; the jump between 4 and 82000 is the picture's own information (the caption can't show it), and the caption's math is 47.5 px tall against the cells' 58 px, so the two don't read as the same line twice at one size.",
+    "Loop: B11 moves seq back to the big layout, unlights its cells and returns 2, 3, 4, 82000 to full opacity on its first word, with the bar's exits; the last ? blink ends before the 0.5 s pause does, so the last frame is frame 0's picture.",
+    "Easing: theme.ts's ease.out for appear and reveal, ease.exit for exit, ease.smooth otherwise, unless params say linear. A beat's first-word cue that isn't an entrance or exit is linear (B1's and B5's, B2's dimming, B8's blink), so it shows inside the 3-frame reaction window. Cues sharing an anchor run in parallel; an appear or reveal waits for that anchor's exits (B9, B10).",
+    "Draw order is declaration order: seq < counter < range < funnel < axisName < scan < startLabel < endLabel. No two of them share space while both are visible; the header stays above y 339 and everything else below y 373.",
+    "Text in the visual zone: TeX numbers (sizes above), the counter's row names and the funnel's tier names in Pretendard SemiBold 48 (a '2' is 34 px tall, the smallest glyph), and four Notes (type.label 56): '2부터 10만까지' 351 px, '자릿수' 145, '5자리' 131, '10진법 1100만 자리' 453. TeX measured with measure-tex.mts; Pretendard widths from the static OTFs' advance widths. Captions measured the same way at 60 px: the widest after B1 are '2진법부터 5진법까지 써 봐요.' 703 px and '1100만 자리까지 찾아봤지만,' 699 px, both on one line.",
+    "Extents still estimated (production's render check measures them): the lamp rays and their 12 px clearance to the row names; the rolling digits' travel (20 px, so a digit never meets its box's outline); the pulses' growth (Sequence terms 1.15× inside fixed cells; lamps 1.25×; counter digits 1.15×, which leaves about 2 px between neighbors at the 29 px column pitch); the funnel's tier names against their tiers' left edges; the B10 labels' ink (they were placed from advance widths). Ink spans by beat end: B1 and B11 x 148–932; B2 279–801; B3–B8 148–932 (the boxes); B9 148–932; B10 about 157–927. All centered within a few px of x 540.",
+    "Pacing: B4 gets a 0.4 s pause the script didn't have, so the first lit row (the moment the device has to read) stays still for about 1.5 s before B5 steps on. B6's 0.8 s and B7's 1 s pauses are the script's and carry the near misses and the held result."
+  ],
+  "colors": {
+    "text": "숫자 0과 1, 10진법 수, 칸과 이름표",
+    "red": "2 이상인 숫자: 하나라도 있으면 등이 꺼짐",
+    "yellow": "켜진 등, 켜진 줄과 칸, 82000",
+    "muted": "꺼진 등, 줄 테두리, 깔때기, 탐색 막대"
+  },
+  "components": [
+    {
+      "name": "Sequence",
+      "status": "new",
+      "spec": "A sequence's terms in a row of cells, with one long dotted jump between two of them (the 2, 3, 4, 82000, ? header). Props: terms (TeX strings in order; cells are addressed by their term), open (the term whose cell is drawn dashed: '?'), jumpAfter (the term after which the jump goes), center [x, y], size (TeX px), cell [w, h] (a one-digit cell), wide (the width of a longer term's cell), gap (between cells), jump (the jump's width). Drawing: each cell a rounded rect (corners 12) outlined 4 px (stroke.line) in text, no fill, its term's ink centered in it, TeX in text; the open cell's outline dashed (stroke.dash); in the jump, six round dots (8 px across, muted) spaced evenly from 20 px inside one cell to 20 px before the next. A lit cell: outline yellow and fill yellow at 0.15 (hotel.lit), its term still text, at full opacity whatever setStyle set. Actions: moveTo {center, scale} (the whole row moves and scales about its center, TeX size with it; strokes, dashes and dots keep their px); setStyle {cells, opacity}; light {cells} (outline and fill fade to lit over the span); unlight {cells: all | [..]}; pulse {cells} (each cell's outline thickens 4 → 8 px inward and its term grows up to 1.15×, staying 6 px clear of the outline, and back; the cell itself doesn't grow, so neighbors never touch) or {part: jump} (the dots light yellow one after another from left to right and fade back, a spark crossing the gap, over the span); blink {cells, times} (the cell's opacity dips to 0.25 and back `times` times over the span, ending at rest)."
+    },
+    {
+      "name": "BaseCounter",
+      "status": "new",
+      "spec": "The device: one number and the same number written in several bases, row under row, each base row with a lamp that is lit when the row has only 0s and 1s. Props: value (start), decimal {y, label, size, ones} (the number in base 10: a label at labelX and digits right-aligned on the ones column, no box, no lamp, digits always text), rowStyle {box: [x0, x1], height, radius, lampX, lampR, labelX, size, ones} (shared by the base rows). Base rows exist only once added (addRow); each draws a rounded box (muted 4 px outline), its label 'N진법' (Pretendard SemiBold 48, text) from labelX, and the value's digits in base N right-aligned in one-digit columns (TeX size, column pitch one digit's advance, so equal digits stack in columns as the number grows leftward), and its lamp at lampX once lamps are shown. Digits are text; after `color`, a digit of 2 or more is red (the decimal row stays text). Lamp: dark is a circle r lampR, muted 4 px outline over the background fill; lit is filled yellow with a yellow outline and eight 4 px yellow rays from r 28 to r 38. Before `power` every lamp is dark; after it, a row's lamp is lit exactly when its digits are all 0 or 1, and a lit row's box lights too (outline yellow, a yellow band at 0.12 filling the box, drawn beneath its text); lamps and boxes change over 0.35 s (duration.fast), or within the frame when the value moves faster than that. Actions: appear (the decimal row fades in); addRow {base, y} (that row's box, label, digits and, if lamps are shown, lamp fade in at y; in the counter's colors and power state); moveRow {base, y} (slides); lamps (every row's dark lamp fades in; rows added later come with theirs); color (digits of 2 or more turn red over the span); power (lamps go live over the span: rows that qualify light, lamp first, then the box); step {to} (the value changes to `to`: in every row, each digit column that changes rolls upward, the old digit rising 20 px and fading out as the new one rises 20 px into place, a new leading column rising in at the left, a vanished one fading; rolls stay inside their row's box); set {to} (the value changes with a crossfade, no roll: resets); run {from, to} (with until: the value climbs from `from` to `to` on a log scale under ease.smooth, one value per frame, digits changing in place); count {stops} (each stop gets an equal slot of the span: the value counts up through the numbers between in the slot's first quarter, a number per frame, skipping evenly if there are more numbers than frames, and holds the stop for the rest); pulse {part: lamps, rows?} (each named row's lamp scales 1.25 and back, rays included) or {part: digits, rows?, which?: red | all} (those digits scale 1.15 about their own centers, their color lifted halfway to text, and back: the red 2s 'blinking'; at 1.15 a digit stays about 2 px clear of its neighbors); exit."
+    },
+    {
+      "name": "Funnel",
+      "status": "new",
+      "spec": "A stepped funnel of counts: centered tiers narrowing downward, one per filter, and what comes out at the bottom. Props: x (center), height (each tier's), tiers [{y, w, label, count}] (y the tier's center, label Pretendard SemiBold 48, count TeX), output {tex, y, cell: [w, h]}. Drawing: a tier is a rounded rect (corners 16), muted 4 px outline, no fill; inside it, a small lit lamp (BaseCounter's lit lamp at r 14, rays from r 20 to r 27) centered 44 px in from its left edge, its label from 84 px in (text), and its count (TeX 64, text) with the ink's right edge 32 px in from its right edge, vertically centered on the digits' ink. Output: an arrow (5 px, muted, head 18) from 8 px under the last tier's bottom straight down 32 px, onto a lit cell (Sequence's lit style, corners 12) holding the output TeX (56, text). Actions: appear (tier 1 drops in: fades in while sliding 40 px down into place); reveal {tier: n} (tier n drops in the same way); reveal {part: output} (the arrow grows down, then the cell fades in lit); exit."
+    },
+    {
+      "name": "ScanBar",
+      "status": "new",
+      "spec": "A searched range: a bar from a found point to how far the search went, a dashed continuation past it, and a light that sweeps it. Props: from [x, y] (the left end), to [x, y] (the searched end), tail (the x where the continuation has faded out), dot {label, labelY} (a lit point at `from` and its TeX label). Drawing: the bar a 6 px (stroke.sheet) line from `from` to `to`, muted where the scan has not passed and text where it has; a tick at `to`, 4 px, text, 44 px tall centered on the bar; past it a dashed 6 px line (stroke.dash) to `tail`, each dash at the opacity of its x, 1 at `to` falling linearly to 0 at `tail` (fade.ts); the dot is BaseCounter's lit lamp at r 16 (rays r 22 → 30) on `from`, its label TeX 50 in yellow, ink centered at (from.x, labelY). Actions: appear (the bar draws left to right from the lit dot, the tick and the dashes last); scan (with until: a light, a 14 px yellow disc trailing a 90 px yellow line that fades behind it, runs from the dot to the tick at constant speed, the bar turning text behind it, and fades out on the tick; nothing on the bar lights); pulse {part: dot} (the lamp scales 1.3 and back); exit."
+    },
+    {
+      "name": "Note",
+      "status": "existing",
+      "spec": "One line of plain text with $...$ math (studio/src/components/Note.tsx): props text, at [x, y] (the ink center), color (default text); type.label. Actions: appear, exit, setText. Used for '2부터 10만까지' (B9) and the search bar's '자릿수', '5자리', '10진법 1100만 자리' (B10)."
+    }
+  ],
+  "beats": [
+    {
+      "id": "B1",
+      "name": "훅",
+      "readAloud": "이, 삼, 사, 팔만 이천, 그다음은?",
+      "captions": [
+        {
+          "text": "$2,\\ 3,\\ 4,\\ 82000$, 그다음은?",
+          "at": {
+            "word": "이"
+          }
+        }
+      ],
+      "pauseAfter": 0,
+      "elements": [
+        {
+          "id": "seq",
+          "component": "Sequence",
+          "visibleAtStart": true,
+          "props": {
+            "terms": [
+              "2",
+              "3",
+              "4",
+              "82000",
+              "?"
+            ],
+            "open": "?",
+            "jumpAfter": "4",
+            "center": [
+              540,
+              745
+            ],
+            "w": 784,
+            "h": 116,
+            "size": 72,
+            "cell": [
+              84,
+              116
+            ],
+            "wide": 254,
+            "gap": 10,
+            "jump": 164
+          },
+          "where": "the big layout across the middle of the visual zone: cells 2 (x 148–232), 3 (242–326), 4 (336–420), the dotted jump (420–584), 82000 (584–838), the dashed ? cell (848–932), all y 687–803. The sequence for the whole episode: it shrinks into the header in B2's pause, its cells light one by one (B4, B5, B7), and it grows back here in B11"
+        }
+      ],
+      "cues": [
+        {
+          "at": {
+            "word": "이"
+          },
+          "target": "seq",
+          "action": "pulse",
+          "params": {
+            "cells": [
+              "2"
+            ],
+            "ease": "linear"
+          },
+          "speed": "fast",
+          "note": "each term pulses as it is read; linear, so the first word shows within 3 frames"
+        },
+        {
+          "at": {
+            "word": "삼"
+          },
+          "target": "seq",
+          "action": "pulse",
+          "params": {
+            "cells": [
+              "3"
+            ]
+          },
+          "speed": "fast",
+          "note": "'삼'"
+        },
+        {
+          "at": {
+            "word": "사"
+          },
+          "target": "seq",
+          "action": "pulse",
+          "params": {
+            "cells": [
+              "4"
+            ]
+          },
+          "speed": "fast",
+          "note": "'사'"
+        },
+        {
+          "at": {
+            "word": "팔만"
+          },
+          "target": "seq",
+          "action": "pulse",
+          "params": {
+            "part": "jump"
+          },
+          "until": {
+            "word": "이천"
+          },
+          "note": "'팔만': a spark runs along the dots from 4 to 82000: the sudden jump (C4, about 20,000 times)"
+        },
+        {
+          "at": {
+            "word": "이천"
+          },
+          "target": "seq",
+          "action": "pulse",
+          "params": {
+            "cells": [
+              "82000"
+            ]
+          },
+          "speed": "base",
+          "note": "'이천': 82000 lands"
+        },
+        {
+          "at": {
+            "word": "그다음은"
+          },
+          "target": "seq",
+          "action": "blink",
+          "params": {
+            "cells": [
+              "?"
+            ],
+            "times": 2
+          },
+          "speed": "slow",
+          "note": "'그다음은?': the empty cell blinks twice"
+        }
+      ],
+      "endFrame": "Frame 0's picture, still: five cells in one row across the middle of the visual zone (x 148–932, y 687–803): 2, 3, 4 side by side, a long dotted gap, then 82000 and the dashed ? cell, all white, none lit. Caption: '2, 3, 4, 82000, 그다음은?'",
+      "claims": [
+        "C1",
+        "C4"
+      ]
+    },
+    {
+      "id": "B2",
+      "name": "첫 답",
+      "readAloud": "아직 아무도 몰라요.",
+      "captions": [
+        {
+          "text": "아직 아무도 몰라요.",
+          "at": {
+            "word": "아직"
+          }
+        }
+      ],
+      "pauseAfter": 0.3,
+      "elements": [],
+      "cues": [
+        {
+          "at": {
+            "word": "아직"
+          },
+          "target": "seq",
+          "action": "setStyle",
+          "params": {
+            "cells": [
+              "2",
+              "3",
+              "4",
+              "82000"
+            ],
+            "opacity": 0.45,
+            "ease": "linear"
+          },
+          "speed": "base",
+          "note": "the known terms step back; only the ? cell stays bright. Linear for the first word"
+        },
+        {
+          "at": {
+            "word": "몰라요"
+          },
+          "target": "seq",
+          "action": "blink",
+          "params": {
+            "cells": [
+              "?"
+            ],
+            "times": 1
+          },
+          "speed": "base",
+          "note": "'몰라요': the open cell"
+        },
+        {
+          "at": {
+            "pause": true
+          },
+          "target": "seq",
+          "action": "moveTo",
+          "params": {
+            "center": [
+              540,
+              300
+            ],
+            "w": 523,
+            "h": 77,
+            "scale": 0.667
+          },
+          "speed": "base",
+          "note": "in the pause the row shrinks to 2/3 and rises to the top of the zone, where it stays as the header (the dimmed terms stay dim until they light)"
+        }
+      ],
+      "endFrame": "The sequence as the header at the top of the visual zone (x 279–801, y 261–339, TeX 48): 2, 3, 4 and 82000 at 0.45, the ? cell full white. The rest of the zone empty. Caption '아직 아무도 몰라요.', held through the 0.3 s pause.",
+      "claims": [
+        "C8"
+      ]
+    },
+    {
+      "id": "B3",
+      "name": "3진법으로 세기",
+      "readAloud": "우리는 구 다음에 자리가 넘어가죠. 삼진법은 영, 일, 이, 그다음이 일영이에요.",
+      "captions": [
+        {
+          "text": "우리는 9 다음에",
+          "at": {
+            "word": "우리는"
+          }
+        },
+        {
+          "text": "자리가 넘어가죠.",
+          "at": {
+            "word": "자리가"
+          }
+        },
+        {
+          "text": "3진법은 0, 1, 2,",
+          "at": {
+            "word": "삼진법은"
+          }
+        },
+        {
+          "text": "그다음이 10이에요.",
+          "at": {
+            "word": "그다음이"
+          }
+        }
+      ],
+      "pauseAfter": 0.4,
+      "elements": [
+        {
+          "id": "counter",
+          "component": "BaseCounter",
+          "props": {
+            "value": 8,
+            "decimal": {
+              "y": 452,
+              "label": "10진법",
+              "labelX": 250,
+              "size": 64,
+              "ones": 882
+            },
+            "rowStyle": {
+              "box": [
+                148,
+                932
+              ],
+              "height": 92,
+              "radius": 16,
+              "lampX": 200,
+              "lampR": 20,
+              "labelX": 250,
+              "size": 48,
+              "ones": 886
+            }
+          },
+          "where": "under the header: the 10진법 row (label from x 250, digits right-aligned on x 882, ink center y 452); base rows in boxes x 148–932, added from here on (3진법 at y 584 now; B4: 2진법 584, 3진법 712, 4진법 840, 5진법 968; B8: 6진법 1096). Exits on B9's first word"
+        }
+      ],
+      "cues": [
+        {
+          "at": {
+            "word": "우리는"
+          },
+          "target": "counter",
+          "action": "appear",
+          "speed": "base",
+          "note": "'우리는': the number we write, 10진법, showing 8"
+        },
+        {
+          "at": {
+            "word": "구"
+          },
+          "target": "counter",
+          "action": "step",
+          "params": {
+            "to": 9
+          },
+          "speed": "fast",
+          "note": "'구': 8 rolls to 9"
+        },
+        {
+          "at": {
+            "word": "넘어가죠"
+          },
+          "target": "counter",
+          "action": "step",
+          "params": {
+            "to": 10
+          },
+          "speed": "base",
+          "note": "'넘어가죠': the carry. The 9 rolls on to 0 and a 1 rises in on its left: 10"
+        },
+        {
+          "at": {
+            "word": "삼진법은"
+          },
+          "target": "counter",
+          "action": "set",
+          "params": {
+            "to": 0
+          },
+          "speed": "base",
+          "note": "counting starts again from 0 (a crossfade, not a roll)"
+        },
+        {
+          "at": {
+            "word": "삼진법은"
+          },
+          "target": "counter",
+          "action": "addRow",
+          "params": {
+            "base": 3,
+            "y": 584
+          },
+          "speed": "base",
+          "note": "'삼진법은': the 3진법 row in its box right under the number, showing 0. No lamp yet"
+        },
+        {
+          "at": {
+            "word": "영"
+          },
+          "target": "counter",
+          "action": "pulse",
+          "params": {
+            "part": "digits",
+            "which": "all"
+          },
+          "speed": "fast",
+          "note": "'영': both rows' 0"
+        },
+        {
+          "at": {
+            "word": "일"
+          },
+          "target": "counter",
+          "action": "step",
+          "params": {
+            "to": 1
+          },
+          "speed": "fast",
+          "note": "'일': 1 and 1"
+        },
+        {
+          "at": {
+            "word": "이"
+          },
+          "target": "counter",
+          "action": "step",
+          "params": {
+            "to": 2
+          },
+          "speed": "fast",
+          "note": "'이': 2 and 2"
+        },
+        {
+          "at": {
+            "word": "그다음이"
+          },
+          "target": "counter",
+          "action": "step",
+          "params": {
+            "to": 3
+          },
+          "speed": "base",
+          "note": "'그다음이': 3. The 3진법 row's 2 rolls on to 0 and a 1 rises in on its left, the same carry as 9 → 10 above (C20)"
+        },
+        {
+          "at": {
+            "word": "일영이에요"
+          },
+          "target": "counter",
+          "action": "pulse",
+          "params": {
+            "part": "digits",
+            "rows": [
+              3
+            ],
+            "which": "all"
+          },
+          "speed": "base",
+          "note": "'일영': the 3진법 row's 10"
+        }
+      ],
+      "endFrame": "Header at the top. Below it the 10진법 row: label at the left, 3 at the right. Under it the 3진법 row in its muted box (x 148–932, y 538–630), label at the left, 10 at the right; no lamp. All digits white. Caption '그다음이 10이에요.', held through the 0.4 s pause.",
+      "claims": [
+        "C20"
+      ]
+    },
+    {
+      "id": "B4",
+      "name": "네 줄",
+      "readAloud": "일보다 큰 수를 이진법부터 오진법까지 써 봐요. 영과 일뿐인 줄엔 불이 켜져요.",
+      "captions": [
+        {
+          "text": "1보다 큰 수를",
+          "at": {
+            "word": "일보다"
+          }
+        },
+        {
+          "text": "2진법부터 5진법까지 써 봐요.",
+          "at": {
+            "word": "이진법부터"
+          }
+        },
+        {
+          "text": "0과 1뿐인 줄엔",
+          "at": {
+            "word": "영과"
+          }
+        },
+        {
+          "text": "불이 켜져요.",
+          "at": {
+            "word": "불이"
+          }
+        }
+      ],
+      "pauseAfter": 0.4,
+      "elements": [],
+      "cues": [
+        {
+          "at": {
+            "word": "일보다"
+          },
+          "target": "counter",
+          "action": "set",
+          "params": {
+            "to": 1,
+            "ease": "linear"
+          },
+          "speed": "fast",
+          "note": "'일보다': back to 1 (both rows 1). Linear for the first word"
+        },
+        {
+          "at": {
+            "word": "큰"
+          },
+          "target": "counter",
+          "action": "step",
+          "params": {
+            "to": 2
+          },
+          "speed": "fast",
+          "note": "'큰': greater than 1, so counting starts at 2 (0 and 1 would light every row, C2)"
+        },
+        {
+          "at": {
+            "word": "수를"
+          },
+          "target": "counter",
+          "action": "moveRow",
+          "params": {
+            "base": 3,
+            "y": 712
+          },
+          "speed": "fast",
+          "note": "'수를': the 3진법 row slides down one place, clear of y 584 before the 2진법 row comes in (two rows' digits must never cross)"
+        },
+        {
+          "at": {
+            "word": "이진법부터"
+          },
+          "target": "counter",
+          "action": "addRow",
+          "params": {
+            "base": 2,
+            "y": 584
+          },
+          "speed": "base",
+          "note": "'이진법부터': the 2진법 row comes in above it, showing 10"
+        },
+        {
+          "at": {
+            "word": "이진법부터"
+          },
+          "target": "counter",
+          "action": "lamps",
+          "speed": "base",
+          "note": "each row gets its lamp at its left end, dark"
+        },
+        {
+          "at": {
+            "word": "오진법까지"
+          },
+          "target": "counter",
+          "action": "addRow",
+          "params": {
+            "base": 4,
+            "y": 840
+          },
+          "speed": "base",
+          "note": "4진법 row: 2"
+        },
+        {
+          "at": {
+            "word": "오진법까지"
+          },
+          "target": "counter",
+          "action": "addRow",
+          "params": {
+            "base": 5,
+            "y": 968
+          },
+          "speed": "base",
+          "note": "5진법 row: 2"
+        },
+        {
+          "at": {
+            "word": "영과"
+          },
+          "target": "counter",
+          "action": "color",
+          "speed": "base",
+          "note": "'영과 일뿐인': every digit 2 or more turns red (the three 2s); 0s and 1s stay white"
+        },
+        {
+          "at": {
+            "word": "불이"
+          },
+          "target": "counter",
+          "action": "power",
+          "speed": "base",
+          "note": "THE DEVICE. '불이': the 2진법 row, 10, has only 0 and 1, so its lamp lights yellow with rays and its whole box lights (yellow outline, yellow band). The other three each hold a red 2, so their lamps stay dark"
+        },
+        {
+          "at": {
+            "word": "불이"
+          },
+          "target": "counter",
+          "action": "pulse",
+          "params": {
+            "part": "digits",
+            "rows": [
+              3,
+              4,
+              5
+            ],
+            "which": "red"
+          },
+          "speed": "base",
+          "note": "at the same moment the three red 2s blink once: they are why those lamps stay dark"
+        },
+        {
+          "at": {
+            "word": "불이"
+          },
+          "target": "seq",
+          "action": "light",
+          "params": {
+            "cells": [
+              "2"
+            ]
+          },
+          "speed": "base",
+          "note": "the header's 2 lights with its row: 2 is the first number for the top row"
+        }
+      ],
+      "endFrame": "THE DEVICE, to read at a glance. Header: 2 lit (yellow), 3, 4, 82000 dim, ? white. 10진법 row: 2. Four row boxes, 2진법 / 3진법 / 4진법 / 5진법 top to bottom (y 584, 712, 840, 968), each with a round lamp at its left end, its name, and its digits at the right: 2진법 '10' in white with its lamp lit yellow (rays) and its whole box lit (yellow outline and band); 3진법, 4진법, 5진법 each a red '2' with a dark lamp and a muted box. 줄마다 왼쪽 끝에 등이 하나 있고, 그 줄 숫자가 모두 0과 1이면 등이 노랗게 켜지며 줄 전체가 환해진다. 2 이상인 빨간 숫자가 하나라도 있으면 그 줄의 등은 꺼진 채다. Caption '불이 켜져요.', held through the 0.4 s pause.",
+      "claims": [
+        "C1",
+        "C2",
+        "C20"
+      ]
+    },
+    {
+      "id": "B5",
+      "name": "3과 4",
+      "readAloud": "삼은 삼진법 줄까지, 사는 사진법 줄까지 다 켜지는 첫 수예요.",
+      "captions": [
+        {
+          "text": "3은 3진법 줄까지,",
+          "at": {
+            "word": "삼은"
+          }
+        },
+        {
+          "text": "4는 4진법 줄까지",
+          "at": {
+            "word": "사는"
+          }
+        },
+        {
+          "text": "다 켜지는 첫 수예요.",
+          "at": {
+            "word": "다"
+          }
+        }
+      ],
+      "pauseAfter": 0.3,
+      "elements": [],
+      "cues": [
+        {
+          "at": {
+            "word": "삼은"
+          },
+          "target": "counter",
+          "action": "step",
+          "params": {
+            "to": 3,
+            "ease": "linear"
+          },
+          "speed": "base",
+          "note": "'삼은': 3 = 11 / 10 / 3 / 3. The 3진법 row rolls 2 → 10 and lights; 4진법 and 5진법 show a red 3, dark (C3). Linear for the first word"
+        },
+        {
+          "at": {
+            "word": "삼은"
+          },
+          "target": "seq",
+          "action": "light",
+          "params": {
+            "cells": [
+              "3"
+            ]
+          },
+          "speed": "base",
+          "note": "the header's 3 lights"
+        },
+        {
+          "at": {
+            "word": "삼진법"
+          },
+          "target": "counter",
+          "action": "pulse",
+          "params": {
+            "part": "lamps",
+            "rows": [
+              2,
+              3
+            ]
+          },
+          "speed": "base",
+          "note": "'삼진법 줄까지': the two lit lamps"
+        },
+        {
+          "at": {
+            "word": "사는"
+          },
+          "target": "counter",
+          "action": "step",
+          "params": {
+            "to": 4
+          },
+          "speed": "base",
+          "note": "'사는': 4 = 100 / 11 / 10 / 4. The 4진법 row rolls 3 → 10 and lights; the 5진법 row's 4 is red, dark"
+        },
+        {
+          "at": {
+            "word": "사는"
+          },
+          "target": "seq",
+          "action": "light",
+          "params": {
+            "cells": [
+              "4"
+            ]
+          },
+          "speed": "base",
+          "note": "the header's 4 lights"
+        },
+        {
+          "at": {
+            "word": "사진법"
+          },
+          "target": "counter",
+          "action": "pulse",
+          "params": {
+            "part": "lamps",
+            "rows": [
+              2,
+              3,
+              4
+            ]
+          },
+          "speed": "base",
+          "note": "'사진법 줄까지': three lit lamps, one more row than for 3"
+        },
+        {
+          "at": {
+            "word": "첫"
+          },
+          "target": "seq",
+          "action": "pulse",
+          "params": {
+            "cells": [
+              "2",
+              "3",
+              "4"
+            ]
+          },
+          "speed": "base",
+          "note": "'첫 수': the lit 2, 3, 4 in the header are these first numbers"
+        }
+      ],
+      "endFrame": "Value 4: 2진법 100, 3진법 11, 4진법 10, each row lit (lamp and box yellow); 5진법 a red 4, lamp dark, box muted. Header: 2, 3, 4 lit, 82000 dim, ? white. Caption '다 켜지는 첫 수예요.'",
+      "claims": [
+        "C1",
+        "C3",
+        "C20"
+      ]
+    },
+    {
+      "id": "B6",
+      "name": "5진법까지는",
+      "readAloud": "오진법 줄까지는요?",
+      "captions": [
+        {
+          "text": "5진법 줄까지는요?",
+          "at": {
+            "word": "오진법"
+          }
+        }
+      ],
+      "pauseAfter": 0.8,
+      "elements": [],
+      "cues": [
+        {
+          "at": {
+            "word": "오진법"
+          },
+          "target": "counter",
+          "action": "run",
+          "params": {
+            "from": 5,
+            "to": 81899
+          },
+          "until": {
+            "pause": true
+          },
+          "note": "'오진법': the number takes off from 5 into the thousands and tens of thousands, the rows streaming; rows 3–5 mostly dark, a lower lamp flickering on now and then on real numbers; slowing near 81,899"
+        },
+        {
+          "at": {
+            "word": "줄까지는요"
+          },
+          "target": "counter",
+          "action": "pulse",
+          "params": {
+            "part": "lamps",
+            "rows": [
+              5
+            ]
+          },
+          "speed": "base",
+          "note": "'줄까지는요?': the 5진법 lamp, the question"
+        },
+        {
+          "at": {
+            "pause": true
+          },
+          "target": "counter",
+          "action": "count",
+          "params": {
+            "stops": [
+              81900,
+              81901,
+              81921
+            ]
+          },
+          "speed": "slow",
+          "note": "near misses, 0.4 s each (C18): 81900 and 81901 light 2, 3, 5 (the 4진법 row is full of red 3s); 81921 lights 2, 3, 4 (the 5진법 row's 4 is red). Three lamps of four, one short"
+        }
+      ],
+      "endFrame": "Value 81921 held: 2진법 10100000000000001, 3진법 11011101010, 4진법 110000001 lit; 5진법 10110141 with its 4 red, lamp dark: three of four rows lit. Header unchanged (2, 3, 4 lit). Caption '5진법 줄까지는요?'",
+      "claims": [
+        "C1",
+        "C18"
+      ]
+    },
+    {
+      "id": "B7",
+      "name": "82000",
+      "readAloud": "네 줄은 팔만 이천에서야 다 켜져요.",
+      "captions": [
+        {
+          "text": "네 줄은",
+          "at": {
+            "word": "네"
+          }
+        },
+        {
+          "text": "82000에서야 다 켜져요.",
+          "at": {
+            "word": "팔만"
+          }
+        }
+      ],
+      "pauseAfter": 1.0,
+      "elements": [],
+      "cues": [
+        {
+          "at": {
+            "word": "네"
+          },
+          "target": "counter",
+          "action": "count",
+          "params": {
+            "stops": [
+              81984,
+              81985
+            ]
+          },
+          "until": {
+            "word": "팔만"
+          },
+          "note": "'네 줄은': two more near misses, 81984 and 81985 (2, 3, 4 lit; a red 4 and a red 2 in the 5진법 row)"
+        },
+        {
+          "at": {
+            "word": "팔만"
+          },
+          "target": "counter",
+          "action": "count",
+          "params": {
+            "stops": [
+              82000
+            ]
+          },
+          "speed": "fast",
+          "note": "'팔만': the count stops at 82000 and all four lamps light at once: 10100000001010000 / 11011111001 / 110001100 / 10111000 (C4), every digit white"
+        },
+        {
+          "at": {
+            "word": "다"
+          },
+          "target": "seq",
+          "action": "light",
+          "params": {
+            "cells": [
+              "82000"
+            ]
+          },
+          "speed": "base",
+          "note": "'다 켜져요': the header's 82000 lights"
+        },
+        {
+          "at": {
+            "word": "다"
+          },
+          "target": "counter",
+          "action": "pulse",
+          "params": {
+            "part": "lamps"
+          },
+          "speed": "base",
+          "note": "the four lit lamps together"
+        }
+      ],
+      "endFrame": "Value 82000, all four rows lit (lamps and boxes yellow): 2진법 10100000001010000, 3진법 11011111001, 4진법 110001100, 5진법 10111000, right-aligned (17, 11, 9, 8 digits), every digit white. Header: 2, 3, 4, 82000 lit, ? white. Held through the 1 s pause. Caption '82000에서야 다 켜져요.'",
+      "claims": [
+        "C4"
+      ]
+    },
+    {
+      "id": "B8",
+      "name": "다섯째 줄",
+      "readAloud": "그다음은 육진법까지, 다섯 줄이 다 켜져야 해요.",
+      "captions": [
+        {
+          "text": "그다음은 6진법까지,",
+          "at": {
+            "word": "그다음은"
+          }
+        },
+        {
+          "text": "다섯 줄이",
+          "at": {
+            "word": "다섯"
+          }
+        },
+        {
+          "text": "다 켜져야 해요.",
+          "at": {
+            "word": "다"
+          }
+        }
+      ],
+      "pauseAfter": 0.3,
+      "elements": [],
+      "cues": [
+        {
+          "at": {
+            "word": "그다음은"
+          },
+          "target": "seq",
+          "action": "blink",
+          "params": {
+            "cells": [
+              "?"
+            ],
+            "times": 2,
+            "ease": "linear"
+          },
+          "speed": "slow",
+          "note": "'그다음은': the ? cell after 82000. Linear for the first word"
+        },
+        {
+          "at": {
+            "word": "육진법까지"
+          },
+          "target": "counter",
+          "action": "addRow",
+          "params": {
+            "base": 6,
+            "y": 1096
+          },
+          "speed": "base",
+          "note": "'육진법까지': a fifth row, 6진법, under the four: 82000 is 1431344 there (C5), its 4, 3, 3, 4, 4 red, its lamp dark from the start"
+        },
+        {
+          "at": {
+            "word": "다섯"
+          },
+          "target": "counter",
+          "action": "pulse",
+          "params": {
+            "part": "lamps"
+          },
+          "speed": "base",
+          "note": "'다섯 줄이': all five lamps, four lit and one dark"
+        },
+        {
+          "at": {
+            "word": "켜져야"
+          },
+          "target": "counter",
+          "action": "pulse",
+          "params": {
+            "part": "digits",
+            "rows": [
+              6
+            ],
+            "which": "red"
+          },
+          "speed": "base",
+          "note": "'켜져야': the red digits that keep the fifth lamp dark: 82000 is not the next number"
+        },
+        {
+          "at": {
+            "pause": true
+          },
+          "target": "seq",
+          "action": "blink",
+          "params": {
+            "cells": [
+              "?"
+            ],
+            "times": 1
+          },
+          "speed": "base",
+          "note": "the open cell again"
+        }
+      ],
+      "endFrame": "Five rows: 2진법–5진법 lit as at the end of B7; under them the 6진법 row (y 1096) showing 1431344, its 4, 3, 3, 4, 4 red and 1s white, lamp dark, box muted. Header: 2, 3, 4, 82000 lit, ? white. Caption '다 켜져야 해요.'",
+      "claims": [
+        "C1",
+        "C5",
+        "C8"
+      ]
+    },
+    {
+      "id": "B9",
+      "name": "걸러지기",
+      "readAloud": "둘부터 십만까지 세면, 줄이 하나 늘 때마다 남는 수가 확 줄어요.",
+      "captions": [
+        {
+          "text": "2부터 10만까지 세면,",
+          "at": {
+            "word": "둘부터"
+          }
+        },
+        {
+          "text": "줄이 하나 늘 때마다",
+          "at": {
+            "word": "줄이"
+          }
+        },
+        {
+          "text": "남는 수가 확 줄어요.",
+          "at": {
+            "word": "남는"
+          }
+        }
+      ],
+      "pauseAfter": 0.4,
+      "elements": [
+        {
+          "id": "range",
+          "component": "Note",
+          "props": {
+            "text": "2부터 10만까지",
+            "at": [
+              540,
+              398
+            ],
+            "color": "text"
+          },
+          "where": "the funnel's heading, centered under the header: ink about x 365–715, y 373–423"
+        },
+        {
+          "id": "funnel",
+          "component": "Funnel",
+          "props": {
+            "x": 540,
+            "height": 104,
+            "center": [
+              540,
+              747
+            ],
+            "w": 784,
+            "h": 602,
+            "tiers": [
+              {
+                "y": 498,
+                "w": 784,
+                "label": "2진법 줄까지",
+                "count": "99{,}999"
+              },
+              {
+                "y": 620,
+                "w": 680,
+                "label": "3진법 줄까지",
+                "count": "2{,}046"
+              },
+              {
+                "y": 742,
+                "w": 576,
+                "label": "4진법 줄까지",
+                "count": "30"
+              },
+              {
+                "y": 864,
+                "w": 472,
+                "label": "5진법 줄까지",
+                "count": "1"
+              }
+            ],
+            "output": {
+              "tex": "82000",
+              "y": 1006,
+              "cell": [
+                200,
+                84
+              ]
+            }
+          },
+          "where": "tiers centered on x 540, 104 tall: 148–932 (y 446–550), 200–880 (568–672), 252–828 (690–794), 304–776 (812–916); the arrow from y 924 down to 956; the lit 82000 cell x 440–640, y 964–1048"
+        }
+      ],
+      "cues": [
+        {
+          "at": {
+            "word": "둘부터"
+          },
+          "target": "counter",
+          "action": "exit",
+          "note": "the counter clears; the header stays"
+        },
+        {
+          "at": {
+            "word": "둘부터"
+          },
+          "target": "range",
+          "action": "appear",
+          "speed": "base",
+          "note": "'둘부터 십만까지': the range"
+        },
+        {
+          "at": {
+            "word": "십만까지"
+          },
+          "target": "funnel",
+          "action": "appear",
+          "speed": "fast",
+          "note": "tier 1 drops in: 2진법 줄까지 99,999, every number from 2 to 100,000 (C13, C2)"
+        },
+        {
+          "at": {
+            "word": "줄이"
+          },
+          "target": "funnel",
+          "action": "reveal",
+          "params": {
+            "tier": 2
+          },
+          "speed": "fast",
+          "note": "'줄이': 3진법 줄까지 2,046"
+        },
+        {
+          "at": {
+            "word": "때마다"
+          },
+          "target": "funnel",
+          "action": "reveal",
+          "params": {
+            "tier": 3
+          },
+          "speed": "fast",
+          "note": "'때마다': 4진법 줄까지 30"
+        },
+        {
+          "at": {
+            "word": "확"
+          },
+          "target": "funnel",
+          "action": "reveal",
+          "params": {
+            "tier": 4
+          },
+          "speed": "fast",
+          "note": "'확': 5진법 줄까지 1"
+        },
+        {
+          "at": {
+            "pause": true
+          },
+          "target": "funnel",
+          "action": "reveal",
+          "params": {
+            "part": "output"
+          },
+          "speed": "base",
+          "note": "as the sentence ends, the one survivor comes out lit: 82000, the only number to 100,000 with four rows lit"
+        }
+      ],
+      "endFrame": "Header at the top. '2부터 10만까지' over a stepped funnel of four centered tiers narrowing downward (y 446–916), each with a small lit lamp and its name at the left and its count at the right: 2진법 줄까지 99,999 / 3진법 줄까지 2,046 / 4진법 줄까지 30 / 5진법 줄까지 1; under the last tier a short arrow down to a lit cell 82000 (y 964–1048). Caption '남는 수가 확 줄어요.', held through the 0.4 s pause.",
+      "claims": [
+        "C13",
+        "C2"
+      ]
+    },
+    {
+      "id": "B10",
+      "name": "1100만 자리",
+      "readAloud": "천백만 자리까지 찾아봤지만, 네 줄이 다 켜지는 수는 팔만 이천 말고 못 찾았어요.",
+      "captions": [
+        {
+          "text": "1100만 자리까지 찾아봤지만,",
+          "at": {
+            "word": "천백만"
+          }
+        },
+        {
+          "text": "네 줄이 다 켜지는",
+          "at": {
+            "word": "네"
+          }
+        },
+        {
+          "text": "수는 82000 말고",
+          "at": {
+            "word": "수는"
+          }
+        },
+        {
+          "text": "못 찾았어요.",
+          "at": {
+            "word": "못"
+          }
+        }
+      ],
+      "pauseAfter": 0,
+      "elements": [
+        {
+          "id": "axisName",
+          "component": "Note",
+          "props": {
+            "text": "자릿수",
+            "at": [
+              540,
+              616
+            ],
+            "color": "muted"
+          },
+          "where": "the bar's name, centered above it: ink about x 467–613, y 592–640"
+        },
+        {
+          "id": "scan",
+          "component": "ScanBar",
+          "props": {
+            "from": [
+              230,
+              760
+            ],
+            "to": [
+              700,
+              760
+            ],
+            "tail": 924,
+            "dot": {
+              "label": "82000",
+              "labelY": 696
+            }
+          },
+          "where": "the bar at y 760 from the lit dot at x 230 (rays x 200–260) to the tick at x 700, dashes fading out by x 924; '82000' in yellow above the dot (ink x 157–303)"
+        },
+        {
+          "id": "startLabel",
+          "component": "Note",
+          "props": {
+            "text": "5자리",
+            "at": [
+              230,
+              836
+            ],
+            "color": "text"
+          },
+          "where": "under the dot: ink about x 164–296"
+        },
+        {
+          "id": "endLabel",
+          "component": "Note",
+          "props": {
+            "text": "10진법 1100만 자리",
+            "at": [
+              700,
+              836
+            ],
+            "color": "text"
+          },
+          "where": "under the tick: ink about x 474–926"
+        }
+      ],
+      "cues": [
+        {
+          "at": {
+            "word": "천백만"
+          },
+          "target": "funnel",
+          "action": "exit",
+          "note": "the funnel clears"
+        },
+        {
+          "at": {
+            "word": "천백만"
+          },
+          "target": "range",
+          "action": "exit",
+          "note": "with its heading"
+        },
+        {
+          "at": {
+            "word": "천백만"
+          },
+          "target": "scan",
+          "action": "appear",
+          "speed": "base",
+          "note": "'천백만 자리까지': the bar draws from 82000's lit dot to the tick, then the fading dashes"
+        },
+        {
+          "at": {
+            "word": "천백만"
+          },
+          "target": "endLabel",
+          "action": "appear",
+          "speed": "base",
+          "note": "the tick's label: digits, in base 10, not a value (C7)"
+        },
+        {
+          "at": {
+            "word": "천백만"
+          },
+          "target": "startLabel",
+          "action": "appear",
+          "speed": "base",
+          "note": "82000 has 5 digits"
+        },
+        {
+          "at": {
+            "word": "천백만"
+          },
+          "target": "axisName",
+          "action": "appear",
+          "speed": "base",
+          "note": "the bar measures digit count"
+        },
+        {
+          "at": {
+            "word": "자리까지"
+          },
+          "target": "scan",
+          "action": "scan",
+          "params": {
+            "ease": "linear"
+          },
+          "until": {
+            "word": "네"
+          },
+          "note": "'찾아봤지만': the search light runs from 82000 to the tick; nothing lights (C6, C7)"
+        },
+        {
+          "at": {
+            "word": "팔만"
+          },
+          "target": "scan",
+          "action": "pulse",
+          "params": {
+            "part": "dot"
+          },
+          "speed": "base",
+          "note": "'팔만 이천 말고': the one lit dot"
+        },
+        {
+          "at": {
+            "word": "못"
+          },
+          "target": "seq",
+          "action": "blink",
+          "params": {
+            "cells": [
+              "?"
+            ],
+            "times": 2
+          },
+          "speed": "slow",
+          "note": "'못 찾았어요': the header's ? still open"
+        }
+      ],
+      "endFrame": "Header at the top (2, 3, 4, 82000 lit; ? white). '자릿수' above a horizontal bar at y 760: a lit lamp at its left end (x 230) with '82000' above it in yellow and '5자리' below; the bar white up to the tick at x 700, labeled '10진법 1100만 자리' below; past the tick a dashed muted line fading out by x 924. No other dot lit. Caption '못 찾았어요.'",
+      "claims": [
+        "C7",
+        "C6"
+      ]
+    },
+    {
+      "id": "B11",
+      "name": "아직 물음표",
+      "readAloud": "그다음 수는 없을 거라고 추측하지만, 증명은 아직 없어요.",
+      "captions": [
+        {
+          "text": "그다음 수는",
+          "at": {
+            "word": "그다음"
+          }
+        },
+        {
+          "text": "없을 거라고 추측하지만,",
+          "at": {
+            "word": "없을"
+          }
+        },
+        {
+          "text": "증명은 아직 없어요.",
+          "at": {
+            "word": "증명은"
+          }
+        }
+      ],
+      "pauseAfter": 0.5,
+      "elements": [],
+      "cues": [
+        {
+          "at": {
+            "word": "그다음"
+          },
+          "target": "scan",
+          "action": "exit",
+          "note": "the bar clears"
+        },
+        {
+          "at": {
+            "word": "그다음"
+          },
+          "target": "axisName",
+          "action": "exit"
+        },
+        {
+          "at": {
+            "word": "그다음"
+          },
+          "target": "startLabel",
+          "action": "exit"
+        },
+        {
+          "at": {
+            "word": "그다음"
+          },
+          "target": "endLabel",
+          "action": "exit"
+        },
+        {
+          "at": {
+            "word": "그다음"
+          },
+          "target": "seq",
+          "action": "moveTo",
+          "params": {
+            "center": [
+              540,
+              745
+            ],
+            "w": 784,
+            "h": 116,
+            "scale": 1
+          },
+          "speed": "slow",
+          "note": "'그다음 수는': the header grows back to the middle, frame 0's layout"
+        },
+        {
+          "at": {
+            "word": "그다음"
+          },
+          "target": "seq",
+          "action": "unlight",
+          "params": {
+            "cells": "all"
+          },
+          "speed": "slow",
+          "note": "its lights go out as it comes"
+        },
+        {
+          "at": {
+            "word": "그다음"
+          },
+          "target": "seq",
+          "action": "setStyle",
+          "params": {
+            "cells": [
+              "2",
+              "3",
+              "4",
+              "82000"
+            ],
+            "opacity": 1
+          },
+          "speed": "slow",
+          "note": "and the terms return to full white: B1's first frame"
+        },
+        {
+          "at": {
+            "word": "추측하지만"
+          },
+          "target": "seq",
+          "action": "blink",
+          "params": {
+            "cells": [
+              "?"
+            ],
+            "times": 1
+          },
+          "speed": "base",
+          "note": "'추측하지만': a guess, not an answer"
+        },
+        {
+          "at": {
+            "word": "없어요"
+          },
+          "target": "seq",
+          "action": "blink",
+          "params": {
+            "cells": [
+              "?"
+            ],
+            "times": 1
+          },
+          "speed": "base",
+          "note": "'없어요': the last blink ends at rest before the pause does (loop)"
+        }
+      ],
+      "endFrame": "Frame 0's picture again (loop): the five cells big across the middle (x 148–932, y 687–803), all white and unlit, the dotted gap, the ? cell at rest; nothing else in the zone. Caption '증명은 아직 없어요.', held through the 0.5 s pause.",
+      "claims": [
+        "C9",
+        "C8"
+      ]
+    }
+  ]
+}
