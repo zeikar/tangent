@@ -1,0 +1,28 @@
+# Render check · 006-zeros-and-ones
+
+**Pass**: 0 fail, 1 warn, 14 pass, 1 skip · contact sheet `check/sheet.png`
+
+| Check | Status | Summary |
+|---|---|---|
+| freshness | pass | render.mp4, cues.json and the studio code all match this storyboard.json |
+| technical | pass | 1080×1920 yuv420p bt709 tv, 30 fps, 1443 frames (48.10 s); audio 48000 Hz, last 100 ms at -120 dBFS |
+| bounds | pass | all 1443 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 144–935, y 256–1150 |
+| centering | pass | B1 0/0, B2 +2/0, B3 +1/0, B4 -1/0, B5 -1/0, B6 +2/0, B7 +2/0, B8 -1/0, B9 0/0, B10 +1/0, B11 0/0 (px off x 540: all ink / picture without edge labels; tolerance ±25) |
+| legibility | pass | smallest glyph "1" 33.9 px in counter "10진법" (floor 30 px, 63 text items) |
+| overlaps | pass | no text meets other text, lines, or a fill drawn over it (in or across elements); no entrance draws while an exit is still visible |
+| labels | skip | no edge label has another element's line nearby |
+| captions | pass | all 29 captions appear 0–0 frames after their cue (limit 3), on one line, inside the caption zone |
+| readable | pass | every name and label stays fully visible at least 30 frames |
+| reaction | pass | B1 +1, B2 +2, B3 +1, B4 +1, B5 +1, B6 +0, B7 +0, B8 +2, B9 +1, B10 +1, B11 +1 (frames from each beat's first word to the first visible change; — = no cue on that word; limit 3) |
+| cues | warn | 4 cues show nothing within 5 frames of their word: B4 f419 counter.lamps +6; B4 f484 counter.color +7; B10 f1294 seq.blink +8; B11 f1417 seq.blink +6 |
+| blank | pass | the visual zone is never empty for more than 3 frames in a row |
+| loudness | pass | -14 LUFS integrated (target -14 ±1), true peak -2.1 dBTP (max -1), range 3 LU |
+| av-sync | pass | render audio is 0 ms off against narration.mp3 (limit ±20 ms) |
+| words | pass | 25 of 25 words after a pause start within 70 ms of an audible onset (widest "삼," at 0.68 s, -70 ms); limit ±200 ms |
+| loop | pass | 13 visual-zone pixels differ by more than 16 levels between the last and first frame (limit 500) |
+
+**cues** (warn)
+
+- `check/cues-1.png`: cues: B4 counter.lamps at f419
+- `check/cues-2.png`: cues: B4 counter.color at f484
+- `check/cues-3.png`: cues: B10 seq.blink at f1294

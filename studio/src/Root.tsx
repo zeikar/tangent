@@ -10,6 +10,7 @@ import { moonCues, moonRotation } from "./episodes/002-moon-rotation";
 import { mirrorCues, mirrorLeftRight } from "./episodes/003-mirror-left-right";
 import { magentaCues, magentaRainbow } from "./episodes/004-magenta-rainbow";
 import { hilbertCues, hilbertHotel } from "./episodes/005-hilbert-hotel";
+import { zerosAndOnes, zerosCues } from "./episodes/006-zeros-and-ones";
 import { MeasureTex, measureTexSchema } from "./probe/MeasureTex";
 import { episodeSchema } from "./storyboard/Episode";
 import { VIDEO } from "./style/theme";
@@ -68,6 +69,15 @@ export const RemotionRoot: React.FC = () => {
         calculateMetadata={hilbertHotel.calculateMetadata}
         defaultProps={{ showSafeArea: false }}
         durationInFrames={hilbertCues.durationInFrames}
+        {...VIDEO}
+      />
+      <Composition
+        id="006-zeros-and-ones"
+        component={zerosAndOnes.Component}
+        schema={episodeSchema}
+        calculateMetadata={zerosAndOnes.calculateMetadata}
+        defaultProps={{ showSafeArea: false }}
+        durationInFrames={zerosCues.durationInFrames}
         {...VIDEO}
       />
       <Folder name="tools">
