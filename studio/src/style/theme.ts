@@ -219,6 +219,53 @@ export const hotel = {
   fadeStep: 8, // a fading line is cut into pieces at most this long
 } as const;
 
+// A number written in several bases, row under row, each row with a lamp lit
+// while its digits are all 0s and 1s (BaseCounter); the sequence of the first
+// such numbers in cells (Sequence); and counts and a search drawn with the same
+// lamp (Funnel, ScanBar). px, or a share of a lamp's radius where noted.
+export const counter = {
+  name: 48, // Pretendard at type.label's weight: row and tier names
+  // A lamp: a round bulb, and when lit, short rays round it...
+  rays: [1.4, 1.9], // ...from and to these shares of its radius...
+  rayCount: 8,
+  rayTurn: 22.5, // ...turned off the axes, so none lies along a bar or points straight at a name
+  rayWidth: 4,
+  lampPulse: 1.25, // a pulsed lamp's scale, rays included
+  band: 0.12, // a lit row's fill, in yellow
+  roll: 20, // a rolling digit rises this far out of its place, and the new one into it
+  digitPulse: 1.15, // a pulsed digit's scale...
+  digitGap: 3, // ...but it stops growing this close to its neighbours (which grow alike)
+  digitLift: 0.5, // a pulsed digit's color, lifted this far toward text
+  flicker: 3, // a running count shows, every this many frames, the next number lighting one more row
+  // Sequence: cells round each term, dots across the jump.
+  cellRadius: 12,
+  cellPulse: 8, // a pulsed cell's outline, grown inward
+  termPulse: 1.15, // a pulsed term's scale...
+  termGap: 6, // ...but it stays this far inside the pulsed outline
+  blink: 0.25, // a blinking cell's opacity at each dip
+  dots: 6, // dots across the jump...
+  dot: 8, // ...this wide...
+  dotInset: 20, // ...the outer two this far in from the cells beside it (at full scale)
+  spark: 0.35, // a spark crossing the dots lights each this far along them, either side
+  // Funnel: tiers of counts, each with a small lit lamp.
+  tierLamp: 14, // its lamp's radius...
+  tierLampX: 44, // ...centered this far in from the tier's left edge
+  tierNameX: 84, // the tier's name, from this far in
+  tierCountX: 32, // its count's ink, ending this far in from its right edge
+  tierCount: 64, // TeX px
+  drop: 40, // a tier slides this far down into place as it fades in
+  outputGap: 8, // the last tier's bottom to the arrow out of it...
+  outputArrow: 32, // ...this long, onto a lit cell
+  output: 56, // TeX px, in that cell
+  // ScanBar: a searched range, a lit lamp at its found end.
+  scanLamp: 16,
+  scanLabel: 50, // TeX px, the lamp's label
+  scanTick: 44, // the searched end's tick, across the bar
+  scanLight: 14, // the search light's disc, across...
+  scanTrail: 90, // ...and the line fading out behind it
+  scanPulse: 1.3, // a pulsed lamp's scale
+} as const;
+
 // Default animation lengths. These are durations, not start times; start times
 // always come from beat cues.
 export const duration = {

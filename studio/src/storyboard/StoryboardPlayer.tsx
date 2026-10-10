@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { AbsoluteFill, useCurrentFrame } from "remotion";
 import { Arrow } from "../components/Arrow";
+import { BaseCounter, counterState } from "../components/BaseCounter";
 import { Body } from "../components/Body";
 import { Camera, CameraState, cameraState, cameraTransform } from "../components/Camera";
 import { bodyState } from "../components/bodies";
@@ -12,6 +13,7 @@ import { ConeCurves } from "../components/ConeCurves";
 import { Dimension } from "../components/Dimension";
 import { DirArrow } from "../components/DirArrow";
 import { Equation } from "../components/Equation";
+import { Funnel } from "../components/Funnel";
 import { HalvingNest } from "../components/HalvingNest";
 import { Hand } from "../components/Hand";
 import { Hotel, hotelState } from "../components/Hotel";
@@ -27,7 +29,9 @@ import { Person, personState } from "../components/Person";
 import { RimTrace } from "../components/RimTrace";
 import { Ring } from "../components/Ring";
 import { RoomArrows } from "../components/RoomArrows";
+import { ScanBar } from "../components/ScanBar";
 import { Scenery } from "../components/Scenery";
+import { Sequence, sequenceState } from "../components/Sequence";
 import { Spectrum } from "../components/Spectrum";
 import { SpinArrow } from "../components/SpinArrow";
 import { StarField } from "../components/StarField";
@@ -74,6 +78,10 @@ const components: Record<string, Component> = {
   Hotel: { draw: Hotel, state: hotelState },
   RoomArrows: { draw: RoomArrows },
   NumberRow: { draw: NumberRow, state: numberRowState },
+  Sequence: { draw: Sequence, state: sequenceState },
+  BaseCounter: { draw: BaseCounter, state: counterState },
+  Funnel: { draw: Funnel },
+  ScanBar: { draw: ScanBar },
 };
 
 // Draw order is declaration order, except that an element drawn beneath

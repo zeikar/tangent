@@ -9,22 +9,23 @@ import { Tex } from "./Tex";
 
 const lineStyle = { position: "absolute", whiteSpace: "nowrap", ...type.label, fontFamily: font.sans } as const;
 
-// Ink of each text, measured once from a hidden copy: render `measuring`
-// until it is empty.
-export const useInk = (label: string, texts: string[]) => {
+// Ink of each text at `fontSize` (type.label's by default), measured once
+// from a hidden copy: render `measuring` until it is empty.
+export const useInk = (label: string, texts: string[], fontSize: number = type.label.fontSize) => {
   const unique = [...new Set(texts)];
   const { metrics, copyRef } = useTextMetrics(label, unique, glyphRect);
   const measuring = unique
     .filter((t) => !metrics.has(t))
     .map((t) => (
-      <div key={`m-${t}`} ref={copyRef(t)} style={{ ...lineStyle, left: 0, top: 0, visibility: "hidden" }}>
+      <div key={`m-${t}`} ref={copyRef(t)} style={{ ...lineStyle, fontSize, left: 0, top: 0, visibility: "hidden" }}>
         {t}
       </div>
     ));
   return { ink: (t: string) => metrics.get(t)!.ink, measuring };
 };
 
-// One line with its ink centered on (x, y), scaled about that point.
+// One line with its ink (from useInk at the same fontSize) centered on
+// (x, y), scaled about that point.
 export const InkLine: React.FC<{
   text: string;
   ink: Rel;
@@ -33,9 +34,10 @@ export const InkLine: React.FC<{
   color: string;
   opacity: number;
   scale?: number;
+  fontSize?: number;
   // What the probe (src/probe) calls this text item.
   kind: string;
-}> = ({ text, ink, x, y, color, opacity, scale = 1, kind }) => {
+}> = ({ text, ink, x, y, color, opacity, scale = 1, fontSize = type.label.fontSize, kind }) => {
   const cx = (ink.l + ink.r) / 2;
   const cy = (ink.t + ink.b) / 2;
   return (
@@ -43,6 +45,7 @@ export const InkLine: React.FC<{
       data-text={kind}
       style={{
         ...lineStyle,
+        fontSize,
         left: x - cx,
         top: y - cy,
         color,
