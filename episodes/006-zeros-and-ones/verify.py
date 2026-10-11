@@ -99,9 +99,11 @@ print(f"C6 below 5^{K5} ≈ {5 ** K5:.2e}: bases 2-5 -> {b345}; bases 4,5 -> {b4
 # C7: the search limits as written in OEIS.
 big = 65520 * math.log10(2)
 assert int(big) == 19723 and round(10 ** (big % 1), 2) == 3.06
-assert len(str(2 ** 65520)) == 19_724
+# 19,724 digits, counted against powers of 10: str() refuses ints over 4300
+# digits from Python 3.11 on
+assert 10 ** 19_723 <= 2 ** 65520 < 10 ** 19_724
 assert round(3125 * math.log10(5), 1) == 2184.3 and len(str(5 ** 3125)) == 2185
-print(f"C7 2^65520 ≈ {10 ** (big % 1):.2f}e{int(big)} ({len(str(2 ** 65520)):,} digits); "
+print(f"C7 2^65520 ≈ {10 ** (big % 1):.2f}e{int(big)} (19,724 digits); "
       f"5^3125 ≈ 10^{3125 * math.log10(5):.1f}")
 
 # Easy to misstate: Evans' own search reached 111...1 (27 ones) in base 6,
