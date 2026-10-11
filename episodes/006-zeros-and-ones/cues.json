@@ -1,0 +1,631 @@
+{
+ "storyboardSha256": "eba349eb250c93660624a2e589e58e52f56f72631c1cdd29bd17f99fcc0e0e96",
+ "narrationSource": "take6@1.08.wav",
+ "takeWordsSha256": "ef312a191f87d8a88de0ad7c87a538a420bad17a83b3e0da69970811ea1ee752",
+ "fps": 30,
+ "durationInFrames": 1381,
+ "beats": [
+  {
+   "id": "B1",
+   "startFrame": 0,
+   "endFrame": 107,
+   "pauseFrame": 92,
+   "captions": [
+    {
+     "word": "이",
+     "frame": 5
+    }
+   ],
+   "cues": [
+    {
+     "target": "seq",
+     "action": "pulse",
+     "word": "이",
+     "frame": 5
+    },
+    {
+     "target": "seq",
+     "action": "pulse",
+     "word": "삼",
+     "frame": 17
+    },
+    {
+     "target": "seq",
+     "action": "pulse",
+     "word": "사",
+     "frame": 33
+    },
+    {
+     "target": "seq",
+     "action": "pulse",
+     "word": "팔만",
+     "frame": 48
+    },
+    {
+     "target": "seq",
+     "action": "blink",
+     "word": "그다음은",
+     "frame": 77
+    }
+   ]
+  },
+  {
+   "id": "B2",
+   "startFrame": 108,
+   "endFrame": 153,
+   "pauseFrame": 154,
+   "captions": [
+    {
+     "word": "아직",
+     "frame": 108
+    }
+   ],
+   "cues": [
+    {
+     "target": "seq",
+     "action": "setStyle",
+     "word": "아직",
+     "frame": 108
+    },
+    {
+     "target": "seq",
+     "action": "blink",
+     "word": "몰라요",
+     "frame": 127
+    },
+    {
+     "target": "seq",
+     "action": "moveTo",
+     "word": "몰라요",
+     "frame": 127
+    }
+   ]
+  },
+  {
+   "id": "B3",
+   "startFrame": 154,
+   "endFrame": 361,
+   "pauseFrame": 333,
+   "captions": [
+    {
+     "word": "우리는",
+     "frame": 154
+    },
+    {
+     "word": "자리가",
+     "frame": 189
+    },
+    {
+     "word": "삼진법은",
+     "frame": 223
+    },
+    {
+     "word": "그다음이",
+     "frame": 290
+    }
+   ],
+   "cues": [
+    {
+     "target": "counter",
+     "action": "appear",
+     "word": "우리는",
+     "frame": 154
+    },
+    {
+     "target": "counter",
+     "action": "step",
+     "word": "구",
+     "frame": 170
+    },
+    {
+     "target": "counter",
+     "action": "step",
+     "word": "넘어가죠",
+     "frame": 197
+    },
+    {
+     "target": "counter",
+     "action": "set",
+     "word": "삼진법은",
+     "frame": 223
+    },
+    {
+     "target": "counter",
+     "action": "addRow",
+     "word": "삼진법은",
+     "frame": 223
+    },
+    {
+     "target": "counter",
+     "action": "pulse",
+     "word": "영",
+     "frame": 248
+    },
+    {
+     "target": "counter",
+     "action": "step",
+     "word": "일",
+     "frame": 265
+    },
+    {
+     "target": "counter",
+     "action": "step",
+     "word": "이",
+     "frame": 278
+    },
+    {
+     "target": "counter",
+     "action": "step",
+     "word": "그다음이",
+     "frame": 290
+    },
+    {
+     "target": "counter",
+     "action": "pulse",
+     "word": "일영이에요",
+     "frame": 313
+    }
+   ]
+  },
+  {
+   "id": "B4",
+   "startFrame": 362,
+   "endFrame": 543,
+   "pauseFrame": 518,
+   "captions": [
+    {
+     "word": "일보다",
+     "frame": 362
+    },
+    {
+     "word": "이진법부터",
+     "frame": 393
+    },
+    {
+     "word": "다",
+     "frame": 456
+    },
+    {
+     "word": "이루어진",
+     "frame": 491
+    }
+   ],
+   "cues": [
+    {
+     "target": "counter",
+     "action": "set",
+     "word": "일보다",
+     "frame": 362
+    },
+    {
+     "target": "counter",
+     "action": "step",
+     "word": "큰",
+     "frame": 374
+    },
+    {
+     "target": "counter",
+     "action": "moveRow",
+     "word": "수를",
+     "frame": 380
+    },
+    {
+     "target": "counter",
+     "action": "addRow",
+     "word": "이진법부터",
+     "frame": 393
+    },
+    {
+     "target": "counter",
+     "action": "addRow",
+     "word": "오진법까지",
+     "frame": 417
+    },
+    {
+     "target": "counter",
+     "action": "addRow",
+     "word": "오진법까지",
+     "frame": 417
+    },
+    {
+     "target": "counter",
+     "action": "color",
+     "word": "영과",
+     "frame": 464
+    },
+    {
+     "target": "counter",
+     "action": "marks",
+     "word": "일로만",
+     "frame": 479
+    },
+    {
+     "target": "counter",
+     "action": "blink",
+     "word": "이루어진",
+     "frame": 491
+    },
+    {
+     "target": "seq",
+     "action": "light",
+     "word": "찾아요",
+     "frame": 508
+    }
+   ]
+  },
+  {
+   "id": "B5",
+   "startFrame": 544,
+   "endFrame": 678,
+   "pauseFrame": 656,
+   "captions": [
+    {
+     "word": "삼은",
+     "frame": 544
+    },
+    {
+     "word": "사는",
+     "frame": 592
+    },
+    {
+     "word": "되는",
+     "frame": 629
+    }
+   ],
+   "cues": [
+    {
+     "target": "counter",
+     "action": "step",
+     "word": "삼은",
+     "frame": 544
+    },
+    {
+     "target": "seq",
+     "action": "light",
+     "word": "삼은",
+     "frame": 544
+    },
+    {
+     "target": "counter",
+     "action": "pulse",
+     "word": "삼진법까지",
+     "frame": 560
+    },
+    {
+     "target": "counter",
+     "action": "step",
+     "word": "사는",
+     "frame": 592
+    },
+    {
+     "target": "seq",
+     "action": "light",
+     "word": "사는",
+     "frame": 592
+    },
+    {
+     "target": "counter",
+     "action": "pulse",
+     "word": "사진법까지",
+     "frame": 608
+    },
+    {
+     "target": "seq",
+     "action": "pulse",
+     "word": "첫",
+     "frame": 637
+    }
+   ]
+  },
+  {
+   "id": "B6",
+   "startFrame": 679,
+   "endFrame": 747,
+   "pauseFrame": 702,
+   "captions": [
+    {
+     "word": "오진법까지는요",
+     "frame": 679
+    }
+   ],
+   "cues": [
+    {
+     "target": "counter",
+     "action": "run",
+     "word": "오진법까지는요",
+     "frame": 679,
+     "untilFrame": 702
+    },
+    {
+     "target": "counter",
+     "action": "count",
+     "pause": true,
+     "frame": 702
+    }
+   ]
+  },
+  {
+   "id": "B7",
+   "startFrame": 748,
+   "endFrame": 844,
+   "pauseFrame": 800,
+   "captions": [
+    {
+     "word": "팔만",
+     "frame": 748
+    }
+   ],
+   "cues": [
+    {
+     "target": "counter",
+     "action": "count",
+     "word": "팔만",
+     "frame": 748
+    },
+    {
+     "target": "counter",
+     "action": "pulse",
+     "word": "이천에서야",
+     "frame": 763
+    },
+    {
+     "target": "seq",
+     "action": "light",
+     "word": "처음",
+     "frame": 781
+    }
+   ]
+  },
+  {
+   "id": "B8",
+   "startFrame": 845,
+   "endFrame": 958,
+   "pauseFrame": 959,
+   "captions": [
+    {
+     "word": "그다음은",
+     "frame": 845
+    },
+    {
+     "word": "영과",
+     "frame": 891
+    },
+    {
+     "word": "이루어져",
+     "frame": 918
+    }
+   ],
+   "cues": [
+    {
+     "target": "seq",
+     "action": "blink",
+     "word": "그다음은",
+     "frame": 845
+    },
+    {
+     "target": "counter",
+     "action": "addRow",
+     "word": "육진법까지",
+     "frame": 862
+    },
+    {
+     "target": "counter",
+     "action": "blink",
+     "word": "영과",
+     "frame": 891
+    },
+    {
+     "target": "seq",
+     "action": "blink",
+     "word": "있어야",
+     "frame": 928
+    }
+   ]
+  },
+  {
+   "id": "B9",
+   "startFrame": 959,
+   "endFrame": 1102,
+   "pauseFrame": 1076,
+   "captions": [
+    {
+     "word": "이부터",
+     "frame": 959
+    },
+    {
+     "word": "진법이",
+     "frame": 1005
+    },
+    {
+     "word": "남는",
+     "frame": 1043
+    }
+   ],
+   "cues": [
+    {
+     "target": "counter",
+     "action": "exit",
+     "word": "이부터",
+     "frame": 959
+    },
+    {
+     "target": "funnel",
+     "action": "appear",
+     "word": "이부터",
+     "frame": 959
+    },
+    {
+     "target": "funnel",
+     "action": "reveal",
+     "word": "진법이",
+     "frame": 1005
+    },
+    {
+     "target": "funnel",
+     "action": "reveal",
+     "word": "때마다",
+     "frame": 1030
+    },
+    {
+     "target": "funnel",
+     "action": "reveal",
+     "word": "확",
+     "frame": 1059
+    },
+    {
+     "target": "funnel",
+     "action": "reveal",
+     "pause": true,
+     "frame": 1076
+    }
+   ]
+  },
+  {
+   "id": "B10",
+   "startFrame": 1103,
+   "endFrame": 1261,
+   "pauseFrame": 1248,
+   "captions": [
+    {
+     "word": "천백만",
+     "frame": 1103
+    },
+    {
+     "word": "오진법까지",
+     "frame": 1157
+    },
+    {
+     "word": "팔만",
+     "frame": 1201
+    }
+   ],
+   "cues": [
+    {
+     "target": "funnel",
+     "action": "exit",
+     "word": "천백만",
+     "frame": 1103
+    },
+    {
+     "target": "scan",
+     "action": "appear",
+     "word": "천백만",
+     "frame": 1103
+    },
+    {
+     "target": "endLabel",
+     "action": "appear",
+     "word": "천백만",
+     "frame": 1103
+    },
+    {
+     "target": "startLabel",
+     "action": "appear",
+     "word": "천백만",
+     "frame": 1103
+    },
+    {
+     "target": "axisName",
+     "action": "appear",
+     "word": "천백만",
+     "frame": 1103
+    },
+    {
+     "target": "scan",
+     "action": "scan",
+     "word": "자리까지",
+     "frame": 1117,
+     "untilFrame": 1157
+    },
+    {
+     "target": "scan",
+     "action": "pulse",
+     "word": "팔만",
+     "frame": 1201
+    },
+    {
+     "target": "seq",
+     "action": "blink",
+     "word": "못",
+     "frame": 1231
+    }
+   ]
+  },
+  {
+   "id": "B11",
+   "startFrame": 1262,
+   "endFrame": 1380,
+   "pauseFrame": 1365,
+   "captions": [
+    {
+     "word": "그다음",
+     "frame": 1262
+    },
+    {
+     "word": "없을",
+     "frame": 1284
+    },
+    {
+     "word": "증명은",
+     "frame": 1328
+    }
+   ],
+   "cues": [
+    {
+     "target": "scan",
+     "action": "exit",
+     "word": "그다음",
+     "frame": 1262
+    },
+    {
+     "target": "axisName",
+     "action": "exit",
+     "word": "그다음",
+     "frame": 1262
+    },
+    {
+     "target": "startLabel",
+     "action": "exit",
+     "word": "그다음",
+     "frame": 1262
+    },
+    {
+     "target": "endLabel",
+     "action": "exit",
+     "word": "그다음",
+     "frame": 1262
+    },
+    {
+     "target": "seq",
+     "action": "moveTo",
+     "word": "그다음",
+     "frame": 1262
+    },
+    {
+     "target": "seq",
+     "action": "unlight",
+     "word": "그다음",
+     "frame": 1262
+    },
+    {
+     "target": "seq",
+     "action": "setStyle",
+     "word": "그다음",
+     "frame": 1262
+    },
+    {
+     "target": "seq",
+     "action": "blink",
+     "word": "추측하지만",
+     "frame": 1301
+    },
+    {
+     "target": "seq",
+     "action": "blink",
+     "word": "없어요",
+     "frame": 1354
+    }
+   ]
+  }
+ ]
+}

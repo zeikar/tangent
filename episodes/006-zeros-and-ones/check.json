@@ -1,9 +1,9 @@
 {
  "episode": "006-zeros-and-ones",
  "render": "render.mp4",
- "renderSha256": "773b63a5c58c7b2715d3b0a2ece86d9be89644e10bca8fb3ce0223c4bb00b801",
- "storyboardSha256": "016a65dd0aa22f721ed69b42a10a4fdca178f6c54194623b74316b2c8cdf1d20",
- "studioSha256": "4f0df747be33471e66fbc92abb0e74e284a0a23a8e344bec52fbb9204e725b79",
+ "renderSha256": "f1811d44c78a3b509ba1ba0d9cc4a772d4f90258da57d77b6e16d0e61a5b3cd7",
+ "storyboardSha256": "eba349eb250c93660624a2e589e58e52f56f72631c1cdd29bd17f99fcc0e0e96",
+ "studioSha256": "25c074b1c2ae0bd4ae3ebb93cffe47040dc91a29791d30281e02a43cf00baed9",
  "verdict": "pass",
  "counts": {
   "fail": 0,
@@ -22,94 +22,94 @@
   {
    "id": "technical",
    "status": "pass",
-   "summary": "1080×1920 yuv420p bt709 tv, 30 fps, 1443 frames (48.10 s); audio 48000 Hz, last 100 ms at -120 dBFS",
+   "summary": "1080×1920 yuv420p bt709 tv, 30 fps, 1381 frames (46.03 s); audio 48000 Hz, last 100 ms at -120 dBFS",
    "cites": []
   },
   {
    "id": "bounds",
    "status": "pass",
-   "summary": "all 1443 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 144–935, y 256–1150",
+   "summary": "all 1381 frames inside x 140–940, visual ink below y 240 and above the caption band, captions in y 1280–1500; visual ink x 144–935, y 256–1150",
    "cites": []
   },
   {
    "id": "centering",
    "status": "pass",
-   "summary": "B1 0/0, B2 +1/0, B3 +2/0, B4 0/0, B5 0/0, B6 0/0, B7 -1/0, B8 -1/0, B9 0/0, B10 +1/0, B11 0/0 (px off x 540: all ink / picture without edge labels; tolerance ±25)",
+   "summary": "B1 +1/0, B2 +1/0, B3 0/0, B4 0/0, B5 0/0, B6 0/0, B7 0/0, B8 0/0, B9 0/0, B10 +1/0, B11 +1/0 (px off x 540: all ink / picture without edge labels; tolerance ±25)",
    "details": [
     {
      "beat": "B1",
-     "frame": 120,
-     "off": 0,
+     "frame": 107,
+     "off": 0.5,
      "pictureOff": 0,
      "status": "pass"
     },
     {
      "beat": "B2",
-     "frame": 179,
+     "frame": 153,
      "off": 1,
      "pictureOff": 0,
      "status": "pass"
     },
     {
      "beat": "B3",
-     "frame": 385,
-     "off": 1.5,
+     "frame": 361,
+     "off": 0,
      "pictureOff": 0,
      "status": "pass"
     },
     {
      "beat": "B4",
-     "frame": 560,
+     "frame": 543,
      "off": 0,
      "pictureOff": 0,
      "status": "pass"
     },
     {
      "beat": "B5",
-     "frame": 718,
+     "frame": 678,
      "off": 0,
      "pictureOff": 0,
      "status": "pass"
     },
     {
      "beat": "B6",
-     "frame": 788,
+     "frame": 747,
      "off": 0,
      "pictureOff": 0,
      "status": "pass"
     },
     {
      "beat": "B7",
-     "frame": 906,
-     "off": -1.5,
+     "frame": 844,
+     "off": 0,
      "pictureOff": 0,
      "status": "pass"
     },
     {
      "beat": "B8",
-     "frame": 1017,
-     "off": -1,
+     "frame": 958,
+     "off": 0,
      "pictureOff": 0,
      "status": "pass"
     },
     {
      "beat": "B9",
-     "frame": 1159,
+     "frame": 1102,
      "off": 0,
      "pictureOff": 0,
      "status": "pass"
     },
     {
      "beat": "B10",
-     "frame": 1333,
+     "frame": 1261,
      "off": 0.5,
      "pictureOff": -0.35000000000002274,
      "status": "pass"
     },
     {
      "beat": "B11",
-     "frame": 1442,
-     "off": 0,
+     "frame": 1380,
+     "off": 0.5,
      "pictureOff": 0,
      "status": "pass"
     }
@@ -119,7 +119,7 @@
   {
    "id": "legibility",
    "status": "pass",
-   "summary": "smallest glyph \"1\" 33.9 px in counter \"10진법\" (floor 30 px, 63 text items)",
+   "summary": "smallest glyph \"1\" 33.9 px in counter \"10진법\" (floor 30 px, 60 text items)",
    "details": [
     {
      "id": "counter",
@@ -127,7 +127,7 @@
      "text": "10진법",
      "char": "1",
      "height": 33.9,
-     "frame": 187
+     "frame": 161
     },
     {
      "id": "counter",
@@ -135,15 +135,23 @@
      "text": "4진법",
      "char": "4",
      "height": 33.9,
-     "frame": 457
+     "frame": 432
     },
     {
      "id": "funnel",
      "kind": "name",
-     "text": "4진법 줄까지",
+     "text": "2부터 10만까지",
+     "char": "1",
+     "height": 33.9,
+     "frame": 969
+    },
+    {
+     "id": "funnel",
+     "kind": "name",
+     "text": "4진법까지",
      "char": "4",
      "height": 33.9,
-     "frame": 1086
+     "frame": 1034
     },
     {
      "id": "counter",
@@ -151,7 +159,7 @@
      "text": "2진법",
      "char": "2",
      "height": 34.4,
-     "frame": 434
+     "frame": 408
     },
     {
      "id": "counter",
@@ -159,23 +167,15 @@
      "text": "5진법",
      "char": "5",
      "height": 34.4,
-     "frame": 457
+     "frame": 432
     },
     {
      "id": "funnel",
      "kind": "name",
-     "text": "2진법 줄까지",
-     "char": "2",
-     "height": 34.4,
-     "frame": 1036
-    },
-    {
-     "id": "funnel",
-     "kind": "name",
-     "text": "5진법 줄까지",
+     "text": "5진법까지",
      "char": "5",
      "height": 34.4,
-     "frame": 1116
+     "frame": 1063
     },
     {
      "id": "counter",
@@ -183,7 +183,7 @@
      "text": "3진법",
      "char": "3",
      "height": 34.9,
-     "frame": 265
+     "frame": 238
     },
     {
      "id": "counter",
@@ -191,15 +191,15 @@
      "text": "6진법",
      "char": "6",
      "height": 34.9,
-     "frame": 936
+     "frame": 877
     },
     {
      "id": "funnel",
      "kind": "name",
-     "text": "3진법 줄까지",
+     "text": "3진법까지",
      "char": "3",
      "height": 34.9,
-     "frame": 1070
+     "frame": 1009
     },
     {
      "id": "seq",
@@ -207,7 +207,7 @@
      "text": "2",
      "char": "2",
      "height": 38.6,
-     "frame": 529
+     "frame": 522
     },
     {
      "id": "seq",
@@ -215,7 +215,7 @@
      "text": "82000",
      "char": "2",
      "height": 38.6,
-     "frame": 857
+     "frame": 795
     },
     {
      "id": "counter",
@@ -223,7 +223,7 @@
      "text": "1",
      "char": "1",
      "height": 38.7,
-     "frame": 302
+     "frame": 273
     },
     {
      "id": "counter",
@@ -231,7 +231,7 @@
      "text": "2",
      "char": "2",
      "height": 38.7,
-     "frame": 319
+     "frame": 286
     },
     {
      "id": "seq",
@@ -239,7 +239,7 @@
      "text": "4",
      "char": "4",
      "height": 39.2,
-     "frame": 629
+     "frame": 606
     },
     {
      "id": "counter",
@@ -247,15 +247,7 @@
      "text": "4",
      "char": "4",
      "height": 39.3,
-     "frame": 630
-    },
-    {
-     "id": "range",
-     "kind": "label",
-     "text": "2부터10만까지",
-     "char": "1",
-     "height": 39.6,
-     "frame": 1031
+     "frame": 607
     },
     {
      "id": "endLabel",
@@ -263,7 +255,7 @@
      "text": "10진법1100만자리",
      "char": "1",
      "height": 39.6,
-     "frame": 1173
+     "frame": 1116
     },
     {
      "id": "seq",
@@ -271,7 +263,7 @@
      "text": "3",
      "char": "3",
      "height": 39.8,
-     "frame": 575
+     "frame": 558
     },
     {
      "id": "counter",
@@ -279,7 +271,15 @@
      "text": "3",
      "char": "3",
      "height": 39.9,
-     "frame": 580
+     "frame": 563
+    },
+    {
+     "id": "counter",
+     "kind": "number",
+     "text": "0",
+     "char": "0",
+     "height": 40,
+     "frame": 238
     }
    ],
    "cites": []
@@ -301,7 +301,7 @@
   {
    "id": "captions",
    "status": "pass",
-   "summary": "all 29 captions appear 0–0 frames after their cue (limit 3), on one line, inside the caption zone",
+   "summary": "all 27 captions appear 0–0 frames after their cue (limit 3), on one line, inside the caption zone",
    "details": [
     {
      "text": "$2,\\ 3,\\ 4,\\ 82000$, 그다음은?",
@@ -314,8 +314,8 @@
     },
     {
      "text": "아직 아무도 몰라요.",
-     "from": 121,
-     "shown": 121,
+     "from": 108,
+     "shown": 108,
      "late": 0,
      "lines": 1,
      "inside": true,
@@ -323,8 +323,8 @@
     },
     {
      "text": "우리는 9 다음에",
-     "from": 180,
-     "shown": 180,
+     "from": 154,
+     "shown": 154,
      "late": 0,
      "lines": 1,
      "inside": true,
@@ -332,8 +332,8 @@
     },
     {
      "text": "자리가 넘어가죠.",
-     "from": 212,
-     "shown": 212,
+     "from": 189,
+     "shown": 189,
      "late": 0,
      "lines": 1,
      "inside": true,
@@ -341,8 +341,8 @@
     },
     {
      "text": "3진법은 0, 1, 2,",
-     "from": 250,
-     "shown": 250,
+     "from": 223,
+     "shown": 223,
      "late": 0,
      "lines": 1,
      "inside": true,
@@ -350,8 +350,8 @@
     },
     {
      "text": "그다음이 10이에요.",
-     "from": 322,
-     "shown": 322,
+     "from": 290,
+     "shown": 290,
      "late": 0,
      "lines": 1,
      "inside": true,
@@ -359,8 +359,8 @@
     },
     {
      "text": "1보다 큰 수를",
-     "from": 386,
-     "shown": 386,
+     "from": 362,
+     "shown": 362,
      "late": 0,
      "lines": 1,
      "inside": true,
@@ -368,80 +368,71 @@
     },
     {
      "text": "2진법부터 5진법까지 써 봐요.",
-     "from": 419,
-     "shown": 419,
+     "from": 393,
+     "shown": 393,
      "late": 0,
      "lines": 1,
      "inside": true,
      "problems": []
     },
     {
-     "text": "0과 1뿐인 줄엔",
-     "from": 484,
-     "shown": 484,
+     "text": "다 0과 1로만",
+     "from": 456,
+     "shown": 456,
      "late": 0,
      "lines": 1,
      "inside": true,
      "problems": []
     },
     {
-     "text": "불이 켜져요.",
-     "from": 515,
-     "shown": 515,
+     "text": "이루어진 수를 찾아요.",
+     "from": 491,
+     "shown": 491,
      "late": 0,
      "lines": 1,
      "inside": true,
      "problems": []
     },
     {
-     "text": "3은 3진법 줄까지,",
-     "from": 561,
-     "shown": 561,
+     "text": "3은 3진법까지,",
+     "from": 544,
+     "shown": 544,
      "late": 0,
      "lines": 1,
      "inside": true,
      "problems": []
     },
     {
-     "text": "4는 4진법 줄까지",
-     "from": 615,
-     "shown": 615,
+     "text": "4는 4진법까지",
+     "from": 592,
+     "shown": 592,
      "late": 0,
      "lines": 1,
      "inside": true,
      "problems": []
     },
     {
-     "text": "다 켜지는 첫 수예요.",
-     "from": 659,
-     "shown": 659,
+     "text": "되는 첫 수예요.",
+     "from": 629,
+     "shown": 629,
      "late": 0,
      "lines": 1,
      "inside": true,
      "problems": []
     },
     {
-     "text": "5진법 줄까지는요?",
-     "from": 719,
-     "shown": 719,
+     "text": "5진법까지는요?",
+     "from": 679,
+     "shown": 679,
      "late": 0,
      "lines": 1,
      "inside": true,
      "problems": []
     },
     {
-     "text": "네 줄은",
-     "from": 789,
-     "shown": 789,
-     "late": 0,
-     "lines": 1,
-     "inside": true,
-     "problems": []
-    },
-    {
-     "text": "82000에서야 다 켜져요.",
-     "from": 812,
-     "shown": 812,
+     "text": "82000에서야 처음 나와요.",
+     "from": 748,
+     "shown": 748,
      "late": 0,
      "lines": 1,
      "inside": true,
@@ -449,26 +440,26 @@
     },
     {
      "text": "그다음은 6진법까지,",
-     "from": 907,
-     "shown": 907,
+     "from": 845,
+     "shown": 845,
      "late": 0,
      "lines": 1,
      "inside": true,
      "problems": []
     },
     {
-     "text": "다섯 줄이",
-     "from": 950,
-     "shown": 950,
+     "text": "0과 1로만",
+     "from": 891,
+     "shown": 891,
      "late": 0,
      "lines": 1,
      "inside": true,
      "problems": []
     },
     {
-     "text": "다 켜져야 해요.",
-     "from": 965,
-     "shown": 965,
+     "text": "이루어져 있어야 해요.",
+     "from": 918,
+     "shown": 918,
      "late": 0,
      "lines": 1,
      "inside": true,
@@ -476,17 +467,17 @@
     },
     {
      "text": "2부터 10만까지 세면,",
-     "from": 1018,
-     "shown": 1018,
+     "from": 959,
+     "shown": 959,
      "late": 0,
      "lines": 1,
      "inside": true,
      "problems": []
     },
     {
-     "text": "줄이 하나 늘 때마다",
-     "from": 1066,
-     "shown": 1066,
+     "text": "진법이 하나 늘 때마다",
+     "from": 1005,
+     "shown": 1005,
      "late": 0,
      "lines": 1,
      "inside": true,
@@ -494,8 +485,8 @@
     },
     {
      "text": "남는 수가 확 줄어요.",
-     "from": 1095,
-     "shown": 1095,
+     "from": 1043,
+     "shown": 1043,
      "late": 0,
      "lines": 1,
      "inside": true,
@@ -503,35 +494,26 @@
     },
     {
      "text": "1100만 자리까지 찾아봤지만,",
-     "from": 1160,
-     "shown": 1160,
+     "from": 1103,
+     "shown": 1103,
      "late": 0,
      "lines": 1,
      "inside": true,
      "problems": []
     },
     {
-     "text": "네 줄이 다 켜지는",
-     "from": 1222,
-     "shown": 1222,
+     "text": "5진법까지 되는 수조차",
+     "from": 1157,
+     "shown": 1157,
      "late": 0,
      "lines": 1,
      "inside": true,
      "problems": []
     },
     {
-     "text": "수는 82000 말고",
-     "from": 1250,
-     "shown": 1250,
-     "late": 0,
-     "lines": 1,
-     "inside": true,
-     "problems": []
-    },
-    {
-     "text": "못 찾았어요.",
-     "from": 1294,
-     "shown": 1294,
+     "text": "82000 말고는 못 찾았어요.",
+     "from": 1201,
+     "shown": 1201,
      "late": 0,
      "lines": 1,
      "inside": true,
@@ -539,8 +521,8 @@
     },
     {
      "text": "그다음 수는",
-     "from": 1334,
-     "shown": 1334,
+     "from": 1262,
+     "shown": 1262,
      "late": 0,
      "lines": 1,
      "inside": true,
@@ -548,8 +530,8 @@
     },
     {
      "text": "없을 거라고 추측하지만,",
-     "from": 1351,
-     "shown": 1351,
+     "from": 1284,
+     "shown": 1284,
      "late": 0,
      "lines": 1,
      "inside": true,
@@ -557,8 +539,8 @@
     },
     {
      "text": "증명은 아직 없어요.",
-     "from": 1395,
-     "shown": 1395,
+     "from": 1328,
+     "shown": 1328,
      "late": 0,
      "lines": 1,
      "inside": true,
@@ -588,70 +570,70 @@
     },
     {
      "beat": "B2",
-     "frame": 121,
+     "frame": 108,
      "hasCue": true,
      "latency": 2,
      "status": "pass"
     },
     {
      "beat": "B3",
-     "frame": 180,
+     "frame": 154,
      "hasCue": true,
      "latency": 1,
      "status": "pass"
     },
     {
      "beat": "B4",
-     "frame": 386,
+     "frame": 362,
      "hasCue": true,
      "latency": 1,
      "status": "pass"
     },
     {
      "beat": "B5",
-     "frame": 561,
+     "frame": 544,
      "hasCue": true,
      "latency": 1,
      "status": "pass"
     },
     {
      "beat": "B6",
-     "frame": 719,
+     "frame": 679,
      "hasCue": true,
      "latency": 0,
      "status": "pass"
     },
     {
      "beat": "B7",
-     "frame": 789,
+     "frame": 748,
      "hasCue": true,
      "latency": 0,
      "status": "pass"
     },
     {
      "beat": "B8",
-     "frame": 907,
+     "frame": 845,
      "hasCue": true,
      "latency": 2,
      "status": "pass"
     },
     {
      "beat": "B9",
-     "frame": 1018,
+     "frame": 959,
      "hasCue": true,
      "latency": 1,
      "status": "pass"
     },
     {
      "beat": "B10",
-     "frame": 1160,
+     "frame": 1103,
      "hasCue": true,
      "latency": 1,
      "status": "pass"
     },
     {
      "beat": "B11",
-     "frame": 1334,
+     "frame": 1262,
      "hasCue": true,
      "latency": 1,
      "status": "pass"
@@ -662,53 +644,77 @@
   {
    "id": "cues",
    "status": "warn",
-   "summary": "3 cues show nothing within 5 frames of their word: B4 f484 counter.color +6; B10 f1294 seq.blink +8; B11 f1417 seq.blink +6",
+   "summary": "7 cues show nothing within 5 frames of their word: B4 f464 counter.color +7; B4 f491 counter.blink +9; B8 f891 counter.blink +9; B8 f928 seq.blink +6; B10 f1231 seq.blink +6; B11 f1301 seq.blink +6; B11 f1354 seq.blink +6",
    "details": [
     {
      "beat": "B4",
-     "frame": 484,
+     "frame": 464,
      "what": "counter.color",
+     "latency": 7
+    },
+    {
+     "beat": "B4",
+     "frame": 491,
+     "what": "counter.blink",
+     "latency": 9
+    },
+    {
+     "beat": "B8",
+     "frame": 891,
+     "what": "counter.blink",
+     "latency": 9
+    },
+    {
+     "beat": "B8",
+     "frame": 928,
+     "what": "seq.blink",
      "latency": 6
     },
     {
      "beat": "B10",
-     "frame": 1294,
+     "frame": 1231,
      "what": "seq.blink",
-     "latency": 8
+     "latency": 6
     },
     {
      "beat": "B11",
-     "frame": 1417,
+     "frame": 1301,
+     "what": "seq.blink",
+     "latency": 6
+    },
+    {
+     "beat": "B11",
+     "frame": 1354,
      "what": "seq.blink",
      "latency": 6
     }
    ],
    "cites": [
     {
-     "frame": 484,
+     "frame": 464,
      "pair": [
-      483,
-      489
+      463,
+      469
      ],
-     "note": "cues: B4 counter.color at f484",
+     "note": "cues: B4 counter.color at f464",
      "file": "cues-1.png"
     },
     {
-     "frame": 1294,
+     "frame": 491,
      "pair": [
-      1293,
-      1299
+      490,
+      496
      ],
-     "note": "cues: B10 seq.blink at f1294",
+     "note": "cues: B4 counter.blink at f491",
      "file": "cues-2.png"
     },
     {
-     "frame": 1417,
+     "frame": 891,
      "pair": [
-      1416,
-      1422
+      890,
+      896
      ],
-     "note": "cues: B11 seq.blink at f1417",
+     "note": "cues: B8 counter.blink at f891",
      "file": "cues-3.png"
     }
    ]
@@ -722,7 +728,7 @@
   {
    "id": "loudness",
    "status": "pass",
-   "summary": "-14 LUFS integrated (target -14 ±1), true peak -2.1 dBTP (max -1), range 3 LU",
+   "summary": "-14.1 LUFS integrated (target -14 ±1), true peak -2.9 dBTP (max -1), range 2.4 LU",
    "cites": []
   },
   {
@@ -734,7 +740,7 @@
   {
    "id": "words",
    "status": "pass",
-   "summary": "25 of 25 words after a pause start within 70 ms of an audible onset (widest \"삼,\" at 0.68 s, -70 ms); limit ±200 ms",
+   "summary": "29 of 29 words after a pause start within 80 ms of an audible onset (widest \"사,\" at 1.1 s, -80 ms); limit ±200 ms",
    "details": [
     {
      "word": "이,",
@@ -743,123 +749,143 @@
     },
     {
      "word": "삼,",
-     "start": 0.68,
+     "start": 0.58,
      "dev": -70
     },
     {
      "word": "사,",
-     "start": 1.22,
-     "dev": -50
+     "start": 1.1,
+     "dev": -80
     },
     {
      "word": "팔만",
-     "start": 1.88,
-     "dev": 10
+     "start": 1.6,
+     "dev": 20
     },
     {
      "word": "그다음은?",
-     "start": 2.92,
+     "start": 2.58,
      "dev": 20
     },
     {
      "word": "아직",
-     "start": 4.02,
-     "dev": -60
+     "start": 3.6,
+     "dev": -50
     },
     {
      "word": "우리는",
-     "start": 6,
-     "dev": -10
+     "start": 5.12,
+     "dev": -30
     },
     {
      "word": "삼진법은",
-     "start": 8.32,
+     "start": 7.42,
+     "dev": -20
+    },
+    {
+     "word": "영,",
+     "start": 8.28,
      "dev": -30
     },
     {
      "word": "일,",
-     "start": 9.8,
+     "start": 8.82,
      "dev": -60
     },
     {
      "word": "이,",
-     "start": 10.36,
-     "dev": -40
+     "start": 9.28,
+     "dev": -70
     },
     {
      "word": "그다음이",
-     "start": 10.74,
-     "dev": 10
+     "start": 9.68,
+     "dev": 0
+    },
+    {
+     "word": "일영이에요.",
+     "start": 10.44,
+     "dev": -60
     },
     {
      "word": "일보다",
-     "start": 12.88,
-     "dev": -50
+     "start": 12.06,
+     "dev": -20
     },
     {
-     "word": "영과",
-     "start": 16.12,
-     "dev": -10
+     "word": "다",
+     "start": 15.2,
+     "dev": 10
     },
     {
      "word": "삼은",
-     "start": 18.7,
+     "start": 18.14,
      "dev": -40
     },
     {
      "word": "사는",
-     "start": 20.5,
-     "dev": -50
-    },
-    {
-     "word": "오진법",
-     "start": 23.98,
+     "start": 19.72,
      "dev": -40
     },
     {
-     "word": "네",
-     "start": 26.3,
+     "word": "사진법까지",
+     "start": 20.28,
+     "dev": -40
+    },
+    {
+     "word": "오진법까지는요?",
+     "start": 22.62,
      "dev": -40
     },
     {
      "word": "팔만",
-     "start": 27.06,
-     "dev": 30
-    },
-    {
-     "word": "그다음은",
-     "start": 30.24,
-     "dev": 0
-    },
-    {
-     "word": "다섯",
-     "start": 31.66,
+     "start": 24.92,
      "dev": 10
     },
     {
-     "word": "둘부터",
-     "start": 33.94,
-     "dev": 20
-    },
-    {
-     "word": "줄이",
-     "start": 35.52,
+     "word": "그다음은",
+     "start": 28.18,
      "dev": 0
     },
     {
-     "word": "천백만",
-     "start": 38.68,
+     "word": "영과",
+     "start": 29.7,
+     "dev": -20
+    },
+    {
+     "word": "이부터",
+     "start": 31.96,
+     "dev": -60
+    },
+    {
+     "word": "진법이",
+     "start": 33.5,
      "dev": 20
     },
     {
-     "word": "네",
-     "start": 40.74,
-     "dev": -10
+     "word": "천백만",
+     "start": 36.76,
+     "dev": 10
+    },
+    {
+     "word": "오진법까지",
+     "start": 38.56,
+     "dev": -40
+    },
+    {
+     "word": "팔만",
+     "start": 40.02,
+     "dev": 20
     },
     {
      "word": "그다음",
-     "start": 44.46,
-     "dev": 20
+     "start": 42.08,
+     "dev": 10
+    },
+    {
+     "word": "증명은",
+     "start": 44.26,
+     "dev": 10
     }
    ],
    "cites": []
@@ -867,7 +893,7 @@
   {
    "id": "loop",
    "status": "pass",
-   "summary": "16 visual-zone pixels differ by more than 16 levels between the last and first frame (limit 500)",
+   "summary": "11 visual-zone pixels differ by more than 16 levels between the last and first frame (limit 500)",
    "cites": []
   }
  ]
