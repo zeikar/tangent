@@ -25,3 +25,14 @@
   every base from 2 up to the base named (e.g. "5진법까지는요?"). The
   first-look note (no dotted gap) carries over to the restoryboard; fix
   round 1 had already applied it (and QA r1#1) when the rewrite came.
+- 2026-10-11 · retake · take6, of the rewritten script with the human's
+  wording: the rule is "영과 일로만 이루어진" in B4 and "이루어져 있어야"
+  in B8 (the writer's "쓰이는 / 쓰여야" read as translated), and B9 counts
+  "이부터 십만까지". Takes 4 and 5 were the steps on the way. The human
+  found take6 clean.
+- 2026-10-11 · storyboard · approved as drafted (restoryboard for the
+  rewrite): a yellow ✓ right of each row's digits marks a base whose form
+  is only 0s and 1s, digits of 2 or more red, no lamps; the near misses
+  go by at about 0.24 s each; the funnel's first tier is "2부터 10만까지";
+  B2 and B8 have no added pause (take6 breathes in those gaps), B4 keeps
+  its 0.4 s.
