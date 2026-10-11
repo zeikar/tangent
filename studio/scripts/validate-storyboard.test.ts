@@ -66,4 +66,22 @@ describe("validate-storyboard.py", () => {
   it("ignores trailing whitespace on a Read-aloud line", () => {
     expect(validate(storyboard("y"), script("  "))).toMatchObject({ ok: true });
   });
+
+  it("takes a one-eojeol caption only when it is the whole Display", () => {
+    const short = (b2: string) => {
+      const sb = storyboard("y");
+      sb.beats[1] = beat("B2", b2, [note("y")], [{ at: { word: b2.split(" ")[0] }, target: "y", action: "appear" }]);
+      return sb;
+    };
+    const md = (b2: string) => script().replace(/라 마 바/g, b2);
+    expect(validate(short("라마바요"), md("라마바요"))).toMatchObject({ ok: true });
+    const split = short("라 마 바");
+    split.beats[1].captions = [
+      { at: { word: "라" }, text: "라" },
+      { at: { word: "마" }, text: "마 바" },
+    ];
+    const r = validate(split);
+    expect(r.ok).toBe(false);
+    expect(r.out).toMatch(/caption '라' has 1 eojeol/);
+  });
 });

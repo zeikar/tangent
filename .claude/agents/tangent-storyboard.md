@@ -87,7 +87,8 @@ report instead of silently redesigning it.
 
 ## Captions
 
-Captions are phrase chunks of the Display text, 2–4 eojeol each, shown from the
+Captions are phrase chunks of the Display text, 2–4 eojeol each (a
+one-eojeol Display is its own single caption), shown from the
 anchor of the chunk's first spoken word until the next chunk. The player
 draws the episode's first chunk from frame 0 instead, before its word is
 heard, so the feed's first frame carries the hook: make that chunk read as

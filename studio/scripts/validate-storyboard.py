@@ -101,7 +101,8 @@ for b in sb["beats"]:
     last = -1
     for i, c in enumerate(b["captions"]):
         n = units(c["text"])
-        if not 2 <= n <= 4:
+        # a one-eojeol Display can't be chunked, so its single caption stands
+        if not 2 <= n <= 4 and not (n == 1 and c["text"] == disp):
             err(f"{bid}: caption {c['text']!r} has {n} eojeol")
         p = anchor_pos(c["at"], ws, f"{bid} caption")
         if p is not None and p <= last:
