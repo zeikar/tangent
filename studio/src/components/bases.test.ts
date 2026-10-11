@@ -10,7 +10,7 @@ describe("digitsOf", () => {
     expect(rep(0, 3)).toBe("0");
   });
 
-  it("finds 82000 the first number past 1 lit in bases 2 to 5", () => {
+  it("finds 82000 the first number past 1 that is 0s and 1s in bases 2 to 5", () => {
     let n = 2;
     while (![2, 3, 4, 5].every((b) => only01(n, b))) n++;
     expect(n).toBe(82000);
@@ -28,7 +28,7 @@ describe("runValues", () => {
     for (let i = 1; i < run.length; i++) expect(run[i]).toBeGreaterThanOrEqual(run[i - 1]);
   });
 
-  it("flickers a lower lamp on real numbers, never lighting all four rows", () => {
+  it("flickers a ✓ on a lower row on real numbers, never giving all four rows one", () => {
     const lit = (n: number) => bases.filter((b) => b > 2 && only01(n, b)).length;
     const flickers = run.filter((n, i) => i % 3 === 2 && n > 100 && lit(n) === 1);
     expect(flickers.length).toBeGreaterThanOrEqual(4);

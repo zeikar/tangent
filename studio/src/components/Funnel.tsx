@@ -4,13 +4,11 @@ import { ElementTimeline, phase, Scene } from "../storyboard/timeline";
 import { color, counter, hotel, mark, stroke } from "../style/theme";
 import { pointsAttr, roundedRectPoints } from "./geometry";
 import { InkLine, InkTex, useInk, useTexInk } from "./InkText";
-import { Lamp } from "./lamp";
 import { lifecycle, Polyline, StraightArrow, Svg } from "./shapes";
 
 // A stepped funnel of counts: centered tiers narrowing downward, one per
-// filter, each with BaseCounter's lit lamp so it reads as the same filter,
-// and what comes out at the bottom in a lit cell. Tiers are drawn as steps,
-// not to scale. Spec: storyboard.json → components → Funnel.
+// filter, and what comes out at the bottom in a filled cell. Tiers are drawn
+// as steps, not to scale. Spec: storyboard.json → components → Funnel.
 
 type Tier = { y: number; w: number; label: string; count: string };
 type Props = { x: number; height: number; tiers: Tier[]; output: { tex: string; y: number; cell: [w: number, h: number] } };
@@ -54,10 +52,14 @@ export const Funnel: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, sc
       <Svg>
         {tiers.map((t, i) =>
           t.shown > 0 ? (
-            <g key={i} opacity={t.shown}>
-              <Polyline pts={roundedRectPoints([t.l, t.y - half, t.r, t.y + half], mark.boxRadius)} color={color.muted} width={stroke.line} closed />
-              <Lamp at={[t.l + counter.tierLampX, t.y]} r={counter.tierLamp} lit={1} />
-            </g>
+            <Polyline
+              key={i}
+              pts={roundedRectPoints([t.l, t.y - half, t.r, t.y + half], mark.boxRadius)}
+              color={color.muted}
+              width={stroke.line}
+              opacity={t.shown}
+              closed
+            />
           ) : null,
         )}
         <StraightArrow
@@ -84,7 +86,7 @@ export const Funnel: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, sc
             <InkLine
               text={t.label}
               ink={name}
-              x={t.l + counter.tierNameX + (name.r - name.l) / 2}
+              x={t.l + counter.tierInset + (name.r - name.l) / 2}
               y={t.y}
               color={color.text}
               opacity={t.shown}
@@ -95,7 +97,7 @@ export const Funnel: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, sc
               tex={t.count}
               ink={count}
               fontSize={counter.tierCount}
-              x={t.r - counter.tierCountX - (count.r - count.l) / 2}
+              x={t.r - counter.tierInset - (count.r - count.l) / 2}
               y={t.y + (count.t + count.b) / 2 - (digit.t + digit.b) / 2}
               color={color.text}
               opacity={t.shown}

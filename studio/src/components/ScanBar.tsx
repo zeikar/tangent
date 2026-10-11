@@ -5,10 +5,9 @@ import { color, counter, hotel, stroke } from "../style/theme";
 import { fadeAt } from "./fade";
 import { arcPoints, Pt, pointsAttr } from "./geometry";
 import { InkTex, useTexInk } from "./InkText";
-import { Lamp } from "./lamp";
 import { lifecycle, Polyline, Svg } from "./shapes";
 
-// A searched range along a horizontal bar: a lit lamp at the found point,
+// A searched range along a horizontal bar: a yellow dot at the found point,
 // the bar to how far the search went (a tick), and a dashed continuation
 // fading out past it, since the numbers go on. A search light sweeps the bar,
 // turning it white behind it, and lights nothing. Spec: storyboard.json →
@@ -34,7 +33,7 @@ export const ScanBar: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, s
       light = t < 1 ? 1 - Math.max(0, (t - ARRIVE) / (1 - ARRIVE)) : 0;
     } else throw new Error(`ScanBar ${el.spec.id}: unknown action ${a.action}`);
   });
-  // Drawn from the lit dot: the bar, then the tick and the dashes.
+  // Drawn from the dot: the bar, then the tick and the dashes.
   const appear = el.actions.find((a) => a.action === "appear");
   if (appear && frame >= appear.from) {
     draw = {
@@ -86,7 +85,13 @@ export const ScanBar: React.FC<{ el: ElementTimeline; scene: Scene }> = ({ el, s
           <Polyline key={k} pts={t.pts} color={color.yellow} width={stroke.sheet} opacity={t.opacity} />
         ))}
         {light > 0 ? <polygon points={pointsAttr(arcPoints([lightX, y], counter.scanLight / 2, 0, 360))} fill={color.yellow} opacity={light} /> : null}
-        <Lamp at={p.from} r={counter.scanLamp} lit={1} scale={lerp(1, counter.scanPulse, pulse)} opacity={draw.dot} />
+        {draw.dot > 0 ? (
+          <polygon
+            points={pointsAttr(arcPoints(p.from, counter.scanDot * lerp(1, counter.scanPulse, pulse), 0, 360))}
+            fill={color.yellow}
+            opacity={draw.dot}
+          />
+        ) : null}
       </Svg>
       <InkTex
         tex={p.dot.label}

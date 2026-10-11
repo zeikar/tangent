@@ -219,46 +219,46 @@ export const hotel = {
   fadeStep: 8, // a fading line is cut into pieces at most this long
 } as const;
 
-// A number written in several bases, row under row, each row with a lamp lit
-// while its digits are all 0s and 1s (BaseCounter); the sequence of the first
-// such numbers in cells (Sequence); and counts and a search drawn with the same
-// lamp (Funnel, ScanBar). px, or a share of a lamp's radius where noted.
+// A number written in several bases, row under row, each row with a ✓ while
+// its digits are all 0s and 1s (BaseCounter); the sequence of the first such
+// numbers in cells (Sequence); and the counts and the search that follow
+// (Funnel, ScanBar). px.
 export const counter = {
   name: 48, // Pretendard at type.label's weight: row and tier names
-  // A lamp: a round bulb, and when lit, short rays round it...
-  rays: [1.4, 1.9], // ...from and to these shares of its radius...
-  rayCount: 8,
-  rayTurn: 22.5, // ...turned off the axes, so none lies along a bar or points straight at a name
-  rayWidth: 4,
-  lampPulse: 1.25, // a pulsed lamp's scale, rays included
-  band: 0.12, // a lit row's fill, in yellow
+  // A ✓: two strokes (stroke.sheet, round caps) through these points from its center, the short one first...
+  check: [
+    [-20, 1],
+    [-7, 15],
+    [21, -15],
+  ],
+  markPulse: 1.25, // ...and a pulsed ✓'s scale (its strokes keep their width)
+  // A ✓ that comes at a count's stop, with stops still to come, draws over at
+  // most this share of the stop's slot, so each stop shows its own ✓s.
+  markCount: 0.4,
   roll: 20, // a rolling digit rises this far out of its place, and the new one into it
   digitPulse: 1.15, // a pulsed digit's scale...
   digitGap: 3, // ...but it stops growing this close to its neighbours (which grow alike)
-  flicker: 3, // a running count shows, every this many frames, the next number lighting one more row
+  flicker: 3, // a running count shows, every this many frames, a real number giving one more row its ✓
   blink: 0.25, // a blinking cell's or digit's opacity at each dip
   // Sequence: cells round each term.
   cellRadius: 12,
   cellPulse: 8, // a pulsed cell's outline, grown inward
   termPulse: 1.15, // a pulsed term's scale...
   termGap: 6, // ...but it stays this far inside the pulsed outline
-  // Funnel: tiers of counts, each with a small lit lamp.
-  tierLamp: 14, // its lamp's radius...
-  tierLampX: 44, // ...centered this far in from the tier's left edge
-  tierNameX: 84, // the tier's name, from this far in
-  tierCountX: 32, // its count's ink, ending this far in from its right edge
+  // Funnel: tiers of counts.
+  tierInset: 32, // a tier's name from this far in from its left edge, its count's ink ending this far in from its right
   tierCount: 64, // TeX px
   drop: 40, // a tier slides this far down into place as it fades in
   outputGap: 8, // the last tier's bottom to the arrow out of it...
   outputArrow: 32, // ...this long, onto a lit cell
   output: 56, // TeX px, in that cell
-  // ScanBar: a searched range, a lit lamp at its found end.
-  scanLamp: 16,
-  scanLabel: 50, // TeX px, the lamp's label
+  // ScanBar: a searched range, a yellow dot at its found end.
+  scanDot: 16, // the dot's radius
+  scanLabel: 50, // TeX px, the dot's label
   scanTick: 44, // the searched end's tick, across the bar
   scanLight: 14, // the search light's disc, across...
   scanTrail: 90, // ...and the line fading out behind it
-  scanPulse: 1.3, // a pulsed lamp's scale
+  scanPulse: 1.3, // a pulsed dot's scale
 } as const;
 
 // Default animation lengths. These are durations, not start times; start times
