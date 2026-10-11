@@ -359,3 +359,55 @@ first episode written under "get to the answer well before the end": room
 - **Left for later:** check-render compares gray only (blue → red is
   invisible to it) and has no minimum gap for text passing near text; a
   storyboard rule to keep white edges 8 px inside the bounds.
+
+### Episode 006, 2, 3, 4, 82000 (2026-10-10 → 11)
+
+Published 2026-10-11 (https://youtube.com/shorts/fmwFDarylG0), 46.0 s, the
+human's own pick (OEIS A258107, seen on Numberphile) ahead of the lined-up
+uncountable episode. It went through two scripts, two storyboards and two
+productions, because a metaphor flagged at the takes was deferred.
+
+- **Topic and research:** a light search found Numberphile's 2015 video and
+  no Korean one. Research pinned the honest wording: a(6) is unknown, the
+  11-million-digit search covered bases 2–5 only, and "no more terms" is a
+  conjecture.
+- **Scripts and takes:** the human merged the two variants, taking a's
+  opening and b's ending, which also brought the length under 50 s. The
+  human asked what "줄에 불이 켜진다" meant by ear. The orchestrator
+  deferred it to the storyboard page instead of treating it as a script
+  note.
+- **First pass (~50 min production):** storyboard approved, render, QA fix
+  then ship. At the first look the human removed the dotted gap: 2, 3, 4,
+  82000 side by side read as a sequence. A stop message reached the
+  production agent after it had finished and rendered fix round 1. The
+  work was kept, since Sequence without the gap carried over.
+- **Rewrite:** on listening again the human dropped the lamp-and-row wording
+  from the narration and stated the rule directly ("다 영과 일로만 이루어진
+  수"). Three takes followed, one per round of the human's wording:
+  - take4 was the rewrite;
+  - take5 changed B8's "쓰여야" to "이루어져 있어야" and B9's "둘부터" to
+    "이부터";
+  - take6 changed B4's "쓰이는" to match.
+  The takes ran 44.7, 43.8 and 42.3 s for 223–228 syllables (5.0–5.4
+  syllables per second at 1.08×), so the same text can vary by 1–2 s
+  between takes. "쓰이는" went into korean-polish's rules.md as a 번역투
+  example. **A wording the human can't parse by ear at the takes is a
+  script note then, not a storyboard question:** the deferral cost a
+  storyboard, a render and a fix round.
+- **Restoryboard (~15 min) and production (~20 min):** a ✓ beside each
+  row's digits replaced the lamps, keeping reason (red digits) and verdict
+  together, about 60 px apart. The new B6 "5진법까지는요?" is one eojeol,
+  which the validator's 2–4 rule rejected. Now a one-eojeol Display is its
+  own caption. take6 breathes in two beat gaps, so those beats have
+  pauseAfter 0. QA said ship on the first render; the human approved it as
+  is.
+- **Critics on 2 fps stills:** one claimed the counter appeared during B2.
+  The storyboard put it on B3's first word. Timing claims from the cut
+  critique need checking against cues before they count.
+- **Publish:** playlist `정수론` over `수열`, a field name like 집합론, with
+  1/3 in base 12 as the lined-up second. The human uploaded before the
+  chat's final approval and asked that, from now on, the description's
+  hashtags also end the title. YouTube rejects < and > in metadata, so
+  A258107's English name was described in Korean.
+- **Human wait:** overnight between the second take and the rewrite's
+  storyboard; every other checkpoint came back within minutes.

@@ -101,7 +101,9 @@ fill the metadata with `videos.update`, which the lock doesn't affect.
   over-promises). For 001: "A4 용지는 왜 하필 210×297일까?" (numbers everyone
   has seen), not "A4 용지는 왜 1:√2일까?" (gives the answer), "A4 용지는 왜
   반으로 접어도 모양이 똑같을까?" (assumes a property few know), or "A4 용지
-  비율의 비밀" (clumsy).
+  비율의 비밀" (clumsy). The description's three hashtags follow the question
+  at the end of the title (the human's call, 2026-10-11, from 006 on); the
+  ~40 characters are for the question, so truncation cuts hashtags first.
 - **Description:** first two lines show the phenomenon, not the answer; then
   the key math or reasoning in plain text, variables defined; decimals
   written so they don't read as exact (297 ÷ 210 ≈ 1.41429 next to √2 ≈
@@ -111,8 +113,10 @@ fill the metadata with `videos.update`, which the lock doesn't affect.
   read (a standard we couldn't open is named in the body, not cited; a
   standard read through a preview is cited with that note), each source a
   "- " line (no middle dot; wording per `docs/korean.md`, since 2026-09-28,
-  so 001 and 002 as uploaded still use ·). Then three hashtags. The first three show above the title, so they
-  follow the title's rule too: no answer (001 uses #용지규격, not #루트2).
+  so 001 and 002 as uploaded still use ·). YouTube rejects < and > in titles
+  and descriptions, so a source name containing them is described instead. Then three hashtags. They also end the title, and the first three show above
+  it, so they follow the title's rule too: no answer (001 uses #용지규격, not
+  #루트2).
 - **Tags:** the topic's search terms in Korean and English, spaced and
   unspaced (A4 용지, A4용지); nothing the video doesn't show and never other
   channels' names. The channel-wide tags come from the upload defaults. Tags
@@ -125,7 +129,9 @@ fill the metadata with `videos.update`, which the lock doesn't affect.
   light topics; the human's pick, 2026-09-30, since it can change later),
   `집합론` (set theory: the sizes of infinite sets, opened with 005 since
   the uncountable episode was lined up; the human's pick over 무한 이야기,
-  무한의 크기 and 상상 속 수학, 2026-10-05, as the accurate field name). Add
+  무한의 크기 and 상상 속 수학, 2026-10-05, as the accurate field name),
+  `정수론` (number theory, opened with 006 since 1/3 in base 12 is lined up;
+  the human's pick over 수열, 2026-10-11, a field name like 집합론). Add
   a theme playlist when a second episode shares a theme, or with the first
   when another in that theme is already lined up; otherwise an episode
   whose theme has no playlist goes in none, and publish.md names its theme
@@ -150,7 +156,7 @@ Video: `publish/<slug>.mp4` · Thumbnail: `publish/<slug>.thumb.png`
 
 ## Title
 ```
-<title>
+<title> #<hashtag> #<hashtag> #<hashtag>
 ```
 
 ## Description

@@ -41,3 +41,7 @@
   before 82000) and r2#2 (the header's 2 fills at the end of B4), and the
   second cut critique's points (B10's tick label, a bigger B3, the decimal
   3 → 2 reset in B4).
+- 2026-10-11 · final · uploaded by the human with publish.md's metadata,
+  playlist `정수론` (over `수열`: a field name like 집합론, and 1/3 in base
+  12 is lined up as its second). From 006 on, the description's hashtags
+  also end the title.

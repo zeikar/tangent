@@ -136,7 +136,10 @@ script's take at 1.08×, with captions to follow along. Ask which script;
 listening decides, not reading. A script's take is whichever the page lists
 under it (take numbers run in generation order). If a take mispronounces or
 glitches, rerun `narrate.mts` for that script; the page then lists both, and
-the human picks the take too. Then, for a pick of script b read by take2:
+the human picks the take too. If the human asks what a line means, that is
+a script note: revise and retake now, not on the storyboard page (006's
+"줄에 불이 켜진다" was deferred and cost a storyboard and a render). Then,
+for a pick of script b read by take2:
 
 ```sh
 git mv $ep/script.b.md $ep/script.md

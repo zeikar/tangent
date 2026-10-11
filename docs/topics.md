@@ -93,7 +93,7 @@ the notes are in `git show d4a76eb:docs/topics.md`.
   it lands on the 4th tick. The draft's ending, π = 10 in base π, is a
   separate and shakier idea (a non-integer base: digits 0–3, expansions
   not unique, and 4 becomes 10.2201…), so it stays out of this one. Pairs
-  with 006 as a bases episode.
+  with 006 as a bases episode, the second in the `정수론` playlist 006 opens.
 - Set aside earlier as already told in Korean, which no longer counts
   against an idea (2026-09-27): the lunar birthday cycle, 11,172 Hangul
   syllables, curved platform gaps, the West Sea's tides, bus bunching,
