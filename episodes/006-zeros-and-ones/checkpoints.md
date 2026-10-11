@@ -36,3 +36,8 @@
   go by at about 0.24 s each; the funnel's first tier is "2부터 10만까지";
   B2 and B8 have no added pause (take6 breathes in those gaps), B4 keeps
   its 0.4 s.
+- 2026-10-11 · first look · the rewrite's render approved as is, with QA
+  round 2 saying ship. Left: QA r2#1 (a one-frame ✓ drop on count values
+  before 82000) and r2#2 (the header's 2 fills at the end of B4), and the
+  second cut critique's points (B10's tick label, a bigger B3, the decimal
+  3 → 2 reset in B4).
